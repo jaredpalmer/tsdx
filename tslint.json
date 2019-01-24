@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "tslint-react",
+    "tslint-config-palmerhq",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": ["src/api/**/*"]
+  }
+}
