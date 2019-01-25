@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "bin": {
-    "tsdx": "lib/index.js"
+    "tsdx": "./lib/index.js"
   },
   "files": [
     "lib"
@@ -14,11 +14,11 @@
     "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-transform-rename-import": "^2.3.0",
+    "camelcase": "^5.0.0",
     "chalk": "^2.4.2",
     "cross-env": "5.0.5",
     "fs-extra": "^7.0.1",
-    "jest": "^24.0.0",
-    "pretty-error": "^2.1.1",
+    "jest": "23.6.0",
     "rollup": "^0.66.4",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
