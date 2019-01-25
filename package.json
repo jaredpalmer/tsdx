@@ -43,7 +43,7 @@
     }
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": [
+    "{index,logError}.js": [
       "prettier --trailing-comma es5 --single-quote --write",
       "git add"
     ]
