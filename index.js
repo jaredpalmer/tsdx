@@ -7,20 +7,22 @@ const path = require('path');
 const { rollup, watch } = require('rollup');
 const commonjs = require('rollup-plugin-commonjs');
 const replace = require('rollup-plugin-replace');
+const json = require('rollup-plugin-json');
 const typescript = require('rollup-plugin-typescript2');
 const resolve = require('rollup-plugin-node-resolve');
 const sourceMaps = require('rollup-plugin-sourcemaps');
 const babel = require('rollup-plugin-babel');
 const { terser } = require('rollup-plugin-terser');
 const { sizeSnapshot } = require('rollup-plugin-size-snapshot');
-
-var PrettyError = require('pretty-error');
-var pe = new PrettyError();
-
+const asyncro = require('asyncro');
+const logError = require('./logError');
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
+
+// Remove the package name scope if it exists
+const removeScope = name => name.replace(/^@.*\//, '');
 
 const pkg = fs.readJSONSync(resolveApp('package.json'));
 
@@ -43,13 +45,51 @@ const babelOptions = {
   ],
 };
 
+const BUILD_CONFIGS = [
+  getConfig('cjs', 'development'),
+  getConfig('cjs', 'production'),
+  getConfig('es', 'production'),
+  getConfig('umd', 'development'),
+  getConfig('umd', 'production'),
+];
+
 function getConfig(format, env) {
   return {
+    // Tell Rollup the entry point to the package
     input: paths.appEntry,
+    // Tell Rollup which packages to ignore
     external,
+    // Establish Rollup output
     output: {
+      // Set filenames of the consumer's package
       file: `${paths.appDist}/${pkg.name}.${format}.${env}.js`,
+      // Pass through the file format
       format,
+      // Do not let Rollup call Object.freeze() on namespace import objects
+      // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
+      freeze: false,
+      // Do not let Rollup add a `__esModule: true` property when generating exports for non-ESM formats.
+      esModule: false,
+      // Rollup has treeshaking by default, but we can optimize it further...
+      treeshake: {
+        // We assume reading a property of an object never has side-effects.
+        // This means tsdx WILL remove getters and setters on objects.
+        //
+        // @example
+        //
+        // const foo = {
+        //  get bar() {
+        //    console.log('effect');
+        //    return 'bar';
+        //  }
+        // }
+        //
+        // const result = foo.bar;
+        // const illegalAccess = foo.quux.tooDeep;
+        //
+        // Punchline....Don't use getters and setters
+        propertyReadSideEffects: false,
+      },
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },
       exports: 'named',
@@ -60,10 +100,12 @@ function getConfig(format, env) {
         jsnext: true,
         browser: true,
       }),
-      commonjs({
-        // use a regex to make sure to include eventual hoisted packages
-        include: /\/node_modules\//,
-      }),
+      env === 'umd' &&
+        commonjs({
+          // use a regex to make sure to include eventual hoisted packages
+          include: /\/node_modules\//,
+        }),
+      json(),
       typescript({
         typescript: require('typescript'),
         cacheRoot: `./.rts2_cache_${format}`,
@@ -103,11 +145,13 @@ function getConfig(format, env) {
 }
 
 async function moveTypes() {
-  // Move the typescript types to the base of the ./dist folder
-  await fs.copy(paths.appDist + '/src', paths.appDist, {
-    overwrite: true,
-  });
-  await fs.remove(paths.appDist + '/src');
+  try {
+    // Move the typescript types to the base of the ./dist folder
+    await fs.copy(paths.appDist + '/src', paths.appDist, {
+      overwrite: true,
+    });
+    await fs.remove(paths.appDist + '/src');
+  } catch (e) {}
 }
 
 prog.version(pkg.version);
@@ -117,14 +161,9 @@ prog
   .describe('Build your project in watch mode')
   .action(async opts => {
     await watch(
-      [
-        getConfig('cjs', 'development'),
-        getConfig('cjs', 'production'),
-        getConfig('es', 'production'),
-        getConfig('umd', 'development'),
-        getConfig('umd', 'production'),
-      ].map(inputOptions => ({
+      BUILD_CONFIGS.map(inputOptions => ({
         watch: {
+          silent: true,
           include: 'src/**',
           exclude: 'node_modules/**',
         },
@@ -132,13 +171,15 @@ prog
       }))
     ).on('event', async event => {
       if (event.code === 'ERROR') {
-        console.log(pe.render(event.error));
+        logError(event.error);
       }
       if (event.code === 'FATAL') {
-        console.log(pe.render(event.error));
+        logError(event.error);
       }
       if (event.code === 'END') {
-        await moveTypes();
+        try {
+          await moveTypes();
+        } catch (_error) {}
       }
     });
   });
@@ -147,18 +188,16 @@ prog
   .command('build')
   .describe('Build your project for production')
   .action(async opts => {
-    await Promise.all(
-      [
-        getConfig('cjs', 'production'),
-        getConfig('es', 'production'),
-        getConfig('umd', 'development'),
-        getConfig('umd', 'production'),
-      ].map(async inputOptions => {
+    try {
+      await asyncro.map(BUILD_CONFIGS, async inputOptions => {
         let bundle = await rollup(inputOptions);
-        await bundle.write(inputOptions.output);
-      })
-    );
-    await moveTypes();
+        const { code } = await bundle.write(inputOptions.output);
+        return console.log(code.length);
+      });
+      await moveTypes();
+    } catch (error) {
+      logError(error);
+    }
   });
 
 prog.parse(process.argv);
