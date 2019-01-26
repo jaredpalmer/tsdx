@@ -8,14 +8,14 @@ Despite all the recent hype, setting up a new TypeScript library can be tough. B
 
 TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
 
-- Zero-config, single dependency
-- Outputs multiple module formats (CJS, UMD & ESM) and development and production build
-- Comes with treeshaking, ready-to-rock lodash/lodash-es optimizations, and minification/compression
-- Works with React
+- Bundles your code with Rollup and outputs multiple module formats (CJS, UMD & ESM) plus development and production builds
+- Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
 - Live reload / watch-mode
-- Human readable error messages (in VSCode format)
+- Works with React
+- Human readable error messages (and in VSCode-friendly format)
 - Bundle size snapshots
 - Jest test runner setup with sensible defaults via `tsdx test`
+- Zero-config, single dependency
 
 ## Quick Start
 
