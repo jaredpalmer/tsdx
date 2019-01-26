@@ -2,18 +2,18 @@
 
 **Zero-config TypeScript package development.**
 
----
+Despite all the recent hype, setting up a new TypeScript library can be tough. Between `tsconfig`, Rollup, Jest....there is just a whole lot of stuff to do and things to fuck up. TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
-Setting up a new TypeScript package is kinda tough. While there are several starter kits and zero-config toolchains for apps and servers, there really isn't a tool that's purpose built for TS package development. To make matters worse, the main TypeScript compiler (i.e. `tsc`) is inadequate for building a modern TS library for wide consumption as it lacks key optimizations such as treeshaking, minification, bundling. **TSDX is a minimalist, zero-config, _and blazing fast_ CLI wrapper around [Rollup](https://github.com/rollup/rollup)** that makes bootstrapping, developing, building, and testing TypeScript libraries a breeze.
+## Features
 
-**TSDX comes with the "battery-pack included":**
+TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
 
 - Zero-config, single dependency
 - Outputs multiple module formats (CJS, UMD & ESM) and development and production build
-- Comes with tree-shaking, ready to rumble lodash/lodash-es optimizations, and minification/compression
+- Comes with treeshaking, ready-to-rock lodash/lodash-es optimizations, and minification/compression
 - Works with React
 - Live reload / watch-mode
-- Human readable error messages
+- Human readable error messages (in VSCode format)
 - Bundle size snapshots
 - Jest test runner setup with sensible defaults via `tsdx test`
 
@@ -25,7 +25,7 @@ cd my-lib
 npm start
 ```
 
-That's it. You don't need to worry about setting up Typescript or rollup or Jest or other build tools. Just start editing src/index.ts and go!
+That's it. You don't need to worry about setting up Typescript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
 
 Below is a list of commands you will probably find useful.
 
