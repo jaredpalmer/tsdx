@@ -1,6 +1,4 @@
-# TSDX 
-
-
+# TSDX
 
 **Zero-config TypeScript package development.**
 
@@ -24,7 +22,7 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 ## Quick Start
 
 ```
-yarn tsdx create my-lib
+npx tsdx create thingzz
 cd my-lib
 yarn start
 ```
