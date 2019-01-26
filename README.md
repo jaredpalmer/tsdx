@@ -20,9 +20,9 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 ## Quick Start
 
 ```
-npx tsdx create my-lib
+yarn tsdx create my-lib
 cd my-lib
-npm start
+yarn start
 ```
 
 That's it. You don't need to worry about setting up Typescript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
