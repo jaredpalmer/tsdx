@@ -2,7 +2,7 @@
 
 **Zero-config TypeScript package development.**
 
-Despite all the recent hype, setting up a new TypeScript library can be tough. Between `tsconfig`, Rollup, Jest....there is just a whole lot of stuff to do and things to fuck up. TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
+Despite all the recent hype, setting up a new TypeScript library can be tough. Between Rollup, Jest, `tsconfig`, TSLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to fuck up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
 ## Features
 
