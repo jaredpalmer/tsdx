@@ -1,6 +1,10 @@
-# TSDX [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx)
+# TSDX 
+
+
 
 **Zero-config TypeScript package development.**
+
+[![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx)
 
 Despite all the recent hype, setting up a new TypeScript library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, Yarn resolutions, TSLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to fuck up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
