@@ -10,6 +10,7 @@
   ],
   "dependencies": {
     "@babel/core": "^7.2.2",
+    "ansi-escapes": "^3.1.0",
     "asyncro": "^3.0.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-dev-expression": "^0.2.1",
@@ -21,6 +22,8 @@
     "fs-extra": "^7.0.1",
     "jest": "23.6.0",
     "mkdirp": "^0.5.1",
+    "ms": "^2.1.1",
+    "ora": "^3.0.0",
     "rollup": "^0.66.4",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
