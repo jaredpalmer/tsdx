@@ -3,13 +3,14 @@
   "version": "0.2.4",
   "license": "MIT",
   "bin": {
-    "tsdx": "./lib/index.js"
+    "tsdx": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "dependencies": {
     "@babel/core": "^7.2.2",
