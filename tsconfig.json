@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    // "declaration": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "module": "ESNext",
+    "rootDir": "src",
+    "strict": true,
+    "target": "es2017",
+    // "composite": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/template/**/*"
+  ]
+}

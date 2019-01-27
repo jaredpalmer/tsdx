@@ -1,6 +1,6 @@
-const { appPackageJson } = require('./constants');
+import { appPackageJson } from './constants';
 
-module.exports = function createJestConfig(resolve, rootDir) {
+export function createJestConfig(resolve, rootDir) {
   return {
     transform: {
       '.(ts|tsx)': resolve('./node_modules/ts-jest'),
@@ -11,4 +11,4 @@ module.exports = function createJestConfig(resolve, rootDir) {
     testMatch: ['<rootDir>/test/**/?(*.)(spec|test).{ts,tsx}'],
     rootDir,
   };
-};
+}

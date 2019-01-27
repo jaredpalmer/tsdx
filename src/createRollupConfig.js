@@ -1,20 +1,15 @@
-const {
-  safeVariableName,
-  resolveApp,
-  removeScope,
-  external,
-} = require('./utils');
-
-const { paths, appPackageJson } = require('./constants');
-const { sizeSnapshot } = require('rollup-plugin-size-snapshot');
-const { terser } = require('rollup-plugin-terser');
-const babel = require('rollup-plugin-babel');
-const commonjs = require('rollup-plugin-commonjs');
-const json = require('rollup-plugin-json');
-const replace = require('rollup-plugin-replace');
-const resolve = require('rollup-plugin-node-resolve');
-const sourceMaps = require('rollup-plugin-sourcemaps');
-const typescript = require('rollup-plugin-typescript2');
+import { safeVariableName, resolveApp, removeScope, external } from './utils';
+import { paths, appPackageJson } from './constants';
+import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
+import { terser } from 'rollup-plugin-terser';
+import babel from 'rollup-plugin-babel';
+import commonjs from 'rollup-plugin-commonjs';
+import json from 'rollup-plugin-json';
+import replace from 'rollup-plugin-replace';
+import resolve from 'rollup-plugin-node-resolve';
+import sourceMaps from 'rollup-plugin-sourcemaps';
+import typescript from 'rollup-plugin-typescript2';
+import shebangPlugin from 'rollup-plugin-preserve-shebang';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
@@ -27,7 +22,8 @@ const babelOptions = {
   ],
 };
 
-module.exports = function createRollupConfig(format, env, opts) {
+export function createRollupConfig(format, env, opts) {
+  let shebang;
   return {
     // Tell Rollup the entry point to the package
     input: resolveApp(opts.input),
@@ -117,6 +113,9 @@ module.exports = function createRollupConfig(format, env, opts) {
           toplevel: format === 'es' || format === 'cjs',
           warnings: true,
         }),
+      shebangPlugin({
+        shebang,
+      }),
     ],
   };
-};
+}
