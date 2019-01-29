@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    // "declaration": true,
     "allowJs": true,
     "importHelpers": true,
     "esModuleInterop": true,
@@ -9,7 +8,6 @@
     "rootDir": "src",
     "strict": true,
     "target": "es2017",
-    // "composite": true
   },
   "include": [
     "src/**/*"
