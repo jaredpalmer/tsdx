@@ -1,22 +1,23 @@
 #!/usr/bin/env node
 
-const sade = require('sade');
-const { rollup, watch } = require('rollup');
-const asyncro = require('asyncro');
-const chalk = require('chalk');
-const fs = require('fs-extra');
-const jest = require('jest');
-const logError = require('./logError');
-const path = require('path');
-const mkdirp = require('mkdirp');
-const execa = require('execa');
-const ora = require('ora');
-const { paths } = require('./constants');
-const messages = require('./messages');
+import sade from 'sade';
+import { rollup, watch } from 'rollup';
+import asyncro from 'asyncro';
+import chalk from 'chalk';
+import fs from 'fs-extra';
+import jest from 'jest';
+import logError from './logError';
+import path from 'path';
+import mkdirp from 'mkdirp';
+import execa from 'execa';
+import ora from 'ora';
+import { paths } from './constants';
+import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-const { safeVariableName, resolveApp, safePackageName } = require('./utils');
-const output = require('./output');
+import { safeVariableName, resolveApp, safePackageName } from './utils';
+import * as Output from './output';
+
 const prog = sade('tsdx');
 
 let appPackageJson;
@@ -55,7 +56,7 @@ prog
     try {
       const projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;
       // copy the template
-      await fs.copy(path.resolve(__dirname, './template'), projectPath, {
+      await fs.copy(path.resolve(__dirname, '../template'), projectPath, {
         overwrite: true,
       });
       // fix gitignore
@@ -82,19 +83,19 @@ prog
       };
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
-      messages.start(pkg);
+      Messages.start(pkg);
     } catch (error) {
       bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
       logError(error);
       process.exit(1);
     }
-    const deps = ['@types/jest', 'tsdx', 'typescript'];
+    const deps = ['@types/jest', 'ts-jest', 'tsdx', 'typescript'];
 
-    const installSpinner = ora(messages.installing(deps)).start();
+    const installSpinner = ora(Messages.installing(deps)).start();
     try {
       await execa(`yarn`, ['add', ...deps, '--dev']);
       installSpinner.succeed('Installed dependecines');
-      console.log(messages.start(pkg));
+      console.log(Messages.start(pkg));
     } catch (error) {
       installSpinner.fail('Failed to install dependencies');
       logError(error);
