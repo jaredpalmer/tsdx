@@ -1,6 +1,5 @@
-'use strict';
-
 import execa from 'execa';
+
 let cmd;
 
 export default function getInstallCmd() {

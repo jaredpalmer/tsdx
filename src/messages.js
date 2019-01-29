@@ -2,6 +2,7 @@ import chalk from 'chalk';
 import getInstallCmd from './getInstallCmd';
 import * as Output from './output';
 
+// This was copied from Razzle. Lots of unused stuff.
 const program = {
   name: 'tsdx',
 };

@@ -1,10 +1,9 @@
-'use strict';
-
 import { eraseLine } from 'ansi-escapes';
 import chalk from 'chalk';
 import ora from 'ora';
 import ms from 'ms';
 
+// This was copied from Razzle. Lots of unused stuff.
 export const info = msg => {
   console.log(`${chalk.gray('>')} ${msg}`);
 };
