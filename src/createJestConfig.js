@@ -3,7 +3,7 @@ import { appPackageJson } from './constants';
 export function createJestConfig(resolve, rootDir) {
   return {
     transform: {
-      '.(ts|tsx)': resolve('./node_modules/ts-jest'),
+      '.(ts|tsx)': resolve('../ts-jest'),
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],

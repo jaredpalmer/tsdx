@@ -89,7 +89,7 @@ prog
       logError(error);
       process.exit(1);
     }
-    const deps = ['@types/jest', 'ts-jest', 'tsdx', 'typescript'];
+    const deps = ['@types/jest', 'tsdx', 'typescript'];
 
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
