@@ -1,9 +1,8 @@
-'use strict';
-const chalk = require('chalk');
+import chalk from 'chalk';
 const stdout = console.log.bind(console);
 const stderr = console.error.bind(console);
 
-module.exports = function logError(err) {
+export default function logError(err) {
   const error = err.error || err;
   const description = `${error.name ? error.name + ': ' : ''}${error.message ||
     error}`;
@@ -29,4 +28,4 @@ module.exports = function logError(err) {
   }
 
   stderr();
-};
+}
