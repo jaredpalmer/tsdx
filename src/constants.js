@@ -1,6 +1,6 @@
-const fs = require('fs-extra');
-const path = require('path');
-const { resolveApp } = require('./utils');
+import fs from 'fs-extra';
+import path from 'path';
+import { resolveApp } from './utils';
 
 let paths = {};
 
@@ -14,4 +14,4 @@ try {
   };
 } catch (e) {}
 
-exports.paths = paths;
+export { paths };

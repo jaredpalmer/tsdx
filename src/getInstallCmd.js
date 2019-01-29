@@ -1,10 +1,9 @@
 'use strict';
 
-const execa = require('execa');
-
+import execa from 'execa';
 let cmd;
 
-module.exports = function getInstallCmd() {
+export default function getInstallCmd() {
   if (cmd) {
     return cmd;
   }
@@ -17,4 +16,4 @@ module.exports = function getInstallCmd() {
   }
 
   return cmd;
-};
+}
