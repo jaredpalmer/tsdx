@@ -68,11 +68,16 @@ async function getInputs(entries, source) {
 function createBuildConfigs(opts) {
   return concatAllArray(
     opts.input.map(input => [
-      createRollupConfig('cjs', 'development', { ...opts, input }),
-      createRollupConfig('cjs', 'production', { ...opts, input }),
-      createRollupConfig('es', 'production', { ...opts, input }),
-      createRollupConfig('umd', 'development', { ...opts, input }),
-      createRollupConfig('umd', 'production', { ...opts, input }),
+      opts.format.includes('cjs') &&
+        createRollupConfig('cjs', 'development', { ...opts, input }),
+      opts.format.includes('cjs') &&
+        createRollupConfig('cjs', 'production', { ...opts, input }),
+      opts.format.includes('es') &&
+        createRollupConfig('es', 'production', { ...opts, input }),
+      opts.format.includes('umd') &&
+        createRollupConfig('umd', 'development', { ...opts, input }),
+      opts.format.includes('umd') &&
+        createRollupConfig('umd', 'production', { ...opts, input }),
     ])
   );
 }
