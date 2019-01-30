@@ -75,6 +75,10 @@ prog
         'umd:main': `dist/${safeName}.umd.production.js`,
         module: `dist/${safeName}.es.production.js`,
         typings: 'dist/index.d.ts',
+        files: [
+          "dist",
+          "index.js"
+        ],
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
