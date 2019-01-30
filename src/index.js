@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 import sade from 'sade';
+import glob from 'tiny-glob/sync';
 import { rollup, watch } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
+import util from 'util';
 import fs from 'fs-extra';
 import jest from 'jest';
 import logError from './logError';
@@ -17,6 +19,7 @@ import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { safeVariableName, resolveApp, safePackageName } from './utils';
 import * as Output from './output';
+import { concatAllArray } from 'jpjs';
 
 const prog = sade('tsdx');
 
@@ -25,17 +28,54 @@ try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
 } catch (e) {}
 
-const createBuildConfigs = opts => {
-  opts.name = opts.name || appPackageJson.name;
-  opts.input = appPackageJson.source;
-  return [
-    createRollupConfig('cjs', 'development', opts),
-    createRollupConfig('cjs', 'production', opts),
-    createRollupConfig('es', 'production', opts),
-    createRollupConfig('umd', 'development', opts),
-    createRollupConfig('umd', 'production', opts),
-  ];
-};
+const stat = util.promisify(fs.stat);
+
+export const isDir = name =>
+  stat(name)
+    .then(stats => stats.isDirectory())
+    .catch(() => false);
+
+export const isFile = name =>
+  stat(name)
+    .then(stats => stats.isFile())
+    .catch(() => false);
+
+async function jsOrTs(filename) {
+  const extension = (await isFile(resolveApp(filename + '.ts')))
+    ? '.ts'
+    : (await isFile(resolveApp(filename + '.tsx')))
+    ? '.tsx'
+    : '.js';
+
+  return resolveApp(`${filename}${extension}`);
+}
+
+async function getInputs(entries, source) {
+  let inputs = [];
+  let stub = [];
+  stub
+    .concat(
+      entries && entries.length
+        ? entries
+        : (source && resolveApp(source)) ||
+            ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
+    )
+    .map(file => glob(file))
+    .forEach(input => inputs.push(input));
+
+  return concatAllArray(inputs);
+}
+function createBuildConfigs(opts) {
+  return concatAllArray(
+    opts.input.map(input => [
+      createRollupConfig('cjs', 'development', { ...opts, input }),
+      createRollupConfig('cjs', 'production', { ...opts, input }),
+      createRollupConfig('es', 'production', { ...opts, input }),
+      createRollupConfig('umd', 'development', { ...opts, input }),
+      createRollupConfig('umd', 'production', { ...opts, input }),
+    ])
+  );
+}
 
 async function moveTypes() {
   try {
@@ -70,15 +110,11 @@ prog
       const pkgJson = {
         name: safeName,
         version: '0.1.0',
-        source: 'src/index.ts',
-        main: 'index.js',
+        main: 'dist/index.js',
         'umd:main': `dist/${safeName}.umd.production.js`,
         module: `dist/${safeName}.es.production.js`,
         typings: 'dist/index.d.ts',
-        files: [
-          "dist",
-          "index.js"
-        ],
+        files: ['dist'],
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
@@ -110,12 +146,38 @@ prog
 prog
   .command('watch')
   .describe('Rebuilds on any change')
+  .option('--entry, -i', 'Entry module(s)')
   .option('--target', 'Specify your target environment', 'web')
   .example('tsdx watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
+  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .action(async opts => {
+    opts.name = opts.name || appPackageJson.name;
+    opts.input = await getInputs(opts.entry, appPackageJson.source);
+    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+    if (opts.format.includes('cjs')) {
+      try {
+        await fs.writeFile(
+          resolveApp('dist/index.js'),
+          `
+         'use strict'
+
+      if (process.env.NODE_ENV === 'production') {
+        module.exports = require('./${safeVariableName(
+          opts.name
+        )}.cjs.production.js')
+      } else {
+        module.exports = require('./${safeVariableName(
+          opts.name
+        )}.cjs.development.js')
+      }`,
+          'utf8'
+        );
+      } catch (e) {}
+    }
+
     await watch(
-      createBuildConfigs(opts).map(inputOptions => ({
+      [cjsDev, cjsProd, ...otherConfigs].map(inputOptions => ({
         watch: {
           silent: true,
           include: 'src/**',
@@ -141,12 +203,43 @@ prog
 prog
   .command('build')
   .describe('Build your project once and exit')
+  .option('--entry, -i', 'Entry module(s)')
+  .option('--target', 'Specify your target environment', 'web')
+  .example('tsdx build --target node')
+  .option('--name', 'Specify name exposed in UMD builds')
+  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .action(async opts => {
+    opts.name = opts.name || appPackageJson.name;
+    opts.input = await getInputs(opts.entry, appPackageJson.source);
+    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+    if (opts.format.includes('cjs')) {
+      try {
+        await fs.writeFile(
+          resolveApp('dist/index.js'),
+          `
+         'use strict'
+
+      if (process.env.NODE_ENV === 'production') {
+        module.exports = require('./${safeVariableName(
+          opts.name
+        )}.cjs.production.js')
+      } else {
+        module.exports = require('./${safeVariableName(
+          opts.name
+        )}.cjs.development.js')
+      }`,
+          'utf8'
+        );
+      } catch (e) {}
+    }
     try {
-      await asyncro.map(createBuildConfigs(opts), async inputOptions => {
-        let bundle = await rollup(inputOptions);
-        await bundle.write(inputOptions.output);
-      });
+      await asyncro.map(
+        [cjsDev, cjsProd, ...otherConfigs],
+        async inputOptions => {
+          let bundle = await rollup(inputOptions);
+          await bundle.write(inputOptions.output);
+        }
+      );
       await moveTypes();
     } catch (error) {
       logError(error);

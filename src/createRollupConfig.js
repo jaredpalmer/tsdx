@@ -26,7 +26,7 @@ export function createRollupConfig(format, env, opts) {
   let shebang;
   return {
     // Tell Rollup the entry point to the package
-    input: resolveApp(opts.input),
+    input: opts.input,
     // Tell Rollup which packages to ignore
     external,
     // Establish Rollup output
