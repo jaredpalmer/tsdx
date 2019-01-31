@@ -1,19 +1,28 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "importHelpers": true,
     "esModuleInterop": true,
-    "outDir": "dist",
-    "declaration": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2015",
+      "scripthost",
+      "es2015.promise",
+      "es2015.generator",
+      "es2015.iterable",
+      "dom"
+    ],
+    "allowJs": true,
     "module": "commonjs",
-    "rootDir": "src",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "outDir": "build",
     "strict": true,
-    "target": "es2017",
+    "target": "es5"
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/template/**/*"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

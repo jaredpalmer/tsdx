@@ -1,18 +1,31 @@
 {
   "name": "tsdx",
-  "version": "0.3.2",
-  "license": "MIT",
+  "version": "0.0.1",
+  "description": "tsdx CLI",
+  "private": true,
   "bin": {
-    "tsdx": "./dist/index.js"
+    "tsdx": "bin/tsdx"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "prepare": "npm run build"
+    "format": "prettier --write **/*.{js,ts,tsx,json}",
+    "lint": "tslint -p .",
+    "compile": "tsc -p .",
+    "build": "yarn format && yarn lint && yarn compile",
+    "test": "jest",
+    "watch": "jest --watch",
+    "snapupdate": "jest --updateSnapshot",
+    "coverage": "jest --coverage"
   },
   "files": [
-    "dist",
-    "template"
+    "tsconfig.json",
+    "tslint.json",
+    "build",
+    "LICENSE",
+    "readme.md",
+    "docs",
+    "bin"
   ],
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.2.2",
     "ansi-escapes": "^3.1.0",
@@ -25,6 +38,7 @@
     "cross-env": "5.0.5",
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
+    "gluegun": "^2.1.0",
     "jest": "23.6.0",
     "jpjs": "^1.2.1",
     "mkdirp": "^0.5.1",
@@ -44,20 +58,26 @@
     "sade": "^1.4.2",
     "tiny-glob": "^0.2.6",
     "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
     "tslib": "^1.9.3",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
     "@types/camelcase": "^4.1.0",
-    "@types/fs-extra": "^5.0.4",
-    "@types/node": "^10.12.18",
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.12",
+    "@types/rollup": "^0.54.0",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
-    "prettier": "^1.16.1",
+    "prettier": "^1.12.1",
     "tslint": "^5.12.0",
     "tslint-config-palmerhq": "^1.0.2",
     "tslint-config-prettier": "^1.17.0",
     "tslint-react": "^3.6.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "husky": {
     "hooks": {

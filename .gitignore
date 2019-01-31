@@ -1,7 +1,7 @@
-*.log
 .DS_Store
 node_modules
-.rts2_cache_cjs
-.rts2_cache_es
-.rts2_cache_umd
+npm-debug.log
+coverage
+.nyc_output
 dist
+build

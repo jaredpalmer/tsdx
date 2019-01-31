@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
-import path from 'path';
 import camelCase from 'camelcase';
+import path from 'path';
 
 // Remove the package name scope if it exists
 export const removeScope = name => name.replace(/^@.*\//, '');

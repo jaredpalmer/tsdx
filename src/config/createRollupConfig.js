@@ -100,7 +100,7 @@ export function createRollupConfig(format, env, opts) {
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
       sourceMaps(),
-      sizeSnapshot(),
+      // sizeSnapshot(),
       env === 'production' &&
         terser({
           sourcemap: true,
