@@ -179,7 +179,9 @@ prog
           opts.name
         )}.cjs.development.js')
       }`,
-          'utf8'
+          {
+            overwrite: true,
+          }
         );
       } catch (e) {}
     }
@@ -239,7 +241,9 @@ prog
           opts.name
         )}.cjs.development.js')
       }`,
-          'utf8'
+          {
+            overwrite: true,
+          }
         );
       } catch (e) {}
     }
