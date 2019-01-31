@@ -6,6 +6,21 @@
 
 Despite all the recent hype, setting up a new TypeScript library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, Yarn resolutions, TSLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to fuck up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Inspiration](#inspiration)
+  - [Comparison to Microbundle](#comparison-to-microbundle)
+- [API Reference](#api-reference)
+  - [`tsdx watch`](#tsdx-watch)
+  - [`tsdx build`](#tsdx-build)
+  - [`tsdx test`](#tsdx-test)
+- [Author](#author)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Features
 
 TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
@@ -59,6 +74,58 @@ TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build to
 - TSDX includes a bootstrap command and default package template
 - TSDX is 100% TypeScript focused. While yes, TSDX does use Babel to run a few optimizations (related to treeshaking and lodash), it does not support custom babel configurations.
 - TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
+
+## API Reference
+
+### `tsdx watch`
+
+```shell
+Description
+  Rebuilds on any change
+
+Usage
+  $ tsdx watch [options]
+
+Options
+  -i, --entry    Entry module(s)
+  --target       Specify your target environment  (default web)
+  --name         Specify name exposed in UMD builds
+  --format       Specify module format(s)  (default cjs,es,umd)
+  -h, --help     Displays this message
+
+Examples
+  $ tsdx watch --entry src/foo.tsx
+  $ tsdx watch --target node
+  $ tsdx watch --name Foo
+  $ tsdx watch --format cjs,es
+```
+
+### `tsdx build`
+
+```shell
+Description
+  Build your project once and exit
+
+Usage
+  $ tsdx build [options]
+
+Options
+  -i, --entry    Entry module(s)
+  --target       Specify your target environment  (default web)
+  --name         Specify name exposed in UMD builds
+  --format       Specify module format(s)  (default cjs,es,umd)
+  -h, --help     Displays this message
+
+Examples
+  $ tsdx build --entry src/foo.tsx
+  $ tsdx build --target node
+  $ tsdx build --name Foo
+  $ tsdx build --format cjs,es
+```
+
+### `tsdx test`
+
+This runs Jest v23.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are trying to test a React component, you likely want to pass in `--env=jsdom` just like you do in Create React App.
 
 ## Author
 
