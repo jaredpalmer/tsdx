@@ -152,10 +152,13 @@ prog
   .command('watch')
   .describe('Rebuilds on any change')
   .option('--entry, -i', 'Entry module(s)')
+  .example('watch --entry src/foo.tsx')
   .option('--target', 'Specify your target environment', 'web')
-  .example('tsdx watch --target node')
+  .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
+  .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .example('watch --format cjs,es')
   .action(async opts => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
@@ -209,10 +212,13 @@ prog
   .command('build')
   .describe('Build your project once and exit')
   .option('--entry, -i', 'Entry module(s)')
+  .example('build --entry src/foo.tsx')
   .option('--target', 'Specify your target environment', 'web')
-  .example('tsdx build --target node')
+  .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
+  .example('build --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .example('build --format cjs,es')
   .action(async opts => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
