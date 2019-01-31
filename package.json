@@ -26,6 +26,7 @@
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
     "jest": "23.6.0",
+    "jpjs": "^1.2.1",
     "mkdirp": "^0.5.1",
     "ms": "^2.1.1",
     "ora": "^3.0.0",
@@ -41,6 +42,7 @@
     "rollup-plugin-terser": "^4.0.2",
     "rollup-plugin-typescript2": "^0.19.2",
     "sade": "^1.4.2",
+    "tiny-glob": "^0.2.6",
     "ts-jest": "^23.10.5",
     "tslib": "^1.9.3",
     "typescript": "^3.2.2"
