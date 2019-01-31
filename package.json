@@ -1,6 +1,6 @@
 {
   "name": "tsdx",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "license": "MIT",
   "bin": {
     "tsdx": "./dist/index.js"
