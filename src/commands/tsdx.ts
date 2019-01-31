@@ -50,11 +50,11 @@ module.exports = {
           spinner.start('Building...');
         }
         if (event.code === 'ERROR') {
-          spinner.fail(print.colors.error('Build failed.'));
+          spinner.fail(print.colors.error('Build failure'));
           toolbox.logError(event.error);
         }
         if (event.code === 'FATAL') {
-          spinner.fail(print.colors.error('Build failed.'));
+          spinner.fail(print.colors.error('Build failure'));
           toolbox.logError(event.error);
         }
         if (event.code === 'END') {
