@@ -66,18 +66,49 @@ async function getInputs(entries, source) {
   return concatAllArray(inputs);
 }
 function createBuildConfigs(opts) {
+  const multiEntry = opts.input.length > 1;
   return concatAllArray(
     opts.input.map(input => [
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'development', { ...opts, input }),
+        createRollupConfig('cjs', 'development', {
+          ...opts,
+          input,
+          name: multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : opts.name,
+        }),
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'production', { ...opts, input }),
+        createRollupConfig('cjs', 'production', {
+          ...opts,
+          input,
+          name: multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : opts.name,
+        }),
       opts.format.includes('es') &&
-        createRollupConfig('es', 'production', { ...opts, input }),
+        createRollupConfig('es', 'production', {
+          ...opts,
+          input,
+          name: multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : opts.name,
+        }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'development', { ...opts, input }),
+        createRollupConfig('umd', 'development', {
+          ...opts,
+          input,
+          name: multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : opts.name,
+        }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'production', { ...opts, input }),
+        createRollupConfig('umd', 'production', {
+          ...opts,
+          input,
+          name: multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : opts.name,
+        }),
     ])
   );
 }
@@ -148,9 +179,10 @@ prog
       process.exit(1);
     }
   });
+const toArray = val => (Array.isArray(val) ? val : val == null ? [] : [val]);
 
 prog
-  .command('watch')
+  .command('watch [...entries]')
   .describe('Rebuilds on any change')
   .option('--entry, -i', 'Entry module(s)')
   .example('watch --entry src/foo.tsx')
@@ -160,30 +192,33 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
-  .action(async opts => {
+  .action(async (str, opts) => {
     opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
+    opts.entries = toArray(str || opts.entry).concat(opts._);
+    opts.input = await getInputs(opts.entries, appPackageJson.source);
+    const multiEntry = opts.input.length > 1;
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        await fs.writeFile(
-          resolveApp('dist/index.js'),
-          `
-         'use strict'
+        asyncro.map(opts.input, async (input, index) => {
+          const fileName = multiEntry
+            ? path.basename(input.replace('src/', ''), path.extname(input))
+            : safeVariableName(opts.name);
+          await fs.writeFile(
+            resolveApp(`dist/${multiEntry ? fileName : 'index'}.js`),
+            `
+'use strict'
 
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safeVariableName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safeVariableName(
-          opts.name
-        )}.cjs.development.js')
-      }`,
-          {
-            overwrite: true,
-          }
-        );
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./${fileName}.cjs.production.js')
+} else {
+  module.exports = require('./${fileName}.cjs.development.js')
+}`,
+            {
+              overwrite: true,
+            }
+          );
+        });
       } catch (e) {}
     }
 
@@ -212,7 +247,7 @@ prog
   });
 
 prog
-  .command('build')
+  .command('build [...entries]')
   .describe('Build your project once and exit')
   .option('--entry, -i', 'Entry module(s)')
   .example('build --entry src/foo.tsx')
