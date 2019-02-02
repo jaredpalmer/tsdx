@@ -20,6 +20,12 @@ import { createJestConfig } from './createJestConfig';
 import { safeVariableName, resolveApp, safePackageName } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
+const createLogger = require('progress-estimator');
+// All configuration keys are optional, but it's recommended to specify a storage location.
+// Learn more about configuration options below.
+const logger = createLogger({
+  storagePath: path.join(__dirname, '.progress-estimator'),
+});
 
 const prog = sade('tsdx');
 
@@ -186,7 +192,7 @@ prog
         );
       } catch (e) {}
     }
-
+    const spinner = ora().start();
     await watch(
       [cjsDev, cjsProd, ...otherConfigs].map(inputOptions => ({
         watch: {
@@ -197,13 +203,19 @@ prog
         ...inputOptions,
       }))
     ).on('event', async event => {
+      if (event.code === 'START') {
+        spinner.start('Compiling...');
+      }
       if (event.code === 'ERROR') {
+        spinner.error('Failed to compile');
         logError(event.error);
       }
       if (event.code === 'FATAL') {
+        spinner.error('Failed to compile');
         logError(event.error);
       }
       if (event.code === 'END') {
+        spinner.succeed('Done! Compiled successfully');
         try {
           await moveTypes();
         } catch (_error) {}
@@ -228,7 +240,7 @@ prog
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        await fs.writeFile(
+        const makeEntryPromise = fs.writeFile(
           resolveApp('dist/index.js'),
           `
          'use strict'
@@ -246,16 +258,18 @@ prog
             overwrite: true,
           }
         );
+        logger(promise, 'Creating entry...');
       } catch (e) {}
     }
     try {
-      await asyncro.map(
+      const promise = asyncro.map(
         [cjsDev, cjsProd, ...otherConfigs],
         async inputOptions => {
           let bundle = await rollup(inputOptions);
           await bundle.write(inputOptions.output);
         }
       );
+      logger(promise, 'Building...');
       await moveTypes();
     } catch (error) {
       logError(error);
