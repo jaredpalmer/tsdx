@@ -73,7 +73,7 @@ export function createRollupConfig(format, env, opts) {
         jsnext: true,
         browser: opts.target !== 'node',
       }),
-      env === 'umd' &&
+      format === 'umd' &&
         commonjs({
           // use a regex to make sure to include eventual hoisted packages
           include: /\/node_modules\//,
