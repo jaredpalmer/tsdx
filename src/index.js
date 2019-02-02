@@ -17,9 +17,20 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import { safeVariableName, resolveApp, safePackageName } from './utils';
+import {
+  safeVariableName,
+  resolveApp,
+  safePackageName,
+  clearConsole,
+} from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
+const createLogger = require('progress-estimator');
+// All configuration keys are optional, but it's recommended to specify a storage location.
+// Learn more about configuration options below.
+const logger = createLogger({
+  storagePath: path.join(__dirname, '.progress-estimator'),
+});
 
 const prog = sade('tsdx');
 
@@ -186,7 +197,7 @@ prog
         );
       } catch (e) {}
     }
-
+    const spinner = ora().start();
     await watch(
       [cjsDev, cjsProd, ...otherConfigs].map(inputOptions => ({
         watch: {
@@ -197,13 +208,23 @@ prog
         ...inputOptions,
       }))
     ).on('event', async event => {
+      if (event.code === 'START') {
+        clearConsole();
+        spinner.start(chalk.bold.cyan('Compiling modules...'));
+      }
       if (event.code === 'ERROR') {
+        spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
       }
       if (event.code === 'FATAL') {
+        spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
       }
       if (event.code === 'END') {
+        spinner.succeed(chalk.bold.green('Compiled successfully'));
+        console.log(`
+  ${chalk.dim('Watching for changes')}
+`);
         try {
           await moveTypes();
         } catch (_error) {}
@@ -228,7 +249,7 @@ prog
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        await fs.writeFile(
+        const promise = fs.writeFile(
           resolveApp('dist/index.js'),
           `
          'use strict'
@@ -246,16 +267,18 @@ prog
             overwrite: true,
           }
         );
+        logger(promise, 'Creating entry file');
       } catch (e) {}
     }
     try {
-      await asyncro.map(
+      const promise = asyncro.map(
         [cjsDev, cjsProd, ...otherConfigs],
         async inputOptions => {
           let bundle = await rollup(inputOptions);
           await bundle.write(inputOptions.output);
         }
       );
+      logger(promise, 'Building modules');
       await moveTypes();
     } catch (error) {
       logError(error);

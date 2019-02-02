@@ -30,6 +30,7 @@
     "mkdirp": "^0.5.1",
     "ms": "^2.1.1",
     "ora": "^3.0.0",
+    "progress-estimator": "^0.2.2",
     "rollup": "^0.66.4",
     "rollup-plugin-babel": "^4.0.3",
     "rollup-plugin-commonjs": "^9.1.8",
