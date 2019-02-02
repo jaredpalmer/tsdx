@@ -17,7 +17,12 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import { safeVariableName, resolveApp, safePackageName } from './utils';
+import {
+  safeVariableName,
+  resolveApp,
+  safePackageName,
+  clearConsole,
+} from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 const createLogger = require('progress-estimator');
@@ -204,18 +209,22 @@ prog
       }))
     ).on('event', async event => {
       if (event.code === 'START') {
-        spinner.start('Compiling...');
+        clearConsole();
+        spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {
-        spinner.error('Failed to compile');
+        spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
       }
       if (event.code === 'FATAL') {
-        spinner.error('Failed to compile');
+        spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
       }
       if (event.code === 'END') {
-        spinner.succeed('Done! Compiled successfully');
+        spinner.succeed(chalk.bold.green('Compiled successfully'));
+        console.log(`
+  ${chalk.dim('Watching for changes')}
+`);
         try {
           await moveTypes();
         } catch (_error) {}
@@ -240,7 +249,7 @@ prog
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        const makeEntryPromise = fs.writeFile(
+        const promise = fs.writeFile(
           resolveApp('dist/index.js'),
           `
          'use strict'
@@ -258,7 +267,7 @@ prog
             overwrite: true,
           }
         );
-        logger(promise, 'Creating entry...');
+        logger(promise, 'Creating entry file');
       } catch (e) {}
     }
     try {
@@ -269,7 +278,7 @@ prog
           await bundle.write(inputOptions.output);
         }
       );
-      logger(promise, 'Building...');
+      logger(promise, 'Building modules');
       await moveTypes();
     } catch (error) {
       logError(error);
