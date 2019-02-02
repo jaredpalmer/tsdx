@@ -1,6 +1,5 @@
 import { safeVariableName, resolveApp, removeScope, external } from './utils';
 import { paths, appPackageJson } from './constants';
-import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
@@ -10,6 +9,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import shebangPlugin from 'rollup-plugin-preserve-shebang';
+import { OutputOptions, RollupFileOptions } from 'rollup';
+import { CoreOptions } from '../types';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
@@ -22,7 +23,11 @@ const babelOptions = {
   ],
 };
 
-export function createRollupConfig(format, env, opts) {
+export function createRollupConfig(
+  format: OutputOptions['format'],
+  env: 'production' | 'development',
+  opts: CoreOptions
+): RollupFileOptions {
   let shebang;
   return {
     // Tell Rollup the entry point to the package
@@ -73,7 +78,7 @@ export function createRollupConfig(format, env, opts) {
         jsnext: true,
         browser: opts.target !== 'node',
       }),
-      env === 'umd' &&
+      format === 'umd' &&
         commonjs({
           // use a regex to make sure to include eventual hoisted packages
           include: /\/node_modules\//,

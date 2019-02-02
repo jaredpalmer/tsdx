@@ -1,14 +1,7 @@
 import { GluegunToolbox } from 'gluegun';
 import { watch, RollupWatchOptions } from 'rollup';
 import { createRollupConfig } from '../config/createRollupConfig';
-
-interface Options {
-  format: string;
-  name: string;
-  target: 'web' | 'node';
-  watch: boolean;
-  input: string;
-}
+import { CoreOptions } from '../types';
 
 module.exports = {
   name: 'tsdx',
@@ -18,7 +11,7 @@ module.exports = {
       parameters: { options: rawOptions },
     } = toolbox;
 
-    const options: Options = {
+    const options: CoreOptions = {
       format: rawOptions.format || 'cjs,es,umd',
       target: rawOptions.target || 'web',
       name: rawOptions.name || '@todo',
