@@ -57,10 +57,10 @@ Your library will be rebuilt if you make edits.
 
 ### `npm run build` or `yarn build`
 
-Builds the package to the `dist` folder.
+Bundles the package to the `dist` folder. 
+The package is optimized and bundled with Rollup into multiple formats (CommonJS, UMD, and ES Module).
 
-The package is optimized and bundled into multiple formats.
-Your package is ready to be published!
+<img src="https://user-images.githubusercontent.com/4060187/52168322-a98e5b00-26f6-11e9-8cf6-222d716b75ef.gif" width="600" />
 
 ### `npm test` or `yarn test`
 
