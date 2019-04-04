@@ -1,7 +1,21 @@
 {
   "name": "tsdx",
   "version": "0.3.4",
+  "author": "Jared Palmer <jared@palmer.net>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaredpalmer/tsdx.git"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "bundle",
+    "rollup"
+  ],
+  "bugs": {
+    "url": "https://github.com/jaredpalmer/tsdx/issues"
+  },
   "bin": {
     "tsdx": "./dist/index.js"
   },
