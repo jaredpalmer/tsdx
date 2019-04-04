@@ -7,8 +7,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prepare": "npm run build",
-    "version": "np"
+    "prepare": "npm run build"
   },
   "files": [
     "dist",
@@ -55,7 +54,6 @@
     "@types/node": "^10.12.18",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
-    "np": "^4.0.2",
     "prettier": "^1.16.1",
     "tslint": "^5.12.0",
     "tslint-config-palmerhq": "^1.0.2",
