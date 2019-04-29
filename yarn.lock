@@ -140,10 +140,10 @@
     log-update "^2.3.0"
     strip-ansi "^3.0.1"
 
-"@jaredpalmer/rollup-plugin-preserve-shebang@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@jaredpalmer/rollup-plugin-preserve-shebang/-/rollup-plugin-preserve-shebang-0.1.6.tgz#20a900ad5f767d13999ea592106e1a8ccd9ead65"
-  integrity sha512-ZSR/XtxtfvQU4XCjaLTP2r3VdREV99G9ElNA8xFq3hpdk/6axn1Zu+McyckBo9tz+h1D35uWrSA/fg2Ovm6dSg==
+"@jaredpalmer/rollup-plugin-preserve-shebang@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@jaredpalmer/rollup-plugin-preserve-shebang/-/rollup-plugin-preserve-shebang-0.1.7.tgz#859af736117f3596e30942ceed305c3b0385fdbe"
+  integrity sha512-3LXEo59XtjdnGMVBsyvKAe8g1SEffjut7RguqjK1H8VfpqLvclDTIFCIZMUsCnja2PyKb/R20LaJtNf415pTSg==
   dependencies:
     magic-string "^0.22.4"
 
