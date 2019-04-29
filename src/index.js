@@ -25,6 +25,7 @@ import {
 } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
+const pkg = require('../package.json');
 const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
 // Learn more about configuration options below.
@@ -104,6 +105,7 @@ async function moveTypes() {
 }
 
 prog
+  .version(pkg.version)
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .action(async pkg => {
