@@ -30,6 +30,7 @@
   ],
   "dependencies": {
     "@babel/core": "^7.2.2",
+    "@jaredpalmer/rollup-plugin-preserve-shebang": "^0.1.6",
     "ansi-escapes": "^3.1.0",
     "asyncro": "^3.0.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
@@ -51,7 +52,6 @@
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
-    "rollup-plugin-preserve-shebang": "^0.1.6",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-size-snapshot": "^0.8.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
@@ -72,7 +72,7 @@
     "prettier": "^1.16.1",
     "tslint": "^5.12.0",
     "tslint-config-palmerhq": "^1.0.2",
-    "tslint-config-prettier": "^1.17.0",
+    "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^3.6.0"
   },
   "husky": {

@@ -1,4 +1,10 @@
-import { safeVariableName, resolveApp, removeScope, external } from './utils';
+import {
+  safeVariableName,
+  safePackageName,
+  resolveApp,
+  removeScope,
+  external,
+} from './utils';
 import { paths, appPackageJson } from './constants';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { terser } from 'rollup-plugin-terser';
@@ -32,7 +38,7 @@ export function createRollupConfig(format, env, opts) {
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safePackageName(
+      file: `${paths.appDist}/${safeVariableName(
         opts.name
       )}.${format}.${env}.js`,
       // Pass through the file format
@@ -69,9 +75,11 @@ export function createRollupConfig(format, env, opts) {
     },
     plugins: [
       resolve({
-        module: true,
-        jsnext: true,
-        browser: opts.target !== 'node',
+        mainFields: [
+          'module',
+          'main',
+          opts.target !== 'node' ? 'browser' : undefined,
+        ].filter(Boolean),
       }),
       format === 'umd' &&
         commonjs({
