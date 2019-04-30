@@ -22,6 +22,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "test": "jest --config ./test/jest.config.json",
     "prepare": "npm run build"
   },
   "files": [
@@ -71,6 +72,8 @@
     "husky": "^2.1.0",
     "lint-staged": "^8.1.0",
     "prettier": "^1.17.0",
+    "ps-tree": "^1.2.0",
+    "shelljs": "^0.8.3",
     "tslint": "^5.16.0",
     "tslint-config-palmerhq": "^1.0.2",
     "tslint-config-prettier": "^1.18.0",
