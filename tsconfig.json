@@ -10,7 +10,7 @@
     "module": "commonjs",
     "rootDir": "src",
     "strict": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "skipLibCheck": true,
     "target": "es2017"
   }

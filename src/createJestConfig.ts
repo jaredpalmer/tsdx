@@ -1,4 +1,7 @@
-export function createJestConfig(resolve, rootDir) {
+export function createJestConfig(
+  _: (relativePath: string) => void,
+  rootDir: string
+) {
   return {
     transform: {
       '.(ts|tsx)': require.resolve('ts-jest/dist'),

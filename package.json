@@ -46,7 +46,6 @@
     "jest-watch-typeahead": "^0.3.0",
     "jpjs": "^1.2.1",
     "mkdirp": "^0.5.1",
-    "ms": "^2.1.1",
     "ora": "^3.0.0",
     "progress-estimator": "^0.2.2",
     "rollup": "^1.10.1",

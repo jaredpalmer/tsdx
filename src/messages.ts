@@ -25,14 +25,14 @@ Run ${chalk.cyan(`${program.name} --help`)} to see all options.
 `;
 };
 
-export const alreadyExists = function(projectName) {
+export const alreadyExists = function(projectName: string) {
   return `
 Uh oh! Looks like there's already a directory called ${chalk.red(
     projectName
   )}. Please try a different name or delete that folder.`;
 };
 
-export const installing = function(packages) {
+export const installing = function(packages: string[]) {
   const pkgText = packages
     .map(function(pkg) {
       return `    ${chalk.cyan(chalk.bold(pkg))}`;
@@ -44,7 +44,7 @@ ${pkgText}
 `;
 };
 
-export const installError = function(packages) {
+export const installError = function(packages: string[]) {
   const pkgText = packages
     .map(function(pkg) {
       return `${chalk.cyan(chalk.bold(pkg))}`;
@@ -54,13 +54,13 @@ export const installError = function(packages) {
   Output.error(`Failed to install ${pkgText}, try again.`);
 };
 
-export const copying = function(projectName) {
+export const copying = function(projectName: string) {
   return `
 Creating ${chalk.bold(chalk.green(projectName))}...
 `;
 };
 
-export const start = function(projectName) {
+export const start = function(projectName: string) {
   const cmd = getInstallCmd();
 
   const commands = {

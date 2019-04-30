@@ -1,8 +1,8 @@
 import chalk from 'chalk';
-const stdout = console.log.bind(console);
+
 const stderr = console.error.bind(console);
 
-export default function logError(err) {
+export default function logError(err: any) {
   const error = err.error || err;
   const description = `${error.name ? error.name + ': ' : ''}${error.message ||
     error}`;

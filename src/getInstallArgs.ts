@@ -1,6 +1,9 @@
-import { InstallCmd } from './getInstallCmd';
+import { InstallCommand } from './getInstallCmd';
 
-export default function getInstallArgs(cmd: InstallCmd, packages: string[]) {
+export default function getInstallArgs(
+  cmd: InstallCommand,
+  packages: string[]
+) {
   switch (cmd) {
     case 'npm':
       return ['install', ...packages, '--save-dev'];
