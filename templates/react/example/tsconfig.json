@@ -1,5 +1,4 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
     "allowSyntheticDefaultImports": false,
     "target": "es5",
@@ -13,15 +12,8 @@
     "strictNullChecks": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "lib": [
-      "es2015",
-      "es2016",
-      "dom"
-    ],
+    "lib": ["es2015", "es2016", "dom"],
     "baseUrl": ".",
-    "types": [
-      "node",
-
-    ]
+    "types": ["node"]
   }
 }
