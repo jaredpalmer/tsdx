@@ -25,6 +25,8 @@ import {
 } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
+import getInstallCmd from './getInstallCmd';
+import getInstallArgs from './getInstallArgs';
 const pkg = require('../package.json');
 const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
@@ -179,7 +181,7 @@ prog
 
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
-      await execa(`yarn`, ['add', ...deps, '--dev']);
+      await execa(getInstallArgs(getInstallCmd(), deps));
       installSpinner.succeed('Installed dependecines');
       console.log(Messages.start(pkg));
     } catch (error) {
