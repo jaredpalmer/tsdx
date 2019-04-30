@@ -8,6 +8,7 @@
     "module": "commonjs",
     "rootDir": "src",
     "strict": true,
+    "skipLibCheck": true,
     "target": "es2017",
   },
   "include": [
