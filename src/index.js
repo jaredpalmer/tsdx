@@ -139,6 +139,26 @@ prog
           prepare: 'npm run build',
           test: 'tsdx test',
         },
+        husky: {
+          hooks: {
+            'pre-commit': 'lint-staged',
+          },
+        },
+        'lint-staged': {
+          linters: {
+            '*.{ts,tsx,js,jsx,css,scss,md}': [
+              'prettier --trailing-comma es5 --single-quote --write',
+              'git add',
+            ],
+            ignore: ['**/dist/*, **/node_modules/*'],
+          },
+        },
+        prettier: {
+          printWidth: 80,
+          semi: true,
+          singleQuote: true,
+          trailingComma: 'es5',
+        },
       };
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
@@ -148,7 +168,14 @@ prog
       logError(error);
       process.exit(1);
     }
-    const deps = ['@types/jest', 'tsdx', 'typescript'];
+    const deps = [
+      '@types/jest',
+      'husky',
+      'lint-staged',
+      'prettier',
+      'tsdx',
+      'typescript',
+    ];
 
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
