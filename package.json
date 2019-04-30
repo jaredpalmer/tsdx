@@ -70,8 +70,8 @@
     "@types/fs-extra": "^5.0.5",
     "@types/node": "^11.13.8",
     "husky": "^2.1.0",
-    "lint-staged": "^8.1.0",
     "prettier": "^1.17.0",
+    "pretty-quick": "^1.10.0",
     "ps-tree": "^1.2.0",
     "shelljs": "^0.8.3",
     "tslint": "^5.16.0",
@@ -81,14 +81,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "pretty-quick --staged"
     }
-  },
-  "lint-staged": {
-    "src/*.js": [
-      "prettier --trailing-comma es5 --single-quote --write",
-      "git add"
-    ]
   },
   "prettier": {
     "printWidth": 80,
