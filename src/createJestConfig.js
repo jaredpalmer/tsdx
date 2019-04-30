@@ -1,7 +1,6 @@
 import { appPackageJson } from './constants';
 
 export function createJestConfig(resolve, rootDir) {
-  const compilerOptions = resolve('./tsconfig.json');
   return {
     transform: {
       '.(ts|tsx)': require.resolve('ts-jest/dist'),
