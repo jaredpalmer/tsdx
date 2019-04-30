@@ -142,16 +142,7 @@ prog
         },
         husky: {
           hooks: {
-            'pre-commit': 'lint-staged',
-          },
-        },
-        'lint-staged': {
-          linters: {
-            '*.{ts,tsx,js,jsx,css,scss,md}': [
-              'prettier --trailing-comma es5 --single-quote --write',
-              'git add',
-            ],
-            ignore: ['**/dist/*, **/node_modules/*'],
+            'pre-commit': 'pretty-quick --staged',
           },
         },
         prettier: {
@@ -172,7 +163,7 @@ prog
     const deps = [
       '@types/jest',
       'husky',
-      'lint-staged',
+      'pretty-quick',
       'prettier',
       'tsdx',
       'typescript',
