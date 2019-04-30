@@ -6,7 +6,7 @@ import { rollup, watch } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import util from 'util';
-import fs from 'fs-extra';
+import * as fs from 'fs-extra';
 import jest from 'jest';
 import logError from './logError';
 import path from 'path';
@@ -43,15 +43,15 @@ try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
 } catch (e) {}
 
-const stat = util.promisify(fs.stat);
-
 export const isDir = name =>
-  stat(name)
+  fs
+    .stat(name)
     .then(stats => stats.isDirectory())
     .catch(() => false);
 
 export const isFile = name =>
-  stat(name)
+  fs
+    .stat(name)
     .then(stats => stats.isFile())
     .catch(() => false);
 
@@ -66,8 +66,8 @@ async function jsOrTs(filename) {
 }
 
 async function getInputs(entries, source) {
-  let inputs = [];
-  let stub = [];
+  let inputs: any[] = [];
+  let stub: any[] = [];
   stub
     .concat(
       entries && entries.length
@@ -197,7 +197,7 @@ prog
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
       const cmd = getInstallCmd();
-      await execa(cmd, getInstallArgs(getInstallCmd(), deps));
+      await execa(cmd, getInstallArgs(cmd, deps));
       installSpinner.succeed('Installed dependecines');
       console.log(Messages.start(pkg));
     } catch (error) {
@@ -237,10 +237,7 @@ prog
         module.exports = require('./${safeVariableName(
           opts.name
         )}.cjs.development.js')
-      }`,
-          {
-            overwrite: true,
-          }
+      }`
         );
       } catch (e) {}
     }
@@ -296,7 +293,7 @@ prog
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        await mkdirp(resolveApp('./dist'));
+        await util.promisify(mkdirp)(resolveApp('./dist'));
         const promise = fs
           .writeFile(
             resolveApp('./dist/index.js'),
@@ -311,10 +308,7 @@ prog
         module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
-      }`,
-            {
-              overwrite: true,
-            }
+      }`
           )
           .catch(e => logError(e));
         logger(promise, 'Creating entry file');
@@ -362,7 +356,9 @@ prog
       argv.push('--watchAll');
     }
 
-    const maybeTestSetupFiledExists = await fs.exists(paths.testsSetup);
+    const maybeTestSetupFiledExists = await (fs.exists as any)(
+      paths.testsSetup
+    );
     const setupTestsFile = maybeTestSetupFiledExists
       ? '<rootDir>/src/setupTests.ts'
       : undefined;

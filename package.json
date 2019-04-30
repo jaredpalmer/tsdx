@@ -22,8 +22,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "jest --config ./test/jest.config.json",
-    "prepare": "npm run build"
+    "test": "jest --config ./test/jest.config.json"
   },
   "files": [
     "dist",
@@ -67,9 +66,16 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
+    "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
+    "@types/execa": "^0.9.0",
     "@types/fs-extra": "^5.0.5",
+    "@types/mkdirp": "^0.5.2",
+    "@types/ms": "^0.7.30",
     "@types/node": "^11.13.8",
+    "@types/ora": "^3.2.0",
+    "@types/rollup-plugin-json": "^3.0.2",
+    "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^2.1.0",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",

@@ -1,4 +1,6 @@
 {
+  "include": ["src/**/*"],
+  "exclude": ["src/template/**/*"],
   "compilerOptions": {
     "allowJs": true,
     "importHelpers": true,
@@ -8,13 +10,8 @@
     "module": "commonjs",
     "rootDir": "src",
     "strict": true,
+    "noImplicitAny": false,
     "skipLibCheck": true,
-    "target": "es2017",
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/template/**/*"
-  ]
+    "target": "es2017"
+  }
 }

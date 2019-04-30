@@ -1,8 +1,10 @@
 import execa from 'execa';
 
-let cmd;
+let cmd: InstallCmd;
 
-export default function getInstallCmd() {
+export type InstallCmd = 'yarn' | 'npm';
+
+export default function getInstallCmd(): InstallCmd {
   if (cmd) {
     return cmd;
   }
