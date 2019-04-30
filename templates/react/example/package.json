@@ -2,7 +2,6 @@
   "name": "example",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Jared Palmer <jared@palmer.net>",
   "license": "MIT",
   "scripts": {
     "start": "parcel index.html"
