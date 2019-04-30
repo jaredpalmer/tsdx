@@ -237,10 +237,7 @@ prog
         module.exports = require('./${safeVariableName(
           opts.name
         )}.cjs.development.js')
-      }`,
-          {
-            overwrite: true,
-          } as fs.WriteFileOptions
+      }`
         );
       } catch (e) {}
     }
@@ -311,10 +308,7 @@ prog
         module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
-      }`,
-            {
-              overwrite: true,
-            } as fs.WriteFileOptions
+      }`
           )
           .catch(e => logError(e));
         logger(promise, 'Creating entry file');
