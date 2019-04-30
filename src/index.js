@@ -27,6 +27,7 @@ import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
+import { Input } from 'enquirer';
 const pkg = require('../package.json');
 const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
@@ -113,8 +114,32 @@ prog
   .action(async pkg => {
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`).start();
 
+    // Helper fn to prompt the user for a different
+    // folder name if one already exists
+    async function getProjectPath(projectPath) {
+      if (fs.existsSync(projectPath)) {
+        bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
+        const prompt = new Input({
+          message: `A folder named ${chalk.bold.red(
+            pkg
+          )} already exists! ${chalk.bold('Choose a different name')}`,
+          initial: pkg + '-1',
+          result: v => v.trim(),
+        });
+        pkg = await prompt.run();
+        projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;
+        bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
+        return getProjectPath(projectPath); // recursion!
+      } else {
+        return projectPath;
+      }
+    }
+
     try {
-      const projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;
+      // get the project path
+      let projectPath = await getProjectPath(
+        fs.realpathSync(process.cwd()) + '/' + pkg
+      );
       // copy the template
       await fs.copy(path.resolve(__dirname, '../template'), projectPath, {
         overwrite: true,
