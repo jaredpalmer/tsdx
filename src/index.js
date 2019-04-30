@@ -278,26 +278,31 @@ prog
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
-        const promise = fs.writeFile(
-          resolveApp('dist/index.js'),
-          `
+        await mkdirp(resolveApp('./dist'));
+        const promise = fs
+          .writeFile(
+            resolveApp('./dist/index.js'),
+            `
          'use strict'
 
       if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.production.js')
       } else {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
       }`,
-          {
-            overwrite: true,
-          }
-        );
+            {
+              overwrite: true,
+            }
+          )
+          .catch(e => logError(e));
         logger(promise, 'Creating entry file');
-      } catch (e) {}
+      } catch (e) {
+        logError(e);
+      }
     }
     try {
       const promise = asyncro.map(

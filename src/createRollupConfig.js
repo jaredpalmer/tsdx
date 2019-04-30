@@ -38,7 +38,7 @@ export function createRollupConfig(format, env, opts) {
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safeVariableName(
+      file: `${paths.appDist}/${safePackageName(
         opts.name
       )}.${format}.${env}.js`,
       // Pass through the file format
