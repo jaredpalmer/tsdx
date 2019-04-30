@@ -5,7 +5,7 @@ import {
   removeScope,
   external,
 } from './utils';
-import { paths, appPackageJson } from './constants';
+import { paths } from './constants';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { terser } from 'rollup-plugin-terser';
 import babel from 'rollup-plugin-babel';
@@ -79,7 +79,7 @@ export function createRollupConfig(format, env, opts) {
           'module',
           'main',
           opts.target !== 'node' ? 'browser' : undefined,
-        ].filter(Boolean),
+        ].filter(Boolean) as string[],
       }),
       format === 'umd' &&
         commonjs({

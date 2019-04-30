@@ -20,11 +20,6 @@ export const success = msg => {
   console.log(`${chalk.green('> Success!')} ${msg}`);
 };
 
-export const time = () => {
-  const start = new Date();
-  return chalk.gray(`[${ms(new Date() - start)}]`);
-};
-
 export const wait = msg => {
   const spinner = ora(chalk.green(msg));
   spinner.color = 'blue';
@@ -47,7 +42,7 @@ export const prompt = opts => {
       const s = v.toString();
 
       function cleanup() {
-        process.stdin.setRawMode(false);
+        process.stdin.setRawMode!(false);
         process.stdin.removeListener('data', ondata);
       }
 
@@ -64,7 +59,7 @@ export const prompt = opts => {
       }
     };
 
-    process.stdin.setRawMode(true);
+    process.stdin.setRawMode!(true);
     process.stdin.resume();
     process.stdin.on('data', ondata);
   });

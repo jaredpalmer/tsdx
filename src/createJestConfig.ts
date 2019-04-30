@@ -1,5 +1,3 @@
-import { appPackageJson } from './constants';
-
 export function createJestConfig(resolve, rootDir) {
   return {
     transform: {
