@@ -28,7 +28,11 @@ const babelOptions = {
   ],
 };
 
-export function createRollupConfig(format, env, opts) {
+export function createRollupConfig(
+  format: 'cjs' | 'umd' | 'es',
+  env: 'development' | 'production',
+  opts: { input: string; name: string; target: 'node' | 'browser' }
+) {
   let shebang;
   return {
     // Tell Rollup the entry point to the package

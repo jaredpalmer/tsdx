@@ -2,7 +2,7 @@
 
 import sade from 'sade';
 import glob from 'tiny-glob/sync';
-import { rollup, watch } from 'rollup';
+import { rollup, watch, RollupOptions, OutputOptions } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import util from 'util';
@@ -38,24 +38,28 @@ const logger = createLogger({
 
 const prog = sade('tsdx');
 
-let appPackageJson;
+let appPackageJson: {
+  name: string;
+  source?: string;
+  jest?: any;
+};
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
 } catch (e) {}
 
-export const isDir = name =>
+export const isDir = (name: string) =>
   fs
     .stat(name)
     .then(stats => stats.isDirectory())
     .catch(() => false);
 
-export const isFile = name =>
+export const isFile = (name: string) =>
   fs
     .stat(name)
     .then(stats => stats.isFile())
     .catch(() => false);
 
-async function jsOrTs(filename) {
+async function jsOrTs(filename: string) {
   const extension = (await isFile(resolveApp(filename + '.ts')))
     ? '.ts'
     : (await isFile(resolveApp(filename + '.tsx')))
@@ -65,7 +69,7 @@ async function jsOrTs(filename) {
   return resolveApp(`${filename}${extension}`);
 }
 
-async function getInputs(entries, source) {
+async function getInputs(entries: string[], source?: string) {
   let inputs: any[] = [];
   let stub: any[] = [];
   stub
@@ -80,9 +84,9 @@ async function getInputs(entries, source) {
 
   return concatAllArray(inputs);
 }
-function createBuildConfigs(opts) {
+function createBuildConfigs(opts: any) {
   return concatAllArray(
-    opts.input.map(input => [
+    opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
         createRollupConfig('cjs', 'development', { ...opts, input }),
       opts.format.includes('cjs') &&
@@ -111,12 +115,12 @@ prog
   .version(pkg.version)
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
-  .action(async pkg => {
+  .action(async (pkg: string) => {
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`).start();
 
     // Helper fn to prompt the user for a different
     // folder name if one already exists
-    async function getProjectPath(projectPath) {
+    async function getProjectPath(projectPath: string): Promise<string> {
       if (fs.existsSync(projectPath)) {
         bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
         const prompt = new Input({
@@ -124,7 +128,7 @@ prog
             pkg
           )} already exists! ${chalk.bold('Choose a different name')}`,
           initial: pkg + '-1',
-          result: v => v.trim(),
+          result: (v: string) => v.trim(),
         });
         pkg = await prompt.run();
         projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;
@@ -218,7 +222,7 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
-  .action(async opts => {
+  .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
@@ -287,7 +291,7 @@ prog
   .example('build --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('build --format cjs,es')
-  .action(async opts => {
+  .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
@@ -319,7 +323,7 @@ prog
     try {
       const promise = asyncro.map(
         [cjsDev, cjsProd, ...otherConfigs],
-        async inputOptions => {
+        async (inputOptions: RollupOptions & { output: OutputOptions }) => {
           let bundle = await rollup(inputOptions);
           await bundle.write(inputOptions.output);
           await moveTypes();
@@ -336,7 +340,7 @@ prog
   .describe(
     'Run jest test runner in watch mode. Passes through all flags directly to Jest'
   )
-  .action(async opts => {
+  .action(async (opts: any) => {
     // Do this as the first thing so that any code reading it knows the right env.
     process.env.BABEL_ENV = 'test';
     process.env.NODE_ENV = 'test';
