@@ -278,10 +278,10 @@ prog
         async inputOptions => {
           let bundle = await rollup(inputOptions);
           await bundle.write(inputOptions.output);
+          await moveTypes();
         }
       );
       logger(promise, 'Building modules');
-      await moveTypes();
     } catch (error) {
       logError(error);
     }
