@@ -27,7 +27,7 @@ import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
-import { Input } from 'enquirer';
+import { Input, Select } from 'enquirer';
 const pkg = require('../package.json');
 const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
@@ -116,8 +116,8 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .action(async (pkg: string) => {
-    const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`).start();
-
+    const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
+    let template;
     // Helper fn to prompt the user for a different
     // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
@@ -144,10 +144,22 @@ prog
       let projectPath = await getProjectPath(
         fs.realpathSync(process.cwd()) + '/' + pkg
       );
-      // copy the template
-      await fs.copy(path.resolve(__dirname, '../template'), projectPath, {
-        overwrite: true,
+
+      const prompt = new Select({
+        message: 'Choose a template',
+        choices: ['basic', 'react'],
       });
+
+      template = await prompt.run();
+      bootSpinner.start();
+      // copy the template
+      await fs.copy(
+        path.resolve(__dirname, `../templates/${template}`),
+        projectPath,
+        {
+          overwrite: true,
+        }
+      );
       // fix gitignore
       await fs.move(
         path.resolve(projectPath, './gitignore'),
@@ -167,7 +179,7 @@ prog
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
-          test: 'tsdx test',
+          test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
         },
         husky: {
           hooks: {
@@ -189,14 +201,25 @@ prog
       logError(error);
       process.exit(1);
     }
-    const deps = [
+
+    let deps = [
       '@types/jest',
       'husky',
       'pretty-quick',
       'prettier',
       'tsdx',
       'typescript',
-    ];
+    ].sort();
+
+    if (template === 'react') {
+      deps = [
+        ...deps,
+        '@types/react',
+        '@types/react-dom',
+        'react',
+        'react-dom',
+      ].sort();
+    }
 
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
@@ -359,13 +382,6 @@ prog
       // @see https://github.com/wmonk/create-react-app-typescript/issues/282#issuecomment-379660648
       argv.push('--watchAll');
     }
-
-    const maybeTestSetupFiledExists = await (fs.exists as any)(
-      paths.testsSetup
-    );
-    const setupTestsFile = maybeTestSetupFiledExists
-      ? '<rootDir>/src/setupTests.ts'
-      : undefined;
 
     argv.push(
       '--config',
