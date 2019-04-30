@@ -138,7 +138,6 @@ prog
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
-          prepare: 'npm run build',
           test: 'tsdx test',
         },
         husky: {
