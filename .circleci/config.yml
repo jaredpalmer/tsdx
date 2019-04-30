@@ -17,8 +17,12 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: Install and build package
+          name: Install
           command: yarn install --frozen-lockfile
+
+      - run:
+          name: Build
+          command: yarn build
 
       - run:
           name: Run tests
