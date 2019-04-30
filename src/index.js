@@ -196,7 +196,8 @@ prog
 
     const installSpinner = ora(Messages.installing(deps)).start();
     try {
-      await execa(getInstallArgs(getInstallCmd(), deps));
+      const cmd = getInstallCmd();
+      await execa(cmd, getInstallArgs(getInstallCmd(), deps));
       installSpinner.succeed('Installed dependecines');
       console.log(Messages.start(pkg));
     } catch (error) {
