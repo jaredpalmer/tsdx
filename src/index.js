@@ -146,7 +146,7 @@ prog
         },
         'lint-staged': {
           linters: {
-            '*.{ts,tsx,js,jsx,md}': [
+            '*.{ts,tsx,js,jsx,css,scss,md}': [
               'prettier --trailing-comma es5 --single-quote --write',
               'git add',
             ],
