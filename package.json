@@ -26,7 +26,7 @@
   },
   "files": [
     "dist",
-    "template"
+    "templates"
   ],
   "dependencies": {
     "@babel/core": "^7.2.2",
