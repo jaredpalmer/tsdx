@@ -250,23 +250,22 @@ prog
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
-      try {
-        await fs.writeFile(
-          resolveApp('dist/index.js'),
-          `
+      await util.promisify(mkdirp)(resolveApp('dist'));
+      await fs.writeFile(
+        resolveApp('dist/index.js'),
+        `
          'use strict'
 
       if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.production.js')
       } else {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
       }`
-        );
-      } catch (e) {}
+      );
     }
     const spinner = ora().start();
     await watch(
