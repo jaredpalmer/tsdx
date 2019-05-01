@@ -25,6 +25,10 @@ jobs:
           command: yarn build
 
       - run:
+          name: Run linter
+          command: yarn lint
+
+      - run:
           name: Run tests
           command: yarn test --runInBand --no-cache --coverage
 

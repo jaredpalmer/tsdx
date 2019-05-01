@@ -1,10 +1,4 @@
-import {
-  safeVariableName,
-  safePackageName,
-  resolveApp,
-  removeScope,
-  external,
-} from './utils';
+import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { sizeSnapshot } from 'rollup-plugin-size-snapshot';
 import { terser } from 'rollup-plugin-terser';
@@ -122,7 +116,7 @@ export function createRollupConfig(
           compress: {
             keep_infinity: true,
             pure_getters: true,
-            collapse_vars: false
+            collapse_vars: false,
           },
           ecma: 5,
           toplevel: format === 'es' || format === 'cjs',

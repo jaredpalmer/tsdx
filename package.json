@@ -76,6 +76,7 @@
     "@types/ora": "^3.2.0",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.16.0",
     "husky": "^2.1.0",

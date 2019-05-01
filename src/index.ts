@@ -17,13 +17,7 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import {
-  safeVariableName,
-  resolveApp,
-  safePackageName,
-  clearConsole,
-} from './utils';
-import * as Output from './output';
+import { resolveApp, safePackageName, clearConsole } from './utils';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -363,7 +357,7 @@ prog
   .describe(
     'Run jest test runner in watch mode. Passes through all flags directly to Jest'
   )
-  .action(async (opts: any) => {
+  .action(async () => {
     // Do this as the first thing so that any code reading it knows the right env.
     process.env.BABEL_ENV = 'test';
     process.env.NODE_ENV = 'test';
@@ -387,7 +381,7 @@ prog
       })
     );
 
-    const [_skipTheWordTest, ...argsToPassToJestCli] = argv;
+    const [, ...argsToPassToJestCli] = argv;
     jest.run(argsToPassToJestCli);
   });
 
