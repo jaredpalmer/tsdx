@@ -125,7 +125,7 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v23.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are trying to test a React component, you likely want to pass in `--env=jsdom` just like you do in Create React App.
+This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
 
 ## Author
 
