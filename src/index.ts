@@ -376,13 +376,6 @@ prog
 
     const argv = process.argv.slice(2);
 
-    // Watch unless on CI or in coverage mode
-    if (!process.env.CI && argv.indexOf('--coverage') < 0) {
-      // Use Jest --watchAll flag (instead of) --watch as of Jest 23+
-      // @see https://github.com/wmonk/create-react-app-typescript/issues/282#issuecomment-379660648
-      argv.push('--watchAll');
-    }
-
     argv.push(
       '--config',
       JSON.stringify({
