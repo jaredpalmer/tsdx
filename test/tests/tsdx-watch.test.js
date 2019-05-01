@@ -9,45 +9,17 @@ const kill = require('../utils/psKill');
 
 shell.config.silent = false;
 
-const stageName = 'stage-build';
+const stageName = 'stage-watch';
 
-describe('tsdx', () => {
+describe('tsdx watch', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
   });
 
-  it('tsdx build', () => {
-    util.setupStageWithFixture(stageName, 'build-default');
-
-    const output = shell.exec('node ../dist/index.js build');
-
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.cjs.development.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.cjs.production.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.es.production.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.umd.development.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.umd.development.js')
-    ).toBeTruthy();
-
-    expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
-
-    expect(output.code).toBe(0);
-  });
-
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
 
-  it('tsdx watch', () => {
+  it('should watch files', () => {
     util.setupStageWithFixture(stageName, 'build-default');
-
     let outputTest;
     const run = new Promise(resolve => {
       const child = shell.exec('../dist/index.js watch --verbose=true', () => {
