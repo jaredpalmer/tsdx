@@ -22,9 +22,9 @@ const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 const babelOptions = {
   exclude: /node_modules/,
   plugins: [
-    'annotate-pure-calls',
-    'dev-expression',
-    ['transform-rename-import', { replacements }],
+    require.resolve('babel-plugin-annotate-pure-calls'),
+    require.resolve('babel-plugin-dev-expression'),
+    [require.resolve('babel-plugin-transform-rename-import'), { replacements }],
   ],
 };
 
@@ -122,7 +122,7 @@ export function createRollupConfig(
           compress: {
             keep_infinity: true,
             pure_getters: true,
-            collapse_vars: false
+            collapse_vars: false,
           },
           ecma: 5,
           toplevel: format === 'es' || format === 'cjs',
