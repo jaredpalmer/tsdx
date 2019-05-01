@@ -122,7 +122,7 @@ export function createRollupConfig(
           compress: {
             keep_infinity: true,
             pure_getters: true,
-            collapse_vars: false
+            collapse_vars: false,
           },
           ecma: 5,
           toplevel: format === 'es' || format === 'cjs',
