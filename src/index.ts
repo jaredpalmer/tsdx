@@ -257,11 +257,11 @@ prog
          'use strict'
 
       if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.production.js')
       } else {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
       }`
