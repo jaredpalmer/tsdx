@@ -245,28 +245,33 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
+  .option('--verbose', 'Do not clear the console on rebuilds')
+  .example('watch --verbose')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
+        await util.promisify(mkdirp)(resolveApp('./dist'));
         await fs.writeFile(
-          resolveApp('dist/index.js'),
+          resolveApp('./dist/index.js'),
           `
          'use strict'
 
       if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.production.js')
       } else {
-        module.exports = require('./${safeVariableName(
+        module.exports = require('./${safePackageName(
           opts.name
         )}.cjs.development.js')
       }`
         );
-      } catch (e) {}
+      } catch (e) {
+        logError(e);
+      }
     }
     const spinner = ora().start();
     await watch(
@@ -280,7 +285,9 @@ prog
       }))
     ).on('event', async event => {
       if (event.code === 'START') {
-        clearConsole();
+        if (!!opts.verbose) {
+          clearConsole();
+        }
         spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {
