@@ -181,6 +181,7 @@ prog
           build: 'tsdx build',
           test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
         },
+        peerDependencies: template === 'react' ? { react: '>=16' } : {},
         husky: {
           hooks: {
             'pre-commit': 'pretty-quick --staged',
