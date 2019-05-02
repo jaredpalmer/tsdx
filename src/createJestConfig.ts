@@ -1,8 +1,11 @@
+import fs from 'fs';
+import path from 'path';
+
 export function createJestConfig(
   _: (relativePath: string) => void,
   rootDir: string
 ) {
-  return {
+  const config = {
     transform: {
       '.(ts|tsx)': require.resolve('ts-jest/dist'),
     },
@@ -17,4 +20,16 @@ export function createJestConfig(
       require.resolve('jest-watch-typeahead/testname'),
     ],
   };
+
+  fs.writeFile(
+    path.join(rootDir, 'jest.config.js'),
+    `module.exports = ${JSON.stringify(config, null, 4)}`,
+    err => {
+      if (err) {
+        console.error('Error trying to save the Jest configuration file!');
+      }
+    }
+  );
+
+  return config;
 }
