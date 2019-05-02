@@ -49,7 +49,7 @@ This is the folder structure we set up for you:
 ```
 /example
   index.html
-  index.tsx       # prototype your component here
+  index.tsx       # test your component here in a demo app
   package.json
   tsconfig.json
 /src
