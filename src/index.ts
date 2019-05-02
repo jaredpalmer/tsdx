@@ -209,6 +209,7 @@ prog
       'pretty-quick',
       'prettier',
       'tsdx',
+      'tslib',
       'typescript',
     ].sort();
 
