@@ -98,7 +98,7 @@ function createBuildConfigs(opts: any) {
       opts.format.includes('umd') &&
         createRollupConfig('umd', 'production', { ...opts, input }),
     ])
-  );
+  ).filter(Boolean);
 }
 
 async function moveTypes() {
