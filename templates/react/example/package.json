@@ -7,9 +7,11 @@
     "start": "parcel index.html"
   },
   "dependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "react-app-polyfill": "^1.0.0"
+  },
+  "alias": {
+    "react": "../node_modules/react",
+    "react-dom": "../node_modules/react-dom"
   },
   "devDependencies": {
     "@types/react": "^16.8.15",
