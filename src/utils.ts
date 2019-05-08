@@ -17,7 +17,7 @@ export const safePackageName = (name: string) =>
   name.toLowerCase().replace(/((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
 
 export const external = (id: string) =>
-  !id.startsWith('.') && !id.startsWith('/');
+  !id.startsWith('.') && !path.isAbsolute(id);
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
