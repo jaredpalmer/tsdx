@@ -21,16 +21,5 @@ export function createJestConfig(
     ],
   };
 
-  if (!fs.existsSync(path.join(rootDir, 'jest.config.js')))
-    fs.writeFile(
-      path.join(rootDir, 'jest.config.js'),
-      `module.exports = ${JSON.stringify(config, null, 4)}`,
-      err => {
-        if (err) {
-          console.error('Error trying to save the Jest configuration file!');
-        }
-      }
-    );
-
   return config;
 }
