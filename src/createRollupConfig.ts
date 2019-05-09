@@ -1,3 +1,4 @@
+import { DEFAULT_EXTENSIONS } from '@babel/core';
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { terser } from 'rollup-plugin-terser';
@@ -14,6 +15,7 @@ const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
 const babelOptions = {
   exclude: /node_modules/,
+  extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
   plugins: [
     'annotate-pure-calls',
     'dev-expression',
