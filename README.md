@@ -139,6 +139,10 @@ exports.sum = (s, t) => s + t;
 
 AS you can see, TSDX stripped out the development check from the production code. **This allows you can to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
 
+#### Rollup Treeshaking
+
+TSDX's rollup config [removes getters and setters on objects](https://github.com/palmerhq/tsdx/blob/1f6a1b6819bb17678aa417f0df5349bec12f59ac/src/createRollupConfig.ts#L73) so that property access has no side effects. Don't do it.
+
 #### Advanced `babel-plugin-dev-expressions`
 
 TSDX will use `babel-plugin-dev-expressions` to make the following replacements _before_ treeshaking.
