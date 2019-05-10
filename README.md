@@ -245,7 +245,7 @@ import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as Ke
 //# sourceMappingURL=test-react-tsdx.es.production.js.map
 ```
 
-TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable be end consumers while allowing to you to use `@types/lodash` for free.
+TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
 
 > Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
 
