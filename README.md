@@ -75,7 +75,7 @@ By default, runs tests related to files changed since the last commit.
 
 Aside from just bundling your module into different formats, TSDX comes with some optimizations for your convenience. They yield objectively better code and smaller bundle sizes.
 
-After TSDX compiles your code with TypeSCript, it processes your code with 3 Babel plugins:
+After TSDX compiles your code with TypeScript, it processes your code with 3 Babel plugins:
 
 - [`babel-plugin-annotate-pure-calls`](https://github.com/Andarist/babel-plugin-annotate-pure-calls): Injects for `#__PURE` annotations to enable treeshaking
 - [`babel-plugin-dev-expressions`](https://github.com/4Catalyzer/babel-plugin-dev-expression): A mirror of Facebook's dev-expression Babel plugin. It reduces or eliminates development checks from production code
