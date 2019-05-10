@@ -1,4 +1,5 @@
-import { DEFAULT_EXTENSIONS } from '@babel/core';ge
+import { DEFAULT_EXTENSIONS } from '@babel/core';
+ge;
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { terser } from 'rollup-plugin-terser';

@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "jest --config ./test/jest.config.json",
-    "lint": "eslint 'src/**/*.ts'"
+    "lint": "eslint src/**/*.ts"
   },
   "files": [
     "dist",
@@ -79,6 +79,8 @@
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
     "husky": "^2.1.0",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
