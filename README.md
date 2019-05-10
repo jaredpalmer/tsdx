@@ -214,13 +214,13 @@ Recommended for use with https://github.com/alexreardon/tiny-warning.
 
 If you want to use a lodash function in your package, TSDX will help you do it the _right_ way so that your library does not get fat shamed on Twitter. However, before you continue, seriously consider rolling whatever function you are about to use on your own. Anyways, here is how to do it right.
 
-First, add `lodash` and `lodash-es` as _dependencies_
+First, install `lodash` and `lodash-es` as _dependencies_
 
 ```bash
 yarn add lodash lodash-es
 ```
 
-Now add @types/lodash to your development dependencies.
+Now install `@types/lodash` to your development dependencies.
 
 ```bash
 yarn add @types/lodash --dev
