@@ -42,6 +42,15 @@ describe('tsdx build', () => {
     expect(output.code).toBe(0);
   });
 
+  it('should create the library correctly', () => {
+    util.setupStageWithFixture(stageName, 'build-default');
+
+    shell.exec('node ../dist/index.js build');
+
+    const lib = require(`../../${stageName}/dist`);
+    expect(lib.foo()).toBe('bar');
+  });
+
   afterEach(() => {
     util.teardownStage(stageName);
   });

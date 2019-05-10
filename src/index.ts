@@ -92,7 +92,7 @@ function createBuildConfigs(opts: any) {
       opts.format.includes('umd') &&
         createRollupConfig('umd', 'production', { ...opts, input }),
     ])
-  );
+  ).filter(Boolean);
 }
 
 async function moveTypes() {
@@ -203,6 +203,7 @@ prog
       'pretty-quick',
       'prettier',
       'tsdx',
+      'tslib',
       'typescript',
     ].sort();
 
@@ -331,21 +332,27 @@ prog
         )}.cjs.development.js')
       }`
           )
-          .catch(e => logError(e));
+          .catch(e => {
+            throw e;
+          });
         logger(promise, 'Creating entry file');
       } catch (e) {
         logError(e);
       }
     }
     try {
-      const promise = asyncro.map(
-        [cjsDev, cjsProd, ...otherConfigs],
-        async (inputOptions: RollupOptions & { output: OutputOptions }) => {
-          let bundle = await rollup(inputOptions);
-          await bundle.write(inputOptions.output);
-          await moveTypes();
-        }
-      );
+      const promise = asyncro
+        .map(
+          [cjsDev, cjsProd, ...otherConfigs],
+          async (inputOptions: RollupOptions & { output: OutputOptions }) => {
+            let bundle = await rollup(inputOptions);
+            await bundle.write(inputOptions.output);
+            await moveTypes();
+          }
+        )
+        .catch((e: any) => {
+          throw e;
+        });
       logger(promise, 'Building modules');
     } catch (error) {
       logError(error);
