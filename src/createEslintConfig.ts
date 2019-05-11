@@ -11,7 +11,11 @@ export function createEslintConfig({
   writeFile,
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
   const config = {
-    extends: ['plugin:@typescript-eslint/recommended'],
+    extends: [
+      'plugin:@typescript-eslint/recommended',
+      'prettier/@typescript-eslint',
+      'plugin:prettier/recommended',
+    ],
     root: true,
     env: {
       node: true,
@@ -28,8 +32,6 @@ export function createEslintConfig({
     parser: '@typescript-eslint/parser',
     plugins: ['@typescript-eslint'],
     rules: {
-      indent: 'off',
-      '@typescript-eslint/indent': ['error', 2],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
     },
