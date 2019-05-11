@@ -22,8 +22,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "yarn build && node dist/index.js lint src --ignore-pattern tests/lint",
-    "lint:ci": "node dist/index.js lint src test",
+    "lint": "yarn build && yarn lint:post-build",
+    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "jest --config ./test/jest.config.json"
   },
   "files": [
@@ -94,7 +94,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern '!tests/lint/**'"
+      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**'"
     }
   },
   "prettier": {

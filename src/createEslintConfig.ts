@@ -48,16 +48,28 @@ export function createEslintConfig({
       },
     },
   };
-  if (writeFile && !fs.existsSync(path.join(rootDir, '.eslintrc.js')))
-    fs.writeFile(
-      path.join(rootDir, '.eslintrc.js'),
-      `module.exports = ${JSON.stringify(config, null, 2)}`,
-      err => {
-        if (err) {
-          console.error('Error trying to save the Eslint configuration file!');
+
+  if (writeFile) {
+    const file = path.join(rootDir, '.eslintrc.js');
+    if (fs.existsSync(file)) {
+      console.error(
+        'Error trying to save the Eslint configuration file:',
+        `${file} already exists.`
+      );
+    } else {
+      fs.writeFile(
+        file,
+        `module.exports = ${JSON.stringify(config, null, 2)}`,
+        err => {
+          if (err) {
+            console.error(
+              'Error trying to save the Eslint configuration file!'
+            );
+          }
         }
-      }
-    );
+      );
+    }
+  }
 
   return config;
 }
