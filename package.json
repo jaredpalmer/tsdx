@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "lint": "yarn build && node dist/index.js lint src test",
+    "lint": "yarn build && node dist/index.js lint src --ignore-pattern tests/lint",
     "lint:ci": "node dist/index.js lint src test",
     "test": "jest --config ./test/jest.config.json"
   },
@@ -47,6 +47,7 @@
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.13.0",
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
     "jest": "^24.7.1",
@@ -81,17 +82,19 @@
     "@types/ms": "^0.7.30",
     "@types/node": "^11.13.8",
     "@types/ora": "^3.2.0",
+    "@types/react": "^16.8.17",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^2.1.0",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
     "ps-tree": "^1.2.0",
+    "react": "^16.8.6",
     "shelljs": "^0.8.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged --pattern '!tests/lint/**'"
     }
   },
   "prettier": {

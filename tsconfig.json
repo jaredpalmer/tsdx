@@ -3,6 +3,7 @@
   "exclude": ["src/template/**/*"],
   "compilerOptions": {
     "allowJs": true,
+    "jsx": "react",
     "importHelpers": true,
     "esModuleInterop": true,
     "outDir": "dist",

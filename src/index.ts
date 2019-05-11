@@ -402,31 +402,38 @@ prog
   .example('lint src test')
   .option('--fix', 'Fixes fixable errors and warnings')
   .example('lint src test --fix')
+  .option('--ignore-pattern', 'Ignore a pattern')
+  .example('lint src test --ignore-pattern test/foobar.ts')
   .option('--write-file', 'Write the config file locally')
   .example('lint src test --write-file')
-  .action(async (opts: { fix: boolean; 'write-file': boolean }) => {
-    const argv = process.argv.slice(2);
-
-    const [, ...rest] = argv;
-    const cli = new CLIEngine({
-      extensions: ['.ts', '.tsx'],
-      fix: opts.fix,
-      baseConfig: {
-        ...createEslintConfig({
-          rootDir: paths.appRoot,
-          writeFile: opts['write-file'],
-        }),
-        ...appPackageJson.eslint,
-      },
-    });
-    const report = cli.executeOnFiles(rest.filter(it => !it.startsWith('-')));
-    if (opts.fix) {
-      CLIEngine.outputFixes(report);
+  .action(
+    async (opts: {
+      fix: boolean;
+      'ignore-pattern': string;
+      'write-file': boolean;
+      _: string[];
+    }) => {
+      const cli = new CLIEngine({
+        extensions: ['.ts', '.tsx'],
+        fix: opts.fix,
+        ignorePattern: opts['ignore-pattern'],
+        baseConfig: {
+          ...createEslintConfig({
+            rootDir: paths.appRoot,
+            writeFile: opts['write-file'],
+          }),
+          ...appPackageJson.eslint,
+        },
+      });
+      const report = cli.executeOnFiles(opts['_']);
+      if (opts.fix) {
+        CLIEngine.outputFixes(report);
+      }
+      console.log(cli.getFormatter()(report.results));
+      if (report.errorCount) {
+        process.exit(1);
+      }
     }
-    console.log(cli.getFormatter()(report.results));
-    if (report.errorCount) {
-      process.exit(1);
-    }
-  });
+  );
 
 prog.parse(process.argv);

@@ -330,21 +330,23 @@ This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) f
 ### `tsdx lint`
 
 ```shell
-  Description
-    Run eslint
+Description
+  Run eslint
 
-  Usage
-    $ tsdx lint [options]
+Usage
+  $ tsdx lint [options]
 
-  Options
-    --fix           Fixes fixable errors and warnings
-    --write-file    Write the config file locally
-    -h, --help      Displays this message
+Options
+  --fix               Fixes fixable errors and warnings
+  --ignore-pattern    Ignore a pattern
+  --write-file        Write the config file locally
+  -h, --help          Displays this message
 
-  Examples
-    $ tsdx lint src test
-    $ tsdx lint src test --fix
-    $ tsdx lint src test --write-file
+Examples
+  $ tsdx lint src test
+  $ tsdx lint src test --fix
+  $ tsdx lint src test --ignore-pattern test/foobar.ts
+  $ tsdx lint src test --write-file
 ```
 
 ## Author
