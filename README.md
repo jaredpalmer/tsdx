@@ -12,8 +12,14 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
   - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
+  - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
+    - [Rollup Treeshaking](#rollup-treeshaking)
+    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
+      - [`__DEV__`](#dev)
+      - [`invariant`](#invariant)
+      - [`warning`](#warning)
   - [Using lodash](#using-lodash)
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
@@ -21,6 +27,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`tsdx watch`](#tsdx-watch)
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
+  - [`tsdx lint`](#tsdx-lint)
 - [Author](#author)
 - [License](#license)
 
@@ -70,6 +77,10 @@ The package is optimized and bundled with Rollup into multiple formats (CommonJS
 
 Runs the test watcher (Jest) in an interactive mode.
 By default, runs tests related to files changed since the last commit.
+
+### `npm run lint` or `yarn lint`
+
+Runs Eslint.
 
 ## Optimizations
 
@@ -315,6 +326,26 @@ Examples
 ### `tsdx test`
 
 This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
+
+### `tsdx lint`
+
+```shell
+  Description
+    Run eslint
+
+  Usage
+    $ tsdx lint [options]
+
+  Options
+    --fix           Fixes fixable errors and warnings
+    --write-file    Write the config file locally
+    -h, --help      Displays this message
+
+  Examples
+    $ tsdx lint src test
+    $ tsdx lint src test --fix
+    $ tsdx lint src test --write-file
+```
 
 ## Author
 

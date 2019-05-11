@@ -22,6 +22,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "lint": "yarn build && node dist/index.js lint src test",
+    "lint:ci": "node dist/index.js lint src test",
     "test": "jest --config ./test/jest.config.json"
   },
   "files": [
@@ -31,6 +33,8 @@
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@jaredpalmer/rollup-plugin-preserve-shebang": "^0.1.7",
+    "@typescript-eslint/eslint-plugin": "^1.8.0",
+    "@typescript-eslint/parser": "^1.8.0",
     "ansi-escapes": "^3.1.0",
     "asyncro": "^3.0.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
@@ -40,6 +44,7 @@
     "chalk": "^2.4.2",
     "cross-env": "5.0.5",
     "enquirer": "^2.3.0",
+    "eslint": "^5.16.0",
     "execa": "^1.0.0",
     "fs-extra": "^7.0.1",
     "jest": "^24.7.1",
@@ -67,6 +72,7 @@
   "devDependencies": {
     "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
+    "@types/eslint": "^4.16.6",
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "^5.0.5",
     "@types/mkdirp": "^0.5.2",
