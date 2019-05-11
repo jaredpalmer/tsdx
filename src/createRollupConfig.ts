@@ -16,6 +16,7 @@ const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 const babelOptions = {
   exclude: /node_modules/,
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
+  presets: ['@babel/preset-env'],
   plugins: [
     'annotate-pure-calls',
     'dev-expression',
