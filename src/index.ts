@@ -424,6 +424,9 @@ prog
       CLIEngine.outputFixes(report);
     }
     console.log(cli.getFormatter()(report.results));
+    if (report.errorCount) {
+      process.exit(1);
+    }
   });
 
 prog.parse(process.argv);
