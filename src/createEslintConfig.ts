@@ -41,6 +41,8 @@ export function createEslintConfig({
       'no-empty': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [2, { args: 'none' }],
     },
     settings: {
       react: {
@@ -57,17 +59,14 @@ export function createEslintConfig({
         `${file} already exists.`
       );
     } else {
-      fs.writeFile(
-        file,
-        `module.exports = ${JSON.stringify(config, null, 2)}`,
-        err => {
-          if (err) {
-            console.error(
-              'Error trying to save the Eslint configuration file!'
-            );
-          }
-        }
-      );
+      try {
+        fs.writeFileSync(
+          file,
+          `module.exports = ${JSON.stringify(config, null, 2)}`
+        );
+      } catch (e) {
+        console.error(e);
+      }
     }
   }
 
