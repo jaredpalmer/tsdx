@@ -13,15 +13,18 @@ import shebangPlugin from '@jaredpalmer/rollup-plugin-preserve-shebang';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
-const babelOptions = {
+const babelOptions = (format: 'cjs' | 'es' | 'umd') => ({
   exclude: /node_modules/,
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
   plugins: [
-    'annotate-pure-calls',
-    'dev-expression',
-    ['transform-rename-import', { replacements }],
-  ],
-};
+    require.resolve('babel-plugin-annotate-pure-calls'),
+    require.resolve('babel-plugin-dev-expression'),
+    format !== 'cjs' && [
+      require.resolve('babel-plugin-transform-rename-import'),
+      { replacements },
+    ],
+  ].filter(Boolean),
+});
 
 export function createRollupConfig(
   format: 'cjs' | 'umd' | 'es',
