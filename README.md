@@ -49,7 +49,7 @@ yarn start
 
 That's it. You don't need to worry about setting up Typescript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
 
-Below is a list of commands you will probably find useful.
+Below is a list of commands you will probably find useful:
 
 ### `npm start` or `yarn start`
 
