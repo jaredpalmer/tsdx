@@ -21,6 +21,7 @@
     "tsdx": "./dist/index.js"
   },
   "scripts": {
+    "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "test": "jest --config ./test/jest.config.json"
   },
