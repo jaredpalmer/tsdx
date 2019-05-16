@@ -105,7 +105,7 @@ export function createRollupConfig(
           },
         },
       }),
-      babel(babelOptions),
+      babel(babelOptions(format)),
       replace({
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
