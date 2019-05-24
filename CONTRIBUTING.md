@@ -22,7 +22,7 @@ Thanks for your interest in TSDX! You are very welcome to contribute. If you are
    yarn && yarn build
    ```
    
-   > **Note:** you'll need to run `yarn build` any time you want to see your changes.
+   > **Note:** you'll need to run `yarn build` any time you want to see your changes, or run `yarn watch` to leave it in watch mode.
 
 3. Make it so running `tsdx` anywhere will run your local dev version:
    
