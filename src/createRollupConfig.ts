@@ -97,11 +97,7 @@ export function createRollupConfig(
             sourceMap: true,
             declaration: true,
             jsx: 'react',
-          },
-        },
-        tsconfigOverride: {
-          compilerOptions: {
-            target: 'esnext',
+            target: 'es5',
           },
         },
       }),
