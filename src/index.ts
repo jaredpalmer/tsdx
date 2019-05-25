@@ -28,7 +28,14 @@ import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
+import run from './runner';
+import {
+  safeVariableName,
+  resolveApp,
+  safePackageName,
+  clearConsole,
+} from './utils';
+import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -214,9 +221,12 @@ prog
     }
 
     try {
+      console.log(fs.realpathSync(process.cwd()) + '/' + pkg);
       // get the project path
       const realPath = await fs.realpath(process.cwd());
       let projectPath = await getProjectPath(realPath + '/' + pkg);
+
+      console.log(projectPath);
 
       const prompt = new Select({
         message: 'Choose a template',
@@ -364,6 +374,13 @@ prog
   .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
+  .example('build --tsconfig ./tsconfig.foo.json')
+  .option('--onFirstSuccess', 'Run a command on the first successful build')
+  .example('watch --onSuccess npm run start')
+  .option('--onSuccess', 'Run a command on successful build')
+  .example('watch --onSuccess npm run start')
+  .option('--onFailure', 'Run a command on a failed build')
+  .example('watch --onSuccess npm run start')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
@@ -373,9 +390,17 @@ prog
       await cleanDistFolder();
     }
     await ensureDistFolder();
+    opts.name = opts.name || appPackageJson.name;
+    opts.input = await getInputs(opts.entry, appPackageJson.source);
     if (opts.format.includes('cjs')) {
       await writeCjsEntryFile(opts.name);
     }
+
+    let firstTime = true;
+    let firstSuccessKiller = null;
+    let successKiller = null;
+    let failureKiller = null;
+
     const spinner = ora().start();
     await watch(
       (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
@@ -396,18 +421,28 @@ prog
       if (event.code === 'ERROR') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
+        failureKiller = run(opts.onFailure);
       }
       if (event.code === 'FATAL') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
+        failureKiller = run(opts.onFailure);
       }
       if (event.code === 'END') {
         spinner.succeed(chalk.bold.green('Compiled successfully'));
         console.log(`
   ${chalk.dim('Watching for changes')}
 `);
+
         try {
           await moveTypes();
+
+          if (firstTime && opts.onFirstSuccessCommand) {
+            firstTime = false;
+            firstSuccessKiller = run(opts.onFirstSuccessCommand);
+          } else {
+            successKiller = run(opts.onSuccess);
+          }
         } catch (_error) {}
       }
     });
@@ -440,8 +475,13 @@ prog
     await ensureDistFolder();
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
-      const promise = writeCjsEntryFile(opts.name).catch(logError);
-      logger(promise, 'Creating entry file');
+      try {
+        await util.promisify(mkdirp)(resolveApp('./dist'));
+        const promise = writeCjsEntryFile(opts.name).catch(logError);
+        logger(promise, 'Creating entry file');
+      } catch (e) {
+        logError(e);
+      }
     }
     try {
       const promise = asyncro
