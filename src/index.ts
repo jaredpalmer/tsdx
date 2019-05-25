@@ -17,6 +17,7 @@ import * as fs from 'fs-extra';
 import jest from 'jest';
 import logError from './logError';
 import path from 'path';
+import nodeCleanup from 'node-cleanup';
 import mkdirp from 'mkdirp';
 import execa from 'execa';
 import ora from 'ora';
@@ -24,7 +25,13 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
+import run from './runner';
+import {
+  safeVariableName,
+  resolveApp,
+  safePackageName,
+  clearConsole,
+} from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
@@ -155,10 +162,13 @@ prog
     }
 
     try {
+      console.log(fs.realpathSync(process.cwd()) + '/' + pkg);
       // get the project path
       let projectPath = await getProjectPath(
         fs.realpathSync(process.cwd()) + '/' + pkg
       );
+
+      console.log(projectPath);
 
       const prompt = new Select({
         message: 'Choose a template',
@@ -263,6 +273,12 @@ prog
   .example('watch --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option('--onFirstSuccess', 'Run a command on the first successful build')
+  .example('watch --onSuccess npm run start')
+  .option('--onSuccess', 'Run a command on successful build')
+  .example('watch --onSuccess npm run start')
+  .option('--onFailure', 'Run a command on a failed build')
+  .example('watch --onSuccess npm run start')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
@@ -285,6 +301,12 @@ prog
       }`
       );
     }
+
+    let firstTime = true;
+    let firstSuccessKiller = null;
+    let successKiller = null;
+    let failureKiller = null;
+
     const spinner = ora().start();
     await watch(
       (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
@@ -303,18 +325,28 @@ prog
       if (event.code === 'ERROR') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
+        failureKiller = run(opts.onFailure);
       }
       if (event.code === 'FATAL') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
+        failureKiller = run(opts.onFailure);
       }
       if (event.code === 'END') {
         spinner.succeed(chalk.bold.green('Compiled successfully'));
         console.log(`
   ${chalk.dim('Watching for changes')}
 `);
+
         try {
           await moveTypes();
+
+          if (firstTime && opts.onFirstSuccessCommand) {
+            firstTime = false;
+            firstSuccessKiller = run(opts.onFirstSuccessCommand);
+          } else {
+            successKiller = run(opts.onSuccess);
+          }
         } catch (_error) {}
       }
     });
@@ -344,7 +376,7 @@ prog
           .writeFile(
             resolveApp('./dist/index.js'),
             `
-         'use strict'
+      'use strict'
 
       if (process.env.NODE_ENV === 'production') {
         module.exports = require('./${safePackageName(
@@ -413,7 +445,16 @@ prog
     );
 
     const [_skipTheWordTest, ...argsToPassToJestCli] = argv;
+
     jest.run(argsToPassToJestCli);
   });
 
 prog.parse(process.argv);
+
+nodeCleanup((_exitCode, signal) => {
+  tscProcess.kill(signal);
+  killProcesses(true).then(() => process.exit());
+  // don't call cleanup handler again
+  nodeCleanup.uninstall();
+  return false;
+});
