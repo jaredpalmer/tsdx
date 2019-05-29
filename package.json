@@ -32,6 +32,7 @@
   "dependencies": {
     "@babel/core": "^7.4.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "ansi-escapes": "^3.2.0",
     "asyncro": "^3.0.0",
