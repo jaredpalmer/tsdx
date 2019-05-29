@@ -34,6 +34,7 @@
     "@jaredpalmer/rollup-plugin-preserve-shebang": "^0.1.7",
     "ansi-escapes": "^3.2.0",
     "asyncro": "^3.0.0",
+    "@babel/preset-env": "^7.4.4",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-transform-rename-import": "^2.3.0",

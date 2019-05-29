@@ -16,6 +16,7 @@ const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 const babelOptions = (format: 'cjs' | 'es' | 'umd') => ({
   exclude: /node_modules/,
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
+  presets: ['@babel/preset-env'],
   plugins: [
     require.resolve('babel-plugin-annotate-pure-calls'),
     require.resolve('babel-plugin-dev-expression'),
