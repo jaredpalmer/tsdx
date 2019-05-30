@@ -313,7 +313,7 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .option('--format', 'Specify module format(s)', 'cjs,es')
   .example('build --format cjs,es')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
