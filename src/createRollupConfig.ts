@@ -54,7 +54,12 @@ let shebang: any = {};
 export function createRollupConfig(
   format: 'cjs' | 'umd' | 'es',
   env: 'development' | 'production',
-  opts: { input: string; name: string; target: 'node' | 'browser' }
+  opts: {
+    input: string;
+    name: string;
+    target: 'node' | 'browser';
+    tsconfig?: string;
+  }
 ) {
   return {
     // Tell Rollup the entry point to the package
@@ -141,6 +146,7 @@ export function createRollupConfig(
       typescript({
         typescript: require('typescript'),
         cacheRoot: `./.rts2_cache_${format}`,
+        tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           compilerOptions: {
             sourceMap: true,

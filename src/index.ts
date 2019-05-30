@@ -247,6 +247,8 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
@@ -315,6 +317,8 @@ prog
   .example('build --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('build --format cjs,es')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
