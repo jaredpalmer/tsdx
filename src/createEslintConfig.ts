@@ -11,7 +11,7 @@ export function createEslintConfig({
   writeFile,
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
   const config = {
-    extends: 'react-app'
+    extends: ['react-app'],
   };
 
   if (writeFile) {
