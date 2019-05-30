@@ -11,13 +11,7 @@ export function createEslintConfig({
   writeFile,
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
   const config = {
-    extends: [
-      'eslint:recommended',
-      'plugin:@typescript-eslint/recommended',
-      'prettier/@typescript-eslint',
-      'plugin:prettier/recommended',
-      'plugin:react/recommended',
-    ],
+    extends: ['react-app'],
     root: true,
     env: {
       node: true,
