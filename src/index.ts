@@ -92,6 +92,8 @@ function createBuildConfigs(opts: any) {
       opts.format.includes('cjs') &&
         createRollupConfig('cjs', 'production', { ...opts, input }),
       opts.format.includes('es') &&
+        createRollupConfig('es', 'development', { ...opts, input }),
+      opts.format.includes('es') &&
         createRollupConfig('es', 'production', { ...opts, input }),
       opts.format.includes('umd') &&
         createRollupConfig('umd', 'development', { ...opts, input }),
@@ -351,6 +353,7 @@ prog
         .map(
           [cjsDev, cjsProd, ...otherConfigs],
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
+            console.log(inputOptions);
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
             await moveTypes();
