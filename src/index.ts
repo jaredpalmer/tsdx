@@ -406,9 +406,12 @@ prog
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option('--write-file', 'Write the config file locally')
   .example('lint src test --write-file')
+  .option('--prettier', 'Use Prettier to lint')
+  .example('lint src test --prettier')
   .action(
     async (opts: {
       fix: boolean;
+      prettier: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
       _: string[];
@@ -419,6 +422,7 @@ prog
         ignorePattern: opts['ignore-pattern'],
         baseConfig: {
           ...createEslintConfig({
+            prettier: opts.prettier,
             rootDir: paths.appRoot,
             writeFile: opts['write-file'],
           }),

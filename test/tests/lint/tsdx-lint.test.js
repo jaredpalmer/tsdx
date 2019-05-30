@@ -20,6 +20,21 @@ describe('tsdx lint', () => {
     expect(output.code).toBe(0);
   });
 
+  describe('prettier', () => {
+    const flags = '--prettier'
+    it('should fail to lint a ts file with errors', () => {
+      const testFile = 'test/tests/lint/file-with-prettier-lint-errors.ts';
+      const output = shell.exec(`node dist/index.js lint ${testFile} ${flags}`);
+      expect(output.code).toBe(1);
+    });
+
+    it('should succeed linting a ts file without errors', () => {
+      const testFile = 'test/tests/lint/file-without-lint-error.ts';
+      const output = shell.exec(`node dist/index.js lint ${testFile} ${flags}`);
+      expect(output.code).toBe(0);
+    });
+  })
+
   it('should fail to lint a tsx file with errors', () => {
     const testFile = 'test/tests/lint/react-file-with-lint-errors.tsx';
     const output = shell.exec(`node dist/index.js lint ${testFile}`);

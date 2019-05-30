@@ -340,13 +340,15 @@ Options
   --fix               Fixes fixable errors and warnings
   --ignore-pattern    Ignore a pattern
   --write-file        Write the config file locally
+  --prettier          Use Prettier to lint
   -h, --help          Displays this message
 
 Examples
-  $ tsdx lint src test
-  $ tsdx lint src test --fix
+  $ tsdx lint src
+  $ tsdx lint src --fix
   $ tsdx lint src test --ignore-pattern test/foobar.ts
-  $ tsdx lint src test --write-file
+  $ tsdx lint src --write-file
+  $ tsdx lint src test --prettier
 ```
 
 ## Author

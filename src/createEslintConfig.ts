@@ -3,15 +3,23 @@ import path from 'path';
 import { CLIEngine } from 'eslint';
 
 interface CreateEslintConfigArgs {
+  prettier: boolean;
   rootDir: string;
   writeFile: boolean;
 }
 export function createEslintConfig({
+  prettier,
   rootDir,
   writeFile,
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
+  const baseExtends = ['react-app'];
   const config = {
-    extends: ['react-app'],
+    extends: prettier
+      ? baseExtends.concat([
+          'prettier/@typescript-eslint',
+          'plugin:prettier/recommended',
+        ])
+      : baseExtends,
   };
 
   if (writeFile) {
