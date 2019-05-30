@@ -10,7 +10,6 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import shebangPlugin from '@jaredpalmer/rollup-plugin-preserve-shebang';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
