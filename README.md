@@ -80,7 +80,8 @@ By default, runs tests related to files changed since the last commit.
 
 ### `npm run lint` or `yarn lint`
 
-Runs Eslint.
+Runs Eslint.  
+If you would like to customize the linting you can add a `eslint` block to your package.json or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file to whatever you want.
 
 ## Optimizations
 
