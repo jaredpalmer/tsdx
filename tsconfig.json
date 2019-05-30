@@ -12,7 +12,8 @@
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "skipLibCheck": true,
-    "target": "es2017"
+    "target": "es2017",
   }
 }
