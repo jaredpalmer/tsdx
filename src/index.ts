@@ -353,7 +353,6 @@ prog
         .map(
           [cjsDev, cjsProd, ...otherConfigs],
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
-            console.log(inputOptions);
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
             await moveTypes();
