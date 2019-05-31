@@ -120,6 +120,17 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .action(async (pkg: string) => {
+    console.log(
+      chalk.blue(`
+::::::::::: ::::::::  :::::::::  :::    ::: 
+    :+:    :+:    :+: :+:    :+: :+:    :+: 
+    +:+    +:+        +:+    +:+  +:+  +:+  
+    +#+    +#++:++#++ +#+    +:+   +#++:+   
+    +#+           +#+ +#+    +#+  +#+  +#+  
+    #+#    #+#    #+# #+#    #+# #+#    #+# 
+    ###     ########  #########  ###    ###                                                 
+`)
+    );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
     let template;
     // Helper fn to prompt the user for a different
