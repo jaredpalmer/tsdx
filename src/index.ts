@@ -172,7 +172,6 @@ prog
         name: safeName,
         version: '0.1.0',
         main: 'dist/index.js',
-        'umd:main': `dist/${safeName}.umd.production.js`,
         module: `dist/${safeName}.es.production.js`,
         typings: 'dist/index.d.ts',
         files: ['dist'],
