@@ -22,7 +22,7 @@ const babelOptions = (
   passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         loose: true,
         modules: false,
