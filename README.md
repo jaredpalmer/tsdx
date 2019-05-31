@@ -30,7 +30,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
 
-- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS, UMD & ESM) plus development and production builds
+- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS & ESM by default, and also UMD if you want) plus development and production builds
 - Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
 - Live reload / watch-mode
 - Works with React
@@ -97,7 +97,7 @@ export const sum = (a: number, b: number) => {
 };
 ```
 
-`tsdx build` will output an ES module file, 2 UMD files (dev and prod), and 3 CommonJS files (dev, prod, and an entry file). For brevity, let's examine the CommonJS output (comments added for emphasis):
+`tsdx build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
 
 ```js
 // Entry File
@@ -279,14 +279,14 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es,umd)
+  --format       Specify module format(s)  (default cjs,es)
   -h, --help     Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,es
+  $ tsdx watch --format cjs,es,umd
 ```
 
 ### `tsdx build`
@@ -302,14 +302,14 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es,umd)
+  --format       Specify module format(s)  (default cjs,es)
   -h, --help     Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
-  $ tsdx build --format cjs,es
+  $ tsdx build --format cjs,es,umd
 ```
 
 ### `tsdx test`
