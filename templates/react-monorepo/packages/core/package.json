@@ -1,0 +1,15 @@
+{
+  "name": "core",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "umd:main": "dist/core.umd.production.js",
+  "module": "dist/core.es.production.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build"
+  }
+}
