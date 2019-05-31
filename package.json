@@ -24,7 +24,7 @@
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
-    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint' --prettier",
+    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "jest --config ./test/jest.config.json"
   },
   "files": [
