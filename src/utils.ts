@@ -19,6 +19,10 @@ export const safePackageName = (name: string) =>
 export const external = (id: string) =>
   !id.startsWith('.') && !path.isAbsolute(id);
 
+export const templateIsReact = (template: string) => template.includes('react');
+export const templateIsMonorepo = (template: string) =>
+  template.endsWith('-monorepo');
+
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 export const appDirectory = fs.realpathSync(process.cwd());

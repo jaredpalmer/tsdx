@@ -20,12 +20,12 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import execa from 'execa';
 import ora from 'ora';
-import { paths } from './constants';
+import { paths, templates, structures, monorepos } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
-import * as Output from './output';
+import { resolveApp, safePackageName, clearConsole, templateIsReact, templateIsMonorepo, } from './utils';
+
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -132,7 +132,8 @@ prog
 `)
     );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
-    let template;
+    let template!: string;
+    let cmd!: string;
     // Helper fn to prompt the user for a different
     // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
@@ -162,10 +163,24 @@ prog
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react'],
+        choices: templates,
       });
 
       template = await prompt.run();
+
+      if (monorepos.some(monorepo => monorepo.startsWith(template))) {
+        const prompt = new Select({
+          message: 'Choose a project structure',
+          choices: structures,
+          result: (structure: string) =>
+            structure === 'monorepo' ? `-monorepo` : '',
+        });
+        const suffix = await prompt.run();
+        template = `${template}${suffix}`;
+      }
+
+      cmd = templateIsMonorepo(template) ? 'lerna run' : 'tsdx';
+
       bootSpinner.start();
       // copy the template
       await fs.copy(
@@ -191,11 +206,13 @@ prog
         typings: 'dist/index.d.ts',
         files: ['dist'],
         scripts: {
-          start: 'tsdx watch',
-          build: 'tsdx build',
-          test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
+          start: `${cmd} watch`,
+          build: `${cmd} build`,
+          test: templateIsReact(template)
+            ? 'tsdx test --env=jsdom'
+            : 'tsdx test',
         },
-        peerDependencies: template === 'react' ? { react: '>=16' } : {},
+        peerDependencies: templateIsReact(template) ? { react: '>=16' } : {},
         husky: {
           hooks: {
             'pre-commit': 'pretty-quick --staged',
@@ -227,7 +244,7 @@ prog
       'typescript',
     ].sort();
 
-    if (template === 'react') {
+    if (templateIsReact(template)) {
       deps = [
         ...deps,
         '@types/react',
@@ -235,6 +252,10 @@ prog
         'react',
         'react-dom',
       ].sort();
+    }
+
+    if (templateIsMonorepo(template)) {
+      deps = [...deps, 'lerna'].sort();
     }
 
     const installSpinner = ora(Messages.installing(deps)).start();
