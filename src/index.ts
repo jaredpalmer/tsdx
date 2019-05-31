@@ -187,7 +187,6 @@ prog
         name: safeName,
         version: '0.1.0',
         main: 'dist/index.js',
-        'umd:main': `dist/${safeName}.umd.production.js`,
         module: `dist/${safeName}.es.production.js`,
         typings: 'dist/index.d.ts',
         files: ['dist'],
@@ -330,7 +329,7 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .option('--format', 'Specify module format(s)', 'cjs,es')
   .example('build --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
