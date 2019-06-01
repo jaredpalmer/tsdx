@@ -30,12 +30,6 @@ describe('tsdx build', () => {
     expect(
       shell.test('-f', 'dist/build-default.es.production.js')
     ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.umd.development.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.umd.development.js')
-    ).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 

@@ -2,7 +2,14 @@
 
 import sade from 'sade';
 import glob from 'tiny-glob/sync';
-import { rollup, watch, RollupOptions, OutputOptions } from 'rollup';
+import {
+  rollup,
+  watch,
+  RollupOptions,
+  OutputOptions,
+  RollupWatchOptions,
+  WatcherOptions,
+} from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import util from 'util';
@@ -17,12 +24,7 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
-import {
-  safeVariableName,
-  resolveApp,
-  safePackageName,
-  clearConsole,
-} from './utils';
+import { resolveApp, safePackageName, clearConsole } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
@@ -84,7 +86,9 @@ async function getInputs(entries: string[], source?: string) {
 
   return concatAllArray(inputs);
 }
-function createBuildConfigs(opts: any) {
+function createBuildConfigs(
+  opts: any
+): Array<RollupOptions & { output: OutputOptions }> {
   return concatAllArray(
     opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
@@ -116,6 +120,17 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .action(async (pkg: string) => {
+    console.log(
+      chalk.blue(`
+::::::::::: ::::::::  :::::::::  :::    ::: 
+    :+:    :+:    :+: :+:    :+: :+:    :+: 
+    +:+    +:+        +:+    +:+  +:+  +:+  
+    +#+    +#++:++#++ +#+    +:+   +#++:+   
+    +#+           +#+ +#+    +#+  +#+  +#+  
+    #+#    #+#    #+# #+#    #+# #+#    #+# 
+    ###     ########  #########  ###    ###                                                 
+`)
+    );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
     let template;
     // Helper fn to prompt the user for a different
@@ -172,7 +187,6 @@ prog
         name: safeName,
         version: '0.1.0',
         main: 'dist/index.js',
-        'umd:main': `dist/${safeName}.umd.production.js`,
         module: `dist/${safeName}.es.production.js`,
         typings: 'dist/index.d.ts',
         files: ['dist'],
@@ -247,10 +261,12 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
-    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+    const buildConfigs = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       await util.promisify(mkdirp)(resolveApp('dist'));
       await fs.writeFile(
@@ -271,12 +287,12 @@ prog
     }
     const spinner = ora().start();
     await watch(
-      [cjsDev, cjsProd, ...otherConfigs].map(inputOptions => ({
+      (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
         watch: {
           silent: true,
-          include: 'src/**',
-          exclude: 'node_modules/**',
-        },
+          include: ['src/**'],
+          exclude: ['node_modules/**'],
+        } as WatcherOptions,
         ...inputOptions,
       }))
     ).on('event', async event => {
@@ -313,12 +329,14 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .option('--format', 'Specify module format(s)', 'cjs,es')
   .example('build --format cjs,es')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
-    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+    const buildConfigs = createBuildConfigs(opts);
     if (opts.format.includes('cjs')) {
       try {
         await util.promisify(mkdirp)(resolveApp('./dist'));
@@ -349,7 +367,7 @@ prog
     try {
       const promise = asyncro
         .map(
-          [cjsDev, cjsProd, ...otherConfigs],
+          buildConfigs,
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
