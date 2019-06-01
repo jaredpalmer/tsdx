@@ -264,11 +264,11 @@ prog
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .option('--onFirstSuccess', 'Run a command on the first successful build')
-  .example('watch --onSuccess npm run start')
-  .option('--onSuccess', 'Run a command on successful build')
-  .example('watch --onSuccess npm run start')
+  .example('watch --onFirstSuccess "echo The first successful build!"')
+  .option('--onSuccess', 'Run a command on a successful build')
+  .example('watch --onSuccess "echo Successful build!"')
   .option('--onFailure', 'Run a command on a failed build')
-  .example('watch --onSuccess npm run start')
+  .example('watch --onFailure "The build failed!"')
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);

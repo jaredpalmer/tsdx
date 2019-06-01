@@ -276,17 +276,25 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es)
-  -h, --help     Displays this message
+  -i, --entry         Entry module(s)
+  --target            Specify your target environment  (default web)
+  --name              Specify name exposed in UMD builds
+  --format            Specify module format(s)  (default cjs,es,umd)
+  --tsconfig          Specify custom tsconfig path
+  --onFirstSuccess    Run a command on the first successful build
+  --onSuccess         Run a command on a successful build
+  --onFailure         Run a command on a failed build
+  -h, --help          Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
   $ tsdx watch --format cjs,es,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx watch --onFirstSuccess "echo The first successful build!"
+  $ tsdx watch --onSuccess "echo Successful build!"
+  $ tsdx watch --onFailure "The build failed!"
 ```
 
 ### `tsdx build`
