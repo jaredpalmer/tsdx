@@ -23,8 +23,8 @@
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
-    "test": "jest --config ./test/jest.config.json",
-    "watch": "chokidar \"./package.json\" \"./src/**/*.ts\" \"node_modules\\@jaredpalmer\\rollup-plugin-preserve-shebang\\dist\\index.js\" -c \"yarn build && echo Success\""
+    "start": "tsc -p tsconfig.json --watch",
+    "test": "jest --config ./test/jest.config.json"
   },
   "files": [
     "dist",
@@ -43,9 +43,7 @@
     "babel-plugin-transform-rename-import": "^2.3.0",
     "camelcase": "^5.0.0",
     "chalk": "^2.4.2",
-    "chokidar-cli": "^1.2.2",
     "cross-env": "5.2.0",
-    "cross-spawn": "^6.0.5",
     "enquirer": "^2.3.0",
     "execa": "^1.0.0",
     "fs-extra": "^8.0.1",
@@ -53,13 +51,11 @@
     "jest-watch-typeahead": "^0.3.1",
     "jpjs": "^1.2.1",
     "mkdirp": "^0.5.1",
-    "node-cleanup": "^2.1.2",
     "ora": "^3.4.0",
     "progress-estimator": "^0.2.2",
     "rollup": "^1.12.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-hashbang": "^2.2.2",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-replace": "^2.2.0",
@@ -68,14 +64,12 @@
     "rollup-plugin-terser": "^4.0.4",
     "rollup-plugin-typescript2": "^0.21.1",
     "sade": "^1.4.2",
-    "string-argv": "^0.3.0",
     "tiny-glob": "^0.2.6",
     "ts-jest": "^24.0.2",
     "tslib": "^1.9.3",
     "typescript": "^3.4.5"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.4.5",
     "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
     "@types/execa": "^0.9.0",
@@ -84,7 +78,6 @@
     "@types/ms": "^0.7.30",
     "@types/node": "^12.0.2",
     "@types/ora": "^3.2.0",
-    "@types/ps-tree": "^1.1.0",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^2.3.0",
