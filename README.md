@@ -291,7 +291,7 @@ Examples
   $ tsdx watch --target node
   $ tsdx watch --name Foo
   $ tsdx watch --format cjs,es,umd
-  $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx watch --tsconfig ./tsconfig.foo.json
   $ tsdx watch --onFirstSuccess "echo The first successful build!"
   $ tsdx watch --onSuccess "echo Successful build!"
   $ tsdx watch --onFailure "The build failed!"
