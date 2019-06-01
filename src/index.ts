@@ -278,7 +278,7 @@ prog
       await fs.writeFile(
         resolveApp('dist/index.js'),
         `
-         'use strict'
+      'use strict'
 
       if (process.env.NODE_ENV === 'production') {
         module.exports = require('./${safePackageName(
