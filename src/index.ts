@@ -29,12 +29,7 @@ import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
 import run from './runner';
-import {
-  safeVariableName,
-  resolveApp,
-  safePackageName,
-  clearConsole,
-} from './utils';
+import { resolveApp, safePackageName, clearConsole } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
@@ -221,12 +216,9 @@ prog
     }
 
     try {
-      console.log(fs.realpathSync(process.cwd()) + '/' + pkg);
       // get the project path
       const realPath = await fs.realpath(process.cwd());
       let projectPath = await getProjectPath(realPath + '/' + pkg);
-
-      console.log(projectPath);
 
       const prompt = new Select({
         message: 'Choose a template',
@@ -396,10 +388,30 @@ prog
       await writeCjsEntryFile(opts.name);
     }
 
+    type Killer = execa.ExecaChildProcess | null;
+
     let firstTime = true;
-    let firstSuccessKiller = null;
-    let successKiller = null;
-    let failureKiller = null;
+    let successKiller: Killer = null;
+    let failureKiller: Killer = null;
+
+    function run(command: string) {
+      if (command) {
+        const [exec, ...args] = command.split(' ');
+
+        return execa(exec, args, {
+          stdio: 'inherit',
+        });
+      }
+
+      return null;
+    }
+
+    function killHooks() {
+      return Promise.all([
+        successKiller ? successKiller.kill('SIGTERM') : null,
+        failureKiller ? failureKiller.kill('SIGTERM') : null,
+      ]);
+    }
 
     const spinner = ora().start();
     await watch(
@@ -412,6 +424,9 @@ prog
         ...inputOptions,
       }))
     ).on('event', async event => {
+      // clear previous onSuccess/onFailure hook processes so they don't pile up
+      await killHooks();
+
       if (event.code === 'START') {
         if (!opts.verbose) {
           clearConsole();
@@ -437,9 +452,9 @@ prog
         try {
           await moveTypes();
 
-          if (firstTime && opts.onFirstSuccessCommand) {
+          if (firstTime && opts.onFirstSuccess) {
             firstTime = false;
-            firstSuccessKiller = run(opts.onFirstSuccessCommand);
+            run(opts.onFirstSuccess);
           } else {
             successKiller = run(opts.onSuccess);
           }

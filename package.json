@@ -26,7 +26,8 @@
     "lint": "yarn build && yarn lint:post-build",
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "jest --config ./test/jest.config.json",
-    "watch": "chokidar \"./package.json\" \"./src/**/*.ts\" \"node_modules\\@jaredpalmer\\rollup-plugin-preserve-shebang\\dist\\index.js\" -c \"yarn build && echo Success\""
+    "watch": "chokidar \"./package.json\" \"./src/**/*.ts\" \"node_modules\\@jaredpalmer\\rollup-plugin-preserve-shebang\\dist\\index.js\" -c \"yarn build && echo Success\"",
+    "start": "tsc -p tsconfig.json --watch"
   },
   "files": [
     "dist",
@@ -79,7 +80,6 @@
     "jpjs": "^1.2.1",
     "lodash.merge": "^4.6.2",
     "mkdirp": "^0.5.1",
-    "node-cleanup": "^2.1.2",
     "ora": "^3.4.0",
     "pascal-case": "^2.0.1",
     "prettier": "^1.18.2",
@@ -100,7 +100,6 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.4.5",
     "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
     "@types/eslint": "^6.1.2",
