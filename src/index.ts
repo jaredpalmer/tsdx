@@ -241,7 +241,7 @@ prog
     try {
       const cmd = getInstallCmd();
       await execa(cmd, getInstallArgs(cmd, deps));
-      installSpinner.succeed('Installed dependecines');
+      installSpinner.succeed('Installed dependencies');
       console.log(Messages.start(pkg));
     } catch (error) {
       installSpinner.fail('Failed to install dependencies');
