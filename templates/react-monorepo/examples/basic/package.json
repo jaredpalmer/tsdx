@@ -11,9 +11,9 @@
     "react-app-polyfill": "^1.0.0"
   },
   "alias": {
-    "react": "../../../node_modules/react",
-    "react-dom": "../../../node_modules/react-dom",
-    "core": "../."
+    "react": "../../node_modules/react",
+    "react-dom": "../../node_modules/react-dom",
+    "core": "../../packages/core"
   },
   "devDependencies": {
     "@types/react": "^16.8.15",
