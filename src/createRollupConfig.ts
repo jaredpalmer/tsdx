@@ -18,10 +18,15 @@ const errorCodeOpts = {
   errorMapFilePath: paths.appRoot + '/codes.json',
 };
 
-const babelOptions = (
-  format: 'cjs' | 'es' | 'umd',
-  target: 'node' | 'browser'
-) => ({
+interface TsdxOptions {
+  input: string;
+  name: string;
+  target: 'node' | 'browser';
+  tsconfig?: string;
+  extractErrors?: string;
+}
+
+const babelOptions = (format: 'cjs' | 'es' | 'umd', opts: TsdxOptions) => ({
   exclude: 'node_modules/**',
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
   passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
@@ -31,7 +36,7 @@ const babelOptions = (
       {
         loose: true,
         modules: false,
-        targets: target === 'node' ? { node: '8' } : undefined,
+        targets: opts.target === 'node' ? { node: '8' } : undefined,
         exclude: ['transform-async-to-generator'],
       },
     ],
@@ -51,21 +56,17 @@ const babelOptions = (
       require.resolve('@babel/plugin-proposal-class-properties'),
       { loose: true },
     ],
-    require('./errors/transformErrorMessages'),
+    opts.extractErrors && require('./errors/transformErrorMessages'),
   ].filter(Boolean),
 });
 
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
+
 export function createRollupConfig(
   format: 'cjs' | 'umd' | 'es',
   env: 'development' | 'production',
-  opts: {
-    input: string;
-    name: string;
-    target: 'node' | 'browser';
-    tsconfig?: string;
-  }
+  opts: TsdxOptions
 ) {
   const findAndRecordErrorCodes = extractErrors({
     ...errorCodeOpts,
@@ -120,7 +121,7 @@ export function createRollupConfig(
       exports: 'named',
     },
     plugins: [
-      {
+      !!opts.extractErrors && {
         transform(source: any) {
           findAndRecordErrorCodes(source);
           return source;
@@ -176,7 +177,7 @@ export function createRollupConfig(
           },
         },
       }),
-      babel(babelOptions(format, opts.target)),
+      babel(babelOptions(format, opts)),
       replace({
         'process.env.NODE_ENV': JSON.stringify(env),
       }),
