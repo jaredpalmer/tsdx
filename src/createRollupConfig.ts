@@ -10,8 +10,13 @@ import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import shebangPlugin from '@jaredpalmer/rollup-plugin-preserve-shebang';
+import { extractErrors } from './errors/extractErrors';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
+
+const errorCodeOpts = {
+  errorMapFilePath: paths.appRoot + '/codes.json',
+};
 
 const babelOptions = (
   format: 'cjs' | 'es' | 'umd',
@@ -46,6 +51,7 @@ const babelOptions = (
       require.resolve('@babel/plugin-proposal-class-properties'),
       { loose: true },
     ],
+    require('./errors/transformErrorMessages'),
   ].filter(Boolean),
 });
 
@@ -61,6 +67,7 @@ export function createRollupConfig(
     tsconfig?: string;
   }
 ) {
+  const findAndRecordErrorCodes = extractErrors(errorCodeOpts);
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -110,6 +117,12 @@ export function createRollupConfig(
       exports: 'named',
     },
     plugins: [
+      {
+        transform(source: any) {
+          findAndRecordErrorCodes(source);
+          return source;
+        },
+      },
       resolve({
         mainFields: [
           'module',
