@@ -47,9 +47,13 @@ export default function transformErrorMessages(babel: any) {
             );
 
           // Import ReactError
-          const reactErrorIdentfier = addDefault(path, 'errors/Error', {
-            nameHint: 'ReactError',
-          });
+          const reactErrorIdentfier = addDefault(
+            path,
+            paths.appSrc + '/_error.js',
+            {
+              nameHint: 'InvariantError',
+            }
+          );
 
           // Outputs:
           //   throw ReactError(`A ${adj} message that contains ${noun}`);
@@ -108,9 +112,13 @@ export default function transformErrorMessages(babel: any) {
           prodErrorId = parseInt(prodErrorId, 10);
 
           // Import ReactErrorProd
-          const reactErrorProdIdentfier = addDefault(path, 'errors/ErrorProd', {
-            nameHint: 'ReactError',
-          });
+          const reactErrorProdIdentfier = addDefault(
+            path,
+            paths.appSrc + '/_error.production.js',
+            {
+              nameHint: 'InvariantErrorProd',
+            }
+          );
 
           // Outputs:
           //   throw ReactErrorProd(ERR_CODE, adj, noun);

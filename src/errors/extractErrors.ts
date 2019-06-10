@@ -12,6 +12,9 @@ import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
 import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
+import { paths } from '../constants';
+import { safeVariableName } from '../utils';
+import pascalCase from 'pascal-case';
 
 const babylonOptions = {
   sourceType: 'module',
@@ -33,6 +36,10 @@ export function extractErrors(opts: any) {
     throw new Error(
       'Missing options. Ensure you pass an object with `errorMapFilePath`.'
     );
+  }
+
+  if (!opts.name || !('name' in opts)) {
+    throw new Error('Missing options. Ensure you pass --name flag to tsdx');
   }
 
   const errorMapFilePath = opts.errorMapFilePath;
@@ -91,10 +98,45 @@ export function extractErrors(opts: any) {
   }
 
   function flush(cb?: any) {
+    const prettyName = pascalCase(safeVariableName(opts.name));
     fs.writeFileSync(
       errorMapFilePath,
       JSON.stringify(invertObject(existingErrorMap), null, 2) + '\n',
       'utf-8'
+    );
+    fs.writeFileSync(
+      paths.appSrc + '/_error.ts',
+      `
+function ${prettyName}Error(message: string) {
+  const error = new Error(message);
+  error.name = 'Invariant Violation';
+  return error;
+}
+
+export default ${prettyName}Error;      
+      `
+    );
+
+    fs.writeFileSync(
+      paths.appSrc + '/_error.production.ts',
+      `// Do not require this module directly! Use a normal error constructor with
+// template literal strings. The messages will be converted to ReactError during
+// build, and in production they will be minified.
+
+function ${prettyName}ErrorProd(code: string | number) {
+  let url = '${opts.extractErrors}' + code;
+  for (let i = 1; i < arguments.length; i++) {
+    url += '&args[]=' + encodeURIComponent(arguments[i]);
+  }
+  return new Error(
+    \`Minified ${prettyName} error #\$\{code\}; visit \$\{url\} for the full message or \` +
+      'use the non-minified dev environment for full errors and additional \' +
+      'helpful warnings. '
+  );
+}
+
+export default ${prettyName}ErrorProd;
+`
     );
   }
 

@@ -54,6 +54,7 @@
     "jpjs": "^1.2.1",
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
+    "pascal-case": "^2.0.1",
     "progress-estimator": "^0.2.2",
     "rollup": "^1.12.0",
     "rollup-plugin-babel": "^4.3.2",

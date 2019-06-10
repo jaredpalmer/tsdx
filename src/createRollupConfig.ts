@@ -67,7 +67,10 @@ export function createRollupConfig(
     tsconfig?: string;
   }
 ) {
-  const findAndRecordErrorCodes = extractErrors(errorCodeOpts);
+  const findAndRecordErrorCodes = extractErrors({
+    ...errorCodeOpts,
+    ...opts,
+  });
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,

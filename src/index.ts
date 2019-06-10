@@ -262,7 +262,14 @@ prog
   .option('--format', 'Specify module format(s)', 'cjs,es,umd')
   .example('watch --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
-  .example('build --tsconfig ./tsconfig.foo.json')
+  .example('watch --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
@@ -333,6 +340,13 @@ prog
   .example('build --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (opts: any) => {
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
