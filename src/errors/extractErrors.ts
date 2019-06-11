@@ -45,7 +45,7 @@ export function extractErrors(opts: any) {
   if (typeof opts.extractErrors === 'boolean') {
     throw new Error(
       'No url passed to extractErrors flag.' +
-        'Ensure you pass a url to --extractErrors, eg. "https://reactjs.org/docs/error-decoder.html?invariant=".'
+        'Ensure you pass a url, eg. `--extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=`.'
     );
   }
 
@@ -55,12 +55,7 @@ export function extractErrors(opts: any) {
     // Using `fs.readFileSync` instead of `require` here, because `require()`
     // calls are cached, and the cache map is not properly invalidated after
     // file changes.
-    existingErrorMap = JSON.parse(
-      fs.readFileSync(
-        path.join(__dirname, path.basename(errorMapFilePath)),
-        'utf8'
-      )
-    );
+    existingErrorMap = JSON.parse(fs.readFileSync(errorMapFilePath, 'utf8'));
   } catch (e) {
     existingErrorMap = {};
   }
