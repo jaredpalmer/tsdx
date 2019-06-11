@@ -42,6 +42,13 @@ export function extractErrors(opts: any) {
     throw new Error('Missing options. Ensure you pass --name flag to tsdx');
   }
 
+  if (typeof opts.extractErrors === 'boolean') {
+    throw new Error(
+      'No url passed to extractErrors flag.' +
+        'Ensure you pass a url to --extractErrors, eg. "https://reactjs.org/docs/error-decoder.html?invariant=".'
+    );
+  }
+
   const errorMapFilePath = opts.errorMapFilePath;
   let existingErrorMap: any;
   try {
