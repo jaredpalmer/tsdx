@@ -120,7 +120,7 @@ export default ${prettyName}Error;
     fs.writeFileSync(
       paths.appSrc + '/_error.production.ts',
       `// Do not require this module directly! Use a normal error constructor with
-// template literal strings. The messages will be converted to ReactError during
+// template literal strings. The messages will be converted to ${prettyName}Error during
 // build, and in production they will be minified.
 
 function ${prettyName}ErrorProd(code: string | number) {
