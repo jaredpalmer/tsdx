@@ -194,7 +194,9 @@ if (!condition) {
 }
 ```
 
-Recommended for use with smaller https://github.com/alexreardon/tiny-invariant.
+Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
+
+To extract and minify error codes in production into a static `codes.json` file, pass an `extractErrors` flag with a URL where you will decode the error code. Example: `tsdx build --extractErrors=https://your-url.com/?invariant=`
 
 ##### `warning`
 
@@ -212,7 +214,7 @@ if ('production' !== process.env.NODE_ENV) {
 }
 ```
 
-Recommended for use with https://github.com/alexreardon/tiny-warning.
+Note: TSDX doesn't supply a `warning` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-warning.
 
 ### Using lodash
 
@@ -299,22 +301,30 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es)
-  -h, --help     Displays this message
+  -i, --entry     Entry module(s)
+  --target        Specify your target environment  (default web)
+  --name          Specify name exposed in UMD builds
+  --format        Specify module format(s)  (default cjs,es)
+  --extractErrors Specify url for extracting error codes
+  -h, --help      Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,es,umd
+  $ tsdx build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=
 ```
 
 ### `tsdx test`
 
 This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
+
+## Hosting extracted Errors
+
+After running `--extractErrors`, you will have a `codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
+
+_Simple guide to host error codes to be completed_
 
 ## Author
 
