@@ -386,11 +386,11 @@ prog
       return fs.writeFile(
         resolveApp(`./dist/index${format !== 'cjs' ? `.${format}` : ''}.js`),
         [
-          'use strict;',
+          `'use strict'`,
           `if (process.env.NODE_ENV === 'production') {`,
-          `${baseLine}.production.js;`,
+          `${baseLine}.production.js`,
           '} else {',
-          `${baseLine}.development.js;`,
+          `${baseLine}.development.js`,
           '}',
         ].join('\n')
       );
