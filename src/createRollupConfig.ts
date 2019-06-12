@@ -53,8 +53,8 @@ const babelOptions = (
 let shebang: any = {};
 export function createRollupConfig(
   format: 'cjs' | 'umd' | 'es',
-  env: 'development' | 'production',
   opts: {
+    env?: 'development' | 'production';
     input: string;
     name: string;
     target: 'node' | 'browser';
@@ -74,9 +74,9 @@ export function createRollupConfig(
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safePackageName(
-        opts.name
-      )}.${format}.${env}.js`,
+      file: `${paths.appDist}/${safePackageName(opts.name)}.${format}${
+        opts.env ? `.${opts.env}` : ''
+      }.js`,
       // Pass through the file format
       format,
       // Do not let Rollup call Object.freeze() on namespace import objects
@@ -161,14 +161,15 @@ export function createRollupConfig(
         },
       }),
       babel(babelOptions(format, opts.target)),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
+      format === 'umd' &&
+        replace({
+          'process.env.NODE_ENV': JSON.stringify(opts.env),
+        }),
       sourceMaps(),
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      env === 'production' &&
+      format === 'umd' &&
         terser({
           sourcemap: true,
           output: { comments: false },
@@ -178,7 +179,7 @@ export function createRollupConfig(
             passes: 10,
           },
           ecma: 5,
-          toplevel: format === 'es' || format === 'cjs',
+          toplevel: false,
           warnings: true,
         }),
     ],

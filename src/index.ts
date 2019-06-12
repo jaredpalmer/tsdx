@@ -92,15 +92,13 @@ function createBuildConfigs(
   return concatAllArray(
     opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'development', { ...opts, input }),
-      opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'production', { ...opts, input }),
+        createRollupConfig('cjs', { ...opts, input }),
       opts.format.includes('es') &&
-        createRollupConfig('es', 'production', { ...opts, input }),
+        createRollupConfig('es', { ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'development', { ...opts, input }),
+        createRollupConfig('umd', { env: 'development', ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'production', { ...opts, input }),
+        createRollupConfig('umd', { env: 'production', ...opts, input }),
     ])
   ).filter(Boolean);
 }
@@ -267,23 +265,9 @@ prog
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const buildConfigs = createBuildConfigs(opts);
+    await util.promisify(mkdirp)(resolveApp('dist'));
     if (opts.format.includes('cjs')) {
-      await util.promisify(mkdirp)(resolveApp('dist'));
-      await fs.writeFile(
-        resolveApp('dist/index.js'),
-        `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-      );
+      await writeEntryFile(opts.name);
     }
     const spinner = ora().start();
     await watch(
@@ -337,32 +321,10 @@ prog
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const buildConfigs = createBuildConfigs(opts);
+    await util.promisify(mkdirp)(resolveApp('./dist'));
     if (opts.format.includes('cjs')) {
-      try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
-        const promise = fs
-          .writeFile(
-            resolveApp('./dist/index.js'),
-            `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-          )
-          .catch(e => {
-            throw e;
-          });
-        logger(promise, 'Creating entry file');
-      } catch (e) {
-        logError(e);
-      }
+      const promise = writeEntryFile(opts.name).catch(logError);
+      logger(promise, 'Creating entry file');
     }
     try {
       const promise = asyncro
@@ -382,6 +344,15 @@ prog
       logError(error);
     }
   });
+
+function writeEntryFile(name: string) {
+  return fs.writeFile(
+    resolveApp('dist/index.js'),
+    `'use strict'
+
+module.exports = require('./${safePackageName(name)}.cjs.js')`
+  );
+}
 
 prog
   .command('test')
