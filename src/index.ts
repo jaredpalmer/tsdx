@@ -388,9 +388,9 @@ prog
         [
           `'use strict'`,
           `if (process.env.NODE_ENV === 'production') {`,
-          `${baseLine}.production.js`,
+          `${baseLine}.production.js')`,
           '} else {',
-          `${baseLine}.development.js`,
+          `${baseLine}.development.js')`,
           '}',
         ].join('\n')
       );
