@@ -382,7 +382,7 @@ prog
 
     function writeEntryFile(format: string) {
       // prettier-ignore
-      const baseLine = `  module.exports = require('./${safePackageName(opts.name)}.${format}.`;
+      const baseLine = `  module.exports = require('./${safePackageName(opts.name)}.${format}`;
       return fs.writeFile(
         resolveApp(`./dist/index${format !== 'cjs' ? `.${format}` : ''}.js`),
         [
