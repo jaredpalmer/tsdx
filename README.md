@@ -97,7 +97,7 @@ export const sum = (a: number, b: number) => {
 };
 ```
 
-`tsdx build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
+`tsdx build` will output an 3 files for CommonJS and ES formats (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
 
 ```js
 // Entry File

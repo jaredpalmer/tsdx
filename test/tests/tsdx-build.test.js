@@ -21,11 +21,15 @@ describe('tsdx build', () => {
     const output = shell.exec('node ../dist/index.js build');
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.es.js')).toBeTruthy();
     expect(
       shell.test('-f', 'dist/build-default.cjs.development.js')
     ).toBeTruthy();
     expect(
       shell.test('-f', 'dist/build-default.cjs.production.js')
+    ).toBeTruthy();
+    expect(
+      shell.test('-f', 'dist/build-default.es.development.js')
     ).toBeTruthy();
     expect(
       shell.test('-f', 'dist/build-default.es.production.js')

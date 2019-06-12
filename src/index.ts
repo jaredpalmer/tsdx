@@ -96,6 +96,8 @@ function createBuildConfigs(
       opts.format.includes('cjs') &&
         createRollupConfig('cjs', 'production', { ...opts, input }),
       opts.format.includes('es') &&
+        createRollupConfig('es', 'development', { ...opts, input }),
+      opts.format.includes('es') &&
         createRollupConfig('es', 'production', { ...opts, input }),
       opts.format.includes('umd') &&
         createRollupConfig('umd', 'development', { ...opts, input }),
@@ -337,33 +339,29 @@ prog
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     const buildConfigs = createBuildConfigs(opts);
-    if (opts.format.includes('cjs')) {
-      try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
-        const promise = fs
-          .writeFile(
-            resolveApp('./dist/index.js'),
-            `
-         'use strict'
 
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-          )
-          .catch(e => {
-            throw e;
-          });
-        logger(promise, 'Creating entry file');
-      } catch (e) {
-        logError(e);
-      }
+    let promise = Promise.resolve();
+
+    if (opts.format.length > 0) {
+      promise.then(() => util.promisify(mkdirp)(resolveApp('./dist')));
     }
+
+    if (opts.format.includes('cjs')) {
+      logger(
+        promise.then(() => writeEntryFile('cjs')).catch(logError),
+        'Creating CJS entry file'
+      );
+    }
+
+    if (opts.format.includes('es')) {
+      logger(
+        promise.then(() => writeEntryFile('es')).catch(logError),
+        'Creating ES entry file'
+      );
+    }
+
+    await promise;
+
     try {
       const promise = asyncro
         .map(
@@ -380,6 +378,22 @@ prog
       logger(promise, 'Building modules');
     } catch (error) {
       logError(error);
+    }
+
+    function writeEntryFile(format: string) {
+      // prettier-ignore
+      const baseLine = `  module.exports = require('./${safePackageName(opts.name)}.${format}.`;
+      return fs.writeFile(
+        resolveApp(`./dist/index${format !== 'cjs' ? `.${format}` : ''}.js`),
+        [
+          'use strict',
+          `if (process.env.NODE_ENV === 'production') {`,
+          `${baseLine}.production.js`,
+          '} else {',
+          `${baseLine}.development.js`,
+          '}',
+        ].join('\n')
+      );
     }
   });
 
