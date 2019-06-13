@@ -14,7 +14,7 @@ import shebangPlugin from '@jaredpalmer/rollup-plugin-preserve-shebang';
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
 const babelOptions = (
-  format: 'cjs' | 'es' | 'umd',
+  format: 'cjs' | 'esm' | 'umd',
   target: 'node' | 'browser'
 ) => ({
   exclude: 'node_modules/**',
@@ -52,7 +52,7 @@ const babelOptions = (
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 export function createRollupConfig(
-  format: 'cjs' | 'umd' | 'es',
+  format: 'cjs' | 'umd' | 'esm',
   opts: {
     env?: 'development' | 'production';
     minify?: boolean;
@@ -65,10 +65,9 @@ export function createRollupConfig(
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
-  const outputFormat = format === 'es' ? 'esm' : format;
   const outputName = [
     `${paths.appDist}/${safePackageName(opts.name)}`,
-    outputFormat,
+    format,
     opts.env,
     shouldMinify ? 'min' : '',
     'js',
@@ -91,7 +90,7 @@ export function createRollupConfig(
       // Set filenames of the consumer's package
       file: outputName,
       // Pass through the file format
-      format: outputFormat,
+      format,
       // Do not let Rollup call Object.freeze() on namespace import objects
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,

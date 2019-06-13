@@ -248,7 +248,7 @@ For brevity let's look at the ES module output.
 <!-- prettier-ignore -->
 ```js
 import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as KebabLogger};
-//# sourceMappingURL=test-react-tsdx.es.production.js.map
+//# sourceMappingURL=test-react-tsdx.esm.production.js.map
 ```
 
 TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
@@ -281,14 +281,14 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es)
+  --format       Specify module format(s)  (default cjs,esm)
   -h, --help     Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,es,umd
+  $ tsdx watch --format cjs,esm,umd
 ```
 
 ### `tsdx build`
@@ -304,14 +304,14 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es)
+  --format       Specify module format(s)  (default cjs,esm)
   -h, --help     Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
-  $ tsdx build --format cjs,es,umd
+  $ tsdx build --format cjs,esm,umd
 ```
 
 ### `tsdx test`

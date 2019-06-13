@@ -95,8 +95,8 @@ function createBuildConfigs(
         createRollupConfig('cjs', { env: 'development', ...opts, input }),
       opts.format.includes('cjs') &&
         createRollupConfig('cjs', { env: 'production', ...opts, input }),
-      opts.format.includes('es') &&
-        createRollupConfig('es', { ...opts, input }),
+      opts.format.includes('esm') &&
+        createRollupConfig('esm', { ...opts, input }),
       opts.format.includes('umd') &&
         createRollupConfig('umd', { env: 'development', ...opts, input }),
       opts.format.includes('umd') &&
@@ -259,8 +259,8 @@ prog
   .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('watch --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es')
-  .example('watch --format cjs,es')
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('watch --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (dirtyOpts: any) => {
@@ -314,8 +314,8 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es')
-  .example('build --format cjs,es')
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (dirtyOpts: any) => {
@@ -351,8 +351,8 @@ async function normalizeOpts(opts: any) {
     name: opts.name || appPackageJson.name,
     input: await getInputs(opts.entry, appPackageJson.source),
     format: opts.format.split(',').map((format: string) => {
-      if (format === 'esm') {
-        return 'es';
+      if (format === 'es') {
+        return 'esm';
       }
       return format;
     }),
