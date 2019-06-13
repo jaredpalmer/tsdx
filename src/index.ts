@@ -92,7 +92,9 @@ function createBuildConfigs(
   return concatAllArray(
     opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', { ...opts, input }),
+        createRollupConfig('cjs', { env: 'development', ...opts, input }),
+      opts.format.includes('cjs') &&
+        createRollupConfig('cjs', { env: 'production', ...opts, input }),
       opts.format.includes('es') &&
         createRollupConfig('es', { ...opts, input }),
       opts.format.includes('umd') &&
@@ -257,17 +259,16 @@ prog
   .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('watch --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
+  .option('--format', 'Specify module format(s)', 'cjs,es')
   .example('watch --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
-    await util.promisify(mkdirp)(resolveApp('dist'));
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      await writeEntryFile(opts.name);
+      await writeCjsEntryFile(opts.name);
     }
     const spinner = ora().start();
     await watch(
@@ -317,13 +318,12 @@ prog
   .example('build --format cjs,es')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
-    await util.promisify(mkdirp)(resolveApp('./dist'));
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      const promise = writeEntryFile(opts.name).catch(logError);
+      const promise = writeCjsEntryFile(opts.name).catch(logError);
       logger(promise, 'Creating entry file');
     }
     try {
@@ -345,12 +345,37 @@ prog
     }
   });
 
-function writeEntryFile(name: string) {
-  return fs.writeFile(
-    resolveApp('dist/index.js'),
-    `'use strict'
+async function normalizeOpts(opts: any) {
+  return {
+    ...opts,
+    name: opts.name || appPackageJson.name,
+    input: await getInputs(opts.entry, appPackageJson.source),
+    format: opts.format.split(',').map((format: string) => {
+      if (format === 'esm') {
+        return 'es';
+      }
+      return format;
+    }),
+  };
+}
 
-module.exports = require('./${safePackageName(name)}.cjs.js')`
+function ensureDistFolder() {
+  return util.promisify(mkdirp)(resolveApp('dist'));
+}
+
+function writeCjsEntryFile(name: string) {
+  // prettier-ignore
+  const baseLine = `  module.exports = require('./${safePackageName(name)}`;
+  return fs.writeFile(
+    resolveApp(`./dist/index.js`),
+    [
+      `'use strict'`,
+      `if (process.env.NODE_ENV === 'production') {`,
+      `${baseLine}.cjs.production.min.js')`,
+      '} else {',
+      `${baseLine}.cjs.development.js')`,
+      '}',
+    ].join('\n')
   );
 }
 

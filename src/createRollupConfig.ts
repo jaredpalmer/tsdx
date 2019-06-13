@@ -55,12 +55,26 @@ export function createRollupConfig(
   format: 'cjs' | 'umd' | 'es',
   opts: {
     env?: 'development' | 'production';
+    minify?: boolean;
     input: string;
     name: string;
     target: 'node' | 'browser';
     tsconfig?: string;
   }
 ) {
+  const shouldMinify =
+    opts.minify !== undefined ? opts.minify : opts.env === 'production';
+
+  const outputName = [
+    `${paths.appDist}/${safePackageName(opts.name)}`,
+    format === 'es' ? 'esm' : format,
+    opts.env,
+    shouldMinify ? 'min' : '',
+    'js',
+  ]
+    .filter(Boolean)
+    .join('.');
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -74,9 +88,7 @@ export function createRollupConfig(
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safePackageName(opts.name)}.${format}${
-        opts.env ? `.${opts.env}` : ''
-      }.js`,
+      file: outputName,
       // Pass through the file format
       format,
       // Do not let Rollup call Object.freeze() on namespace import objects
@@ -161,7 +173,7 @@ export function createRollupConfig(
         },
       }),
       babel(babelOptions(format, opts.target)),
-      format === 'umd' &&
+      opts.env !== undefined &&
         replace({
           'process.env.NODE_ENV': JSON.stringify(opts.env),
         }),
@@ -169,7 +181,7 @@ export function createRollupConfig(
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      format === 'umd' &&
+      shouldMinify &&
         terser({
           sourcemap: true,
           output: { comments: false },
