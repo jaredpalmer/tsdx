@@ -191,7 +191,7 @@ export function createRollupConfig(
             passes: 10,
           },
           ecma: 5,
-          toplevel: false,
+          toplevel: format === 'cjs',
           warnings: true,
         }),
     ],
