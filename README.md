@@ -97,7 +97,49 @@ export const sum = (a: number, b: number) => {
 };
 ```
 
-`tsdx build` will output an CommonJS and ES module file by default. If you want to specify a UMD build, you can do that as well.
+`tsdx build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
+
+```js
+// Entry File
+// ./dist/index.js
+'use strict';
+
+// This determines which build to use based on the `NODE_ENV` of your end user.
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./mylib.cjs.production.js');
+} else {
+  module.exports = require('./mylib.cjs.development.js');
+}
+```
+
+```js
+// CommonJS Development Build
+// ./dist/mylib.cjs.development.js
+'use strict';
+
+const sum = (a, b) => {
+  {
+    console.log('Helpful dev-only error message');
+  }
+
+  return a + b;
+};
+
+exports.sum = sum;
+//# sourceMappingURL=mylib.cjs.development.js.map
+```
+
+```js
+// CommonJS Production Build
+// ./dist/mylib.cjs.production.js
+'use strict';
+exports.sum = (s, t) => s + t;
+//# sourceMappingURL=test-react-tsdx.cjs.production.js.map
+```
+
+AS you can see, TSDX stripped out the development check from the production code. **This allows you can to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+
+For ESM build, it's up to end-user to build environment specific build with NODE_ENV replace (done by Webpack 4 automatically).
 
 #### Rollup Treeshaking
 
