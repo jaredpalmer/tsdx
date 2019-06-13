@@ -65,9 +65,10 @@ export function createRollupConfig(
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
+  const outputFormat = format === 'es' ? 'esm' : format;
   const outputName = [
     `${paths.appDist}/${safePackageName(opts.name)}`,
-    format === 'es' ? 'esm' : format,
+    outputFormat,
     opts.env,
     shouldMinify ? 'min' : '',
     'js',
@@ -90,7 +91,7 @@ export function createRollupConfig(
       // Set filenames of the consumer's package
       file: outputName,
       // Pass through the file format
-      format,
+      format: outputFormat,
       // Do not let Rollup call Object.freeze() on namespace import objects
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
