@@ -364,19 +364,17 @@ function ensureDistFolder() {
 }
 
 function writeCjsEntryFile(name: string) {
-  // prettier-ignore
-  const baseLine = `  module.exports = require('./${safePackageName(name)}`;
-  return fs.writeFile(
-    resolveApp(`./dist/index.js`),
-    [
-      `'use strict'`,
-      `if (process.env.NODE_ENV === 'production') {`,
-      `${baseLine}.cjs.production.min.js')`,
-      '} else {',
-      `${baseLine}.cjs.development.js')`,
-      '}',
-    ].join('\n')
-  );
+  const baseLine = `module.exports = require('./${safePackageName(name)}`;
+  const contents = `
+'use strict'
+
+if (process.env.NODE_ENV === 'production') {
+  ${baseLine}.cjs.production.min.js')
+} else {
+  ${baseLine}.cjs.development.js')
+}
+`;
+  return fs.writeFile(resolveApp(`./dist/index.js`), contents);
 }
 
 prog
