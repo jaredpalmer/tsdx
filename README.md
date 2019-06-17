@@ -137,7 +137,7 @@ exports.sum = (s, t) => s + t;
 //# sourceMappingURL=test-react-tsdx.cjs.production.js.map
 ```
 
-AS you can see, TSDX stripped out the development check from the production code. **This allows you can to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+AS you can see, TSDX stripped out the development check from the production code. **This allows you to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
 
 #### Rollup Treeshaking
 
