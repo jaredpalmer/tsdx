@@ -187,7 +187,7 @@ prog
         name: safeName,
         version: '0.1.0',
         main: 'dist/index.js',
-        module: `dist/${safeName}.es.production.js`,
+        module: `dist/${safeName}.esm.js`,
         typings: 'dist/index.d.ts',
         files: ['dist'],
         scripts: {
