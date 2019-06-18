@@ -14,7 +14,9 @@ export const safeVariableName = (name: string) =>
   );
 
 export const safePackageName = (name: string) =>
-  name.toLowerCase().replace(/((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
+  name
+    .toLowerCase()
+    .replace(/(^@.*\/)|((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
 
 export const external = (id: string) =>
   !id.startsWith('.') && !path.isAbsolute(id);
