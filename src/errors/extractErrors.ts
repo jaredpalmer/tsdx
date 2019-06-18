@@ -107,7 +107,7 @@ export function extractErrors(opts: any) {
       'utf-8'
     );
     fs.writeFileSync(
-      paths.appSrc + '/_error.ts',
+      paths.appSrc + '/errors/Error.js',
       `
 function ${prettyName}Error(message: string) {
   const error = new Error(message);
@@ -120,7 +120,7 @@ export default ${prettyName}Error;
     );
 
     fs.writeFileSync(
-      paths.appSrc + '/_error.production.ts',
+      paths.appSrc + '/errors/ErrorProd.ts',
       `// Do not require this module directly! Use a normal error constructor with
 // template literal strings. The messages will be converted to ${prettyName}Error during
 // build, and in production they will be minified.
