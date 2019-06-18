@@ -92,15 +92,15 @@ function createBuildConfigs(
   return concatAllArray(
     opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'development', { ...opts, input }),
+        createRollupConfig('cjs', { env: 'development', ...opts, input }),
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'production', { ...opts, input }),
-      opts.format.includes('es') &&
-        createRollupConfig('es', 'production', { ...opts, input }),
+        createRollupConfig('cjs', { env: 'production', ...opts, input }),
+      opts.format.includes('esm') &&
+        createRollupConfig('esm', { ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'development', { ...opts, input }),
+        createRollupConfig('umd', { env: 'development', ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'production', { ...opts, input }),
+        createRollupConfig('umd', { env: 'production', ...opts, input }),
     ])
   ).filter(Boolean);
 }
@@ -259,31 +259,16 @@ prog
   .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('watch --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
-  .example('watch --format cjs,es')
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('watch --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      await util.promisify(mkdirp)(resolveApp('dist'));
-      await fs.writeFile(
-        resolveApp('dist/index.js'),
-        `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-      );
+      await writeCjsEntryFile(opts.name);
     }
     const spinner = ora().start();
     await watch(
@@ -329,40 +314,17 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es')
-  .example('build --format cjs,es')
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
-        const promise = fs
-          .writeFile(
-            resolveApp('./dist/index.js'),
-            `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-          )
-          .catch(e => {
-            throw e;
-          });
-        logger(promise, 'Creating entry file');
-      } catch (e) {
-        logError(e);
-      }
+      const promise = writeCjsEntryFile(opts.name).catch(logError);
+      logger(promise, 'Creating entry file');
     }
     try {
       const promise = asyncro
@@ -382,6 +344,38 @@ prog
       logError(error);
     }
   });
+
+async function normalizeOpts(opts: any) {
+  return {
+    ...opts,
+    name: opts.name || appPackageJson.name,
+    input: await getInputs(opts.entry, appPackageJson.source),
+    format: opts.format.split(',').map((format: string) => {
+      if (format === 'es') {
+        return 'esm';
+      }
+      return format;
+    }),
+  };
+}
+
+function ensureDistFolder() {
+  return util.promisify(mkdirp)(resolveApp('dist'));
+}
+
+function writeCjsEntryFile(name: string) {
+  const baseLine = `module.exports = require('./${safePackageName(name)}`;
+  const contents = `
+'use strict'
+
+if (process.env.NODE_ENV === 'production') {
+  ${baseLine}.cjs.production.min.js')
+} else {
+  ${baseLine}.cjs.development.js')
+}
+`;
+  return fs.writeFile(resolveApp(`./dist/index.js`), contents);
+}
 
 prog
   .command('test')

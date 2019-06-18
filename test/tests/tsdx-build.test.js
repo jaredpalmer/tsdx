@@ -18,18 +18,16 @@ describe('tsdx build', () => {
   it('should compile files into a dist directory', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 
-    const output = shell.exec('node ../dist/index.js build');
+    const output = shell.exec('node ../dist/index.js build --format esm,cjs');
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
       shell.test('-f', 'dist/build-default.cjs.development.js')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-default.cjs.production.js')
+      shell.test('-f', 'dist/build-default.cjs.production.min.js')
     ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.es.production.js')
-    ).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-default.esm.js')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 
