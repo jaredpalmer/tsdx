@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 
 // Delete me
-export const Thing = () => {
+export const Thing: React.FC = () => {
   return <div>the snozzberries taste like snozzberries</div>;
 };
