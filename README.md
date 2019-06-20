@@ -282,6 +282,7 @@ Options
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
   --format       Specify module format(s)  (default cjs,esm)
+  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   -h, --help     Displays this message
 
 Examples
@@ -289,6 +290,7 @@ Examples
   $ tsdx watch --target node
   $ tsdx watch --name Foo
   $ tsdx watch --format cjs,esm,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx build`
@@ -305,6 +307,7 @@ Options
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
   --format       Specify module format(s)  (default cjs,esm)
+  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   -h, --help     Displays this message
 
 Examples
@@ -312,6 +315,7 @@ Examples
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx test`
