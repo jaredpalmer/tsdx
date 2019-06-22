@@ -3,7 +3,14 @@
 
 import sade from 'sade';
 import glob from 'tiny-glob/sync';
-import { rollup, watch, RollupOptions, OutputOptions } from 'rollup';
+import {
+  rollup,
+  watch,
+  RollupOptions,
+  OutputOptions,
+  RollupWatchOptions,
+  WatcherOptions,
+} from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import util from 'util';
@@ -82,19 +89,21 @@ async function getInputs(entries: string[], source?: string) {
 
   return concatAllArray(inputs);
 }
-function createBuildConfigs(opts: any) {
+function createBuildConfigs(
+  opts: any
+): Array<RollupOptions & { output: OutputOptions }> {
   return concatAllArray(
     opts.input.map((input: string) => [
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'development', { ...opts, input }),
+        createRollupConfig('cjs', { env: 'development', ...opts, input }),
       opts.format.includes('cjs') &&
-        createRollupConfig('cjs', 'production', { ...opts, input }),
-      opts.format.includes('es') &&
-        createRollupConfig('es', 'production', { ...opts, input }),
+        createRollupConfig('cjs', { env: 'production', ...opts, input }),
+      opts.format.includes('esm') &&
+        createRollupConfig('esm', { ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'development', { ...opts, input }),
+        createRollupConfig('umd', { env: 'development', ...opts, input }),
       opts.format.includes('umd') &&
-        createRollupConfig('umd', 'production', { ...opts, input }),
+        createRollupConfig('umd', { env: 'production', ...opts, input }),
     ])
   ).filter(Boolean);
 }
@@ -114,6 +123,17 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .action(async (pkg: string) => {
+    console.log(
+      chalk.blue(`
+::::::::::: ::::::::  :::::::::  :::    ::: 
+    :+:    :+:    :+: :+:    :+: :+:    :+: 
+    +:+    +:+        +:+    +:+  +:+  +:+  
+    +#+    +#++:++#++ +#+    +:+   +#++:+   
+    +#+           +#+ +#+    +#+  +#+  +#+  
+    #+#    #+#    #+# #+#    #+# #+#    #+# 
+    ###     ########  #########  ###    ###                                                 
+`)
+    );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
     let template;
     // Helper fn to prompt the user for a different
@@ -170,8 +190,7 @@ prog
         name: safeName,
         version: '0.1.0',
         main: 'dist/index.js',
-        'umd:main': `dist/${safeName}.umd.production.js`,
-        module: `dist/${safeName}.es.production.js`,
+        module: `dist/${safeName}.esm.js`,
         typings: 'dist/index.d.ts',
         files: ['dist'],
         scripts: {
@@ -225,7 +244,7 @@ prog
     try {
       const cmd = getInstallCmd();
       await execa(cmd, getInstallArgs(cmd, deps));
-      installSpinner.succeed('Installed dependecines');
+      installSpinner.succeed('Installed dependencies');
       console.log(Messages.start(pkg));
     } catch (error) {
       installSpinner.fail('Failed to install dependencies');
@@ -243,38 +262,25 @@ prog
   .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('watch --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
-  .example('watch --format cjs,es')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
-    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('watch --format cjs,esm')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
+    const buildConfigs = createBuildConfigs(opts);
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      await util.promisify(mkdirp)(resolveApp('dist'));
-      await fs.writeFile(
-        resolveApp('dist/index.js'),
-        `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-      );
+      await writeCjsEntryFile(opts.name);
     }
     const spinner = ora().start();
     await watch(
-      [cjsDev, cjsProd, ...otherConfigs].map(inputOptions => ({
+      (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
         watch: {
           silent: true,
-          include: 'src/**',
-          exclude: 'node_modules/**',
-        },
+          include: ['src/**'],
+          exclude: ['node_modules/**'],
+        } as WatcherOptions,
         ...inputOptions,
       }))
     ).on('event', async event => {
@@ -311,43 +317,22 @@ prog
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,es,umd')
-  .example('build --format cjs,es')
-  .action(async (opts: any) => {
-    opts.name = opts.name || appPackageJson.name;
-    opts.input = await getInputs(opts.entry, appPackageJson.source);
-    const [cjsDev, cjsProd, ...otherConfigs] = createBuildConfigs(opts);
+  .option('--format', 'Specify module format(s)', 'cjs,esm')
+  .example('build --format cjs,esm')
+  .option('--tsconfig', 'Specify custom tsconfig path')
+  .example('build --tsconfig ./tsconfig.foo.json')
+  .action(async (dirtyOpts: any) => {
+    const opts = await normalizeOpts(dirtyOpts);
+    const buildConfigs = createBuildConfigs(opts);
+    await ensureDistFolder();
     if (opts.format.includes('cjs')) {
-      try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
-        const promise = fs
-          .writeFile(
-            resolveApp('./dist/index.js'),
-            `
-         'use strict'
-
-      if (process.env.NODE_ENV === 'production') {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.production.js')
-      } else {
-        module.exports = require('./${safePackageName(
-          opts.name
-        )}.cjs.development.js')
-      }`
-          )
-          .catch(e => {
-            throw e;
-          });
-        logger(promise, 'Creating entry file');
-      } catch (e) {
-        logError(e);
-      }
+      const promise = writeCjsEntryFile(opts.name).catch(logError);
+      logger(promise, 'Creating entry file');
     }
     try {
       const promise = asyncro
         .map(
-          [cjsDev, cjsProd, ...otherConfigs],
+          buildConfigs,
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
@@ -362,6 +347,38 @@ prog
       logError(error);
     }
   });
+
+async function normalizeOpts(opts: any) {
+  return {
+    ...opts,
+    name: opts.name || appPackageJson.name,
+    input: await getInputs(opts.entry, appPackageJson.source),
+    format: opts.format.split(',').map((format: string) => {
+      if (format === 'es') {
+        return 'esm';
+      }
+      return format;
+    }),
+  };
+}
+
+function ensureDistFolder() {
+  return util.promisify(mkdirp)(resolveApp('dist'));
+}
+
+function writeCjsEntryFile(name: string) {
+  const baseLine = `module.exports = require('./${safePackageName(name)}`;
+  const contents = `
+'use strict'
+
+if (process.env.NODE_ENV === 'production') {
+  ${baseLine}.cjs.production.min.js')
+} else {
+  ${baseLine}.cjs.development.js')
+}
+`;
+  return fs.writeFile(resolveApp(`./dist/index.js`), contents);
+}
 
 prog
   .command('test')

@@ -14,7 +14,7 @@ import typescript from 'rollup-plugin-typescript2';
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
 const babelOptions = (
-  format: 'cjs' | 'es' | 'umd',
+  format: 'cjs' | 'esm' | 'umd',
   target: 'node' | 'browser'
 ) => ({
   exclude: 'node_modules/**',
@@ -22,7 +22,7 @@ const babelOptions = (
   passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
   presets: [
     [
-      '@babel/preset-env',
+      require.resolve('@babel/preset-env'),
       {
         loose: true,
         modules: false,
@@ -52,10 +52,29 @@ const babelOptions = (
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 export function createRollupConfig(
-  format: 'cjs' | 'umd' | 'es',
-  env: 'development' | 'production',
-  opts: { input: string; name: string; target: 'node' | 'browser' }
+  format: 'cjs' | 'umd' | 'esm',
+  opts: {
+    env?: 'development' | 'production';
+    minify?: boolean;
+    input: string;
+    name: string;
+    target: 'node' | 'browser';
+    tsconfig?: string;
+  }
 ) {
+  const shouldMinify =
+    opts.minify !== undefined ? opts.minify : opts.env === 'production';
+
+  const outputName = [
+    `${paths.appDist}/${safePackageName(opts.name)}`,
+    format,
+    opts.env,
+    shouldMinify ? 'min' : '',
+    'js',
+  ]
+    .filter(Boolean)
+    .join('.');
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -69,9 +88,7 @@ export function createRollupConfig(
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safePackageName(
-        opts.name
-      )}.${format}.${env}.js`,
+      file: outputName,
       // Pass through the file format
       format,
       // Do not let Rollup call Object.freeze() on namespace import objects
@@ -141,6 +158,7 @@ export function createRollupConfig(
       typescript({
         typescript: require('typescript'),
         cacheRoot: `./.rts2_cache_${format}`,
+        tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           compilerOptions: {
             sourceMap: true,
@@ -155,14 +173,15 @@ export function createRollupConfig(
         },
       }),
       babel(babelOptions(format, opts.target)),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
+      opts.env !== undefined &&
+        replace({
+          'process.env.NODE_ENV': JSON.stringify(opts.env),
+        }),
       sourceMaps(),
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      env === 'production' &&
+      shouldMinify &&
         terser({
           sourcemap: true,
           output: { comments: false },
@@ -172,7 +191,7 @@ export function createRollupConfig(
             passes: 10,
           },
           ecma: 5,
-          toplevel: format === 'es' || format === 'cjs',
+          toplevel: format === 'cjs',
           warnings: true,
         }),
     ],

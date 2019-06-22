@@ -37,7 +37,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
 
-- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS, UMD & ESM) plus development and production builds
+- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS & ESM by default, and also UMD if you want) plus development and production builds
 - Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
 - Live reload / watch-mode
 - Works with React
@@ -109,7 +109,7 @@ export const sum = (a: number, b: number) => {
 };
 ```
 
-`tsdx build` will output an ES module file, 2 UMD files (dev and prod), and 3 CommonJS files (dev, prod, and an entry file). For brevity, let's examine the CommonJS output (comments added for emphasis):
+`tsdx build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
 
 ```js
 // Entry File
@@ -149,7 +149,9 @@ exports.sum = (s, t) => s + t;
 //# sourceMappingURL=test-react-tsdx.cjs.production.js.map
 ```
 
-AS you can see, TSDX stripped out the development check from the production code. **This allows you can to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+AS you can see, TSDX stripped out the development check from the production code. **This allows you to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+
+For ESM build, it's up to end-user to build environment specific build with NODE_ENV replace (done by Webpack 4 automatically).
 
 #### Rollup Treeshaking
 
@@ -258,7 +260,7 @@ For brevity let's look at the ES module output.
 <!-- prettier-ignore -->
 ```js
 import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as KebabLogger};
-//# sourceMappingURL=test-react-tsdx.es.production.js.map
+//# sourceMappingURL=test-react-tsdx.esm.production.js.map
 ```
 
 TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
@@ -291,14 +293,16 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es,umd)
+  --format       Specify module format(s)  (default cjs,esm)
+  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   -h, --help     Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,es
+  $ tsdx watch --format cjs,esm,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx build`
@@ -314,14 +318,16 @@ Options
   -i, --entry    Entry module(s)
   --target       Specify your target environment  (default web)
   --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es,umd)
+  --format       Specify module format(s)  (default cjs,esm)
+  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   -h, --help     Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
-  $ tsdx build --format cjs,es
+  $ tsdx build --format cjs,esm,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx test`
