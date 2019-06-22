@@ -426,7 +426,6 @@ prog
   .action(
     async (opts: {
       fix: boolean;
-      prettier: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
       _: string[];

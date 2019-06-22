@@ -5,6 +5,7 @@ declare module 'ora';
 declare module 'sade';
 declare module 'tiny-glob/sync';
 declare module 'ansi-escapes';
+declare module 'eslint-config-react-app';
 
 // Patch Babel
 // @see line 226 of https://unpkg.com/@babel/core@7.4.4/lib/index.js
