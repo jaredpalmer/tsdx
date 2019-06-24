@@ -261,6 +261,11 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,esm')
   .example('watch --format cjs,esm')
+  .option(
+    '--preserveWatchOutput',
+    'Keep outdated console output in watch mode instead of clearing the screen'
+  )
+  .example('watch --preserveWatchOutput')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .action(async (dirtyOpts: any) => {
@@ -282,7 +287,9 @@ prog
       }))
     ).on('event', async event => {
       if (event.code === 'START') {
-        clearConsole();
+        if (!opts.preserveWatchOutput) {
+          clearConsole();
+        }
         spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {

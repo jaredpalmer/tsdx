@@ -278,12 +278,13 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,esm)
-  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  -h, --help     Displays this message
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --preserveWatchOutput Keep outdated console output in watch mode instead of clearing the screen
+  -h, --help            Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
