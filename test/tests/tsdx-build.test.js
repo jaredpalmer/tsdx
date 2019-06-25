@@ -43,6 +43,12 @@ describe('tsdx build', () => {
     expect(lib.foo()).toBe('bar');
   });
 
+  it('should fail gracefully with exit code 1 when build failed', () => {
+    util.setupStageWithFixture(stageName, 'build-invalid');
+    const code = shell.exec('node ../dist/index.js build').code;
+    expect(code).toBe(1);
+  });
+
   afterEach(() => {
     util.teardownStage(stageName);
   });
