@@ -331,9 +331,13 @@ prog
         .map(
           buildConfigs,
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
-            let bundle = await rollup(inputOptions);
+          try {
+            let bundle = await rollup_1.rollup(inputOptions);
             await bundle.write(inputOptions.output);
             await moveTypes();
+          } catch (e) {
+            console.error(e);
+            process.exit(1);
           }
         )
         .catch((e: any) => {
