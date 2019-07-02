@@ -163,13 +163,18 @@ prog
         fs.realpathSync(process.cwd()) + '/' + pkg
       );
 
+      const prompt = new Select({
+        message: 'Choose a template',
+        choices: ['basic', 'react'],
+      });
+
       if (opts.template) {
-        template = opts.template;
+        template = opts.template.trim();
+        if (!prompt.choices.includes(template)) {
+          bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
+          template = await prompt.run();
+        }
       } else {
-        const prompt = new Select({
-          message: 'Choose a template',
-          choices: ['basic', 'react'],
-        });
         template = await prompt.run();
       }
 
