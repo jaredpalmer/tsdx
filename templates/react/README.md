@@ -114,6 +114,25 @@ npm start # or yarn start
 
 The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**!
 
+## Deploying the Playground
+
+The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+
+```bash
+cd example # if not already in the example folder
+npm run build # builds to dist
+netlify deploy # deploy the dist folder
+``` 
+
+Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
+
+```bash
+netlify init
+# build command: cd example && yarn && yarn build
+# directory to deploy: example/dist
+# pick yes for netlify.toml
+```
+
 ## Named Exports
 
 Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
