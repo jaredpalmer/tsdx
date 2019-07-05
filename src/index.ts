@@ -119,16 +119,19 @@ prog
   .version(pkg.version)
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
-  .action(async (pkg: string) => {
+  .example('create mypackage')
+  .option('--template', 'Specify a template. Allowed choices: [basic, react]')
+  .example('create --template react mypackage')
+  .action(async (pkg: string, opts: any) => {
     console.log(
       chalk.blue(`
-::::::::::: ::::::::  :::::::::  :::    ::: 
-    :+:    :+:    :+: :+:    :+: :+:    :+: 
-    +:+    +:+        +:+    +:+  +:+  +:+  
-    +#+    +#++:++#++ +#+    +:+   +#++:+   
-    +#+           +#+ +#+    +#+  +#+  +#+  
-    #+#    #+#    #+# #+#    #+# #+#    #+# 
-    ###     ########  #########  ###    ###                                                 
+::::::::::: ::::::::  :::::::::  :::    :::
+    :+:    :+:    :+: :+:    :+: :+:    :+:
+    +:+    +:+        +:+    +:+  +:+  +:+
+    +#+    +#++:++#++ +#+    +:+   +#++:+
+    +#+           +#+ +#+    +#+  +#+  +#+
+    #+#    #+#    #+# #+#    #+# #+#    #+#
+    ###     ########  #########  ###    ###
 `)
     );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
@@ -165,7 +168,16 @@ prog
         choices: ['basic', 'react'],
       });
 
-      template = await prompt.run();
+      if (opts.template) {
+        template = opts.template.trim();
+        if (!prompt.choices.includes(template)) {
+          bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
+          template = await prompt.run();
+        }
+      } else {
+        template = await prompt.run();
+      }
+
       bootSpinner.start();
       // copy the template
       await fs.copy(
