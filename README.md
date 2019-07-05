@@ -283,7 +283,7 @@ Options
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  --preserveWatchOutput Keep outdated console output in watch mode instead of clearing the screen
+  --verbose             Keep outdated console output in watch mode instead of clearing the screen
   -h, --help            Displays this message
 
 Examples
