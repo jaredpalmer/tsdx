@@ -340,8 +340,10 @@ prog
           throw e;
         });
       logger(promise, 'Building modules');
+      await promise;
     } catch (error) {
       logError(error);
+      process.exit(1);
     }
   });
 
