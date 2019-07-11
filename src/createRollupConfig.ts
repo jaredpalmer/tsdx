@@ -9,7 +9,6 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import shebangPlugin from '@jaredpalmer/rollup-plugin-preserve-shebang';
 import { extractErrors } from './errors/extractErrors';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
@@ -22,11 +21,13 @@ interface TsdxOptions {
   input: string;
   name: string;
   target: 'node' | 'browser';
+  env: 'development' | 'production';
   tsconfig?: string;
   extractErrors?: string;
+  minify?: boolean;
 }
 
-const babelOptions = (format: 'cjs' | 'es' | 'umd', opts: TsdxOptions) => ({
+const babelOptions = (format: 'cjs' | 'esm' | 'umd', opts: TsdxOptions) => ({
   exclude: 'node_modules/**',
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
   passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
@@ -64,14 +65,27 @@ const babelOptions = (format: 'cjs' | 'es' | 'umd', opts: TsdxOptions) => ({
 let shebang: any = {};
 
 export function createRollupConfig(
-  format: 'cjs' | 'umd' | 'es',
-  env: 'development' | 'production',
+  format: 'cjs' | 'umd' | 'esm',
   opts: TsdxOptions
 ) {
   const findAndRecordErrorCodes = extractErrors({
     ...errorCodeOpts,
     ...opts,
   });
+
+  const shouldMinify =
+    opts.minify !== undefined ? opts.minify : opts.env === 'production';
+
+  const outputName = [
+    `${paths.appDist}/${safePackageName(opts.name)}`,
+    format,
+    opts.env,
+    shouldMinify ? 'min' : '',
+    'js',
+  ]
+    .filter(Boolean)
+    .join('.');
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -85,9 +99,7 @@ export function createRollupConfig(
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
-      file: `${paths.appDist}/${safePackageName(
-        opts.name
-      )}.${format}.${env}.js`,
+      file: outputName,
       // Pass through the file format
       format,
       // Do not let Rollup call Object.freeze() on namespace import objects
@@ -178,14 +190,15 @@ export function createRollupConfig(
         },
       }),
       babel(babelOptions(format, opts)),
-      replace({
-        'process.env.NODE_ENV': JSON.stringify(env),
-      }),
+      opts.env !== undefined &&
+        replace({
+          'process.env.NODE_ENV': JSON.stringify(opts.env),
+        }),
       sourceMaps(),
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      env === 'production' &&
+      shouldMinify &&
         terser({
           sourcemap: true,
           output: { comments: false },
@@ -195,7 +208,7 @@ export function createRollupConfig(
             passes: 10,
           },
           ecma: 5,
-          toplevel: format === 'es' || format === 'cjs',
+          toplevel: format === 'cjs',
           warnings: true,
         }),
     ],

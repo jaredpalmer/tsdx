@@ -137,7 +137,9 @@ exports.sum = (s, t) => s + t;
 //# sourceMappingURL=test-react-tsdx.cjs.production.js.map
 ```
 
-AS you can see, TSDX stripped out the development check from the production code. **This allows you can to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+AS you can see, TSDX stripped out the development check from the production code. **This allows you to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+
+For ESM build, it's up to end-user to build environment specific build with NODE_ENV replace (done by Webpack 4 automatically).
 
 #### Rollup Treeshaking
 
@@ -248,7 +250,7 @@ For brevity let's look at the ES module output.
 <!-- prettier-ignore -->
 ```js
 import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as KebabLogger};
-//# sourceMappingURL=test-react-tsdx.es.production.js.map
+//# sourceMappingURL=test-react-tsdx.esm.production.js.map
 ```
 
 TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
@@ -278,17 +280,20 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,es)
-  -h, --help     Displays this message
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --verbose             Keep outdated console output in watch mode instead of clearing the screen
+  -h, --help            Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,es,umd
+  $ tsdx watch --format cjs,esm,umd
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx build`
@@ -301,19 +306,21 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry     Entry module(s)
-  --target        Specify your target environment  (default web)
-  --name          Specify name exposed in UMD builds
-  --format        Specify module format(s)  (default cjs,es)
-  --extractErrors Specify url for extracting error codes
-  -h, --help      Displays this message
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --extractErrors       Specify url for extracting error codes
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  -h, --help            Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
-  $ tsdx build --format cjs,es,umd
+  $ tsdx build --format cjs,esm,umd
   $ tsdx build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=
+  $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
 ### `tsdx test`

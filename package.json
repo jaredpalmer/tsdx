@@ -1,6 +1,6 @@
 {
   "name": "tsdx",
-  "version": "0.6.1",
+  "version": "0.7.2",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
@@ -69,14 +69,14 @@
     "sade": "^1.4.2",
     "tiny-glob": "^0.2.6",
     "ts-jest": "^24.0.2",
-    "tslib": "^1.9.3",
-    "typescript": "^3.4.5"
+    "tslib": "^1.9.3"
   },
   "devDependencies": {
     "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "^7.0.0",
+    "@types/jest": "^24.0.15",
     "@types/mkdirp": "^0.5.2",
     "@types/ms": "^0.7.30",
     "@types/node": "^12.0.2",
@@ -91,7 +91,11 @@
     "tslint": "^5.16.0",
     "tslint-config-palmerhq": "^1.0.2",
     "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^4.0.0"
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.5"
+  },
+  "peerDependencies": {
+    "typescript": "3"
   },
   "husky": {
     "hooks": {

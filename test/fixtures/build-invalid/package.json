@@ -2,6 +2,6 @@
   "scripts": {
     "build": "tsdx build"
   },
-  "name": "build-default",
+  "name": "build-invalid",
   "license": "MIT"
 }
