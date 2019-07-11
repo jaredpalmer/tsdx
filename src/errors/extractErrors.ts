@@ -6,8 +6,7 @@
  */
 'use strict';
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'fs-extra';
 import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
 import { invertObject } from './invertObject';
@@ -101,31 +100,38 @@ export function extractErrors(opts: any) {
 
   function flush(cb?: any) {
     const prettyName = pascalCase(safeVariableName(opts.name));
+    // Output messages to ./codes.json
     fs.writeFileSync(
       errorMapFilePath,
       JSON.stringify(invertObject(existingErrorMap), null, 2) + '\n',
       'utf-8'
     );
+
+    // Ensure that the ./src/errors directory exists or create it
+    fs.ensureDirSync(paths.appRoot + '/errors');
+
+    // Write the error files, unless they already exist
     fs.writeFileSync(
-      paths.appSrc + '/errors/Error.js',
+      paths.appRoot + '/errors/ErrorDev.js',
       `
-function ${prettyName}Error(message: string) {
+function ErrorDev(message) {
   const error = new Error(message);
   error.name = 'Invariant Violation';
   return error;
 }
 
-export default ${prettyName}Error;      
-      `
+export default ErrorDev;      
+      `,
+      'utf-8'
     );
 
     fs.writeFileSync(
-      paths.appSrc + '/errors/ErrorProd.ts',
+      paths.appRoot + '/errors/ErrorProd.js',
       `// Do not require this module directly! Use a normal error constructor with
-// template literal strings. The messages will be converted to ${prettyName}Error during
+// template literal strings. The messages will be converted to ErrorProd during
 // build, and in production they will be minified.
 
-function ${prettyName}ErrorProd(code: string | number) {
+function ErrorProd(code) {
   let url = '${opts.extractErrors}' + code;
   for (let i = 1; i < arguments.length; i++) {
     url += '&args[]=' + encodeURIComponent(arguments[i]);
@@ -137,8 +143,9 @@ function ${prettyName}ErrorProd(code: string | number) {
   );
 }
 
-export default ${prettyName}ErrorProd;
-`
+export default ErrorProd;
+`,
+      'utf-8'
     );
   }
 

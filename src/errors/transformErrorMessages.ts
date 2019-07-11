@@ -44,7 +44,7 @@ export default function transformErrorMessages(babel: any) {
           // Import ReactError
           const reactErrorIdentfier = addDefault(
             path,
-            paths.appSrc + '/_error.js',
+            paths.appRoot + '/errors/ErrorDev.js',
             {
               nameHint: 'InvariantError',
             }
@@ -109,7 +109,7 @@ export default function transformErrorMessages(babel: any) {
           // Import ReactErrorProd
           const reactErrorProdIdentfier = addDefault(
             path,
-            paths.appSrc + '/_error.production.js',
+            paths.appRoot + '/errors/ErrorProd.js',
             {
               nameHint: 'InvariantErrorProd',
             }

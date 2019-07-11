@@ -14,7 +14,7 @@ import { extractErrors } from './errors/extractErrors';
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
 const errorCodeOpts = {
-  errorMapFilePath: paths.appRoot + '/codes.json',
+  errorMapFilePath: paths.appRoot + '/errors/codes.json',
 };
 
 interface TsdxOptions {
