@@ -122,7 +122,7 @@ The Playground is just a simple [Parcel](https://parceljs.org) app, you can depl
 cd example # if not already in the example folder
 npm run build # builds to dist
 netlify deploy # deploy the dist folder
-``` 
+```
 
 Alternatively, if you already have a git repo connected, you can set up continuous deployment with Netlify:
 

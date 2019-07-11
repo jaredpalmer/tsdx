@@ -279,7 +279,14 @@ prog
   )
   .example('watch --verbose')
   .option('--tsconfig', 'Specify custom tsconfig path')
-  .example('build --tsconfig ./tsconfig.foo.json')
+  .example('watch --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
@@ -337,6 +344,13 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
