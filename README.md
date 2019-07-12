@@ -7,29 +7,30 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Features](#features)
-- [Quick Start](#quick-start)
+- [Features](#Features)
+- [Quick Start](#Quick-Start)
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
   - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
   - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
-- [Optimizations](#optimizations)
-  - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
-    - [Rollup Treeshaking](#rollup-treeshaking)
-    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#dev)
+- [Optimizations](#Optimizations)
+  - [Development-only Expressions + Treeshaking](#Development-only-Expressions--Treeshaking)
+    - [Rollup Treeshaking](#Rollup-Treeshaking)
+    - [Advanced `babel-plugin-dev-expressions`](#Advanced-babel-plugin-dev-expressions)
+      - [`__DEV__`](#DEV)
       - [`invariant`](#invariant)
       - [`warning`](#warning)
-  - [Using lodash](#using-lodash)
-- [Inspiration](#inspiration)
-  - [Comparison to Microbundle](#comparison-to-microbundle)
-- [API Reference](#api-reference)
+  - [Using lodash](#Using-lodash)
+- [Inspiration](#Inspiration)
+  - [Comparison to Microbundle](#Comparison-to-Microbundle)
+- [API Reference](#API-Reference)
   - [`tsdx watch`](#tsdx-watch)
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
   - [`tsdx lint`](#tsdx-lint)
-- [Author](#author)
-- [License](#license)
+- [Hosting extracted Errors](#Hosting-extracted-Errors)
+- [Author](#Author)
+- [License](#License)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -80,7 +81,7 @@ By default, runs tests related to files changed since the last commit.
 
 ### `npm run lint` or `yarn lint`
 
-Runs Eslint.  
+Runs Eslint.
 If you would like to customize the linting you can add a `eslint` block to your package.json or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file to whatever you want.
 
 ## Optimizations
@@ -208,7 +209,9 @@ if (!condition) {
 }
 ```
 
-Recommended for use with smaller https://github.com/alexreardon/tiny-invariant.
+Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
+
+To extract and minify error codes in production into a static `codes.json` file, pass an `extractErrors` flag with a URL where you will decode the error code. Example: `tsdx build --extractErrors=https://your-url.com/?invariant=`
 
 ##### `warning`
 
@@ -226,7 +229,7 @@ if ('production' !== process.env.NODE_ENV) {
 }
 ```
 
-Recommended for use with https://github.com/alexreardon/tiny-warning.
+Note: TSDX doesn't supply a `warning` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-warning.
 
 ### Using lodash
 
@@ -290,12 +293,13 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,esm)
-  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  -h, --help     Displays this message
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --verbose             Keep outdated console output in watch mode instead of clearing the screen
+  -h, --help            Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
@@ -315,18 +319,20 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry    Entry module(s)
-  --target       Specify your target environment  (default web)
-  --name         Specify name exposed in UMD builds
-  --format       Specify module format(s)  (default cjs,esm)
-  --tsconfig     Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  -h, --help     Displays this message
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --extractErrors       Specify url for extracting error codes
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  -h, --help            Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
+  $ tsdx build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=
   $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 
@@ -355,6 +361,12 @@ Examples
   $ tsdx lint src test --ignore-pattern test/foobar.ts
   $ tsdx lint src --write-file
 ```
+
+## Hosting extracted Errors
+
+After running `--extractErrors`, you will have a `codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
+
+_Simple guide to host error codes to be completed_
 
 ## Author
 

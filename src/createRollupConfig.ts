@@ -10,13 +10,25 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
+import { extractErrors } from './errors/extractErrors';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 
-const babelOptions = (
-  format: 'cjs' | 'esm' | 'umd',
-  target: 'node' | 'browser'
-) => ({
+const errorCodeOpts = {
+  errorMapFilePath: paths.appRoot + '/errors/codes.json',
+};
+
+interface TsdxOptions {
+  input: string;
+  name: string;
+  target: 'node' | 'browser';
+  env: 'development' | 'production';
+  tsconfig?: string;
+  extractErrors?: string;
+  minify?: boolean;
+}
+
+const babelOptions = (format: 'cjs' | 'esm' | 'umd', opts: TsdxOptions) => ({
   exclude: 'node_modules/**',
   extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
   passPerPreset: true, // @see https://babeljs.io/docs/en/options#passperpreset
@@ -26,7 +38,7 @@ const babelOptions = (
       {
         loose: true,
         modules: false,
-        targets: target === 'node' ? { node: '8' } : undefined,
+        targets: opts.target === 'node' ? { node: '8' } : undefined,
         exclude: ['transform-async-to-generator'],
       },
     ],
@@ -46,22 +58,22 @@ const babelOptions = (
       require.resolve('@babel/plugin-proposal-class-properties'),
       { loose: true },
     ],
+    opts.extractErrors && require('./errors/transformErrorMessages'),
   ].filter(Boolean),
 });
 
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
+
 export function createRollupConfig(
   format: 'cjs' | 'umd' | 'esm',
-  opts: {
-    env?: 'development' | 'production';
-    minify?: boolean;
-    input: string;
-    name: string;
-    target: 'node' | 'browser';
-    tsconfig?: string;
-  }
+  opts: TsdxOptions
 ) {
+  const findAndRecordErrorCodes = extractErrors({
+    ...errorCodeOpts,
+    ...opts,
+  });
+
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
@@ -122,6 +134,12 @@ export function createRollupConfig(
       exports: 'named',
     },
     plugins: [
+      !!opts.extractErrors && {
+        transform(source: any) {
+          findAndRecordErrorCodes(source);
+          return source;
+        },
+      },
       resolve({
         mainFields: [
           'module',
@@ -172,7 +190,7 @@ export function createRollupConfig(
           },
         },
       }),
-      babel(babelOptions(format, opts.target)),
+      babel(babelOptions(format, opts)),
       opts.env !== undefined &&
         replace({
           'process.env.NODE_ENV': JSON.stringify(opts.env),

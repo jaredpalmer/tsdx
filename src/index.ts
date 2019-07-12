@@ -122,16 +122,19 @@ prog
   .version(pkg.version)
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
-  .action(async (pkg: string) => {
+  .example('create mypackage')
+  .option('--template', 'Specify a template. Allowed choices: [basic, react]')
+  .example('create --template react mypackage')
+  .action(async (pkg: string, opts: any) => {
     console.log(
       chalk.blue(`
-::::::::::: ::::::::  :::::::::  :::    ::: 
-    :+:    :+:    :+: :+:    :+: :+:    :+: 
-    +:+    +:+        +:+    +:+  +:+  +:+  
-    +#+    +#++:++#++ +#+    +:+   +#++:+   
-    +#+           +#+ +#+    +#+  +#+  +#+  
-    #+#    #+#    #+# #+#    #+# #+#    #+# 
-    ###     ########  #########  ###    ###                                                 
+::::::::::: ::::::::  :::::::::  :::    :::
+    :+:    :+:    :+: :+:    :+: :+:    :+:
+    +:+    +:+        +:+    +:+  +:+  +:+
+    +#+    +#++:++#++ +#+    +:+   +#++:+
+    +#+           +#+ +#+    +#+  +#+  +#+
+    #+#    #+#    #+# #+#    #+# #+#    #+#
+    ###     ########  #########  ###    ###
 `)
     );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
@@ -168,7 +171,16 @@ prog
         choices: ['basic', 'react'],
       });
 
-      template = await prompt.run();
+      if (opts.template) {
+        template = opts.template.trim();
+        if (!prompt.choices.includes(template)) {
+          bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
+          template = await prompt.run();
+        }
+      } else {
+        template = await prompt.run();
+      }
+
       bootSpinner.start();
       // copy the template
       await fs.copy(
@@ -264,8 +276,20 @@ prog
   .example('watch --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,esm')
   .example('watch --format cjs,esm')
+  .option(
+    '--verbose',
+    'Keep outdated console output in watch mode instead of clearing the screen'
+  )
+  .example('watch --verbose')
   .option('--tsconfig', 'Specify custom tsconfig path')
-  .example('build --tsconfig ./tsconfig.foo.json')
+  .example('watch --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
@@ -285,7 +309,9 @@ prog
       }))
     ).on('event', async event => {
       if (event.code === 'START') {
-        clearConsole();
+        if (!opts.verbose) {
+          clearConsole();
+        }
         spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {
@@ -321,6 +347,13 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option(
+    '--extractErrors',
+    'Extract errors to codes.json and provide a url for decoding.'
+  )
+  .example(
+    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
+  )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
@@ -343,8 +376,10 @@ prog
           throw e;
         });
       logger(promise, 'Building modules');
+      await promise;
     } catch (error) {
       logError(error);
+      process.exit(1);
     }
   });
 

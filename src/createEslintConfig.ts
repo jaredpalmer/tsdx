@@ -29,7 +29,11 @@ export function createEslintConfig({
     overrides: undefined,
     parser: require.resolve('@typescript-eslint/parser'),
     parserOptions: reactAppConfig.overrides.parserOptions,
-    plugins: [...reactAppConfig.plugins, ...reactAppConfig.overrides.plugins],
+    plugins: [
+      ...reactAppConfig.plugins,
+      ...reactAppConfig.overrides.plugins,
+      'no-for-of-loops',
+    ],
     rules: {
       ...reactAppConfig.rules,
       ...reactAppConfig.overrides.rules,
