@@ -329,7 +329,7 @@ This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) f
 
 ## Hosting extracted Errors
 
-After running `--extractErrors`, you will have a `codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
+After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
 
 _Simple guide to host error codes to be completed_
 
