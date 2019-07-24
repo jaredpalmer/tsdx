@@ -14,7 +14,13 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
+    - [Rollup Treeshaking](#rollup-treeshaking)
+    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
+      - [`__DEV__`](#__dev__)
+      - [`invariant`](#invariant)
+      - [`warning`](#warning)
   - [Using lodash](#using-lodash)
+- [Hosting extracted errors](#hosting-extracted-errors)
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
 - [API Reference](#api-reference)
@@ -257,6 +263,16 @@ TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o f
 
 > Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
 
+### Error extraction
+
+_This feature is still under development_
+
+After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. This process scans your production code and swaps out your error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`. Note: you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
+
+After that, you will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
+
+_Simple guide to host error codes to be completed_
+
 ## Inspiration
 
 TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
@@ -326,12 +342,6 @@ Examples
 ### `tsdx test`
 
 This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
-
-## Hosting extracted Errors
-
-After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
-
-_Simple guide to host error codes to be completed_
 
 ## Author
 
