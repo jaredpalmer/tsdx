@@ -7,30 +7,31 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Features](#Features)
-- [Quick Start](#Quick-Start)
+- [Features](#features)
+- [Quick Start](#quick-start)
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
   - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
   - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
-- [Optimizations](#Optimizations)
-  - [Development-only Expressions + Treeshaking](#Development-only-Expressions--Treeshaking)
-    - [Rollup Treeshaking](#Rollup-Treeshaking)
-    - [Advanced `babel-plugin-dev-expressions`](#Advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#DEV)
+- [Optimizations](#optimizations)
+  - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
+    - [Rollup Treeshaking](#rollup-treeshaking)
+    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
+      - [`__DEV__`](#dev)
       - [`invariant`](#invariant)
       - [`warning`](#warning)
-  - [Using lodash](#Using-lodash)
-- [Inspiration](#Inspiration)
-  - [Comparison to Microbundle](#Comparison-to-Microbundle)
-- [API Reference](#API-Reference)
+  - [Using lodash](#using-lodash)
+  - [Error extraction](#error-extraction)
+- [Inspiration](#inspiration)
+  - [Comparison to Microbundle](#comparison-to-microbundle)
+- [API Reference](#api-reference)
   - [`tsdx watch`](#tsdx-watch)
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
   - [`tsdx lint`](#tsdx-lint)
-- [Hosting extracted Errors](#Hosting-extracted-Errors)
-- [Author](#Author)
-- [License](#License)
+- [Hosting extracted Errors](#hosting-extracted-errors)
+- [Author](#author)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -270,6 +271,16 @@ TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o f
 
 > Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
 
+### Error extraction
+
+_This feature is still under development_
+
+After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. This process scans your production code and swaps out your error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`. Note: you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
+
+After that, you will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
+
+_Simple guide to host error codes to be completed_
+
 ## Inspiration
 
 TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
@@ -358,7 +369,7 @@ Options
 Examples
   $ tsdx lint src
   $ tsdx lint src --fix
-  $ tsdx lint src test --ignore-pattern test/foobar.ts
+  $ tsdx lint src test --ignore-pattern test/foo.ts
   $ tsdx lint src --write-file
 ```
 
