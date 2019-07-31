@@ -381,15 +381,19 @@ prog
   });
 
 async function normalizeOpts(opts: any) {
+  let format = opts.format.split(',')
+  if (opts.name && format.indexOf('umd') === -1) {
+    format.push('umd')
+  }
   return {
     ...opts,
     name: opts.name || appPackageJson.name,
     input: await getInputs(opts.entry, appPackageJson.source),
-    format: opts.format.split(',').map((format: string) => {
-      if (format === 'es') {
+    format: format.map((fmt: string) => {
+      if (fmt === 'es') {
         return 'esm';
       }
-      return format;
+      return fmt;
     }),
   };
 }
