@@ -29,7 +29,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
   - [`tsdx lint`](#tsdx-lint)
-- [Hosting extracted Errors](#hosting-extracted-errors)
 - [Author](#author)
 - [License](#license)
 
@@ -372,12 +371,6 @@ Examples
   $ tsdx lint src test --ignore-pattern test/foo.ts
   $ tsdx lint src --write-file
 ```
-
-## Hosting extracted Errors
-
-After running `--extractErrors`, you will have a `codes.json` file with all your extracted error codes. You will need to host the decoder somewhere (with the URL that you passed in to `--extractErrors`).
-
-_Simple guide to host error codes to be completed_
 
 ## Author
 
