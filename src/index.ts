@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-/* eslint @typescript-eslint/no-var-requires: 0 */
 
 import sade from 'sade';
 import glob from 'tiny-glob/sync';

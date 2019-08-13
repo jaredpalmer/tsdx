@@ -2720,10 +2720,10 @@ eslint-config-prettier@^6.0.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-react-app@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-5.0.0.tgz#b3639e96fccc24eaaa63c92fc2f4358f79f22fb2"
-  integrity sha512-d3hbvu14J1Iy7N+XvrMOMXmw32iIGGIHqg7DK0RqA6UxKOix+Z53fuQ/uf2NqasSse3uHUNB1EvuZ8Iw2bzd3g==
+eslint-config-react-app@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-react-app/-/eslint-config-react-app-5.0.1.tgz#5f3d666ba3ee3cb384eb943e260e868f6c72251b"
+  integrity sha512-GYXP3F/0PSHlYfGHhahqnJze8rYKxzXgrzXVqRRd4rDO40ga4NA3aHM7/HKbwceDN0/C1Ij3BoAWFawJgRbXEw==
   dependencies:
     confusing-browser-globals "^1.0.8"
 
