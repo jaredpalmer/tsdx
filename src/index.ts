@@ -208,6 +208,7 @@ prog
           start: 'tsdx watch',
           build: 'tsdx build',
           test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
+          lint: 'tsdx lint'
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
         husky: {
