@@ -23,6 +23,8 @@
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
+    "lint": "yarn build && yarn lint:post-build",
+    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "jest --config ./test/jest.config.json"
   },
   "files": [
@@ -35,6 +37,8 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^1.13.0",
     "ansi-escapes": "^3.2.0",
     "asyncro": "^3.0.0",
     "babel-plugin-annotate-pure-calls": "^0.4.0",
@@ -47,6 +51,15 @@
     "chalk": "^2.4.2",
     "cross-env": "5.2.0",
     "enquirer": "^2.3.0",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-react-app": "^5.0.1",
+    "eslint-plugin-flowtype": "^4.2.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "execa": "^1.0.0",
     "fs-extra": "^8.0.1",
     "jest": "^24.8.0",
@@ -55,6 +68,7 @@
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
     "pascal-case": "^2.0.1",
+    "prettier": "^1.18.2",
     "progress-estimator": "^0.2.2",
     "rollup": "^1.12.0",
     "rollup-plugin-babel": "^4.3.2",
@@ -74,6 +88,7 @@
   "devDependencies": {
     "@types/ansi-escapes": "^4.0.0",
     "@types/camelcase": "^5.2.0",
+    "@types/eslint": "^4.16.8",
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "^8.0.0",
     "@types/jest": "^24.0.15",
@@ -81,17 +96,14 @@
     "@types/ms": "^0.7.30",
     "@types/node": "^12.0.2",
     "@types/ora": "^3.2.0",
+    "@types/react": "^16.8.17",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^2.3.0",
-    "prettier": "^1.17.1",
     "pretty-quick": "^1.10.0",
     "ps-tree": "^1.2.0",
+    "react": "^16.8.6",
     "shelljs": "^0.8.3",
-    "tslint": "^5.16.0",
-    "tslint-config-palmerhq": "^1.0.2",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-react": "^4.0.0",
     "typescript": "^3.4.5"
   },
   "peerDependencies": {
@@ -99,7 +111,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint"
     }
   },
   "prettier": {

@@ -15,6 +15,7 @@ import chalk from 'chalk';
 import util from 'util';
 import * as fs from 'fs-extra';
 import jest from 'jest';
+import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
 import mkdirp from 'mkdirp';
@@ -24,8 +25,8 @@ import { paths } from './constants';
 import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
+import { createEslintConfig } from './createEslintConfig';
 import { resolveApp, safePackageName, clearConsole } from './utils';
-import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -44,6 +45,7 @@ let appPackageJson: {
   name: string;
   source?: string;
   jest?: any;
+  eslint?: any;
 };
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
@@ -417,7 +419,7 @@ prog
   .describe(
     'Run jest test runner in watch mode. Passes through all flags directly to Jest'
   )
-  .action(async (opts: any) => {
+  .action(async () => {
     // Do this as the first thing so that any code reading it knows the right env.
     process.env.BABEL_ENV = 'test';
     process.env.NODE_ENV = 'test';
@@ -441,8 +443,48 @@ prog
       })
     );
 
-    const [_skipTheWordTest, ...argsToPassToJestCli] = argv;
+    const [, ...argsToPassToJestCli] = argv;
     jest.run(argsToPassToJestCli);
   });
+
+prog
+  .command('lint')
+  .describe('Run eslint with Prettier')
+  .example('lint src test')
+  .option('--fix', 'Fixes fixable errors and warnings')
+  .example('lint src test --fix')
+  .option('--ignore-pattern', 'Ignore a pattern')
+  .example('lint src test --ignore-pattern test/foobar.ts')
+  .option('--write-file', 'Write the config file locally')
+  .example('lint src test --write-file')
+  .action(
+    async (opts: {
+      fix: boolean;
+      'ignore-pattern': string;
+      'write-file': boolean;
+      _: string[];
+    }) => {
+      const cli = new CLIEngine({
+        baseConfig: {
+          ...createEslintConfig({
+            rootDir: paths.appRoot,
+            writeFile: opts['write-file'],
+          }),
+          ...appPackageJson.eslint,
+        },
+        extensions: ['.ts', '.tsx'],
+        fix: opts.fix,
+        ignorePattern: opts['ignore-pattern'],
+      });
+      const report = cli.executeOnFiles(opts['_']);
+      if (opts.fix) {
+        CLIEngine.outputFixes(report);
+      }
+      console.log(cli.getFormatter()(report.results));
+      if (report.errorCount) {
+        process.exit(1);
+      }
+    }
+  );
 
 prog.parse(process.argv);

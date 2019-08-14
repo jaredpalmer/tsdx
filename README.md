@@ -12,21 +12,23 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
   - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
+  - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
     - [Rollup Treeshaking](#rollup-treeshaking)
     - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#__dev__)
+      - [`__DEV__`](#dev)
       - [`invariant`](#invariant)
       - [`warning`](#warning)
   - [Using lodash](#using-lodash)
-- [Hosting extracted errors](#hosting-extracted-errors)
+  - [Error extraction](#error-extraction)
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
 - [API Reference](#api-reference)
   - [`tsdx watch`](#tsdx-watch)
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
+  - [`tsdx lint`](#tsdx-lint)
 - [Author](#author)
 - [License](#license)
 
@@ -76,6 +78,11 @@ The package is optimized and bundled with Rollup into multiple formats (CommonJS
 
 Runs the test watcher (Jest) in an interactive mode.
 By default, runs tests related to files changed since the last commit.
+
+### `npm run lint` or `yarn lint`
+
+Runs Eslint with Prettier on .ts and .tsx files.
+If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
 
 ## Optimizations
 
@@ -342,6 +349,28 @@ Examples
 ### `tsdx test`
 
 This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
+
+### `tsdx lint`
+
+```shell
+Description
+  Run eslint with Prettier
+
+Usage
+  $ tsdx lint [options]
+
+Options
+  --fix               Fixes fixable errors and warnings
+  --ignore-pattern    Ignore a pattern
+  --write-file        Write the config file locally
+  -h, --help          Displays this message
+
+Examples
+  $ tsdx lint src
+  $ tsdx lint src --fix
+  $ tsdx lint src test --ignore-pattern test/foo.ts
+  $ tsdx lint src --write-file
+```
 
 ## Author
 

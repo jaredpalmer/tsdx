@@ -1,6 +1,3 @@
-import fs from 'fs';
-import path from 'path';
-
 export function createJestConfig(
   _: (relativePath: string) => void,
   rootDir: string

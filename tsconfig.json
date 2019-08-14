@@ -3,6 +3,7 @@
   "exclude": ["src/template/**/*"],
   "compilerOptions": {
     "allowJs": true,
+    "jsx": "react",
     "importHelpers": true,
     "esModuleInterop": true,
     "outDir": "dist",
@@ -11,7 +12,8 @@
     "rootDir": "src",
     "strict": true,
     "noImplicitAny": true,
+    "noUnusedLocals": true,
     "skipLibCheck": true,
-    "target": "es2017"
+    "target": "es2017",
   }
 }

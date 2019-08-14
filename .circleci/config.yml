@@ -25,6 +25,10 @@ jobs:
           command: yarn build
 
       - run:
+          name: Lint
+          command: yarn lint:post-build
+
+      - run:
           name: Run tests
           command: yarn test --runInBand --no-cache --coverage
 

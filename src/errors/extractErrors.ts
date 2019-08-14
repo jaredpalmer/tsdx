@@ -4,8 +4,6 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-'use strict';
-
 import fs from 'fs-extra';
 import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
@@ -137,8 +135,8 @@ function ErrorProd(code) {
     url += '&args[]=' + encodeURIComponent(arguments[i]);
   }
   return new Error(
-    \`Minified ${prettyName} error #\$\{code\}; visit \$\{url\} for the full message or \` +
-      'use the non-minified dev environment for full errors and additional \' +
+    \`Minified ${prettyName} error #$\{code}; visit $\{url} for the full message or \` +
+      'use the non-minified dev environment for full errors and additional ' +
       'helpful warnings. '
   );
 }
