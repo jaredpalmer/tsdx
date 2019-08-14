@@ -1,4 +1,3 @@
-/* eslint @typescript-eslint/camelcase: 0 */
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';

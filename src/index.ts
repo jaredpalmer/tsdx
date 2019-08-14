@@ -449,7 +449,7 @@ prog
 
 prog
   .command('lint')
-  .describe('Run eslint')
+  .describe('Run eslint with Prettier')
   .example('lint src test')
   .option('--fix', 'Fixes fixable errors and warnings')
   .example('lint src test --fix')
@@ -465,9 +465,6 @@ prog
       _: string[];
     }) => {
       const cli = new CLIEngine({
-        extensions: ['.ts', '.tsx'],
-        fix: opts.fix,
-        ignorePattern: opts['ignore-pattern'],
         baseConfig: {
           ...createEslintConfig({
             rootDir: paths.appRoot,
@@ -475,6 +472,9 @@ prog
           }),
           ...appPackageJson.eslint,
         },
+        extensions: ['.ts', '.tsx'],
+        fix: opts.fix,
+        ignorePattern: opts['ignore-pattern'],
       });
       const report = cli.executeOnFiles(opts['_']);
       if (opts.fix) {

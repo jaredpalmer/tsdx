@@ -81,8 +81,8 @@ By default, runs tests related to files changed since the last commit.
 
 ### `npm run lint` or `yarn lint`
 
-Runs Eslint.
-If you would like to customize the linting you can add a `eslint` block to your package.json or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file to whatever you want.
+Runs Eslint with Prettier on .ts and .tsx files.
+If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
 
 ## Optimizations
 
@@ -354,7 +354,7 @@ This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) f
 
 ```shell
 Description
-  Run eslint
+  Run eslint with Prettier
 
 Usage
   $ tsdx lint [options]
