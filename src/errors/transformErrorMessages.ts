@@ -31,7 +31,7 @@ export default function transformErrorMessages(babel: any) {
           //
           // where ERR_CODE is an error code: a unique identifier (a number
           // string) that references a verbose error message. The mapping is
-          // stored in `paths.appRoot + "/codes.json"`.
+          // stored in `paths.appErrorsJson`.
           const condition = node.arguments[0];
           const errorMsgLiteral = evalToString(node.arguments[1]);
           const errorMsgExpressions = Array.from(node.arguments.slice(2));

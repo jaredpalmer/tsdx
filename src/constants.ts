@@ -5,6 +5,8 @@ export const paths = {
   testsSetup: resolveApp('test/setupTests.ts'),
   appRoot: resolveApp('.'),
   appSrc: resolveApp('src'),
-  appErrorsJson: resolveApp('./codes.json'),
+  appErrorsJson: resolveApp('errors/codes.json'),
+  appErrors: resolveApp('errors'),
   appDist: resolveApp('dist'),
+  appConfig: resolveApp('tsdx.config.js'),
 };
