@@ -31,6 +31,7 @@ import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
+import { TsdxOptions } from './types';
 const pkg = require('../package.json');
 const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
@@ -47,9 +48,21 @@ let appPackageJson: {
   jest?: any;
   eslint?: any;
 };
+
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
 } catch (e) {}
+
+// check for custom tsdx.config.js
+let tsdxConfig = {
+  rollup(config: any, _options: any) {
+    return config;
+  },
+};
+
+if (fs.existsSync(paths.appConfig)) {
+  tsdxConfig = require(paths.appConfig);
+}
 
 export const isDir = (name: string) =>
   fs
@@ -88,23 +101,51 @@ async function getInputs(entries: string[], source?: string) {
 
   return concatAllArray(inputs);
 }
+
 function createBuildConfigs(
   opts: any
 ): Array<RollupOptions & { output: OutputOptions }> {
   return concatAllArray(
-    opts.input.map((input: string) => [
-      opts.format.includes('cjs') &&
-        createRollupConfig('cjs', { env: 'development', ...opts, input }),
-      opts.format.includes('cjs') &&
-        createRollupConfig('cjs', { env: 'production', ...opts, input }),
-      opts.format.includes('esm') &&
-        createRollupConfig('esm', { ...opts, input }),
-      opts.format.includes('umd') &&
-        createRollupConfig('umd', { env: 'development', ...opts, input }),
-      opts.format.includes('umd') &&
-        createRollupConfig('umd', { env: 'production', ...opts, input }),
-    ])
-  ).filter(Boolean);
+    opts.input.map((input: string) =>
+      [
+        opts.format.includes('cjs') && {
+          ...opts,
+          format: 'cjs',
+          env: 'development',
+          input,
+        },
+        opts.format.includes('cjs') && {
+          ...opts,
+          format: 'cjs',
+          env: 'production',
+          input,
+        },
+        opts.format.includes('esm') && { ...opts, format: 'esm', input },
+        opts.format.includes('umd') && {
+          ...opts,
+          format: 'umd',
+          env: 'development',
+          input,
+        },
+        opts.format.includes('umd') && {
+          ...opts,
+          format: 'umd',
+          env: 'production',
+          input,
+        },
+      ]
+        .filter(Boolean)
+        .map((options: TsdxOptions, index: number) => ({
+          ...options,
+          // We want to know if this is the first run for each entryfile
+          // for certain plugins (e.g. css)
+          writeMeta: index === 0,
+        }))
+    )
+  ).map((options: TsdxOptions) =>
+    // pass the full rollup config to tsdx.config.js override
+    tsdxConfig.rollup(createRollupConfig(options), options)
+  );
 }
 
 async function moveTypes() {
@@ -285,7 +326,7 @@ prog
   .example('watch --tsconfig ./tsconfig.foo.json')
   .option(
     '--extractErrors',
-    'Extract errors to codes.json and provide a url for decoding.'
+    'Extract errors to ./errors/codes.json and provide a url for decoding.'
   )
   .example(
     'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
@@ -349,7 +390,7 @@ prog
   .example('build --tsconfig ./tsconfig.foo.json')
   .option(
     '--extractErrors',
-    'Extract errors to codes.json and provide a url for decoding.'
+    'Extract errors to ./errors/codes.json and provide a url for decoding.'
   )
   .example(
     'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
