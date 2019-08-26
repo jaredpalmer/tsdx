@@ -39,13 +39,6 @@ export function extractErrors(opts: any) {
     throw new Error('Missing options. Ensure you pass --name flag to tsdx');
   }
 
-  if (typeof opts.extractErrors === 'boolean') {
-    throw new Error(
-      'No url passed to extractErrors flag.' +
-        'Ensure you pass a url, eg. `--extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=`.'
-    );
-  }
-
   const errorMapFilePath = opts.errorMapFilePath;
   let existingErrorMap: any;
   try {
@@ -98,19 +91,19 @@ export function extractErrors(opts: any) {
 
   function flush(cb?: any) {
     const prettyName = pascalCase(safeVariableName(opts.name));
-    // Output messages to ./codes.json
+    // Ensure that the ./src/errors directory exists or create it
+    fs.ensureDirSync(paths.appErrors);
+
+    // Output messages to ./errors/codes.json
     fs.writeFileSync(
       errorMapFilePath,
       JSON.stringify(invertObject(existingErrorMap), null, 2) + '\n',
       'utf-8'
     );
 
-    // Ensure that the ./src/errors directory exists or create it
-    fs.ensureDirSync(paths.appRoot + '/errors');
-
     // Write the error files, unless they already exist
     fs.writeFileSync(
-      paths.appRoot + '/errors/ErrorDev.js',
+      paths.appErrors + '/ErrorDev.js',
       `
 function ErrorDev(message) {
   const error = new Error(message);
@@ -124,13 +117,11 @@ export default ErrorDev;
     );
 
     fs.writeFileSync(
-      paths.appRoot + '/errors/ErrorProd.js',
-      `// Do not require this module directly! Use a normal error constructor with
-// template literal strings. The messages will be converted to ErrorProd during
-// build, and in production they will be minified.
-
+      paths.appErrors + '/ErrorProd.js',
+      `
 function ErrorProd(code) {
-  let url = '${opts.extractErrors}' + code;
+  // TODO: replace this URL with yours
+  let url = 'https://reactjs.org/docs/error-decoder.html?invariant=' + code;
   for (let i = 1; i < arguments.length; i++) {
     url += '&args[]=' + encodeURIComponent(arguments[i]);
   }
