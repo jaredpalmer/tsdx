@@ -120,6 +120,7 @@ export default ErrorDev;
       paths.appErrors + '/ErrorProd.js',
       `
 function ErrorProd(code) {
+  // TODO: replace this URL with yours
   let url = 'https://reactjs.org/docs/error-decoder.html?invariant=' + code;
   for (let i = 1; i < arguments.length; i++) {
     url += '&args[]=' + encodeURIComponent(arguments[i]);

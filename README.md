@@ -7,7 +7,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Features](#features)
 - [Quick Start](#quick-start)
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
@@ -49,6 +48,7 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Works with React
 - Human readable error messages (and in VSCode-friendly format)
 - Bundle size snapshots
+- Opt-in to extract `invariant` error codes
 - Jest test runner setup with sensible defaults via `tsdx test`
 - Zero-config, single dependency
 
@@ -216,7 +216,7 @@ if (!condition) {
 
 Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
-To extract and minify error codes in production into a static `codes.json` file, pass an `extractErrors` flag with a URL where you will decode the error code. Example: `tsdx build --extractErrors=https://your-url.com/?invariant=`
+To extract and minify `invariant` error codes in production into a static `codes.json` file, specify either `--extractErrors` in command line or set `extractErrors: true` in `tsdx.config.js`. For more details see [Error extraction docs](#error-extraction).
 
 ##### `warning`
 
@@ -277,13 +277,11 @@ TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o f
 
 ### Error extraction
 
-_This feature is still under development_
-
 After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. This process scans your production code and swaps out your error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`. Note: you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
 
-After that, you will need to host the decoder somewhere. Look at `./errors/ErrorProd.js` and replace the URL with yours.
+⚠️Don't forget: you will need to host the decoder somewhere. Once you have a URL, look at `./errors/ErrorProd.js` and replace the `reactjs.org` URL with yours.
 
-_Simple guide to host error codes to be completed_
+_TODO: Simple guide to host error codes to be completed_
 
 ## Customization
 
@@ -317,7 +315,7 @@ export interface TsdxOptions {
   env: 'development' | 'production';
   // Path to tsconfig file
   tsconfig?: string;
-  // Is error extraction running?
+  // Is opt-in invariant error extraction active?
   extractErrors?: boolean;
   // Is minifying?
   minify?: boolean;
@@ -352,9 +350,10 @@ module.exports = {
   },
 };
 ```
+
 ### Babel
 
-You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with its own babel transforms (which are mostly for optimization). 
+You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with its own babel transforms (which are mostly for optimization).
 
 ## Inspiration
 
@@ -409,7 +408,7 @@ Options
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
-  --extractErrors       Specify url for extracting error codes
+  --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   -h, --help            Displays this message
 
@@ -418,7 +417,7 @@ Examples
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant=
+  $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
 ```
 

@@ -324,13 +324,8 @@ prog
   .example('watch --verbose')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
-  .option(
-    '--extractErrors',
-    'Extract errors to ./errors/codes.json and provide a url for decoding.'
-  )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
+  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
+  .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
