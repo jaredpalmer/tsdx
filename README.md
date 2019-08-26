@@ -216,7 +216,7 @@ if (!condition) {
 
 Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
-To extract and minify `invariant` error codes in production into a static `codes.json` file, specify either `--extractErrors` in command line or set `extractErrors: true` in `tsdx.config.js`. For more details see [Error extraction docs](#error-extraction).
+To extract and minify `invariant` error codes in production into a static `codes.json` file, specify either `--extractErrors` in command line. For more details see [Error extraction docs](#error-extraction).
 
 ##### `warning`
 
