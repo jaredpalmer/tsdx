@@ -199,7 +199,7 @@ declare var __DEV__: boolean;
 Replaces
 
 ```js
-invariant(condition, argument, argument);
+invariant(condition, 'error message here');
 ```
 
 with
@@ -207,7 +207,7 @@ with
 ```js
 if (!condition) {
   if ('production' !== process.env.NODE_ENV) {
-    invariant(false, argument, argument);
+    invariant(false, 'error message here');
   } else {
     invariant(false);
   }
@@ -216,21 +216,21 @@ if (!condition) {
 
 Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
-To extract and minify `invariant` error codes in production into a static `codes.json` file, specify either `--extractErrors` in command line. For more details see [Error extraction docs](#error-extraction).
+To extract and minify `invariant` error codes in production into a static `codes.json` file, specify the `--extractErrors` flag in command line. For more details see [Error extraction docs](#error-extraction).
 
 ##### `warning`
 
 Replaces
 
 ```js
-warning(condition, argument, argument);
+warning(condition, 'dev warning here');
 ```
 
 with
 
 ```js
 if ('production' !== process.env.NODE_ENV) {
-  warning(condition, argument, argument);
+  warning(condition, 'dev warning here');
 }
 ```
 
@@ -277,7 +277,9 @@ TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o f
 
 ### Error extraction
 
-After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted error codes. This process scans your production code and swaps out your error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`. Note: you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
+After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted `invariant` error codes. This process scans your production code and swaps out your `invariant` error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`.
+
+Note: We don't provide this function for you, it is up to you how you want it to behave. For example, you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
 
 ⚠️Don't forget: you will need to host the decoder somewhere. Once you have a URL, look at `./errors/ErrorProd.js` and replace the `reactjs.org` URL with yours.
 
