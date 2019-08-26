@@ -283,6 +283,8 @@ Note: We don't provide this function for you, it is up to you how you want it to
 
 ⚠️Don't forget: you will need to host the decoder somewhere. Once you have a URL, look at `./errors/ErrorProd.js` and replace the `reactjs.org` URL with yours.
 
+> Known issue: our `transformErrorMessages` babel plugin currently doesn't have sourcemap support, so you will see "Sourcemap is likely to be incorrect" warnings. [We would love your help on this.](https://github.com/palmerhq/tsdx/issues/184)
+
 _TODO: Simple guide to host error codes to be completed_
 
 ## Customization
