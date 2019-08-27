@@ -1,6 +1,6 @@
 {
   "name": "tsdx",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
