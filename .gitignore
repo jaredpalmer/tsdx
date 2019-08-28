@@ -6,3 +6,4 @@ node_modules
 .rts2_cache_umd
 dist
 tester
+tester-react
