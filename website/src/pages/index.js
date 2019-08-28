@@ -15,33 +15,56 @@ import styles from './styles.module.css';
 
 const features = [
   {
-    title: <>Easy to Use</>,
+    title: <>The Problem</>,
     imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        Despite all the recent hype, setting up a new TypeScript (x React)
+        library can be tough. Between Rollup, Jest, tsconfig, Yarn resolutions,
+        TSLint, and getting VSCode to play nicely....there is just a whole lot
+        of stuff to do (and things to screw up).
       </>
     ),
   },
   {
-    title: <>Focus on What Matters</>,
+    title: <>Zero Config</>,
     imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        TSDX is a zero-config CLI that helps you develop, test, and publish
+        modern TypeScript packages with ease--so you can focus on your awesome
+        new library and not waste another afternoon on the configuration.
       </>
     ),
   },
   {
-    title: <>Powered by React</>,
+    title: <>Batteries Included</>,
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
-      </>
+      <ul>
+        <li>
+          Bundles your code with{' '}
+          <a href="https://github.com/rollup/rollup">Rollup</a> and outputs
+          multiple module formats (CJS &amp; ESM by default, and also UMD if you
+          want) plus development and production builds
+        </li>
+        <li>
+          Comes with treeshaking, ready-to-rock lodash optimizations, and
+          minification/compression
+        </li>
+        <li>Live reload / watch-mode</li>
+        <li>Works with React</li>
+        <li>Human readable error messages (and in VSCode-friendly format)</li>
+        <li>Bundle size snapshots</li>
+        <li>
+          Opt-in to extract <code>invariant</code> error codes
+        </li>
+        <li>
+          Jest test runner setup with sensible defaults via{' '}
+          <code>tsdx test</code>
+        </li>
+        <li>Zero-config, single dependency</li>
+      </ul>
     ),
   },
 ];
@@ -89,7 +112,7 @@ function Home() {
                 styles.getStarted
               )}
               style={{ marginRight: '1rem' }}
-              to={withBaseUrl('docs/doc1')}
+              to={withBaseUrl('docs/starthere')}
             >
               Get Started
             </Link>
@@ -98,12 +121,23 @@ function Home() {
                 'button  button--secondary button--lg',
                 styles.getStarted
               )}
-              to={withBaseUrl('docs/doc1')}
+              to={'https://github.com/palmerhq/tsdx'}
             >
               GitHub
             </Link>
           </div>
-        </div>
+          <pre
+            style={{
+              textAlign: 'left',
+              margin: '0 auto',
+              marginTop: 10,
+              maxWidth: 450,
+            }}
+          >
+            {`npx tsdx create mylib
+cd mylib && yarn start`}
+          </pre>
+        </div>{' '}
       </header>
       <main>
         {features && features.length && (
