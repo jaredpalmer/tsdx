@@ -7,3 +7,5 @@ node_modules
 dist
 tester
 tester-react
+# Local Netlify folder
+.netlify

@@ -17,11 +17,11 @@ module.exports = {
     navbar: {
       // title: 'My Site',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'TSDX Logo',
         src: 'img/logo.svg',
       },
       links: [
-        { to: 'docs/doc1', label: 'Docs', position: 'right' },
+        { to: 'docs/starthere', label: 'Docs', position: 'right' },
         { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/palmerhq/tsdx',
@@ -38,19 +38,19 @@ module.exports = {
           items: [
             {
               label: 'Docs',
-              to: 'docs/doc1',
+              to: 'docs/starthere',
             },
           ],
         },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-          ],
-        },
+        // {
+        //   title: 'Community',
+        //   items: [
+        //     {
+        //       label: 'Discord',
+        //       href: 'https://discordapp.com/invite/docusaurus',
+        //     },
+        //   ],
+        // },
         {
           title: 'Social',
           items: [
