@@ -254,7 +254,7 @@ prog
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
         husky: {
           hooks: {
-            'pre-commit': 'pretty-quick --staged',
+            'pre-commit': 'tsdx lint',
           },
         },
         prettier: {
@@ -273,15 +273,7 @@ prog
       process.exit(1);
     }
 
-    let deps = [
-      '@types/jest',
-      'husky',
-      'pretty-quick',
-      'prettier',
-      'tsdx',
-      'tslib',
-      'typescript',
-    ].sort();
+    let deps = ['@types/jest', 'husky', 'tsdx', 'tslib', 'typescript'].sort();
 
     if (template === 'react') {
       deps = [
@@ -493,7 +485,7 @@ prog
   .option('--ignore-pattern', 'Ignore a pattern')
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option('--write-file', 'Write the config file locally')
-  .example('lint src test --write-file')
+  .example('lint --write-file')
   .action(
     async (opts: {
       fix: boolean;
@@ -501,6 +493,12 @@ prog
       'write-file': boolean;
       _: string[];
     }) => {
+      if (opts['_'].length === 0) {
+        prog.help('lint');
+        console.log(chalk.red('No input files specified.'));
+        process.exit(1);
+      }
+
       const cli = new CLIEngine({
         baseConfig: {
           ...createEslintConfig({
