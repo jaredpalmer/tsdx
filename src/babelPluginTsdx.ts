@@ -69,7 +69,7 @@ export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
         // },
         { name: 'babel-plugin-annotate-pure-calls' },
         { name: 'babel-plugin-dev-expression' },
-        {
+        customOptions.format !== 'cjs' && {
           name: 'babel-plugin-transform-rename-import',
           replacements,
         },
