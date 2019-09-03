@@ -1,8 +1,14 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import {
+  safeVariableName,
+  safePackageName,
+  external,
+  toReplacementExpression,
+  parseMappingArgument,
+} from './utils';
 import { paths } from './constants';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-// import babel from 'rollup-plugin-babel';
+import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
@@ -39,6 +45,13 @@ export function createRollupConfig(opts: TsdxOptions) {
     .filter(Boolean)
     .join('.');
 
+  let defines = {};
+  if (opts.define) {
+    defines = Object.assign(
+      defines,
+      parseMappingArgument(opts.define, toReplacementExpression)
+    );
+  }
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -142,6 +155,20 @@ export function createRollupConfig(opts: TsdxOptions) {
           },
         },
       }),
+      // if defines is not set, we shouldn't run babel through node_modules
+      !!defines &&
+        babel({
+          babelrc: false,
+          configFile: false,
+          compact: false,
+          include: 'node_modules/**',
+          plugins: [
+            [
+              require.resolve('babel-plugin-transform-replace-expressions'),
+              { replace: defines },
+            ],
+          ],
+        }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
@@ -150,7 +177,7 @@ export function createRollupConfig(opts: TsdxOptions) {
           targets: opts.target === 'node' ? { node: '8' } : undefined,
           extractErrors: opts.extractErrors,
           format: opts.format,
-          // defines: opts.defines,
+          defines,
         },
       }),
       opts.env !== undefined &&
@@ -174,6 +201,6 @@ export function createRollupConfig(opts: TsdxOptions) {
           toplevel: opts.format === 'cjs',
           warnings: true,
         }),
-    ],
+    ].filter(Boolean),
   };
 }

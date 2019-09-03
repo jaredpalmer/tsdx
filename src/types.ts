@@ -17,4 +17,6 @@ export interface TsdxOptions {
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
   writeMeta?: boolean;
+  // Define key values to be replaced (e.g. --define A=1)
+  define?: string;
 }

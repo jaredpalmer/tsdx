@@ -316,8 +316,10 @@ prog
   .example('watch --verbose')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
-  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('build --extractErrors')
+  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json')
+  .example('watch --extractErrors')
+  .option('--define', 'Replace constants with hard-coded values')
+  .example('watch --define A=1,ZOOP=FOO')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
@@ -375,13 +377,10 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .option(
-    '--extractErrors',
-    'Extract errors to ./errors/codes.json and provide a url for decoding.'
-  )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
+  .option('--extractErrors', 'Extract errors to ./errors/codes.json')
+  .example('build --extractErrors')
+  .option('--define', 'Replace constants with hard-coded values')
+  .example('build --define A=1,ZOOP=FOO')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
