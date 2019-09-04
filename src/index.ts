@@ -248,7 +248,7 @@ prog
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
-          test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
+          test: template === 'react' ? 'tsdx test --env=jsdom --passWithNoTests' : 'tsdx test',
           lint: 'tsdx lint',
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
