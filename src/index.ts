@@ -493,7 +493,7 @@ prog
       'write-file': boolean;
       _: string[];
     }) => {
-      if (opts['_'].length === 0) {
+      if (opts['_'].length === 0 && !opts['write-file']) {
         prog.help('lint');
         console.log(chalk.red('No input files specified.'));
         process.exit(1);
