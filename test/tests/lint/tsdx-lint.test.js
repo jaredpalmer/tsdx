@@ -56,7 +56,7 @@ describe('tsdx lint', () => {
       util.setupStageWithFixture(stageName, 'build-default');
     });
 
-    it('should create the field', () => {
+    it('should create the file', () => {
       const output = shell.exec(`node ../dist/index.js lint --write-file`);
       expect(shell.test('-f', '.eslintrc.js')).toBeTruthy();
       expect(output.code).toBe(0);
