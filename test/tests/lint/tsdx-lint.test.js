@@ -4,8 +4,11 @@
 'use strict';
 
 const shell = require('shelljs');
+const util = require('../../fixtures/util');
 
 shell.config.silent = true;
+
+const stageName = 'stage-build';
 
 describe('tsdx lint', () => {
   it('should fail to lint a ts file with errors', () => {
@@ -39,5 +42,24 @@ describe('tsdx lint', () => {
     const testFile = 'test/tests/lint/react-file-without-lint-error.tsx';
     const output = shell.exec(`node dist/index.js lint ${testFile}`);
     expect(output.code).toBe(0);
+  });
+
+  it('should not lint', () => {
+    const output = shell.exec(`node dist/index.js lint`);
+    expect(output.code).toBe(1);
+    expect(output.toString()).toContain('No input files specified.');
+  });
+
+  describe('when --write-file is used', () => {
+    beforeEach(() => {
+      util.teardownStage(stageName);
+      util.setupStageWithFixture(stageName, 'build-default');
+    });
+
+    it('should create the file', () => {
+      const output = shell.exec(`node ../dist/index.js lint --write-file`);
+      expect(shell.test('-f', '.eslintrc.js')).toBeTruthy();
+      expect(output.code).toBe(0);
+    });
   });
 });
