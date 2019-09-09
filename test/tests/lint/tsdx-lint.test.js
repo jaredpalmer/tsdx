@@ -8,7 +8,7 @@ const util = require('../../fixtures/util');
 
 shell.config.silent = true;
 
-const stageName = 'stage-build';
+const stageName = 'stage-lint';
 
 describe('tsdx lint', () => {
   it('should fail to lint a ts file with errors', () => {
