@@ -4,5 +4,8 @@
   "transform": {
     "^.+\\.ts?$": "ts-jest"
   },
-  "testMatch": ["<rootDir>/tests/**/?(*.)(spec|test).(ts|js)?(x)"]
+  "testMatch": [
+    "<rootDir>/tests/**/__tests__/**/*.[jt]s?(x)",
+    "<rootDir>/tests/**/*(*.)@(spec|test).[tj]s?(x)"
+  ]
 }
