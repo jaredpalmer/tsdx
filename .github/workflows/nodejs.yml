@@ -25,7 +25,8 @@ jobs:
       - name: Install yarn package manager
         run: npm install -g yarn
         
-      - name: Install deps and test
-        run: |
-          yarn install --frozen-lockfile
-          yarn test --runInBand     
+      - name: Install deps and build
+        run: yarn install --frozen-lockfile
+        
+      - name: Test package
+        run: yarn test --runInBand        
