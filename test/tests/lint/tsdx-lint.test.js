@@ -61,5 +61,9 @@ describe('tsdx lint', () => {
       expect(shell.test('-f', '.eslintrc.js')).toBeTruthy();
       expect(output.code).toBe(0);
     });
+
+    afterAll(() => {
+      util.teardownStage(stageName);
+    });
   });
 });
