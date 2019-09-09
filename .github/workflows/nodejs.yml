@@ -4,27 +4,28 @@ on: [push]
 
 jobs:
   test:
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+   
     
     runs-on: ${{ matrix.os }}
     
     strategy:
       matrix:
-        node_version: [8, 10, 12]
+        node: ['8.x', '10.x', '12.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
-
+    
+    name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
+    
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node_version }}
+      - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
-          version: ${{ matrix.node_version }}
+          node-version: ${{ matrix.node }}
           
-      - name: Install yarn  
+      - name: Install yarn package manager
         run: npm install -g yarn
         
-      - name: Install deps
-        run: yarn install  --frozen-lockfile
-      
-      - name: Test package
-        run: yarn test --runInBand --coverage
+      - name: Install deps and test
+        run: |
+          yarn install --frozen-lockfile
+          yarn test --runInBand     
