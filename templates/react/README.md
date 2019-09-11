@@ -128,7 +128,7 @@ Alternatively, if you already have a git repo connected, you can set up continuo
 
 ```bash
 netlify init
-# build command: cd example && yarn && yarn build
+# build command: yarn build && cd example && yarn && yarn build
 # directory to deploy: example/dist
 # pick yes for netlify.toml
 ```
