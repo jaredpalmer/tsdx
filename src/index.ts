@@ -494,9 +494,13 @@ prog
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
-        prog.help('lint');
-        console.log(chalk.red('No input files specified.'));
-        process.exit(1);
+        const defaultInputs = ['src', 'test'];
+        opts['_'] = defaultInputs;
+        console.log(
+          chalk.yellow(
+            `No input files specified, defaulting to ${defaultInputs.join(' ')}`
+          )
+        );
       }
 
       const cli = new CLIEngine({
