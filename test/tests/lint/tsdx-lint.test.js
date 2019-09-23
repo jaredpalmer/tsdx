@@ -47,7 +47,7 @@ describe('tsdx lint', () => {
   it('should not lint', () => {
     const output = shell.exec(`node dist/index.js lint`);
     expect(output.code).toBe(1);
-    expect(output.toString()).toContain('No input files specified.');
+    expect(output.toString()).toContain('No input files specified, defaulting to src test');
   });
 
   describe('when --write-file is used', () => {
