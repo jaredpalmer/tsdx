@@ -487,7 +487,7 @@ prog
   .option('--write-file', 'Write the config file locally')
   .example('lint --write-file')
   .action(
-    async (opts: {
+    (opts: {
       fix: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
