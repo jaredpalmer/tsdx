@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import sade from 'sade';
-import glob from 'tiny-glob/sync';
 import {
   rollup,
   watch,
@@ -12,151 +11,36 @@ import {
 } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
-import util from 'util';
 import * as fs from 'fs-extra';
 import jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
-import mkdirp from 'mkdirp';
 import execa from 'execa';
 import ora from 'ora';
 import { paths } from './constants';
 import * as Messages from './messages';
-import { createRollupConfig } from './createRollupConfig';
-import { createJestConfig } from './createJestConfig';
-import { createEslintConfig } from './createEslintConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
-import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
-import { TsdxOptions } from './types';
-const pkg = require('../package.json');
-const createLogger = require('progress-estimator');
-// All configuration keys are optional, but it's recommended to specify a storage location.
-// Learn more about configuration options below.
-const logger = createLogger({
-  storagePath: path.join(__dirname, '.progress-estimator'),
-});
+
+import {
+  logger,
+  moveTypes,
+  safePackageName,
+  clearConsole,
+  pkg,
+  getInputs,
+  ensureDistFolder,
+  writeCjsEntryFile,
+  getAppPackageJson,
+} from './helpers';
+
+import { generateProjectConfig } from './generators';
+import * as builder from './builders';
 
 const prog = sade('tsdx');
-
-let appPackageJson: {
-  name: string;
-  source?: string;
-  jest?: any;
-  eslint?: any;
-};
-
-try {
-  appPackageJson = fs.readJSONSync(resolveApp('package.json'));
-} catch (e) {}
-
-// check for custom tsdx.config.js
-let tsdxConfig = {
-  rollup(config: any, _options: any) {
-    return config;
-  },
-};
-
-if (fs.existsSync(paths.appConfig)) {
-  tsdxConfig = require(paths.appConfig);
-}
-
-export const isDir = (name: string) =>
-  fs
-    .stat(name)
-    .then(stats => stats.isDirectory())
-    .catch(() => false);
-
-export const isFile = (name: string) =>
-  fs
-    .stat(name)
-    .then(stats => stats.isFile())
-    .catch(() => false);
-
-async function jsOrTs(filename: string) {
-  const extension = (await isFile(resolveApp(filename + '.ts')))
-    ? '.ts'
-    : (await isFile(resolveApp(filename + '.tsx')))
-    ? '.tsx'
-    : '.js';
-
-  return resolveApp(`${filename}${extension}`);
-}
-
-async function getInputs(entries: string[], source?: string) {
-  let inputs: any[] = [];
-  let stub: any[] = [];
-  stub
-    .concat(
-      entries && entries.length
-        ? entries
-        : (source && resolveApp(source)) ||
-            ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
-    )
-    .map(file => glob(file))
-    .forEach(input => inputs.push(input));
-
-  return concatAllArray(inputs);
-}
-
-function createBuildConfigs(
-  opts: any
-): Array<RollupOptions & { output: OutputOptions }> {
-  return concatAllArray(
-    opts.input.map((input: string) =>
-      [
-        opts.format.includes('cjs') && {
-          ...opts,
-          format: 'cjs',
-          env: 'development',
-          input,
-        },
-        opts.format.includes('cjs') && {
-          ...opts,
-          format: 'cjs',
-          env: 'production',
-          input,
-        },
-        opts.format.includes('esm') && { ...opts, format: 'esm', input },
-        opts.format.includes('umd') && {
-          ...opts,
-          format: 'umd',
-          env: 'development',
-          input,
-        },
-        opts.format.includes('umd') && {
-          ...opts,
-          format: 'umd',
-          env: 'production',
-          input,
-        },
-      ]
-        .filter(Boolean)
-        .map((options: TsdxOptions, index: number) => ({
-          ...options,
-          // We want to know if this is the first run for each entryfile
-          // for certain plugins (e.g. css)
-          writeMeta: index === 0,
-        }))
-    )
-  ).map((options: TsdxOptions) =>
-    // pass the full rollup config to tsdx.config.js override
-    tsdxConfig.rollup(createRollupConfig(options), options)
-  );
-}
-
-async function moveTypes() {
-  try {
-    // Move the typescript types to the base of the ./dist folder
-    await fs.copy(paths.appDist + '/src', paths.appDist, {
-      overwrite: true,
-    });
-    await fs.remove(paths.appDist + '/src');
-  } catch (e) {}
-}
+const appPackageJson = getAppPackageJson();
 
 prog
   .version(pkg.version)
@@ -208,7 +92,7 @@ prog
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react'],
+        choices: ['basic', 'react', 'chrome'],
       });
 
       if (opts.template) {
@@ -238,33 +122,18 @@ prog
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
-      const pkgJson = {
-        name: safeName,
+
+      const tsdxBag = {
+        safeName,
+        template,
+        logger,
+        bootSpinner,
         version: '0.1.0',
-        main: 'dist/index.js',
-        module: `dist/${safeName}.esm.js`,
-        typings: 'dist/index.d.ts',
-        files: ['dist'],
-        scripts: {
-          start: 'tsdx watch',
-          build: 'tsdx build',
-          test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
-          lint: 'tsdx lint',
-        },
-        peerDependencies: template === 'react' ? { react: '>=16' } : {},
-        husky: {
-          hooks: {
-            'pre-commit': 'tsdx lint',
-          },
-        },
-        prettier: {
-          printWidth: 80,
-          semi: true,
-          singleQuote: true,
-          trailingComma: 'es5',
-        },
+        projectPath,
+        paths,
       };
-      await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
+
+      await generateProjectConfig(tsdxBag);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
       Messages.start(pkg);
     } catch (error) {
@@ -283,6 +152,17 @@ prog
         'react',
         'react-dom',
       ].sort();
+    }
+
+    if (template === 'chrome') {
+      deps = [
+        ...deps,
+        '@types/react',
+        '@types/react-dom',
+        'react',
+        'react-dom',
+        '@types/chrome',
+      ];
     }
 
     const installSpinner = ora(Messages.installing(deps)).start();
@@ -320,7 +200,8 @@ prog
   .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = createBuildConfigs(opts);
+    const { rollupConfig: buildConfigs } = builder.generateBuildConfig(opts);
+
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       await writeCjsEntryFile(opts.name);
@@ -384,7 +265,7 @@ prog
   )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = createBuildConfigs(opts);
+    const { rollupConfig: buildConfigs } = builder.generateBuildConfig(opts);
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       const promise = writeCjsEntryFile(opts.name).catch(logError);
@@ -425,24 +306,6 @@ async function normalizeOpts(opts: any) {
   };
 }
 
-function ensureDistFolder() {
-  return util.promisify(mkdirp)(resolveApp('dist'));
-}
-
-function writeCjsEntryFile(name: string) {
-  const baseLine = `module.exports = require('./${safePackageName(name)}`;
-  const contents = `
-'use strict'
-
-if (process.env.NODE_ENV === 'production') {
-  ${baseLine}.cjs.production.min.js')
-} else {
-  ${baseLine}.cjs.development.js')
-}
-`;
-  return fs.writeFile(resolveApp(`./dist/index.js`), contents);
-}
-
 prog
   .command('test')
   .describe(
@@ -464,7 +327,7 @@ prog
     argv.push(
       '--config',
       JSON.stringify({
-        ...createJestConfig(
+        ...builder.createJestConfig(
           relativePath => path.resolve(__dirname, '..', relativePath),
           paths.appRoot
         ),
@@ -505,7 +368,7 @@ prog
 
       const cli = new CLIEngine({
         baseConfig: {
-          ...createEslintConfig({
+          ...builder.createEslintConfig({
             rootDir: paths.appRoot,
             writeFile: opts['write-file'],
           }),

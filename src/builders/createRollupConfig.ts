@@ -1,5 +1,5 @@
-import { safeVariableName, safePackageName, external } from './utils';
-import { paths } from './constants';
+import { safeVariableName, safePackageName, external } from '../helpers';
+import { paths } from '../constants';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
@@ -9,9 +9,9 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import { extractErrors } from './errors/extractErrors';
-import { babelPluginTsdx } from './babelPluginTsdx';
-import { TsdxOptions } from './types';
+import { extractErrors } from '../errors/extractErrors';
+import { babelPluginTsdx } from '../babelPluginTsdx';
+import { TsdxOptions } from '../types';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,

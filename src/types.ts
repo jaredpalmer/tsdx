@@ -18,3 +18,31 @@ export interface TsdxOptions {
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
   writeMeta?: boolean;
 }
+
+export interface TemplateStaticsBuilderOptions {
+  projectPath: string;
+  logger?: any;
+  bootSpinner: any;
+  safeName: string;
+  version: string;
+  template: 'react' | 'basic' | 'chrome';
+  paths: Paths;
+}
+
+export type Paths = {
+  appPackageJson: string;
+  testsSetup: string;
+  appRoot: string;
+  appSrc: string;
+  appErrorsJson: string;
+  appErrors: string;
+  appDist: string;
+  appConfig: string;
+};
+
+export {
+  RollupOptions,
+  OutputOptions,
+  RollupWatchOptions,
+  WatcherOptions,
+} from 'rollup';
