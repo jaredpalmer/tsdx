@@ -1,14 +1,7 @@
 import { createConfigItem } from '@babel/core';
 import babelPlugin from 'rollup-plugin-babel';
 import merge from 'lodash.merge';
-
-export const isTruthy = (obj?: any) => {
-  if (!obj) {
-    return false;
-  }
-
-  return obj.constructor !== Object || Object.keys(obj).length > 0;
-};
+import { isTruthy } from '../helpers';
 
 const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
 

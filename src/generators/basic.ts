@@ -1,7 +1,7 @@
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 import { generatePackageJson, logger, writeJson } from '../helpers';
 
-export function buildBasicPackageJson(opts: TemplateStaticsBuilderOptions) {
+export function buildBasicPackageJson(opts: TsdxBag) {
   return {
     scripts: {
       start: 'tsdx watch',
@@ -13,7 +13,7 @@ export function buildBasicPackageJson(opts: TemplateStaticsBuilderOptions) {
   };
 }
 
-export async function generateBasicConfig(opts: TemplateStaticsBuilderOptions) {
+export async function generateBasicConfig(opts: TsdxBag) {
   const pkgJson = generatePackageJson(opts);
   try {
     await writeJson({ file: 'package.json', json: pkgJson }, opts);
@@ -22,3 +22,5 @@ export async function generateBasicConfig(opts: TemplateStaticsBuilderOptions) {
     logger(e);
   }
 }
+
+export const basicDeps = [];

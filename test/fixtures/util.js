@@ -20,9 +20,13 @@ module.exports = {
   },
 
   teardownStage: stageName => {
+    const stagePath = path.join(rootDir, stageName);
     shell.cd(rootDir);
-    shell.rm('-rf', path.join(rootDir, stageName));
+    if (shell.test('-d', `${rootDir}/.result/${stageName}`)) {
+      shell.rm('-rf', `${rootDir}/.result/${stageName}`);
+    }
+    shell.exec(`mkdir -p ${rootDir}/.result/${stageName}`);
+    shell.exec(`cp -R ${stagePath} ${rootDir}/.result/`);
+    shell.rm('-rf', stagePath);
   },
-
-  rootDir,
 };

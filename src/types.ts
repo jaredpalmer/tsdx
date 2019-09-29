@@ -19,14 +19,18 @@ export interface TsdxOptions {
   writeMeta?: boolean;
 }
 
-export interface TemplateStaticsBuilderOptions {
+export interface TsdxBag {
   projectPath: string;
   logger?: any;
   bootSpinner: any;
+  installSpinner: any;
   safeName: string;
   version: string;
-  template: 'react' | 'basic' | 'chrome';
+  template: TemplateTypes;
   paths: Paths;
+  pkg: string;
+  deps: string[];
+  tsdxOpts: TsdxOptions;
 }
 
 export type Paths = {
@@ -46,3 +50,5 @@ export {
   RollupWatchOptions,
   WatcherOptions,
 } from 'rollup';
+
+export type TemplateTypes = 'react' | 'basic' | 'chrome';

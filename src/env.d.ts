@@ -25,3 +25,8 @@ declare module 'babylon';
 declare module '@babel/helper-module-imports';
 
 declare module 'lodash.merge';
+
+declare module 'tslib' {
+  export function __rest() {}
+  export function __exportStar() {}
+}

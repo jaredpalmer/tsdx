@@ -10,7 +10,7 @@ import traverse from 'babel-traverse';
 import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
 import { paths } from '../constants';
-import { safeVariableName } from '../utils';
+import { safeVariableName } from '../helpers';
 import pascalCase from 'pascal-case';
 
 const babylonOptions = {

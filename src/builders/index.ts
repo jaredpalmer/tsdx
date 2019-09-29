@@ -19,3 +19,4 @@ export function generateBuildConfig(opts: any) {
 export { createRollupConfig, getBuildOptions, getTsdxConfig };
 export * from './createEslintConfig';
 export * from './createJestConfig';
+export * from './createTsdxBabelPlugin';

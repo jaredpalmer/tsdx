@@ -1,7 +1,7 @@
 import { generatePackageJson, logger, writeJson } from '../helpers';
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 
-export function generateManifestJson(opts: TemplateStaticsBuilderOptions) {
+export function generateManifestJson(opts: TsdxBag) {
   return {
     name: opts.safeName,
     version: opts.version,
@@ -16,7 +16,7 @@ export function generateManifestJson(opts: TemplateStaticsBuilderOptions) {
   };
 }
 
-export function buildChromePackageJson(opts: TemplateStaticsBuilderOptions) {
+export function buildChromePackageJson(opts: TsdxBag) {
   return {
     scripts: {
       start: 'tsdx watch',
@@ -30,9 +30,7 @@ export function buildChromePackageJson(opts: TemplateStaticsBuilderOptions) {
   };
 }
 
-export async function generateChromeExtensionConfig(
-  opts: TemplateStaticsBuilderOptions
-) {
+export async function generateChromeExtensionConfig(opts: TsdxBag) {
   const pkgJson = generatePackageJson(opts);
   const manifestJson = generateManifestJson(opts);
 
@@ -44,3 +42,11 @@ export async function generateChromeExtensionConfig(
     logger(e);
   }
 }
+
+export const chromeDeps = [
+  '@types/react',
+  '@types/react-dom',
+  'react',
+  'react-dom',
+  '@types/chrome',
+];

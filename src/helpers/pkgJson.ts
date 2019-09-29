@@ -1,4 +1,4 @@
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 import {
   buildChromePackageJson,
   buildReactPackageJson,
@@ -13,13 +13,11 @@ const pkgJsonStrategy = {
   react: buildReactPackageJson,
 };
 
-export function getTemplatePackageJson(opts: TemplateStaticsBuilderOptions) {
+export function getTemplatePackageJson(opts: TsdxBag) {
   return pkgJsonStrategy[opts.template](opts);
 }
 
-export function getCommonPackageJsonConfig(
-  opts: TemplateStaticsBuilderOptions
-) {
+export function getCommonPackageJsonConfig(opts: TsdxBag) {
   return {
     name: opts.safeName,
     version: opts.version,
@@ -49,9 +47,9 @@ export function getAppPackageJson() {
     eslint?: any;
   };
   try {
-    appPackageJson = readJson({ file: 'package.json' }));
+    appPackageJson = readJson({ file: 'package.json' });
   } catch (e) {
     appPackageJson = { name: e };
   }
-  return appPackageJson
+  return appPackageJson;
 }

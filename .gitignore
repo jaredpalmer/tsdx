@@ -9,3 +9,4 @@ tester
 tester-react
 # Local Netlify folder
 .netlify
+.result

@@ -1,4 +1,4 @@
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 import {
   generateChromeExtensionConfig,
   generateReactConfig,
@@ -12,7 +12,7 @@ const generatorStrategy = {
 };
 
 export async function generateProjectConfig<T>(
-  opts: TemplateStaticsBuilderOptions
+  opts: TsdxBag
 ): Promise<T | any> {
   try {
     return await generatorStrategy[opts.template](opts);

@@ -4,7 +4,7 @@ let cmd: InstallCommand;
 
 export type InstallCommand = 'yarn' | 'npm';
 
-export default function getInstallCmd(): InstallCommand {
+export function getInstallCmd(): InstallCommand {
   if (cmd) {
     return cmd;
   }
@@ -18,3 +18,5 @@ export default function getInstallCmd(): InstallCommand {
 
   return cmd;
 }
+
+export default getInstallCmd;

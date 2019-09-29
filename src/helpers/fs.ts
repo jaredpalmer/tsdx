@@ -3,7 +3,7 @@ import path from 'path';
 import util from 'util';
 import mkdirp from 'mkdirp';
 import { paths } from '../constants';
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 import { safePackageName } from '.';
 
 export const isDir = (name: string) =>
@@ -60,7 +60,7 @@ export async function writeJson(
     file: string;
     json: object;
   },
-  bag: TemplateStaticsBuilderOptions
+  bag: TsdxBag
 ) {
   try {
     await fs.outputJSON(path.resolve(bag.projectPath), opts.json);

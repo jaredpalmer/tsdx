@@ -1,10 +1,25 @@
 import chalk from 'chalk';
-import getInstallCmd from './getInstallCmd';
+import getInstallCmd from './utils/getInstallCmd';
 import * as Output from './output';
+import { TsdxBag } from '../types';
 
 // This was copied from Razzle. Lots of unused stuff.
 const program = {
   name: 'tsdx',
+};
+
+export const displayWelcome = function() {
+  console.log(
+    chalk.blue(`
+::::::::::: ::::::::  :::::::::  :::    :::
+    :+:    :+:    :+: :+:    :+: :+:    :+:
+    +:+    +:+        +:+    +:+  +:+  +:+
+    +#+    +#++:++#++ +#+    +:+   +#++:+
+    +#+           +#+ +#+    +#+  +#+  +#+
+    #+#    #+#    #+# #+#    #+# #+#    #+#
+    ###     ########  #########  ###    ###
+`)
+  );
 };
 
 export const help = function() {
@@ -60,7 +75,7 @@ Creating ${chalk.bold(chalk.green(projectName))}...
 `;
 };
 
-export const start = function(projectName: string) {
+export const displayNextSteps = function({ pkg: projectName }: TsdxBag) {
   const cmd = getInstallCmd();
 
   const commands = {
@@ -70,7 +85,7 @@ export const start = function(projectName: string) {
     test: cmd === 'npm' ? 'npm test' : 'yarn test',
   };
 
-  return `
+  console.log(`
   ${chalk.green('Awesome!')} You're now ready to start coding.
   
   I already ran ${Output.cmd(commands.install)} for you, so your next steps are:
@@ -87,5 +102,5 @@ export const start = function(projectName: string) {
     
   Questions? Feedback? Please let me know!
   ${chalk.green('https://github.com/jaredpalmer/tsdx/issues')}
-`;
+`);
 };

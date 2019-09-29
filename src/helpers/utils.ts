@@ -27,3 +27,11 @@ export function clearConsole() {
     process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H'
   );
 }
+
+export const isTruthy = (obj?: any) => {
+  if (!obj) {
+    return false;
+  }
+
+  return obj.constructor !== Object || Object.keys(obj).length > 0;
+};

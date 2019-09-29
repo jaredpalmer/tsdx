@@ -1,7 +1,7 @@
 import path from 'path';
 import { concatAllArray } from 'jpjs';
 import glob from 'tiny-glob/sync';
-import { TemplateStaticsBuilderOptions } from '../types';
+import { TsdxBag } from '../types';
 import {
   isDir,
   resolveApp,
@@ -10,7 +10,7 @@ import {
   getTemplatePackageJson,
 } from '.';
 
-export const pkg = require(path.resolve(__dirname, 'package.json'));
+const pkg = require(path.resolve('package.json'));
 
 export async function getInputs(entries: string[], source?: string) {
   let inputs: any[] = [];
@@ -28,8 +28,10 @@ export async function getInputs(entries: string[], source?: string) {
   return concatAllArray(inputs);
 }
 
-export function generatePackageJson(opts: TemplateStaticsBuilderOptions) {
+export function generatePackageJson(opts: TsdxBag) {
   const common = getCommonPackageJsonConfig(opts);
   const specific = getTemplatePackageJson(opts);
   return Object.assign({}, common, specific);
 }
+
+export { pkg };
