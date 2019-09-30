@@ -26,7 +26,7 @@ import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
+import { resolveApp, clearConsole } from './utils';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -200,10 +200,14 @@ prog
       }
     }
 
+    // if scoped like `@babel/core` --> `babel-core`
+    const isScoped = pkg.includes('/') && pkg.includes('@');
+    const pkgPath = isScoped ? pkg.replace('@', '').replace('/', '-') : pkg;
+
     try {
       // get the project path
       let projectPath = await getProjectPath(
-        fs.realpathSync(process.cwd()) + '/' + pkg
+        fs.realpathSync(process.cwd()) + '/' + pkgPath
       );
 
       const prompt = new Select({
@@ -237,13 +241,17 @@ prog
       );
       // Install deps
       process.chdir(projectPath);
-      const safeName = safePackageName(pkg);
+
+      // we don't need "safe name" here, since it should be AS IS passed by the user,
+      // e.g. if `@foo/core` is passed in the prompt, here it should be the same,
+      // but the actual folder will be `foo-core`.
+      // const safeName = safePackageName(pkg);
       const pkgJson = {
-        name: safeName,
+        name: pkg,
         version: '0.1.0',
         main: 'dist/index.js',
-        module: `dist/${safeName}.esm.js`,
-        typings: 'dist/index.d.ts',
+        module: `dist/esm/index.js`,
+        typings: 'dist/types/index.d.ts',
         files: ['dist'],
         scripts: {
           start: 'tsdx watch',
@@ -430,14 +438,14 @@ function ensureDistFolder() {
 }
 
 function writeCjsEntryFile(name: string) {
-  const baseLine = `module.exports = require('./${safePackageName(name)}`;
+  const baseLine = `module.exports = require('./cjs/index`;
   const contents = `
 'use strict'
 
 if (process.env.NODE_ENV === 'production') {
-  ${baseLine}.cjs.production.min.js')
+  ${baseLine}.min.js')
 } else {
-  ${baseLine}.cjs.development.js')
+  ${baseLine}.js')
 }
 `;
   return fs.writeFile(resolveApp(`./dist/index.js`), contents);

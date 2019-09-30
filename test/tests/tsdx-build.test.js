@@ -1,7 +1,6 @@
 /**
  * @jest-environment node
  */
-'use strict';
 
 const shell = require('shelljs');
 const util = require('../fixtures/util');
@@ -21,15 +20,11 @@ describe('tsdx build', () => {
     const output = shell.exec('node ../dist/index.js build --format esm,cjs');
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.cjs.development.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.cjs.production.min.js')
-    ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-default.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/index.min.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/esm/index.js')).toBeTruthy();
 
-    expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'dist/types/index.d.ts')).toBeTruthy();
 
     expect(output.code).toBe(0);
   });
