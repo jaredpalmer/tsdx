@@ -9,7 +9,7 @@ import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { ScriptTarget, JsxEmit } from 'typescript';
-import typescript from '@wessberg/rollup-plugin-ts';
+import ts from '@wessberg/rollup-plugin-ts';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
@@ -125,8 +125,8 @@ export function createRollupConfig(opts: TsdxOptions) {
         },
       },
       opts.format === 'esm' && !shouldMinify
-        ? typescript({
-            transpiler: 'typescript',
+        ? ts({
+            transpiler: 'babel',
             tsconfig: tsconfig => ({
               ...tsconfig,
               target: ScriptTarget.ESNext,
@@ -136,8 +136,8 @@ export function createRollupConfig(opts: TsdxOptions) {
               jsx: JsxEmit.React,
             }),
           })
-        : typescript({
-            transpiler: 'typescript',
+        : ts({
+            transpiler: 'babel',
             tsconfig: tsconfig => ({
               ...tsconfig,
               target: ScriptTarget.ESNext,
