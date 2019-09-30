@@ -90,8 +90,6 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "@types/ansi-escapes": "^4.0.0",
-    "@types/camelcase": "^5.2.0",
     "@types/eslint": "^4.16.8",
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "^8.0.0",
@@ -99,7 +97,6 @@
     "@types/mkdirp": "^0.5.2",
     "@types/ms": "^0.7.30",
     "@types/node": "^12.0.2",
-    "@types/ora": "^3.2.0",
     "@types/react": "^16.8.17",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
