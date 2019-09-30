@@ -8,11 +8,8 @@ import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
-
 import { ScriptTarget, JsxEmit } from 'typescript';
 import typescript from '@wessberg/rollup-plugin-ts';
-
-// import typescript from 'rollup-plugin-typescript2';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
@@ -149,23 +146,6 @@ export function createRollupConfig(opts: TsdxOptions) {
               jsx: JsxEmit.React,
             }),
           }),
-      // typescript({
-      //   typescript: require('typescript'),
-      //   cacheRoot: `./.rts2_cache_${opts.format}`,
-      //   tsconfig: opts.tsconfig,
-      //   tsconfigDefaults: {
-      //     compilerOptions: {
-      //       sourceMap: true,
-      //       declaration: true,
-      //       jsx: 'react',
-      //     },
-      //   },
-      //   tsconfigOverride: {
-      //     compilerOptions: {
-      //       target: 'esnext',
-      //     },
-      //   },
-      // }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
