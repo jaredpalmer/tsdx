@@ -6,7 +6,7 @@ export interface TsdxOptions {
   // JS target
   target: 'node' | 'browser';
   // Module format
-  format: 'cjs' | 'umd' | 'esm';
+  format: 'cjs' | 'umd' | 'esm' | 'system';
   // Environment
   env: 'development' | 'production';
   // Path to tsconfig file
