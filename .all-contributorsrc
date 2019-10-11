@@ -1,0 +1,30 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "sw-yx",
+      "name": "swyx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6764957?v=4",
+      "profile": "https://twitter.com/swyx",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "infra",
+        "maintenance",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "tsdx",
+  "projectOwner": "jaredpalmer",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
