@@ -133,6 +133,18 @@ function createBuildConfigs(
           env: 'production',
           input,
         },
+        opts.format.includes('system') && {
+          ...opts,
+          format: 'system',
+          env: 'development',
+          input,
+        },
+        opts.format.includes('system') && {
+          ...opts,
+          format: 'system',
+          env: 'production',
+          input,
+        },
       ]
         .filter(Boolean)
         .map((options: TsdxOptions, index: number) => ({
