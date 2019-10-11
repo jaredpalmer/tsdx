@@ -1,4 +1,5 @@
 ![tsdx](https://user-images.githubusercontent.com/4060187/56918426-fc747600-6a8b-11e9-806d-2da0b49e89e4.png)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx)
 
@@ -458,3 +459,19 @@ Examples
 ## License
 
 [MIT](https://oss.ninja/mit/jaredpalmer/)
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center"><a href="https://jaredpalmer.com"><img src="https://avatars2.githubusercontent.com/u/4060187?v=4" width="100px;" alt="Jared Palmer"/><br /><sub><b>Jared Palmer</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Documentation">📖</a> <a href="#design-jaredpalmer" title="Design">🎨</a> <a href="#review-jaredpalmer" title="Reviewed Pull Requests">👀</a> <a href="#tool-jaredpalmer" title="Tools">🔧</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Tests">⚠️</a> <a href="#maintenance-jaredpalmer" title="Maintenance">🚧</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
