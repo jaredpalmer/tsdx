@@ -5,6 +5,21 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
+   {
+      "login": "jaredpalmer",
+      "name": "Jared Palmer",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4060187?v=4",
+      "profile": "https://jaredpalmer.com",
+      "contributions": [
+        "doc",
+        "design",
+        "review",
+        "tool",
+        "test",
+        "maintenance",
+        "code"
+      ]
+     },
     {
       "login": "sw-yx",
       "name": "swyx",
@@ -19,7 +34,7 @@
         "infra",
         "maintenance",
         "review"
-      ]
+       ]
     }
   ],
   "contributorsPerLine": 7,
