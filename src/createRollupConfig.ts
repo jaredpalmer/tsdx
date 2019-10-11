@@ -8,7 +8,9 @@ import json from 'rollup-plugin-json';
 import replace from 'rollup-plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
-import typescript from 'rollup-plugin-typescript2';
+import ts from '@wessberg/rollup-plugin-ts';
+import { ScriptTarget, JsxEmit } from 'typescript';
+import path from 'path';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
@@ -125,22 +127,22 @@ export function createRollupConfig(opts: TsdxOptions) {
           };
         },
       },
-      typescript({
-        typescript: require('typescript'),
-        cacheRoot: `./.rts2_cache_${opts.format}`,
-        tsconfig: opts.tsconfig,
-        tsconfigDefaults: {
-          compilerOptions: {
-            sourceMap: true,
-            declaration: true,
-            jsx: 'react',
+      ts({
+        hook: {
+          outputPath: (fp, kind) => {
+            if (/declaration/.test(kind) && opts.format === 'esm') {
+              return path.join(path.dirname(fp), 'index.d.ts');
+            }
           },
         },
-        tsconfigOverride: {
-          compilerOptions: {
-            target: 'esnext',
-          },
-        },
+        tsconfig: tsconfig => ({
+          ...tsconfig,
+          target: ScriptTarget.ESNext,
+          sourceMap: true,
+          declaration: opts.format === 'esm',
+          jsx: JsxEmit.React,
+        }),
+        transpiler: 'babel',
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
