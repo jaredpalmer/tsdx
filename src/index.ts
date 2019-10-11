@@ -460,15 +460,26 @@ prog
     });
 
     const argv = process.argv.slice(2);
+    let jestConfig = {
+      ...createJestConfig(
+        relativePath => path.resolve(__dirname, '..', relativePath),
+        paths.appRoot
+      ),
+      ...appPackageJson.jest,
+    };
+    try {
+      // Allow overriding with jest.config
+      const jestConfigContents = require(path.resolve(
+        paths.appRoot,
+        'jest.config.js'
+      ));
+      jestConfig = { ...jestConfig, ...jestConfigContents };
+    } catch {}
 
     argv.push(
       '--config',
       JSON.stringify({
-        ...createJestConfig(
-          relativePath => path.resolve(__dirname, '..', relativePath),
-          paths.appRoot
-        ),
-        ...appPackageJson.jest,
+        ...jestConfig,
       })
     );
 
