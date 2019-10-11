@@ -5,7 +5,7 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-   {
+    {
       "login": "jaredpalmer",
       "name": "Jared Palmer",
       "avatar_url": "https://avatars2.githubusercontent.com/u/4060187?v=4",
@@ -19,7 +19,7 @@
         "maintenance",
         "code"
       ]
-     },
+    },
     {
       "login": "sw-yx",
       "name": "swyx",
@@ -34,7 +34,17 @@
         "infra",
         "maintenance",
         "review"
-       ]
+      ]
+    },
+    {
+      "login": "JasonEtco",
+      "name": "Jason Etcovitch",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10660468?v=4",
+      "profile": "https://jasonet.co",
+      "contributions": [
+        "bug",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
