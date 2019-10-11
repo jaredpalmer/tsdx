@@ -5,7 +5,7 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {
+   {
       "login": "jaredpalmer",
       "name": "Jared Palmer",
       "avatar_url": "https://avatars2.githubusercontent.com/u/4060187?v=4",
@@ -19,6 +19,22 @@
         "maintenance",
         "code"
       ]
+     },
+    {
+      "login": "sw-yx",
+      "name": "swyx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6764957?v=4",
+      "profile": "https://twitter.com/swyx",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "infra",
+        "maintenance",
+        "review"
+       ]
     }
   ],
   "contributorsPerLine": 7,
