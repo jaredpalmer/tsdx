@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "skvale",
+      "name": "Sam Kvale",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5314713?v=4",
+      "profile": "https://github.com/skvale",
+      "contributions": [
+        "code",
+        "test",
+        "bug",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "tsdx",
+  "projectOwner": "jaredpalmer",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
