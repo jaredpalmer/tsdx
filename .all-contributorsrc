@@ -1,0 +1,23 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "aleclarson",
+      "name": "Alec Larson",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1925840?v=4",
+      "profile": "https://twitter.com/alecdotbiz",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "tsdx",
+  "projectOwner": "jaredpalmer",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
