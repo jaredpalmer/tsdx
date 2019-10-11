@@ -469,10 +469,7 @@ prog
     };
     try {
       // Allow overriding with jest.config
-      const jestConfigContents = require(path.resolve(
-        paths.appRoot,
-        'jest.config.js'
-      ));
+      const jestConfigContents = require(paths.jestConfig);
       jestConfig = { ...jestConfig, ...jestConfigContents };
     } catch {}
 
