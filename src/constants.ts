@@ -9,5 +9,5 @@ export const paths = {
   appErrors: resolveApp('errors'),
   appDist: resolveApp('dist'),
   appConfig: resolveApp('tsdx.config.js'),
-  jestConfig: resolveApp('jest.config'),
+  jestConfig: resolveApp('jest.config.js'),
 };
