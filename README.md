@@ -1,5 +1,4 @@
 ![tsdx](https://user-images.githubusercontent.com/4060187/56918426-fc747600-6a8b-11e9-806d-2da0b49e89e4.png)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx)
 
@@ -467,8 +466,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/skvale"><img src="https://avatars0.githubusercontent.com/u/5314713?v=4" width="100px;" alt="Sam Kvale"/><br /><sub><b>Sam Kvale</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Tests">⚠️</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Askvale" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Documentation">📖</a></td>
+  <tr>   
+    <td align="center"><a href="https://jaredpalmer.com"><img src="https://avatars2.githubusercontent.com/u/4060187?v=4" width="100px;" alt="Jared Palmer"/><br /><sub><b>Jared Palmer</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Documentation">📖</a> <a href="#design-jaredpalmer" title="Design">🎨</a> <a href="#review-jaredpalmer" title="Reviewed Pull Requests">👀</a> <a href="#tool-jaredpalmer" title="Tools">🔧</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Tests">⚠️</a> <a href="#maintenance-jaredpalmer" title="Maintenance">🚧</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jaredpalmer" title="Code">💻</a></td>
+    <td align="center"><a href="https://twitter.com/swyx"><img src="https://avatars1.githubusercontent.com/u/6764957?v=4" width="100px;" alt="swyx"/><br /><sub><b>swyx</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Asw-yx" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=sw-yx" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=sw-yx" title="Documentation">📖</a> <a href="#design-sw-yx" title="Design">🎨</a> <a href="#ideas-sw-yx" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-sw-yx" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-sw-yx" title="Maintenance">🚧</a> <a href="#review-sw-yx" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://jasonet.co"><img src="https://avatars1.githubusercontent.com/u/10660468?v=4" width="100px;" alt="Jason Etcovitch"/><br /><sub><b>Jason Etcovitch</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3AJasonEtco" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=JasonEtco" title="Tests">⚠️</a></td>
+     <td align="center"><a href="https://github.com/skvale"><img src="https://avatars0.githubusercontent.com/u/5314713?v=4" width="100px;" alt="Sam Kvale"/><br /><sub><b>Sam Kvale</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Tests">⚠️</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Askvale" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=skvale" title="Documentation">📖</a></td>
   </tr>
 </table>
 

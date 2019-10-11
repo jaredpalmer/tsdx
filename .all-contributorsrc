@@ -5,8 +5,48 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
+    {     
+      "login": "jaredpalmer",
+      "name": "Jared Palmer",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4060187?v=4",
+      "profile": "https://jaredpalmer.com",
+      "contributions": [
+        "doc",
+        "design",
+        "review",
+        "tool",
+        "test",
+        "maintenance",
+        "code"
+      ]
+    },
     {
-      "login": "skvale",
+      "login": "sw-yx",
+      "name": "swyx",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6764957?v=4",
+      "profile": "https://twitter.com/swyx",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "design",
+        "ideas",
+        "infra",
+        "maintenance",
+        "review"
+      ]
+    },
+    {
+      "login": "JasonEtco",
+      "name": "Jason Etcovitch",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/10660468?v=4",
+      "profile": "https://jasonet.co",
+      "contributions": [
+        "bug",
+        "test"
+      ]
+    }, {
+     "login": "skvale",
       "name": "Sam Kvale",
       "avatar_url": "https://avatars0.githubusercontent.com/u/5314713?v=4",
       "profile": "https://github.com/skvale",
@@ -15,7 +55,7 @@
         "test",
         "bug",
         "doc"
-      ]
+        ]
     }
   ],
   "contributorsPerLine": 7,
