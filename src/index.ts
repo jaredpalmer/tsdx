@@ -19,6 +19,7 @@ import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
 import mkdirp from 'mkdirp';
+import rimraf from 'rimraf';
 import execa from 'execa';
 import ora from 'ora';
 import { paths } from './constants';
@@ -333,6 +334,7 @@ prog
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
+    await cleanDistFolder();
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       await writeCjsEntryFile(opts.name);
@@ -397,6 +399,7 @@ prog
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
+    await cleanDistFolder();
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       const promise = writeCjsEntryFile(opts.name).catch(logError);
@@ -439,6 +442,12 @@ async function normalizeOpts(opts: any) {
 
 function ensureDistFolder() {
   return util.promisify(mkdirp)(resolveApp('dist'));
+}
+
+function cleanDistFolder() {
+  if (fs.existsSync(paths.appDist)) {
+    return util.promisify(rimraf)(paths.appDist);
+  }
 }
 
 function writeCjsEntryFile(name: string) {
