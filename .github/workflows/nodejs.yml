@@ -24,7 +24,7 @@ jobs:
         run: npm install -g yarn
 
       - name: Install deps and build
-        run: yarn install --frozen-lockfile --ignore-engines
+        run: yarn install --frozen-lockfile
 
       - name: Test package
         run: yarn test
