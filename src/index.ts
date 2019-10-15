@@ -21,7 +21,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import rimraf from 'rimraf';
 import execa from 'execa';
-import parseGitConfig from 'parse-git-config';
+import shell from 'shelljs';
 import ora from 'ora';
 import { paths } from './constants';
 import * as Messages from './messages';
@@ -496,11 +496,21 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 function getAuthorName() {
-  const config = parseGitConfig.sync({ type: 'global' });
-  if (config && config.user && config.user.name) {
-    return config.user.name as string;
-  }
-  return '';
+  let author = '';
+
+  author = shell.exec('npm config get init-author-name').stdout.trim();
+  if (author) return author;
+
+  author = shell.exec('git config --global user.name').stdout.trim();
+  if (author) return author;
+
+  author = shell.exec('npm config get init-author-email').stdout.trim();
+  if (author) return author;
+
+  author = shell.exec('git config --global user.email').stdout.trim();
+  if (author) return author;
+
+  return author;
 }
 
 prog
