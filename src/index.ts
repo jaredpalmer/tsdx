@@ -21,6 +21,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import rimraf from 'rimraf';
 import execa from 'execa';
+import parseGitConfig from 'parse-git-config';
 import ora from 'ora';
 import { paths } from './constants';
 import * as Messages from './messages';
@@ -249,8 +250,7 @@ prog
         path.resolve(projectPath, './.gitignore')
       );
 
-      bootSpinner.stop();
-      // update license year and prompt for name
+      // update license year and author
       let license = fs.readFileSync(
         path.resolve(projectPath, 'LICENSE'),
         'utf-8'
@@ -258,12 +258,18 @@ prog
 
       license = license.replace(/<year>/, `${new Date().getFullYear()}`);
 
-      const licenseInput = new Input({
-        name: 'author',
-        message: 'Who is the package author?',
-      });
+      // attempt to automatically derive author name
+      let author = getAuthorName();
 
-      let author = await licenseInput.run();
+      if (!author) {
+        bootSpinner.stop();
+        const licenseInput = new Input({
+          name: 'author',
+          message: 'Who is the package author?',
+        });
+        author = await licenseInput.run();
+        bootSpinner.start();
+      }
 
       license = license.replace(/<author>/, author.trim());
 
@@ -487,6 +493,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 `;
   return fs.writeFile(resolveApp(`./dist/index.js`), contents);
+}
+
+function getAuthorName() {
+  const config = parseGitConfig.sync({ type: 'global' });
+  if (config && config.user && config.user.name) {
+    return config.user.name as string;
+  }
+  return '';
 }
 
 prog
