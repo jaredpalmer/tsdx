@@ -498,16 +498,24 @@ if (process.env.NODE_ENV === 'production') {
 function getAuthorName() {
   let author = '';
 
-  author = shell.exec('npm config get init-author-name').stdout.trim();
+  author = shell
+    .exec('npm config get init-author-name', { silent: true })
+    .stdout.trim();
   if (author) return author;
 
-  author = shell.exec('git config --global user.name').stdout.trim();
+  author = shell
+    .exec('git config --global user.name', { silent: true })
+    .stdout.trim();
   if (author) return author;
 
-  author = shell.exec('npm config get init-author-email').stdout.trim();
+  author = shell
+    .exec('npm config get init-author-email', { silent: true })
+    .stdout.trim();
   if (author) return author;
 
-  author = shell.exec('git config --global user.email').stdout.trim();
+  author = shell
+    .exec('git config --global user.email', { silent: true })
+    .stdout.trim();
   if (author) return author;
 
   return author;
