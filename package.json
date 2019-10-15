@@ -25,7 +25,8 @@
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
-    "test": "jest --config ./test/jest.config.json"
+    "test": "jest --config ./test/jest.config.json",
+    "postinstall": "patch-package"
   },
   "files": [
     "dist",
@@ -107,6 +108,7 @@
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^3.0.9",
+    "patch-package": "^6.2.0",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
     "react": "^16.8.6",
