@@ -38,7 +38,7 @@ const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
 // Learn more about configuration options below.
 const logger = createLogger({
-  storagePath: path.join(__dirname, '.progress-estimator'),
+  storagePath: path.join(paths.cache, '.progress-estimator'),
 });
 
 const prog = sade('tsdx');
@@ -441,7 +441,7 @@ async function normalizeOpts(opts: any) {
 }
 
 function ensureDistFolder() {
-  return util.promisify(mkdirp)(resolveApp('dist'));
+  return util.promisify(mkdirp)(paths.appDist);
 }
 
 function cleanDistFolder() {
@@ -461,7 +461,7 @@ if (process.env.NODE_ENV === 'production') {
   ${baseLine}.cjs.development.js')
 }
 `;
-  return fs.writeFile(resolveApp(`./dist/index.js`), contents);
+  return fs.writeFile(path.join(paths.appDist, 'index.js'), contents);
 }
 
 prog
