@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node: ['8.x', '10.x', '12.x']
+        node: ['10.x', '12.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
