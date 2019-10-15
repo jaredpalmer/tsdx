@@ -1275,10 +1275,10 @@
     semver "^6.3.0"
     ua-parser-js "^0.7.20"
 
-"@wessberg/rollup-plugin-ts@^1.1.69":
-  version "1.1.69"
-  resolved "https://registry.yarnpkg.com/@wessberg/rollup-plugin-ts/-/rollup-plugin-ts-1.1.69.tgz#0c7524c059e0403e6b303e1cf2a69c04cd47e153"
-  integrity sha512-TZs7uKgGfofGyUhU3snonUuzOYHwQQOuXAEPp7KQyfegSb0aV02dhjNsFCdjN50hBn03OOnIIf5V6OqkWDKzVA==
+"@wessberg/rollup-plugin-ts@^1.1.70":
+  version "1.1.70"
+  resolved "https://registry.yarnpkg.com/@wessberg/rollup-plugin-ts/-/rollup-plugin-ts-1.1.70.tgz#d93011cf9b71df4806492b64e2f6c41176bc6737"
+  integrity sha512-z2pKK45r+JOOVRRusIcMUJ/lKFSk3KnE9Bum3c6ZI43DNYhG6w4R56xsTEffMoW2k78zVx71Il3Pdcx/BVTBlA==
   dependencies:
     "@babel/core" "^7.6.4"
     "@babel/plugin-proposal-async-generator-functions" "^7.2.0"
@@ -1294,7 +1294,7 @@
     "@types/node" "^12.7.12"
     "@types/resolve" "0.0.8"
     "@wessberg/browserslist-generator" "1.0.29"
-    "@wessberg/stringutil" "^1.0.18"
+    "@wessberg/stringutil" "^1.0.19"
     browserslist "4.7.0"
     find-up "^4.1.0"
     magic-string "^0.25.4"
@@ -1304,12 +1304,10 @@
     slash "^3.0.0"
     tslib "^1.10.0"
 
-"@wessberg/stringutil@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@wessberg/stringutil/-/stringutil-1.0.18.tgz#5e4ce89ed3e5bfbce7f00a64f9eb5f877bdb2b76"
-  integrity sha512-nIVMm7P5OKyVjxdQb8vuklqi2aXNS6FtdXhp28Ot6aUF/4BDO09u9xJKDpKHQXjkQ3g0bApjPuBij6MrARNUBA==
-  dependencies:
-    tslib "^1.9.3"
+"@wessberg/stringutil@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/@wessberg/stringutil/-/stringutil-1.0.19.tgz#baadcb6f4471fe2d46462a7d7a8294e4b45b29ad"
+  integrity sha512-9AZHVXWlpN8Cn9k5BC/O0Dzb9E9xfEMXzYrNunwvkUTvuK7xgQPVRZpLo+jWCOZ5r8oBa8NIrHuPEu1hzbb6bg==
 
 abab@^2.0.0:
   version "2.0.2"
