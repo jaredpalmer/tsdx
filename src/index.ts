@@ -37,11 +37,11 @@ const pkg = require('../package.json');
 const progressEstimator = require('progress-estimator');
 
 function createLogger() {
-  mkdirp.sync(paths.storagePath);
+  mkdirp.sync(paths.progressEstimatorCache);
   return progressEstimator({
     // All configuration keys are optional, but it's recommended to specify a storage location.
     // Learn more about configuration options below.
-    storagePath: paths.storagePath,
+    storagePath: paths.progressEstimatorCache,
   });
 }
 
