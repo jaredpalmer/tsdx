@@ -257,7 +257,7 @@ prog
         main: 'dist/index.js',
         module: `dist/${safeName}.esm.js`,
         typings: `dist/index.d.ts`,
-        files: ['dist'],
+        files: ['dist', 'src'],
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
