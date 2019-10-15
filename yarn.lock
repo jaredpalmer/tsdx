@@ -1260,25 +1260,25 @@
     lodash.unescape "4.0.1"
     semver "^6.3.0"
 
-"@wessberg/browserslist-generator@1.0.28":
-  version "1.0.28"
-  resolved "https://registry.yarnpkg.com/@wessberg/browserslist-generator/-/browserslist-generator-1.0.28.tgz#a56843a0d0ccf2f8e20734803f269e5346a69000"
-  integrity sha512-xQmXz1/gCd2GG9P+R3OIDx0GSr0LkvO1Us5oXQ2FJ+kGkJEKfiGQxVzUXG9RyE+XRd5La5Jb8p/mZeSBkXjKKQ==
+"@wessberg/browserslist-generator@1.0.29":
+  version "1.0.29"
+  resolved "https://registry.yarnpkg.com/@wessberg/browserslist-generator/-/browserslist-generator-1.0.29.tgz#d643fd3814bcce83bf5f21515a25c9a149bb990f"
+  integrity sha512-Dd3PAdYCwG+3TDP743Ik3V4nDR5lFboGcatFdAJEXPwa9XUVI3Pq/0YapdewtBZSTrpV8sbsArSqEfPZZO27MA==
   dependencies:
     "@types/object-path" "^0.11.0"
     "@types/semver" "^6.0.2"
     "@types/ua-parser-js" "^0.7.33"
     browserslist "4.7.0"
-    caniuse-lite "^1.0.30000997"
-    mdn-browser-compat-data "0.0.94"
+    caniuse-lite "^1.0.30000999"
+    mdn-browser-compat-data "0.0.96"
     object-path "^0.11.4"
     semver "^6.3.0"
     ua-parser-js "^0.7.20"
 
-"@wessberg/rollup-plugin-ts@^1.1.68":
-  version "1.1.68"
-  resolved "https://registry.yarnpkg.com/@wessberg/rollup-plugin-ts/-/rollup-plugin-ts-1.1.68.tgz#ed9a2bb6f85053a8c3e181d9a0bd5302f62b2ede"
-  integrity sha512-s5+2b1KFrDvkttG9aamJrBtIibKzv2+JkS0xqC4KbPXACk5GO+BDUcUxG6j/j7a4JBfRaNlvRBKZ4SuNjtUa6w==
+"@wessberg/rollup-plugin-ts@^1.1.69":
+  version "1.1.69"
+  resolved "https://registry.yarnpkg.com/@wessberg/rollup-plugin-ts/-/rollup-plugin-ts-1.1.69.tgz#0c7524c059e0403e6b303e1cf2a69c04cd47e153"
+  integrity sha512-TZs7uKgGfofGyUhU3snonUuzOYHwQQOuXAEPp7KQyfegSb0aV02dhjNsFCdjN50hBn03OOnIIf5V6OqkWDKzVA==
   dependencies:
     "@babel/core" "^7.6.4"
     "@babel/plugin-proposal-async-generator-functions" "^7.2.0"
@@ -1293,7 +1293,7 @@
     "@types/mkdirp" "^0.5.2"
     "@types/node" "^12.7.12"
     "@types/resolve" "0.0.8"
-    "@wessberg/browserslist-generator" "1.0.28"
+    "@wessberg/browserslist-generator" "1.0.29"
     "@wessberg/stringutil" "^1.0.18"
     browserslist "4.7.0"
     find-up "^4.1.0"
@@ -1847,7 +1847,7 @@ camelcase@^4.1.0:
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
   integrity sha1-1UVjW+HjPFQmScaRc+Xeas+uNN0=
 
-caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30000997:
+caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30000999:
   version "1.0.30000999"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000999.tgz#427253a69ad7bea4aa8d8345687b8eec51ca0e43"
   integrity sha512-1CUyKyecPeksKwXZvYw0tEoaMCo/RwBlXmEtN5vVnabvO0KPd9RQLcaAuR9/1F+KDMv6esmOFWlsXuzDk+8rxg==
@@ -4130,10 +4130,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-mdn-browser-compat-data@0.0.94:
-  version "0.0.94"
-  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-0.0.94.tgz#eaa1653761ce95881ea1858a8c0ce6066d85f94b"
-  integrity sha512-O3zJqbmehz0Hn3wpk62taA0+jNF7yn6BDWqQ9Wh2bEoO9Rx1BYiTmNX565eNVbW0ixfQkY6Sp9FvY/rr79Qmyg==
+mdn-browser-compat-data@0.0.96:
+  version "0.0.96"
+  resolved "https://registry.yarnpkg.com/mdn-browser-compat-data/-/mdn-browser-compat-data-0.0.96.tgz#1b2bf970d6b4db7e323c709a5c247367b6e8ea7f"
+  integrity sha512-L008dOndzCxirqFe7TFG7DSlNxII0mT+EavCoEjrON3835/mqDaiiJgKSl56Uy8CKjszT4eRlhHpOFtCbUZB8w==
   dependencies:
     extend "3.0.2"
 
