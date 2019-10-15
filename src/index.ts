@@ -268,6 +268,7 @@ prog
           message: 'Who is the package author?',
         });
         author = await licenseInput.run();
+        setAuthorName(author);
         bootSpinner.start();
       }
 
@@ -506,7 +507,10 @@ function getAuthorName() {
   author = shell
     .exec('git config --global user.name', { silent: true })
     .stdout.trim();
-  if (author) return author;
+  if (author) {
+    setAuthorName(author);
+    return author;
+  }
 
   author = shell
     .exec('npm config get init-author-email', { silent: true })
@@ -519,6 +523,10 @@ function getAuthorName() {
   if (author) return author;
 
   return author;
+}
+
+function setAuthorName(author: string) {
+  shell.exec(`npm config set init-author-name "${author}"`, { silent: true });
 }
 
 prog
