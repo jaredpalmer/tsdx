@@ -38,7 +38,7 @@ const createLogger = require('progress-estimator');
 // All configuration keys are optional, but it's recommended to specify a storage location.
 // Learn more about configuration options below.
 const logger = createLogger({
-  storagePath: path.join(__dirname, '.progress-estimator'),
+  storagePath: path.join(paths.cache, '.progress-estimator'),
 });
 
 const prog = sade('tsdx');
@@ -52,7 +52,7 @@ let appPackageJson: {
 
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
-} catch (e) {}
+} catch (e) { }
 
 // check for custom tsdx.config.js
 let tsdxConfig = {
@@ -81,8 +81,8 @@ async function jsOrTs(filename: string) {
   const extension = (await isFile(resolveApp(filename + '.ts')))
     ? '.ts'
     : (await isFile(resolveApp(filename + '.tsx')))
-    ? '.tsx'
-    : '.js';
+      ? '.tsx'
+      : '.js';
 
   return resolveApp(`${filename}${extension}`);
 }
@@ -95,7 +95,7 @@ async function getInputs(entries: string[], source?: string) {
       entries && entries.length
         ? entries
         : (source && resolveApp(source)) ||
-            ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
+        ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
     )
     .map(file => glob(file))
     .forEach(input => inputs.push(input));
@@ -168,7 +168,7 @@ async function moveTypes() {
       overwrite: true,
     });
     await fs.remove(paths.appDist + '/src');
-  } catch (e) {}
+  } catch (e) { }
 }
 
 prog
@@ -371,7 +371,7 @@ prog
 `);
         try {
           await moveTypes();
-        } catch (_error) {}
+        } catch (_error) { }
       }
     });
   });
@@ -492,7 +492,7 @@ prog
       // Allow overriding with jest.config
       const jestConfigContents = require(paths.jestConfig);
       jestConfig = { ...jestConfig, ...jestConfigContents };
-    } catch {}
+    } catch { }
 
     argv.push(
       '--config',
