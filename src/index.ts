@@ -248,12 +248,37 @@ prog
         path.resolve(projectPath, './gitignore'),
         path.resolve(projectPath, './.gitignore')
       );
+
+      bootSpinner.stop();
+      // update license year and prompt for name
+      let license = fs.readFileSync(
+        path.resolve(projectPath, 'LICENSE'),
+        'utf-8'
+      );
+
+      license = license.replace(/<year>/, `${new Date().getFullYear()}`);
+
+      const licenseInput = new Input({
+        name: 'author',
+        message: 'Who is the package author?',
+      });
+
+      let author = await licenseInput.run();
+
+      license = license.replace(/<author>/, author.trim());
+
+      fs.writeFileSync(path.resolve(projectPath, 'LICENSE'), license, {
+        encoding: 'utf-8',
+      });
+
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
       const pkgJson = {
         name: safeName,
         version: '0.1.0',
+        license: 'MIT',
+        author: author,
         main: 'dist/index.js',
         module: `dist/${safeName}.esm.js`,
         typings: `dist/index.d.ts`,
