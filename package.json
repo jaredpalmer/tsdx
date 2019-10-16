@@ -92,7 +92,8 @@
     "shelljs": "^0.8.3",
     "tiny-glob": "^0.2.6",
     "ts-jest": "^24.0.2",
-    "tslib": "^1.9.3"
+    "tslib": "^1.9.3",
+    "typescript": "^3.6.4"
   },
   "devDependencies": {
     "@types/ansi-escapes": "^4.0.0",
@@ -111,8 +112,7 @@
     "husky": "^3.0.9",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
-    "react": "^16.8.6",
-    "typescript": "^3.6.2"
+    "react": "^16.8.6"
   },
   "husky": {
     "hooks": {
