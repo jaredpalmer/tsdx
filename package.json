@@ -41,6 +41,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@types/rimraf": "^2.0.2",
+    "@types/shelljs": "^0.8.5",
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",
     "@wessberg/rollup-plugin-ts": "^1.1.70",

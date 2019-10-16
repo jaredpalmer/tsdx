@@ -21,6 +21,7 @@ import path from 'path';
 import mkdirp from 'mkdirp';
 import rimraf from 'rimraf';
 import execa from 'execa';
+import shell from 'shelljs';
 import ora from 'ora';
 import { paths } from './constants';
 import * as Messages from './messages';
@@ -243,12 +244,43 @@ prog
         path.resolve(projectPath, './gitignore'),
         path.resolve(projectPath, './.gitignore')
       );
+
+      // update license year and author
+      let license = fs.readFileSync(
+        path.resolve(projectPath, 'LICENSE'),
+        'utf-8'
+      );
+
+      license = license.replace(/<year>/, `${new Date().getFullYear()}`);
+
+      // attempt to automatically derive author name
+      let author = getAuthorName();
+
+      if (!author) {
+        bootSpinner.stop();
+        const licenseInput = new Input({
+          name: 'author',
+          message: 'Who is the package author?',
+        });
+        author = await licenseInput.run();
+        setAuthorName(author);
+        bootSpinner.start();
+      }
+
+      license = license.replace(/<author>/, author.trim());
+
+      fs.writeFileSync(path.resolve(projectPath, 'LICENSE'), license, {
+        encoding: 'utf-8',
+      });
+
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
       const pkgJson = {
         name: safeName,
         version: '0.1.0',
+        license: 'MIT',
+        author: author,
         main: 'dist/index.js',
         module: `dist/${safeName}.esm.js`,
         typings: `dist/index.d.ts`,
@@ -458,6 +490,39 @@ if (process.env.NODE_ENV === 'production') {
 }
 `;
   return fs.writeFile(path.join(paths.appDist, 'index.js'), contents);
+}
+
+function getAuthorName() {
+  let author = '';
+
+  author = shell
+    .exec('npm config get init-author-name', { silent: true })
+    .stdout.trim();
+  if (author) return author;
+
+  author = shell
+    .exec('git config --global user.name', { silent: true })
+    .stdout.trim();
+  if (author) {
+    setAuthorName(author);
+    return author;
+  }
+
+  author = shell
+    .exec('npm config get init-author-email', { silent: true })
+    .stdout.trim();
+  if (author) return author;
+
+  author = shell
+    .exec('git config --global user.email', { silent: true })
+    .stdout.trim();
+  if (author) return author;
+
+  return author;
+}
+
+function setAuthorName(author: string) {
+  shell.exec(`npm config set init-author-name "${author}"`, { silent: true });
 }
 
 prog
