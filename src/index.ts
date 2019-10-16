@@ -34,12 +34,18 @@ import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
 import { TsdxOptions } from './types';
 const pkg = require('../package.json');
-const createLogger = require('progress-estimator');
-// All configuration keys are optional, but it's recommended to specify a storage location.
-// Learn more about configuration options below.
-const logger = createLogger({
-  storagePath: path.join(paths.cache, '.progress-estimator'),
-});
+const progressEstimator = require('progress-estimator');
+
+function createLogger() {
+  mkdirp.sync(paths.progressEstimatorCache);
+  return progressEstimator({
+    // All configuration keys are optional, but it's recommended to specify a storage location.
+    // Learn more about configuration options below.
+    storagePath: paths.progressEstimatorCache,
+  });
+}
+
+const logger = createLogger();
 
 const prog = sade('tsdx');
 
