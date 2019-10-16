@@ -25,8 +25,7 @@
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
-    "test": "jest --config ./test/jest.config.json",
-    "postinstall": "patch-package"
+    "test": "jest --config ./test/jest.config.json"
   },
   "files": [
     "dist",
@@ -44,7 +43,7 @@
     "@types/rimraf": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^2.3.1",
     "@typescript-eslint/parser": "^2.3.1",
-    "@wessberg/rollup-plugin-ts": "^1.1.66",
+    "@wessberg/rollup-plugin-ts": "^1.1.70",
     "ansi-escapes": "^4.2.1",
     "asyncro": "^3.0.0",
     "babel-eslint": "^10.0.3",
@@ -108,7 +107,6 @@
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^3.0.9",
-    "patch-package": "^6.2.0",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
     "react": "^16.8.6",
