@@ -220,7 +220,26 @@ prog
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react', 'basic-alt'],
+        choices: ['basic', 'react'],
+      });
+
+      const testOrganizationPrompt = new Select({
+        message: 'Where do you prefer your test to live?',
+        choices: [
+          {
+            name: 'In a separate directory',
+            message: 'In a separate directory',
+            value: 'basic',
+          },
+          {
+            name: 'Next to the code',
+            message: 'Next to the code',
+            value: 'basic-alt',
+          },
+        ],
+        result() {
+          return this.focused.value;
+        },
       });
 
       if (opts.template) {
@@ -231,6 +250,9 @@ prog
         }
       } else {
         template = await prompt.run();
+        if (template === 'basic') {
+          template = await testOrganizationPrompt.run();
+        }
       }
 
       bootSpinner.start();

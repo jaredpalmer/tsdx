@@ -1,4 +1,4 @@
-import { sum } from '.';
+import { sum } from './sum';
 
 describe('Sum', () => {
   it('works', () => {
