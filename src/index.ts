@@ -172,7 +172,10 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .example('create mypackage')
-  .option('--template', 'Specify a template. Allowed choices: [basic, react]')
+  .option(
+    '--template',
+    'Specify a template. Allowed choices: [basic, react, basic-alt]'
+  )
   .example('create --template react mypackage')
   .action(async (pkg: string, opts: any) => {
     console.log(
@@ -217,7 +220,7 @@ prog
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react'],
+        choices: ['basic', 'react', 'basic-alt'],
       });
 
       if (opts.template) {
