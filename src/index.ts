@@ -289,7 +289,7 @@ prog
           start: 'tsdx watch',
           build: 'tsdx build',
           test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
-          lint: 'tsdx lint',
+          lint-fix: 'yarn lint --fix'
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
         husky: {
@@ -304,6 +304,12 @@ prog
           trailingComma: 'es5',
         },
       };
+
+      pkgJson.scripts.lint = 'tsdx lint src test';
+      if (template === 'react') {
+        pkgJson.scripts.lint = "${pkgJson.scripts.lint} example --ignore-pattern node_modules";
+      }
+
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
       Messages.start(pkg);
