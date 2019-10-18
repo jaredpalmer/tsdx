@@ -474,7 +474,7 @@ function ensureDistFolder() {
 
 function cleanDistFolder() {
   if (fs.existsSync(paths.appDist)) {
-    return util.promisify(rimraf)(paths.appDist);
+    return util.promisify(rimraf)(`${paths.appDist}/*`);
   }
 }
 
