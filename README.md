@@ -442,6 +442,7 @@ Options
   --fix               Fixes fixable errors and warnings
   --ignore-pattern    Ignore a pattern
   --write-file        Write the config file locally
+  --report-file       Write JSON report to file locally
   -h, --help          Displays this message
 
 Examples
@@ -449,6 +450,7 @@ Examples
   $ tsdx lint src --fix
   $ tsdx lint src test --ignore-pattern test/foo.ts
   $ tsdx lint src --write-file
+  $ tsdx lint src --report-file report.json
 ```
 
 ## Author
