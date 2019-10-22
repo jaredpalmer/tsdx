@@ -576,11 +576,14 @@ prog
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option('--write-file', 'Write the config file locally')
   .example('lint --write-file')
+  .option('--report-file', 'Write JSON report to file locally')
+  .example('lint --report-file eslint-report.json')
   .action(
     (opts: {
       fix: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
+      'report-file': string;
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
@@ -610,6 +613,14 @@ prog
         CLIEngine.outputFixes(report);
       }
       console.log(cli.getFormatter()(report.results));
+      if (opts['report-file']) {
+        fs.mkdirsSync(path.dirname(opts['report-file']));
+
+        fs.writeFileSync(
+          opts['report-file'],
+          cli.getFormatter('json')(report.results)
+        );
+      }
       if (report.errorCount) {
         process.exit(1);
       }
