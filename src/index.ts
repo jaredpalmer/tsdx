@@ -354,6 +354,8 @@ prog
     'Keep outdated console output in watch mode instead of clearing the screen'
   )
   .example('watch --verbose')
+  .option('--noClean', "Don't clean the dist folder")
+  .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
@@ -361,7 +363,9 @@ prog
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
-    await cleanDistFolder();
+    if (!opts.noClean) {
+      await cleanDistFolder();
+    }
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       await writeCjsEntryFile(opts.name);
