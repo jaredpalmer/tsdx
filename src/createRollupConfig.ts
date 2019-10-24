@@ -65,7 +65,8 @@ export function createRollupConfig(opts: TsdxOptions) {
       // Rollup has treeshaking by default, but we can optimize it further...
       treeshake: {
         // We assume reading a property of an object never has side-effects.
-        // This means tsdx WILL remove getters and setters on objects.
+        // This means tsdx WILL remove getters and setters defined directly on objects.
+        // Any getters or setters defined on classes will not be effected.
         //
         // @example
         //
