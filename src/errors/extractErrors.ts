@@ -28,7 +28,7 @@ const babylonOptions = {
   ],
 };
 
-export function extractErrors(opts: any) {
+export async function extractErrors(opts: any) {
   if (!opts || !('errorMapFilePath' in opts)) {
     throw new Error(
       'Missing options. Ensure you pass an object with `errorMapFilePath`.'
@@ -45,7 +45,7 @@ export function extractErrors(opts: any) {
     // Using `fs.readFileSync` instead of `require` here, because `require()`
     // calls are cached, and the cache map is not properly invalidated after
     // file changes.
-    existingErrorMap = JSON.parse(fs.readFileSync(errorMapFilePath, 'utf8'));
+    existingErrorMap = JSON.parse(await fs.readFile(errorMapFilePath, 'utf8'));
   } catch (e) {
     existingErrorMap = {};
   }
@@ -89,20 +89,20 @@ export function extractErrors(opts: any) {
     existingErrorMap[errorMsgLiteral] = '' + currentID++;
   }
 
-  function flush(cb?: any) {
+  async function flush() {
     const prettyName = pascalCase(safeVariableName(opts.name));
     // Ensure that the ./src/errors directory exists or create it
-    fs.ensureDirSync(paths.appErrors);
+    await fs.ensureDir(paths.appErrors);
 
     // Output messages to ./errors/codes.json
-    fs.writeFileSync(
+    await fs.writeFile(
       errorMapFilePath,
       JSON.stringify(invertObject(existingErrorMap), null, 2) + '\n',
       'utf-8'
     );
 
     // Write the error files, unless they already exist
-    fs.writeFileSync(
+    await fs.writeFile(
       paths.appErrors + '/ErrorDev.js',
       `
 function ErrorDev(message) {
@@ -116,7 +116,7 @@ export default ErrorDev;
       'utf-8'
     );
 
-    fs.writeFileSync(
+    await fs.writeFile(
       paths.appErrors + '/ErrorProd.js',
       `
 function ErrorProd(code) {
@@ -138,8 +138,8 @@ export default ErrorProd;
     );
   }
 
-  return function extractErrors(source: any) {
+  return async function extractErrors(source: any) {
     transform(source);
-    flush();
+    await flush();
   };
 }
