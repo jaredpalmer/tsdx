@@ -354,12 +354,15 @@ prog
     'Keep outdated console output in watch mode instead of clearing the screen'
   )
   .example('watch --verbose')
-  .option('--noClean', "Don't clean the dist folder")
-  .example('watch --noClean')
+  .option('--no-clean', "Don't clean the dist folder")
+  .example('watch --no-clean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
-  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('build --extractErrors')
+  .option(
+    '--extract-errors',
+    'Extract invariant errors to ./errors/codes.json.'
+  )
+  .example('build --extract-errors')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
@@ -421,12 +424,10 @@ prog
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .option(
-    '--extractErrors',
+    '--extract-errors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'
   )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
+  .example('build --extract-errors')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);

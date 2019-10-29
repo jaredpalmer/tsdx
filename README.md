@@ -382,22 +382,25 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry           Entry module(s)
-  --target              Specify your target environment  (default web)
-  --name                Specify name exposed in UMD builds
-  --format              Specify module format(s)  (default cjs,esm)
-  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  --verbose             Keep outdated console output in watch mode instead of clearing the screen
-  --noClean             Don't clean the dist folder
-  -h, --help            Displays this message
+  -i, --entry         Entry module(s)
+  --target            Specify your target environment  (default web)
+  --name              Specify name exposed in UMD builds
+  --format            Specify module format(s)  (default cjs,esm)
+  --verbose           Keep outdated console output in watch mode instead of clearing the screen
+  --no-clean          Do not clean the dist folder
+  --tsconfig          Specify custom tsconfig path
+  --extract-errors    Extract invariant errors to ./errors/codes.json.
+  -h, --help          Displays this message
 
 Examples
   $ tsdx watch --entry src/foo.tsx
   $ tsdx watch --target node
   $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,esm,umd
+  $ tsdx watch --format cjs,esm
+  $ tsdx watch --verbose
+  $ tsdx watch --no-clean
   $ tsdx watch --tsconfig ./tsconfig.foo.json
-  $ tsdx watch --noClean
+  $ tsdx build --extract-errors
 ```
 
 ### `tsdx build`
@@ -410,21 +413,21 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry           Entry module(s)
-  --target              Specify your target environment  (default web)
-  --name                Specify name exposed in UMD builds
-  --format              Specify module format(s)  (default cjs,esm)
-  --extractErrors       Opt-in to extracting invariant error codes
-  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  -h, --help            Displays this message
+  -i, --entry         Entry module(s)
+  --target            Specify your target environment  (default web)
+  --name              Specify name exposed in UMD builds
+  --format            Specify module format(s)  (default cjs,esm)
+  --tsconfig          Specify custom tsconfig path
+  --extract-errors    Extract errors to ./errors/codes.json and provide a url for decoding.
+  -h, --help          Displays this message
 
 Examples
   $ tsdx build --entry src/foo.tsx
   $ tsdx build --target node
   $ tsdx build --name Foo
-  $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors
+  $ tsdx build --format cjs,esm
   $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx build --extract-errors
 ```
 
 ### `tsdx test`
