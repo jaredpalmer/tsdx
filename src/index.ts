@@ -288,7 +288,7 @@ prog
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
-          test: template === 'react' ? 'tsdx test --env=jsdom' : 'tsdx test',
+          test: template === 'react' ? 'tsdx test --env=jsdom --passWithNoTests' : 'tsdx test',
           lint: 'tsdx lint',
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
@@ -354,6 +354,8 @@ prog
     'Keep outdated console output in watch mode instead of clearing the screen'
   )
   .example('watch --verbose')
+  .option('--noClean', "Don't clean the dist folder")
+  .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
@@ -361,7 +363,9 @@ prog
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = createBuildConfigs(opts);
-    await cleanDistFolder();
+    if (!opts.noClean) {
+      await cleanDistFolder();
+    }
     await ensureDistFolder();
     if (opts.format.includes('cjs')) {
       await writeCjsEntryFile(opts.name);
@@ -576,11 +580,14 @@ prog
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option('--write-file', 'Write the config file locally')
   .example('lint --write-file')
+  .option('--report-file', 'Write JSON report to file locally')
+  .example('lint --report-file eslint-report.json')
   .action(
     (opts: {
       fix: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
+      'report-file': string;
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
@@ -610,6 +617,14 @@ prog
         CLIEngine.outputFixes(report);
       }
       console.log(cli.getFormatter()(report.results));
+      if (opts['report-file']) {
+        fs.mkdirsSync(path.dirname(opts['report-file']));
+
+        fs.writeFileSync(
+          opts['report-file'],
+          cli.getFormatter('json')(report.results)
+        );
+      }
       if (report.errorCount) {
         process.exit(1);
       }
