@@ -7,7 +7,13 @@
 
 module.exports = {
   docs: {
-    Guide: ['features', 'starthere', 'optimizations', 'customization', 'api'],
+    Guide: [
+      'get-started',
+      'optimizations',
+      'customization',
+      'philosophy',
+      'api',
+    ],
     Contributing: ['docusaurus', 'contributing'],
   },
 };

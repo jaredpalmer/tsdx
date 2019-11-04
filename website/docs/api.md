@@ -1,6 +1,6 @@
 ---
 id: api
-title: API
+title: API Reference
 ---
 
 ### `tsdx watch`
@@ -19,6 +19,7 @@ Options
   --format              Specify module format(s)  (default cjs,esm)
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --verbose             Keep outdated console output in watch mode instead of clearing the screen
+  --noClean             Don't clean the dist folder
   -h, --help            Displays this message
 
 Examples
@@ -26,7 +27,8 @@ Examples
   $ tsdx watch --target node
   $ tsdx watch --name Foo
   $ tsdx watch --format cjs,esm,umd
-  $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx watch --tsconfig ./tsconfig.foo.json
+  $ tsdx watch --noClean
 ```
 
 ### `tsdx build`
@@ -73,6 +75,7 @@ Options
   --fix               Fixes fixable errors and warnings
   --ignore-pattern    Ignore a pattern
   --write-file        Write the config file locally
+  --report-file       Write JSON report to file locally
   -h, --help          Displays this message
 
 Examples
@@ -80,4 +83,5 @@ Examples
   $ tsdx lint src --fix
   $ tsdx lint src test --ignore-pattern test/foo.ts
   $ tsdx lint src --write-file
+  $ tsdx lint src --report-file report.json
 ```

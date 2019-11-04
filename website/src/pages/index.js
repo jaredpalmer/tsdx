@@ -10,7 +10,7 @@ import classnames from 'classnames';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import withBaseUrl from '@docusaurus/withBaseUrl';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
 const features = [
@@ -32,7 +32,7 @@ const features = [
     description: (
       <>
         TSDX is a zero-config CLI that helps you develop, test, and publish
-        modern TypeScript packages with ease--so you can focus on your awesome
+        modern TypeScript packages use ease--so you can focus on your awesome
         new library and not waste another afternoon on the configuration.
       </>
     ),
@@ -43,24 +43,24 @@ const features = [
     description: (
       <ul>
         <li>
-          Bundles your code with{' '}
+          Bundles your code use{' '}
           <a href="https://github.com/rollup/rollup">Rollup</a> and outputs
           multiple module formats (CJS &amp; ESM by default, and also UMD if you
           want) plus development and production builds
         </li>
         <li>
-          Comes with treeshaking, ready-to-rock lodash optimizations, and
+          Comes use treeshaking, ready-to-rock lodash optimizations, and
           minification/compression
         </li>
         <li>Live reload / watch-mode</li>
-        <li>Works with React</li>
+        <li>Works use React</li>
         <li>Human readable error messages (and in VSCode-friendly format)</li>
         <li>Bundle size snapshots</li>
         <li>
           Opt-in to extract <code>invariant</code> error codes
         </li>
         <li>
-          Jest test runner setup with sensible defaults via{' '}
+          Jest test runner setup use sensible defaults via{' '}
           <code>tsdx test</code>
         </li>
         <li>Zero-config, single dependency</li>
@@ -72,6 +72,7 @@ const features = [
 function Home() {
   const context = useDocusaurusContext();
   const { siteConfig = {} } = context;
+  const baseUrl = useBaseUrl('/');
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
@@ -112,7 +113,7 @@ function Home() {
                 styles.getStarted
               )}
               style={{ marginRight: '1rem' }}
-              to={withBaseUrl('docs/starthere')}
+              to={useBaseUrl('docs/get-started')}
             >
               Get Started
             </Link>
@@ -153,7 +154,7 @@ cd mylib && yarn start`}
                       <div className="text--center">
                         <img
                           className={styles.featureImage}
-                          src={withBaseUrl(imageUrl)}
+                          src={baseUrl + imageUrl}
                           alt={title}
                         />
                       </div>

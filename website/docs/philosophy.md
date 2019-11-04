@@ -1,21 +1,7 @@
 ---
-id: features
-title: Features
+id: philosophy
+title: Philosophy
 ---
-
-## Features
-
-TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
-
-- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS & ESM by default, and also UMD if you want) plus development and production builds
-- Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
-- Live reload / watch-mode
-- Works with React
-- Human readable error messages (and in VSCode-friendly format)
-- Bundle size snapshots
-- Opt-in to extract `invariant` error codes
-- Jest test runner setup with sensible defaults via `tsdx test`
-- Zero-config, single dependency
 
 ## Inspiration
 
