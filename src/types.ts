@@ -17,4 +17,6 @@ export interface TsdxOptions {
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
   writeMeta?: boolean;
+  // Only transpile, do not type check (makes compilation faster)
+  transpileOnly?: boolean;
 }

@@ -288,7 +288,10 @@ prog
         scripts: {
           start: 'tsdx watch',
           build: 'tsdx build',
-          test: template === 'react' ? 'tsdx test --env=jsdom --passWithNoTests' : 'tsdx test',
+          test:
+            template === 'react'
+              ? 'tsdx test --env=jsdom --passWithNoTests'
+              : 'tsdx test',
           lint: 'tsdx lint',
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
@@ -358,6 +361,8 @@ prog
   .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
+  .option('--transpileOnly, -T', 'Skip type checking', false)
+  .example('build --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
@@ -420,6 +425,8 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option('--transpileOnly, -T', 'Skip type checking', false)
+  .example('build --transpileOnly')
   .option(
     '--extractErrors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'

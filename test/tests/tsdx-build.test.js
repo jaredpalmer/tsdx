@@ -1,7 +1,6 @@
 /**
  * @jest-environment node
  */
-'use strict';
 
 const shell = require('shelljs');
 const util = require('../fixtures/util');
@@ -83,6 +82,12 @@ describe('tsdx build', () => {
     util.setupStageWithFixture(stageName, 'build-invalid');
     const code = shell.exec('node ../dist/index.js build').code;
     expect(code).toBe(1);
+  });
+
+  it('should only transpile and not type check', () => {
+    util.setupStageWithFixture(stageName, 'build-invalid');
+    const code = shell.exec('node ../dist/index.js build --transpileOnly').code;
+    expect(code).toBe(0);
   });
 
   afterEach(() => {

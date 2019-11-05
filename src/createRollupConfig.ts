@@ -142,6 +142,7 @@ export function createRollupConfig(opts: TsdxOptions) {
             target: 'esnext',
           },
         },
+        check: opts.transpileOnly === false,
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
