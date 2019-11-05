@@ -1,15 +1,23 @@
 import fs from 'fs';
 import path from 'path';
 import { CLIEngine } from 'eslint';
+import { PackageJson } from './types';
+import { getReactVersion } from './utils';
 
 interface CreateEslintConfigArgs {
+  pkg: PackageJson;
   rootDir: string;
   writeFile: boolean;
 }
 export function createEslintConfig({
+  pkg,
   rootDir,
   writeFile,
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
+  const isReactLibrary = Boolean(getReactVersion(pkg));
+
+  console.log(isReactLibrary);
+
   const config = {
     extends: [
       'react-app',

@@ -18,3 +18,12 @@ export interface TsdxOptions {
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
   writeMeta?: boolean;
 }
+
+export interface PackageJson {
+  name: string;
+  source?: string;
+  jest?: any;
+  eslint?: any;
+  dependencies?: { [packageName: string]: string };
+  devDependencies?: { [packageName: string]: string };
+}
