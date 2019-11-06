@@ -17,7 +17,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
     - [Rollup Treeshaking](#rollup-treeshaking)
     - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#dev)
+      - [`__DEV__`](#__dev__)
       - [`invariant`](#invariant)
       - [`warning`](#warning)
   - [Using lodash](#using-lodash)
