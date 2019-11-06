@@ -16,14 +16,18 @@ export function createEslintConfig({
 }: CreateEslintConfigArgs): CLIEngine.Options['baseConfig'] {
   const isReactLibrary = Boolean(getReactVersion(pkg));
 
-  console.log(isReactLibrary);
-
   const config = {
     extends: [
       'react-app',
       'prettier/@typescript-eslint',
       'plugin:prettier/recommended',
     ],
+    settings: {
+      react: {
+        // Fix for https://github.com/jaredpalmer/tsdx/issues/279
+        version: !isReactLibrary ? '999.999.999' : undefined,
+      },
+    },
   };
 
   if (writeFile) {
