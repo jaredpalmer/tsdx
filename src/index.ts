@@ -33,18 +33,13 @@ import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
-import { TsdxOptions } from './types';
+import { PackageJson, TsdxOptions } from './types';
 import { createProgressEstimator } from './createProgressEstimator';
 const pkg = require('../package.json');
 
 const prog = sade('tsdx');
 
-let appPackageJson: {
-  name: string;
-  source?: string;
-  jest?: any;
-  eslint?: any;
-};
+let appPackageJson: PackageJson;
 
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
@@ -606,6 +601,7 @@ prog
       const cli = new CLIEngine({
         baseConfig: {
           ...createEslintConfig({
+            pkg: appPackageJson,
             rootDir: paths.appRoot,
             writeFile: opts['write-file'],
           }),
