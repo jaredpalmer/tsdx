@@ -25,7 +25,7 @@ export function createEslintConfig({
     settings: {
       react: {
         // Fix for https://github.com/jaredpalmer/tsdx/issues/279
-        version: !isReactLibrary ? '999.999.999' : undefined,
+        version: isReactLibrary ? 'detect' : '999.999.999',
       },
     },
   };
