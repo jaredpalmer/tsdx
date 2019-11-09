@@ -35,6 +35,8 @@ import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
 import { PackageJson, TsdxOptions } from './types';
 import { createProgressEstimator } from './createProgressEstimator';
+import { templates } from './templates';
+import { composePackageJson } from './templates/utils';
 const pkg = require('../package.json');
 
 const prog = sade('tsdx');
@@ -167,7 +169,12 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .example('create mypackage')
-  .option('--template', 'Specify a template. Allowed choices: [basic, react]')
+  .option(
+    '--template',
+    `Specify a template. Allowed choices: [${Object.keys(templates).join(
+      ', '
+    )}]`
+  )
   .example('create --template react mypackage')
   .action(async (pkg: string, opts: any) => {
     console.log(
@@ -212,7 +219,7 @@ prog
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react'],
+        choices: Object.keys(templates),
       });
 
       if (opts.template) {
@@ -268,40 +275,13 @@ prog
         encoding: 'utf-8',
       });
 
+      const templateConfig = templates[template as keyof typeof templates];
+      const generatePackageJson = composePackageJson(templateConfig);
+
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
-      const pkgJson = {
-        name: safeName,
-        version: '0.1.0',
-        license: 'MIT',
-        author: author,
-        main: 'dist/index.js',
-        module: `dist/${safeName}.esm.js`,
-        typings: `dist/index.d.ts`,
-        files: ['dist'],
-        scripts: {
-          start: 'tsdx watch',
-          build: 'tsdx build',
-          test:
-            template === 'react'
-              ? 'tsdx test --env=jsdom --passWithNoTests'
-              : 'tsdx test',
-          lint: 'tsdx lint',
-        },
-        peerDependencies: template === 'react' ? { react: '>=16' } : {},
-        husky: {
-          hooks: {
-            'pre-commit': 'tsdx lint',
-          },
-        },
-        prettier: {
-          printWidth: 80,
-          semi: true,
-          singleQuote: true,
-          trailingComma: 'es5',
-        },
-      };
+      const pkgJson = generatePackageJson({ name: safeName, author });
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
       Messages.start(pkg);
@@ -311,19 +291,10 @@ prog
       process.exit(1);
     }
 
-    let deps = ['@types/jest', 'husky', 'tsdx', 'tslib', 'typescript'].sort();
+    const templateConfig = templates[template as keyof typeof templates];
+    const { dependencies: deps } = templateConfig;
 
-    if (template === 'react') {
-      deps = [
-        ...deps,
-        '@types/react',
-        '@types/react-dom',
-        'react',
-        'react-dom',
-      ].sort();
-    }
-
-    const installSpinner = ora(Messages.installing(deps)).start();
+    const installSpinner = ora(Messages.installing(deps.sort())).start();
     try {
       const cmd = getInstallCmd();
       await execa(cmd, getInstallArgs(cmd, deps));
