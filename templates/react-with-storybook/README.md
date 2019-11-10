@@ -18,6 +18,22 @@ npm start # or yarn start
 
 This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
 
+Then run either example playground or storybook:
+
+### Storybook
+
+Run inside another terminal:
+
+```
+yarn storybook
+```
+
+This loads the stories from `./stories`.
+
+> NOTE: Stories should reference the components as if using the library, similar to the example playground. This means importing from the root project directory. This has been aliased in the tsconfig and the storybook webpack config as a helper.
+
+### Example
+
 Then run the example inside another:
 
 ```
