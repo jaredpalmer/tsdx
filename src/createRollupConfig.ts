@@ -1,4 +1,9 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import {
+  safeVariableName,
+  safePackageName,
+  external,
+  resolveApp,
+} from './utils';
 import { paths } from './constants';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
@@ -12,6 +17,7 @@ import typescript from 'rollup-plugin-typescript2';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
+import * as fs from 'fs-extra';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -39,6 +45,11 @@ export function createRollupConfig(opts: TsdxOptions) {
     .filter(Boolean)
     .join('.');
 
+  let tsconfigJSON;
+  try {
+    tsconfigJSON = fs.readJSONSync(resolveApp('tsconfig.json'));
+  } catch (e) {}
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -58,8 +69,8 @@ export function createRollupConfig(opts: TsdxOptions) {
       // Do not let Rollup call Object.freeze() on namespace import objects
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
-      // Do not let Rollup add a `__esModule: true` property when generating exports for non-ESM formats.
-      esModule: false,
+      // Respect tsconfig esModuleInterop when setting __esModule.
+      esModule: tsconfigJSON ? tsconfigJSON.esModuleInterop : false,
       // Rollup has treeshaking by default, but we can optimize it further...
       treeshake: {
         // We assume reading a property of an object never has side-effects.
