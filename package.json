@@ -23,7 +23,7 @@
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
-    "lint": "yarn build && yarn lint:post-build",
+    "lint": "yon build && yon lint:post-build",
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "jest --config ./test/jest.config.json"
   },
@@ -112,11 +112,12 @@
     "husky": "^3.0.9",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "yarn-or-npm": "^3.0.1"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint"
+      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yon lint"
     }
   },
   "prettier": {
