@@ -128,7 +128,7 @@ export function createRollupConfig(opts: TsdxOptions) {
       },
       typescript({
         typescript: require('typescript'),
-        cacheRoot: `./.rts2_cache_${opts.format}`,
+        cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           compilerOptions: {
