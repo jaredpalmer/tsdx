@@ -589,11 +589,12 @@ prog
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
-        const defaultInputs = ['src', 'test'];
+        const defaultInputs = ['src', 'test'].filter(fs.existsSync);
         opts['_'] = defaultInputs;
         console.log(
           chalk.yellow(
-            `No input files specified, defaulting to ${defaultInputs.join(' ')}`
+            `Defaulting to "tsdx lint ${defaultInputs.join(' ')}"`,
+            '\nYou can override this in the package.json scripts, like "lint": "tsdx lint src otherDir"'
           )
         );
       }
