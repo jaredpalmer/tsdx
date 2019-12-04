@@ -29,7 +29,6 @@ import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
 import { resolveApp, safePackageName, clearConsole } from './utils';
-import * as Output from './output';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
