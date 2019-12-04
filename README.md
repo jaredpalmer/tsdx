@@ -35,7 +35,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`tsdx lint`](#tsdx-lint)
 - [Author](#author)
 - [License](#license)
-- [Contributors ✨](#contributors-%e2%9c%a8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
