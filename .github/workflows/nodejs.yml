@@ -20,9 +20,6 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install yarn package manager
-        run: npm install -g yarn
-
       - name: Install deps and build
         run: yarn install --frozen-lockfile
 
