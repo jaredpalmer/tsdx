@@ -1725,7 +1725,10 @@ browserslist@^4.6.0:
     caniuse-lite "^1.0.30000967"
     electron-to-chromium "^1.3.133"
     node-releases "^1.1.19"
+<<<<<<< HEAD
 >>>>>>> watch hooks
+=======
+>>>>>>> 2d85c79c44ce06675d7375b499283a4d08974203
 
 bs-logger@0.x:
   version "0.2.6"
@@ -2065,6 +2068,7 @@ copy-descriptor@^0.1.0:
 
 core-js-compat@^3.1.1:
 <<<<<<< HEAD
+<<<<<<< HEAD
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.2.1.tgz#0cbdbc2e386e8e00d3b85dc81c848effec5b8150"
   integrity sha512-MwPZle5CF9dEaMYdDeWm73ao/IflDH+FjeJCWEADcEgFSE9TLimFKwJsfmkwzI8eC0Aj0mgvMDjeQjrElkz4/A==
@@ -2074,6 +2078,8 @@ core-js-compat@^3.1.1:
 
 core-js@^2.4.0, core-js@^2.6.5:
 =======
+=======
+>>>>>>> 2d85c79c44ce06675d7375b499283a4d08974203
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.1.2.tgz#c29ab9722517094b98622175e2218c3b7398176d"
   integrity sha512-X0Ch5f6itrHxhg5HSJucX6nNLNAGr+jq+biBh6nPGc3YAWz2a8p/ZIZY8cUkDzSRNG54omAuu3hoEF8qZbu/6Q==
@@ -2318,11 +2324,14 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 electron-to-chromium@^1.3.247:
   version "1.3.275"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.275.tgz#19a38436e34216f51820fa2f4326d5ce141fa36f"
   integrity sha512-/YWtW/VapMnuYA1lNOaa1F4GhR1LBf+CUTp60lzDPEEh0XOzyOAyULyYZVF9vziZ3qSbTqCwmKwsyRXp66STbw==
 =======
+=======
+>>>>>>> 2d85c79c44ce06675d7375b499283a4d08974203
 electron-to-chromium@^1.3.133:
   version "1.3.137"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.137.tgz#ba7c88024984c038a5c5c434529aabcea7b42944"
@@ -4511,11 +4520,14 @@ node-pre-gyp@^0.12.0:
     tar "^4"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 node-releases@^1.1.29:
   version "1.1.34"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.34.tgz#ced4655ee1ba9c3a2c5dcbac385e19434155fd40"
   integrity sha512-fNn12JTEfniTuCqo0r9jXgl44+KxRH/huV7zM/KAGOKxDKrHr6EbT7SSs4B+DNxyBE2mks28AD+Jw6PkfY5uwA==
 =======
+=======
+>>>>>>> 2d85c79c44ce06675d7375b499283a4d08974203
 node-releases@^1.1.19:
   version "1.1.21"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.21.tgz#46c86f9adaceae4d63c75d3c2f2e6eee618e55f3"

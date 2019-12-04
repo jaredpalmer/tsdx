@@ -28,7 +28,6 @@ import * as Messages from './messages';
 import { createRollupConfig } from './createRollupConfig';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
-import run from './runner';
 import { resolveApp, safePackageName, clearConsole } from './utils';
 import * as Output from './output';
 import { concatAllArray } from 'jpjs';
