@@ -12,7 +12,7 @@ TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based]
 
 The recommended workflow is to run TSDX in one terminal:
 
-```
+```bash
 npm start # or yarn start
 ```
 
@@ -20,7 +20,7 @@ This builds to `/dist` and runs the project in watch mode so any edits you save 
 
 Then run the example inside another:
 
-```
+```bash
 cd example
 npm i # or yarn to install dependencies
 npm start # or yarn start
@@ -44,7 +44,7 @@ Jest tests are set up to run with `npm test` or `yarn test`. This runs the test 
 
 This is the folder structure we set up for you:
 
-```
+```shell
 /example
   index.html
   index.tsx       # test your component here in a demo app
@@ -106,7 +106,7 @@ The appropriate paths are configured in `package.json` and `dist/index.js` accor
 
 ## Using the Playground
 
-```
+```bash
 cd example
 npm i # or yarn to install dependencies
 npm start # or yarn start
@@ -145,7 +145,7 @@ For vanilla CSS, you can include it at the root directory and add it to the `fil
 
 ## Publishing to NPM
 
-We recommend using https://github.com/sindresorhus/np.
+We recommend using [np](https://github.com/sindresorhus/np).
 
 ## Usage with Lerna
 
