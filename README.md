@@ -54,7 +54,7 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 
 ## Quick Start
 
-```
+```bash
 npx tsdx create mylib
 cd mylib
 yarn start
