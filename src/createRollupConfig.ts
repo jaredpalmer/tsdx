@@ -20,8 +20,8 @@ const errorCodeOpts = {
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 
-export function createRollupConfig(opts: TsdxOptions) {
-  const findAndRecordErrorCodes = extractErrors({
+export async function createRollupConfig(opts: TsdxOptions) {
+  const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
     ...opts,
   });
@@ -88,8 +88,8 @@ export function createRollupConfig(opts: TsdxOptions) {
     },
     plugins: [
       !!opts.extractErrors && {
-        transform(source: any) {
-          findAndRecordErrorCodes(source);
+        async transform(source: any) {
+          await findAndRecordErrorCodes(source);
           return source;
         },
       },

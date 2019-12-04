@@ -4,13 +4,13 @@ let cmd: InstallCommand;
 
 export type InstallCommand = 'yarn' | 'npm';
 
-export default function getInstallCmd(): InstallCommand {
+export default async function getInstallCmd(): Promise<InstallCommand> {
   if (cmd) {
     return cmd;
   }
 
   try {
-    execa.sync('yarnpkg', ['--version']);
+    await execa('yarnpkg', ['--version']);
     cmd = 'yarn';
   } catch (e) {
     cmd = 'npm';
