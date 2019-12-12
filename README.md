@@ -35,6 +35,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
   - [`tsdx lint`](#tsdx-lint)
+  - [Multiple Entry Files](#multiple-entry-files)
 - [Contributing](#contributing)
 - [Author](#author)
 - [License](#license)
@@ -495,6 +496,17 @@ Examples
   $ tsdx lint src --write-file
   $ tsdx lint src --report-file report.json
 ```
+
+### Multiple Entry Files
+
+You can run `tsdx watch` or `tsdx build` with multiple entry files, for example:
+
+```shell
+tsdx build --entry src/index.ts --entry src/foo.ts
+# outputs dist/index.js dist/foo.js and their respective formats and declarations
+```
+
+When given multiple entries, TSDX will output separate bundles for each file for each format, as well as their declarations. Each file will be output to `dist/` with the same name it has in the `src/` directory.
 
 ## Contributing
 
