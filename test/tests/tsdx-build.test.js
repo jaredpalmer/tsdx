@@ -33,6 +33,30 @@ describe('tsdx build', () => {
     expect(output.code).toBe(0);
   });
 
+  it('should compile multiple entries into a dist directory', () => {
+    util.setupStageWithFixture(stageName, 'build-default');
+
+    const output = shell.exec(
+      'node ../dist/index.js build --entry src/index.ts --entry src/foo.ts --format esm,cjs'
+    );
+
+    // index output
+    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs.development.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs.production.min.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
+
+    // foo output
+    expect(shell.test('-f', 'dist/foo.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/foo.cjs.development.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/foo.cjs.production.min.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/foo.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/foo.d.ts')).toBeTruthy();
+
+    expect(output.code).toBe(0);
+  });
+
   it('should create the library correctly', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 
