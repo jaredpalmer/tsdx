@@ -326,6 +326,10 @@ export interface TsdxOptions {
   input: string;
   // Name of package
   name: string;
+  // output path
+  output: {
+    file: string;
+  };
   // JS target
   target: 'node' | 'browser';
   // Module format

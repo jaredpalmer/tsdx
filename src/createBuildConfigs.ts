@@ -22,8 +22,8 @@ export async function createBuildConfigs(
   opts: NormalizedOpts
 ): Promise<Array<RollupOptions & { output: OutputOptions }>> {
   const allInputs = concatAllArray(
-    opts.input.map((input: string) =>
-      createAllFormats(opts, input).map(
+    opts.input.map((input: string, index: number) =>
+      createAllFormats(opts, input, index).map(
         (options: TsdxOptions, index: number) => ({
           ...options,
           // We want to know if this is the first run for each entryfile
@@ -45,45 +45,49 @@ export async function createBuildConfigs(
 
 function createAllFormats(
   opts: NormalizedOpts,
-  input: string
+  input: string,
+  index: number
 ): [TsdxOptions, ...TsdxOptions[]] {
+  const sharedOpts = {
+    ...opts,
+    input,
+    name: opts.name[index],
+    output: {
+      file: opts.output.file[index],
+    },
+  };
+
   return [
     opts.format.includes('cjs') && {
-      ...opts,
+      ...sharedOpts,
       format: 'cjs',
       env: 'development',
-      input,
     },
     opts.format.includes('cjs') && {
-      ...opts,
+      ...sharedOpts,
       format: 'cjs',
       env: 'production',
-      input,
     },
-    opts.format.includes('esm') && { ...opts, format: 'esm', input },
+    opts.format.includes('esm') && { ...sharedOpts, format: 'esm' },
     opts.format.includes('umd') && {
-      ...opts,
+      ...sharedOpts,
       format: 'umd',
       env: 'development',
-      input,
     },
     opts.format.includes('umd') && {
-      ...opts,
+      ...sharedOpts,
       format: 'umd',
       env: 'production',
-      input,
     },
     opts.format.includes('system') && {
-      ...opts,
+      ...sharedOpts,
       format: 'system',
       env: 'development',
-      input,
     },
     opts.format.includes('system') && {
-      ...opts,
+      ...sharedOpts,
       format: 'system',
       env: 'production',
-      input,
     },
   ].filter(Boolean) as [TsdxOptions, ...TsdxOptions[]];
 }

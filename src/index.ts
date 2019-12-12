@@ -100,6 +100,42 @@ async function getInputs(
   return concatAllArray(inputs);
 }
 
+function getNamesAndFiles(
+  inputs: string[],
+  name?: string
+): { names: string[]; files: string[] } {
+  if (inputs.length === 1) {
+    const singleName = name || appPackageJson.name;
+    return {
+      names: [singleName],
+      files: [safePackageName(singleName)],
+    };
+  }
+  // if multiple entries, each entry should retain its filename
+  const names: string[] = [];
+  const files: string[] = [];
+  inputs.forEach(input => {
+    // remove leading src/ directory
+    let filename = input;
+    const srcVars = ['src/', './src/'];
+    if (input.startsWith(srcVars[0]))
+      filename = input.substring(srcVars[0].length);
+    else if (input.startsWith(srcVars[1]))
+      filename = input.substring(srcVars[1].length);
+
+    // remove file extension
+    const noExt = filename
+      .split('.')
+      .slice(0, -1)
+      .join('.');
+
+    // UMD name shouldn't contain slashes, replace with __
+    names.push(noExt.replace('/', '__'));
+    files.push(noExt);
+  });
+  return { names, files };
+}
+
 prog
   .version(pkg.version)
   .command('create <pkg>')
@@ -294,7 +330,11 @@ prog
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     if (opts.format.includes('cjs')) {
-      await writeCjsEntryFile(opts.name);
+      await Promise.all(
+        opts.output.file.map((file: string) =>
+          writeCjsEntryFile(file, opts.input.length)
+        )
+      );
     }
 
     type Killer = execa.ExecaChildProcess | null;
@@ -399,8 +439,15 @@ prog
     await cleanDistFolder();
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
-      const promise = writeCjsEntryFile(opts.name).catch(logError);
-      logger(promise, 'Creating entry file');
+      const promise = Promise.all(
+        opts.output.file.map((file: string) =>
+          writeCjsEntryFile(file, opts.input.length).catch(logError)
+        )
+      );
+      logger(
+        promise,
+        `Creating CJS entry file${opts.input.length > 1 ? 's' : ''}`
+      );
     }
     try {
       const promise = asyncro
@@ -424,16 +471,22 @@ prog
   });
 
 async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
+  const inputs = await getInputs(opts.entry, appPackageJson.source);
+  const { names, files } = getNamesAndFiles(inputs, opts.name);
+
   return {
     ...opts,
-    name: opts.name || appPackageJson.name,
-    input: await getInputs(opts.entry, appPackageJson.source),
+    name: names,
+    input: inputs,
     format: opts.format.split(',').map((format: string) => {
       if (format === 'es') {
         return 'esm';
       }
       return format;
     }) as [ModuleFormat, ...ModuleFormat[]],
+    output: {
+      file: files,
+    },
   };
 }
 
@@ -441,8 +494,8 @@ async function cleanDistFolder() {
   await fs.remove(paths.appDist);
 }
 
-function writeCjsEntryFile(name: string) {
-  const baseLine = `module.exports = require('./${safePackageName(name)}`;
+function writeCjsEntryFile(file: string, numEntries: number) {
+  const baseLine = `module.exports = require('./${file}`;
   const contents = `
 'use strict'
 
@@ -452,7 +505,8 @@ if (process.env.NODE_ENV === 'production') {
   ${baseLine}.cjs.development.js')
 }
 `;
-  return fs.outputFile(path.join(paths.appDist, 'index.js'), contents);
+  const filename = numEntries === 1 ? 'index.js' : `${file}.js`;
+  return fs.outputFile(path.join(paths.appDist, filename), contents);
 }
 
 function getAuthorName() {

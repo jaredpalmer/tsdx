@@ -1,4 +1,4 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import { safeVariableName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
@@ -34,7 +34,7 @@ export async function createRollupConfig(
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
   const outputName = [
-    `${paths.appDist}/${safePackageName(opts.name)}`,
+    `${paths.appDist}/${opts.output.file}`,
     opts.format,
     opts.env,
     shouldMinify ? 'min' : '',
