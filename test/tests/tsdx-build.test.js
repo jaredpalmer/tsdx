@@ -37,22 +37,30 @@ describe('tsdx build', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 
     const output = shell.exec(
-      'node ../dist/index.js build --entry src/index.ts --entry src/foo.ts --format esm,cjs'
+      [
+        'node ../dist/index.js build',
+        '--entry src/index.ts',
+        '--entry src/foo.ts',
+        '--entry src/subdir1/subdir1-2/index.ts',
+        '--format esm,cjs',
+      ].join(' ')
     );
 
-    // index output
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/index.cjs.development.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/index.cjs.production.min.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/index.esm.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
+    function testEntryOutput(filename) {
+      expect(shell.test('-f', `dist/${filename}.js`)).toBeTruthy();
+      expect(
+        shell.test('-f', `dist/${filename}.cjs.development.js`)
+      ).toBeTruthy();
+      expect(
+        shell.test('-f', `dist/${filename}.cjs.production.min.js`)
+      ).toBeTruthy();
+      expect(shell.test('-f', `dist/${filename}.esm.js`)).toBeTruthy();
+      expect(shell.test('-f', `dist/${filename}.d.ts`)).toBeTruthy();
+    }
 
-    // foo output
-    expect(shell.test('-f', 'dist/foo.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/foo.cjs.development.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/foo.cjs.production.min.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/foo.esm.js')).toBeTruthy();
-    expect(shell.test('-f', 'dist/foo.d.ts')).toBeTruthy();
+    testEntryOutput('index');
+    testEntryOutput('foo');
+    testEntryOutput('subdir1/subdir1-2/index');
 
     expect(output.code).toBe(0);
   });
