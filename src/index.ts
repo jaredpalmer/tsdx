@@ -456,7 +456,6 @@ prog
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
-            await deprecated.moveTypes();
           }
         )
         .catch((e: any) => {
@@ -464,6 +463,7 @@ prog
         });
       logger(promise, 'Building modules');
       await promise;
+      await deprecated.moveTypes();
     } catch (error) {
       logError(error);
       process.exit(1);

@@ -35,9 +35,9 @@ export async function createBuildConfigs(
   );
 
   return await Promise.all(
-    allInputs.map(async (options: TsdxOptions) => {
+    allInputs.map(async (options: TsdxOptions, index: number) => {
       // pass the full rollup config to tsdx.config.js override
-      const config = await createRollupConfig(options);
+      const config = await createRollupConfig(options, index);
       return tsdxConfig.rollup(config, options);
     })
   );

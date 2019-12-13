@@ -23,7 +23,8 @@ const errorCodeOpts = {
 let shebang: any = {};
 
 export async function createRollupConfig(
-  opts: TsdxOptions
+  opts: TsdxOptions,
+  outputNum: number
 ): Promise<RollupOptions> {
   const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
@@ -162,6 +163,8 @@ export async function createRollupConfig(
           compilerOptions: {
             // TS -> esnext, then leave the rest to babel-preset-env
             target: 'esnext',
+            // only output declarations once
+            declaration: outputNum !== 0 ? false : undefined,
           },
         },
         check: !opts.transpileOnly,
