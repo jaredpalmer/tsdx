@@ -4,5 +4,6 @@ node_modules
 dist
 tester
 tester-react
+package-lock.json
 # Local Netlify folder
 .netlify

@@ -296,6 +296,7 @@ prog
               ? 'tsdx test --env=jsdom --passWithNoTests'
               : 'tsdx test',
           lint: 'tsdx lint',
+          prepare: 'tsdx build',
         },
         peerDependencies: template === 'react' ? { react: '>=16' } : {},
         husky: {
