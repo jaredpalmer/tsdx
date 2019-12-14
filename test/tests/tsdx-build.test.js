@@ -42,6 +42,7 @@ describe('tsdx build', () => {
         '--entry src/index.ts',
         '--entry src/foo.ts',
         '--entry src/subdir1/subdir1-2/index.ts',
+        '--entry src/**/*.ts',
         '--format esm,cjs',
       ].join(' ')
     );
@@ -61,6 +62,7 @@ describe('tsdx build', () => {
     testEntryOutput('index');
     testEntryOutput('foo');
     testEntryOutput('subdir1/subdir1-2/index');
+    testEntryOutput('subdir1/glob');
 
     expect(output.code).toBe(0);
   });
