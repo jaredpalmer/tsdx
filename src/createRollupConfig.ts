@@ -5,6 +5,7 @@ import {
   resolveApp,
 } from './utils';
 import { paths } from './constants';
+import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
@@ -26,7 +27,9 @@ const errorCodeOpts = {
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 
-export async function createRollupConfig(opts: TsdxOptions) {
+export async function createRollupConfig(
+  opts: TsdxOptions
+): Promise<RollupOptions> {
   const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
     ...opts,
@@ -60,6 +63,27 @@ export async function createRollupConfig(opts: TsdxOptions) {
       }
       return external(id);
     },
+    // Rollup has treeshaking by default, but we can optimize it further...
+    treeshake: {
+      // We assume reading a property of an object never has side-effects.
+      // This means tsdx WILL remove getters and setters defined directly on objects.
+      // Any getters or setters defined on classes will not be effected.
+      //
+      // @example
+      //
+      // const foo = {
+      //  get bar() {
+      //    console.log('effect');
+      //    return 'bar';
+      //  }
+      // }
+      //
+      // const result = foo.bar;
+      // const illegalAccess = foo.quux.tooDeep;
+      //
+      // Punchline....Don't use getters and setters
+      propertyReadSideEffects: false,
+    },
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
@@ -71,27 +95,6 @@ export async function createRollupConfig(opts: TsdxOptions) {
       freeze: false,
       // Respect tsconfig esModuleInterop when setting __esModule.
       esModule: tsconfigJSON ? tsconfigJSON.esModuleInterop : false,
-      // Rollup has treeshaking by default, but we can optimize it further...
-      treeshake: {
-        // We assume reading a property of an object never has side-effects.
-        // This means tsdx WILL remove getters and setters defined directly on objects.
-        // Any getters or setters defined on classes will not be effected.
-        //
-        // @example
-        //
-        // const foo = {
-        //  get bar() {
-        //    console.log('effect');
-        //    return 'bar';
-        //  }
-        // }
-        //
-        // const result = foo.bar;
-        // const illegalAccess = foo.quux.tooDeep;
-        //
-        // Punchline....Don't use getters and setters
-        propertyReadSideEffects: false,
-      },
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },
