@@ -1,17 +1,23 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import {
+  safeVariableName,
+  safePackageName,
+  external,
+  resolveApp,
+} from './utils';
 import { paths } from './constants';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
-import json from 'rollup-plugin-json';
-import replace from 'rollup-plugin-replace';
+import json from '@rollup/plugin-json';
+import replace from '@rollup/plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
+import * as fs from 'fs-extra';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -20,8 +26,8 @@ const errorCodeOpts = {
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 
-export function createRollupConfig(opts: TsdxOptions) {
-  const findAndRecordErrorCodes = extractErrors({
+export async function createRollupConfig(opts: TsdxOptions) {
+  const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
     ...opts,
   });
@@ -38,6 +44,11 @@ export function createRollupConfig(opts: TsdxOptions) {
   ]
     .filter(Boolean)
     .join('.');
+
+  let tsconfigJSON;
+  try {
+    tsconfigJSON = fs.readJSONSync(resolveApp('tsconfig.json'));
+  } catch (e) {}
 
   return {
     // Tell Rollup the entry point to the package
@@ -58,8 +69,8 @@ export function createRollupConfig(opts: TsdxOptions) {
       // Do not let Rollup call Object.freeze() on namespace import objects
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
-      // Do not let Rollup add a `__esModule: true` property when generating exports for non-ESM formats.
-      esModule: false,
+      // Respect tsconfig esModuleInterop when setting __esModule.
+      esModule: tsconfigJSON ? tsconfigJSON.esModuleInterop : false,
       // Rollup has treeshaking by default, but we can optimize it further...
       treeshake: {
         // We assume reading a property of an object never has side-effects.
@@ -88,8 +99,8 @@ export function createRollupConfig(opts: TsdxOptions) {
     },
     plugins: [
       !!opts.extractErrors && {
-        transform(source: any) {
-          findAndRecordErrorCodes(source);
+        async transform(source: any) {
+          await findAndRecordErrorCodes(source);
           return source;
         },
       },
@@ -128,7 +139,7 @@ export function createRollupConfig(opts: TsdxOptions) {
       },
       typescript({
         typescript: require('typescript'),
-        cacheRoot: `./.rts2_cache_${opts.format}`,
+        cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           compilerOptions: {

@@ -60,8 +60,8 @@ Creating ${chalk.bold(chalk.green(projectName))}...
 `;
 };
 
-export const start = function(projectName: string) {
-  const cmd = getInstallCmd();
+export const start = async function(projectName: string) {
+  const cmd = await getInstallCmd();
 
   const commands = {
     install: cmd === 'npm' ? 'npm install' : 'yarn install',

@@ -17,6 +17,7 @@ const basicTemplate: Template = {
       build: 'tsdx build',
       test: 'tsdx test',
       lint: 'tsdx lint',
+      prepare: 'tsdx build',
     },
     peerDependencies: {},
     husky: {
