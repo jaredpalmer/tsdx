@@ -502,11 +502,16 @@ Examples
 You can run `tsdx watch` or `tsdx build` with multiple entry files, for example:
 
 ```shell
-tsdx build --entry src/index.ts --entry src/foo.ts
-# outputs dist/index.js dist/foo.js and their respective formats and declarations
+tsdx build \
+  --entry src/index.ts \
+  --entry src/foo.ts \
+  --entry src/subdir/index.ts \
+  --entry src/globdir/**/*.ts;
+# outputs dist/index.js, dist/foo.js, dist/subdir/index.js, and dist/globdir/**/*.js
+# as well as their respective formats and declarations
 ```
 
-When given multiple entries, TSDX will output separate bundles for each file for each format, as well as their declarations. Each file will be output to `dist/` with the same name it has in the `src/` directory.
+When given multiple entries, TSDX will output separate bundles for each file for each format, as well as their declarations. Each file will be output to `dist/` with the same name it has in the `src/` directory. Entries in subdirectories of `src/` will be mapped to equivalently named subdirectories in `dist/`. TSDX will also expand any globs.
 
 ## Contributing
 
