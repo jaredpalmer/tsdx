@@ -577,9 +577,9 @@ prog
         ...jestConfig,
       })
     );
- 
+
     if (!process.env.CI) {
-      argv.push('--watch') // run jest in watch mode unless in CI
+      argv.push('--watch'); // run jest in watch mode unless in CI
     }
 
     const [, ...argsToPassToJestCli] = argv;
