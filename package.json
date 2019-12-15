@@ -1,8 +1,5 @@
 {
-  "name": "@ambroseus/tsdx",
-  "publishConfig": {
-    "access": "public"
-  },
+  "name": "tsdx",
   "version": "0.11.0",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
