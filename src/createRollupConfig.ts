@@ -14,6 +14,7 @@ import replace from '@rollup/plugin-replace';
 import resolve from 'rollup-plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
+import transformPaths from '@zerollup/ts-transform-paths';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
@@ -49,6 +50,9 @@ export async function createRollupConfig(opts: TsdxOptions) {
   try {
     tsconfigJSON = fs.readJSONSync(resolveApp('tsconfig.json'));
   } catch (e) {}
+
+  const pathTransformer = (service: any): any =>
+    transformPaths(service.getProgram());
 
   return {
     // Tell Rollup the entry point to the package
@@ -153,6 +157,7 @@ export async function createRollupConfig(opts: TsdxOptions) {
             target: 'esnext',
           },
         },
+        transformers: [pathTransformer],
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',

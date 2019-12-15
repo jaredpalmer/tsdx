@@ -1169,6 +1169,20 @@
     semver "^6.3.0"
     tsutils "^3.17.1"
 
+"@zerollup/ts-helpers@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@zerollup/ts-helpers/-/ts-helpers-1.7.4.tgz#59ac8c643b8cc6def5449691630091226991da36"
+  integrity sha512-8JLREeiO6MtmJhU8kw/eNwi+HKlh/K3cMlpH6HVbW53bqhAgTvt8KnIqFh9FMNbCL3QDht35g8VJHVWYkMEt2A==
+  dependencies:
+    resolve "^1.12.0"
+
+"@zerollup/ts-transform-paths@^1.7.8":
+  version "1.7.8"
+  resolved "https://registry.yarnpkg.com/@zerollup/ts-transform-paths/-/ts-transform-paths-1.7.8.tgz#e9de4ed23e9b6f584b9a625141326456f71d0a8a"
+  integrity sha512-xh6KZRF3cD/pYeQypADTh7U9zAU8vgG7PvUT9m20mW8rsiUF69OKDM+9CsR483ceXVh5PC5AHUA/GAvsJ1iVbw==
+  dependencies:
+    "@zerollup/ts-helpers" "^1.7.4"
+
 abab@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.2.tgz#a2fba1b122c69a85caa02d10f9270c7219709a9d"
