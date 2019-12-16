@@ -80,7 +80,7 @@
     "mkdirp": "^0.5.1",
     "ora": "^3.4.0",
     "pascal-case": "^2.0.1",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "progress-estimator": "^0.2.2",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.8",
