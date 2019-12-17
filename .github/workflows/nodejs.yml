@@ -3,6 +3,24 @@ name: Node CI
 on: [push, pull_request]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    name: Lint on node 10.x and ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install deps and build
+        run: yarn install --frozen-lockfile
+
+      - name: Lint codebase
+        run: yarn lint
+
   test:
     runs-on: ${{ matrix.os }}
 
