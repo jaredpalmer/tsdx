@@ -9,17 +9,18 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 - [Features](#features)
 - [Quick Start](#quick-start)
-  - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
-  - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
-  - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
-  - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
+  - [npm start or yarn start](#npm-start-or-yarn-start)
+  - [npm run build or yarn build](#npm-run-build-or-yarn-build)
+  - [npm test or yarn test](#npm-test-or-yarn-test)
+  - [npm run lint or yarn lint](#npm-run-lint-or-yarn-lint)
+  - [prepare script](#prepare-script)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
     - [Rollup Treeshaking](#rollup-treeshaking)
-    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#__dev__)
-      - [`invariant`](#invariant)
-      - [`warning`](#warning)
+    - [Advanced babel-plugin-dev-expressions](#advanced-babel-plugin-dev-expressions)
+      - [__DEV__](#dev)
+      - [invariant](#invariant)
+      - [warning](#warning)
   - [Using lodash](#using-lodash)
   - [Error extraction](#error-extraction)
 - [Customization](#customization)
@@ -29,12 +30,13 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
 - [API Reference](#api-reference)
-  - [`tsdx watch`](#tsdx-watch)
-  - [`tsdx build`](#tsdx-build)
-  - [`tsdx test`](#tsdx-test)
-  - [`tsdx lint`](#tsdx-lint)
+  - [tsdx watch](#tsdx-watch)
+  - [tsdx build](#tsdx-build)
+  - [tsdx test](#tsdx-test)
+  - [tsdx lint](#tsdx-lint)
 - [Author](#author)
 - [License](#license)
+- [Contributors ✨](#contributors-%e2%9c%a8)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -88,6 +90,11 @@ By default, runs tests related to files changed since the last commit.
 
 Runs Eslint with Prettier on .ts and .tsx files.
 If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
+
+### `prepare` script
+
+Bundles and packages to the `dist` folder.
+Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
 
 ## Optimizations
 
@@ -309,7 +316,7 @@ The `options` object contains the following:
 export interface TsdxOptions {
   // path to file
   input: string;
-  // Safe name (for UMD)
+  // Name of package
   name: string;
   // JS target
   target: 'node' | 'browser';
@@ -319,12 +326,14 @@ export interface TsdxOptions {
   env: 'development' | 'production';
   // Path to tsconfig file
   tsconfig?: string;
-  // Is opt-in invariant error extraction active?
+  // Is error extraction running?
   extractErrors?: boolean;
   // Is minifying?
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
   writeMeta?: boolean;
+  // Only transpile, do not type check (makes compilation faster)
+  transpileOnly?: boolean;
 }
 ```
 
@@ -392,6 +401,7 @@ Options
   --onSuccess           Run a command on a successful build
   --onFailure           Run a command on a failed build
   --noClean             Don't clean the dist folder
+  --transpileOnly       Skip type checking
   -h, --help            Displays this message
 
 Examples
@@ -404,6 +414,7 @@ Examples
   $ tsdx watch --onFirstSuccess "echo The first successful build!"
   $ tsdx watch --onSuccess "echo Successful build!"
   $ tsdx watch --onFailure "The build failed!"
+  $ tsdx watch --transpileOnly
 ```
 
 ### `tsdx build`
@@ -422,6 +433,7 @@ Options
   --format              Specify module format(s)  (default cjs,esm)
   --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --transpileOnly       Skip type checking
   -h, --help            Displays this message
 
 Examples
@@ -431,6 +443,7 @@ Examples
   $ tsdx build --format cjs,esm,umd
   $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx build --transpileOnly
 ```
 
 ### `tsdx test`

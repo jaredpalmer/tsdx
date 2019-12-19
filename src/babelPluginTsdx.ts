@@ -86,6 +86,10 @@ export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
           name: '@babel/plugin-proposal-class-properties',
           loose: true,
         },
+        // Adds syntax support for optional chaining (.?)
+        { name: '@babel/plugin-proposal-optional-chaining' },
+        // Adds syntax support for default value using ?? operator
+        { name: '@babel/plugin-proposal-nullish-coalescing-operator' },
         {
           name: '@babel/plugin-transform-regenerator',
           async: false,

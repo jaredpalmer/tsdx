@@ -1,5 +1,11 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import {
+  safeVariableName,
+  safePackageName,
+  external,
+  resolveApp,
+} from './utils';
 import { paths } from './constants';
+import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
@@ -12,6 +18,7 @@ import typescript from 'rollup-plugin-typescript2';
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
+import * as fs from 'fs-extra';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -20,7 +27,9 @@ const errorCodeOpts = {
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
 
-export async function createRollupConfig(opts: TsdxOptions) {
+export async function createRollupConfig(
+  opts: TsdxOptions
+): Promise<RollupOptions> {
   const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
     ...opts,
@@ -39,6 +48,11 @@ export async function createRollupConfig(opts: TsdxOptions) {
     .filter(Boolean)
     .join('.');
 
+  let tsconfigJSON;
+  try {
+    tsconfigJSON = fs.readJSONSync(resolveApp('tsconfig.json'));
+  } catch (e) {}
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
@@ -49,6 +63,27 @@ export async function createRollupConfig(opts: TsdxOptions) {
       }
       return external(id);
     },
+    // Rollup has treeshaking by default, but we can optimize it further...
+    treeshake: {
+      // We assume reading a property of an object never has side-effects.
+      // This means tsdx WILL remove getters and setters defined directly on objects.
+      // Any getters or setters defined on classes will not be effected.
+      //
+      // @example
+      //
+      // const foo = {
+      //  get bar() {
+      //    console.log('effect');
+      //    return 'bar';
+      //  }
+      // }
+      //
+      // const result = foo.bar;
+      // const illegalAccess = foo.quux.tooDeep;
+      //
+      // Punchline....Don't use getters and setters
+      propertyReadSideEffects: false,
+    },
     // Establish Rollup output
     output: {
       // Set filenames of the consumer's package
@@ -58,29 +93,8 @@ export async function createRollupConfig(opts: TsdxOptions) {
       // Do not let Rollup call Object.freeze() on namespace import objects
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
-      // Do not let Rollup add a `__esModule: true` property when generating exports for non-ESM formats.
-      esModule: false,
-      // Rollup has treeshaking by default, but we can optimize it further...
-      treeshake: {
-        // We assume reading a property of an object never has side-effects.
-        // This means tsdx WILL remove getters and setters defined directly on objects.
-        // Any getters or setters defined on classes will not be effected.
-        //
-        // @example
-        //
-        // const foo = {
-        //  get bar() {
-        //    console.log('effect');
-        //    return 'bar';
-        //  }
-        // }
-        //
-        // const result = foo.bar;
-        // const illegalAccess = foo.quux.tooDeep;
-        //
-        // Punchline....Don't use getters and setters
-        propertyReadSideEffects: false,
-      },
+      // Respect tsconfig esModuleInterop when setting __esModule.
+      esModule: tsconfigJSON ? tsconfigJSON.esModuleInterop : false,
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },
@@ -138,6 +152,7 @@ export async function createRollupConfig(opts: TsdxOptions) {
             target: 'es5',
           },
         },
+        check: opts.transpileOnly === false,
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
