@@ -397,6 +397,9 @@ Options
   --format              Specify module format(s)  (default cjs,esm)
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --verbose             Keep outdated console output in watch mode instead of clearing the screen
+  --onFirstSuccess      Run a command on the first successful build
+  --onSuccess           Run a command on a successful build
+  --onFailure           Run a command on a failed build
   --noClean             Don't clean the dist folder
   --transpileOnly       Skip type checking
   -h, --help            Displays this message
@@ -408,6 +411,9 @@ Examples
   $ tsdx watch --format cjs,esm,umd
   $ tsdx watch --tsconfig ./tsconfig.foo.json
   $ tsdx watch --noClean
+  $ tsdx watch --onFirstSuccess "echo The first successful build!"
+  $ tsdx watch --onSuccess "echo Successful build!"
+  $ tsdx watch --onFailure "The build failed!"
   $ tsdx watch --transpileOnly
 ```
 

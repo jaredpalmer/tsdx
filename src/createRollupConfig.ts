@@ -149,11 +149,7 @@ export async function createRollupConfig(
             sourceMap: true,
             declaration: true,
             jsx: 'react',
-          },
-        },
-        tsconfigOverride: {
-          compilerOptions: {
-            target: 'esnext',
+            target: 'es5',
           },
         },
         check: opts.transpileOnly === false,

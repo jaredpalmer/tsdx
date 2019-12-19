@@ -25,7 +25,9 @@
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
-    "test": "jest --config ./test/jest.config.json"
+    "test": "jest --config ./test/jest.config.json",
+    "watch": "chokidar \"./package.json\" \"./src/**/*.ts\" \"node_modules\\@jaredpalmer\\rollup-plugin-preserve-shebang\\dist\\index.js\" -c \"yarn build && echo Success\"",
+    "start": "tsc -p tsconfig.json --watch"
   },
   "files": [
     "dist",
@@ -61,6 +63,8 @@
     "camelcase": "^5.0.0",
     "chalk": "^2.4.2",
     "cross-env": "6.0.3",
+    "chokidar-cli": "^1.2.2",
+    "cross-spawn": "^6.0.5",
     "enquirer": "^2.3.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
@@ -109,6 +113,7 @@
     "@types/node": "^12.0.2",
     "@types/ora": "^3.2.0",
     "@types/react": "^16.9.11",
+    "@types/ps-tree": "^1.1.0",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
     "husky": "^3.0.9",
