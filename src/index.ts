@@ -49,7 +49,7 @@ try {
 
 // check for custom tsdx.config.js
 let tsdxConfig = {
-  rollup(config: any, _options: any) {
+  rollup(config: RollupOptions, _options: TsdxOptions): RollupOptions {
     return config;
   },
 };
