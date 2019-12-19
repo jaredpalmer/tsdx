@@ -9,18 +9,18 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 - [Features](#features)
 - [Quick Start](#quick-start)
-  - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
-  - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
-  - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
-  - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
-  - [`prepare` script](#prepare-script)
+  - [npm start or yarn start](#npm-start-or-yarn-start)
+  - [npm run build or yarn build](#npm-run-build-or-yarn-build)
+  - [npm test or yarn test](#npm-test-or-yarn-test)
+  - [npm run lint or yarn lint](#npm-run-lint-or-yarn-lint)
+  - [prepare script](#prepare-script)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
     - [Rollup Treeshaking](#rollup-treeshaking)
-    - [Advanced `babel-plugin-dev-expressions`](#advanced-babel-plugin-dev-expressions)
-      - [`__DEV__`](#__dev__)
-      - [`invariant`](#invariant)
-      - [`warning`](#warning)
+    - [Advanced babel-plugin-dev-expressions](#advanced-babel-plugin-dev-expressions)
+      - [__DEV__](#dev)
+      - [invariant](#invariant)
+      - [warning](#warning)
   - [Using lodash](#using-lodash)
   - [Error extraction](#error-extraction)
 - [Customization](#customization)
@@ -30,10 +30,10 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
 - [API Reference](#api-reference)
-  - [`tsdx watch`](#tsdx-watch)
-  - [`tsdx build`](#tsdx-build)
-  - [`tsdx test`](#tsdx-test)
-  - [`tsdx lint`](#tsdx-lint)
+  - [tsdx watch](#tsdx-watch)
+  - [tsdx build](#tsdx-build)
+  - [tsdx test](#tsdx-test)
+  - [tsdx lint](#tsdx-lint)
 - [Author](#author)
 - [License](#license)
 - [Contributors ✨](#contributors-%e2%9c%a8)
@@ -398,7 +398,7 @@ Options
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --verbose             Keep outdated console output in watch mode instead of clearing the screen
   --noClean             Don't clean the dist folder
-  -T, --transpileOnly   Skip type checking
+  --transpileOnly       Skip type checking
   -h, --help            Displays this message
 
 Examples
@@ -427,7 +427,7 @@ Options
   --format              Specify module format(s)  (default cjs,esm)
   --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
-  -T, --transpileOnly   Skip type checking
+  --transpileOnly       Skip type checking
   -h, --help            Displays this message
 
 Examples
