@@ -335,6 +335,8 @@ prog
   .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
+  .option('--transpileOnly', 'Skip type checking', false)
+  .example('build --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
@@ -397,6 +399,8 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
+  .option('--transpileOnly', 'Skip type checking', false)
+  .example('build --transpileOnly')
   .option(
     '--extractErrors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'
