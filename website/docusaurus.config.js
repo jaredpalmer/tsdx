@@ -21,8 +21,10 @@ module.exports = {
         src: 'img/logo.svg',
       },
       links: [
-        { to: 'docs/starthere', label: 'Docs', position: 'right' },
-        { to: 'blog', label: 'Blog', position: 'right' },
+        { to: 'docs/get-started', label: 'Docs', position: 'right' },
+        { to: 'help', label: 'Help', position: 'right' },
+        { to: 'users', label: 'Users', position: 'right' },
+        // { to: 'blog', label: 'Blog', position: 'right' },
         {
           href: 'https://github.com/palmerhq/tsdx',
           label: 'GitHub',
@@ -31,14 +33,14 @@ module.exports = {
       ],
     },
     footer: {
-      style: 'dark',
+      style: 'light',
       links: [
         {
           title: 'Docs',
           items: [
             {
               label: 'Docs',
-              to: 'docs/starthere',
+              to: 'docs/get-started',
             },
           ],
         },

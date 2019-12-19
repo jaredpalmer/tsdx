@@ -20,3 +20,12 @@ export interface TsdxOptions {
   // Only transpile, do not type check (makes compilation faster)
   transpileOnly?: boolean;
 }
+
+export interface PackageJson {
+  name: string;
+  source?: string;
+  jest?: any;
+  eslint?: any;
+  dependencies?: { [packageName: string]: string };
+  devDependencies?: { [packageName: string]: string };
+}

@@ -33,18 +33,15 @@ import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
-import { TsdxOptions } from './types';
+import { PackageJson, TsdxOptions } from './types';
 import { createProgressEstimator } from './createProgressEstimator';
+import { templates } from './templates';
+import { composePackageJson } from './templates/utils';
 const pkg = require('../package.json');
 
 const prog = sade('tsdx');
 
-let appPackageJson: {
-  name: string;
-  source?: string;
-  jest?: any;
-  eslint?: any;
-};
+let appPackageJson: PackageJson;
 
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
@@ -99,61 +96,64 @@ async function getInputs(entries: string[], source?: string) {
   return concatAllArray(inputs);
 }
 
-function createBuildConfigs(
+async function createBuildConfigs(
   opts: any
-): Array<RollupOptions & { output: OutputOptions }> {
-  return concatAllArray(
-    opts.input.map((input: string) =>
-      [
-        opts.format.includes('cjs') && {
-          ...opts,
-          format: 'cjs',
-          env: 'development',
-          input,
-        },
-        opts.format.includes('cjs') && {
-          ...opts,
-          format: 'cjs',
-          env: 'production',
-          input,
-        },
-        opts.format.includes('esm') && { ...opts, format: 'esm', input },
-        opts.format.includes('umd') && {
-          ...opts,
-          format: 'umd',
-          env: 'development',
-          input,
-        },
-        opts.format.includes('umd') && {
-          ...opts,
-          format: 'umd',
-          env: 'production',
-          input,
-        },
-        opts.format.includes('system') && {
-          ...opts,
-          format: 'system',
-          env: 'development',
-          input,
-        },
-        opts.format.includes('system') && {
-          ...opts,
-          format: 'system',
-          env: 'production',
-          input,
-        },
-      ]
-        .filter(Boolean)
-        .map((options: TsdxOptions, index: number) => ({
-          ...options,
-          // We want to know if this is the first run for each entryfile
-          // for certain plugins (e.g. css)
-          writeMeta: index === 0,
-        }))
-    )
-  ).map((options: TsdxOptions) =>
-    // pass the full rollup config to tsdx.config.js override
-    tsdxConfig.rollup(createRollupConfig(options), options)
+): Promise<Array<RollupOptions & { output: OutputOptions }>> {
+  return await Promise.all(
+    concatAllArray(
+      opts.input.map((input: string) =>
+        [
+          opts.format.includes('cjs') && {
+            ...opts,
+            format: 'cjs',
+            env: 'development',
+            input,
+          },
+          opts.format.includes('cjs') && {
+            ...opts,
+            format: 'cjs',
+            env: 'production',
+            input,
+          },
+          opts.format.includes('esm') && { ...opts, format: 'esm', input },
+          opts.format.includes('umd') && {
+            ...opts,
+            format: 'umd',
+            env: 'development',
+            input,
+          },
+          opts.format.includes('umd') && {
+            ...opts,
+            format: 'umd',
+            env: 'production',
+            input,
+          },
+          opts.format.includes('system') && {
+            ...opts,
+            format: 'system',
+            env: 'development',
+            input,
+          },
+          opts.format.includes('system') && {
+            ...opts,
+            format: 'system',
+            env: 'production',
+            input,
+          },
+        ]
+          .filter(Boolean)
+          .map((options: TsdxOptions, index: number) => ({
+            ...options,
+            // We want to know if this is the first run for each entryfile
+            // for certain plugins (e.g. css)
+            writeMeta: index === 0,
+          }))
+      )
+    ).map(async (options: TsdxOptions) => {
+      // pass the full rollup config to tsdx.config.js override
+      const config = await createRollupConfig(options);
+      return tsdxConfig.rollup(config, options);
+    })
   );
 }
 
@@ -172,7 +172,12 @@ prog
   .command('create <pkg>')
   .describe('Create a new package with TSDX')
   .example('create mypackage')
-  .option('--template', 'Specify a template. Allowed choices: [basic, react]')
+  .option(
+    '--template',
+    `Specify a template. Allowed choices: [${Object.keys(templates).join(
+      ', '
+    )}]`
+  )
   .example('create --template react mypackage')
   .action(async (pkg: string, opts: any) => {
     console.log(
@@ -191,33 +196,38 @@ prog
     // Helper fn to prompt the user for a different
     // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
-      if (fs.existsSync(projectPath)) {
-        bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
-        const prompt = new Input({
-          message: `A folder named ${chalk.bold.red(
-            pkg
-          )} already exists! ${chalk.bold('Choose a different name')}`,
-          initial: pkg + '-1',
-          result: (v: string) => v.trim(),
-        });
-        pkg = await prompt.run();
-        projectPath = fs.realpathSync(process.cwd()) + '/' + pkg;
-        bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
-        return getProjectPath(projectPath); // recursion!
-      } else {
+      let exists = true;
+      try {
+        // will throw an exception if it does not exists
+        await util.promisify(fs.access)(projectPath);
+      } catch {
+        exists = false;
+      }
+      if (!exists) {
         return projectPath;
       }
+      bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
+      const prompt = new Input({
+        message: `A folder named ${chalk.bold.red(
+          pkg
+        )} already exists! ${chalk.bold('Choose a different name')}`,
+        initial: pkg + '-1',
+        result: (v: string) => v.trim(),
+      });
+      pkg = await prompt.run();
+      projectPath = (await fs.realpath(process.cwd())) + '/' + pkg;
+      bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
+      return await getProjectPath(projectPath); // recursion!
     }
 
     try {
       // get the project path
-      let projectPath = await getProjectPath(
-        fs.realpathSync(process.cwd()) + '/' + pkg
-      );
+      const realPath = await fs.realpath(process.cwd());
+      let projectPath = await getProjectPath(realPath + '/' + pkg);
 
       const prompt = new Select({
         message: 'Choose a template',
-        choices: ['basic', 'react'],
+        choices: Object.keys(templates),
       });
 
       if (opts.template) {
@@ -246,9 +256,9 @@ prog
       );
 
       // update license year and author
-      let license = fs.readFileSync(
+      let license: string = await fs.readFile(
         path.resolve(projectPath, 'LICENSE'),
-        'utf-8'
+        { encoding: 'utf-8' }
       );
 
       license = license.replace(/<year>/, `${new Date().getFullYear()}`);
@@ -269,71 +279,35 @@ prog
 
       license = license.replace(/<author>/, author.trim());
 
-      fs.writeFileSync(path.resolve(projectPath, 'LICENSE'), license, {
+      await fs.writeFile(path.resolve(projectPath, 'LICENSE'), license, {
         encoding: 'utf-8',
       });
+
+      const templateConfig = templates[template as keyof typeof templates];
+      const generatePackageJson = composePackageJson(templateConfig);
 
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
-      const pkgJson = {
-        name: safeName,
-        version: '0.1.0',
-        license: 'MIT',
-        author: author,
-        main: 'dist/index.js',
-        module: `dist/${safeName}.esm.js`,
-        typings: `dist/index.d.ts`,
-        files: ['dist'],
-        scripts: {
-          start: 'tsdx watch',
-          build: 'tsdx build',
-          test:
-            template === 'react'
-              ? 'tsdx test --env=jsdom --passWithNoTests'
-              : 'tsdx test',
-          lint: 'tsdx lint',
-        },
-        peerDependencies: template === 'react' ? { react: '>=16' } : {},
-        husky: {
-          hooks: {
-            'pre-commit': 'tsdx lint',
-          },
-        },
-        prettier: {
-          printWidth: 80,
-          semi: true,
-          singleQuote: true,
-          trailingComma: 'es5',
-        },
-      };
+      const pkgJson = generatePackageJson({ name: safeName, author });
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
-      Messages.start(pkg);
+      await Messages.start(pkg);
     } catch (error) {
       bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
       logError(error);
       process.exit(1);
     }
 
-    let deps = ['@types/jest', 'husky', 'tsdx', 'tslib', 'typescript'].sort();
+    const templateConfig = templates[template as keyof typeof templates];
+    const { dependencies: deps } = templateConfig;
 
-    if (template === 'react') {
-      deps = [
-        ...deps,
-        '@types/react',
-        '@types/react-dom',
-        'react',
-        'react-dom',
-      ].sort();
-    }
-
-    const installSpinner = ora(Messages.installing(deps)).start();
+    const installSpinner = ora(Messages.installing(deps.sort())).start();
     try {
-      const cmd = getInstallCmd();
+      const cmd = await getInstallCmd();
       await execa(cmd, getInstallArgs(cmd, deps));
       installSpinner.succeed('Installed dependencies');
-      console.log(Messages.start(pkg));
+      console.log(await Messages.start(pkg));
     } catch (error) {
       installSpinner.fail('Failed to install dependencies');
       logError(error);
@@ -367,7 +341,7 @@ prog
   .example('build --extractErrors')
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = createBuildConfigs(opts);
+    const buildConfigs = await createBuildConfigs(opts);
     if (!opts.noClean) {
       await cleanDistFolder();
     }
@@ -436,7 +410,7 @@ prog
   )
   .action(async (dirtyOpts: any) => {
     const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = createBuildConfigs(opts);
+    const buildConfigs = await createBuildConfigs(opts);
     await cleanDistFolder();
     await ensureDistFolder();
     const logger = await createProgressEstimator();
@@ -483,9 +457,14 @@ function ensureDistFolder() {
   return util.promisify(mkdirp)(paths.appDist);
 }
 
-function cleanDistFolder() {
-  if (fs.existsSync(paths.appDist)) {
+async function cleanDistFolder() {
+  try {
+    await util.promisify(fs.access)(paths.appDist);
     return util.promisify(rimraf)(paths.appDist);
+  } catch {
+    // if an exception is throw, the files does not exists or it is not visible
+    // either way, we just return
+    return;
   }
 }
 
@@ -573,6 +552,10 @@ prog
       })
     );
 
+    if (!process.env.CI) {
+      argv.push('--watch'); // run jest in watch mode unless in CI
+    }
+
     const [, ...argsToPassToJestCli] = argv;
     jest.run(argsToPassToJestCli);
   });
@@ -590,7 +573,7 @@ prog
   .option('--report-file', 'Write JSON report to file locally')
   .example('lint --report-file eslint-report.json')
   .action(
-    (opts: {
+    async (opts: {
       fix: boolean;
       'ignore-pattern': string;
       'write-file': boolean;
@@ -598,21 +581,25 @@ prog
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
-        const defaultInputs = ['src', 'test'];
+        const defaultInputs = ['src', 'test'].filter(fs.existsSync);
         opts['_'] = defaultInputs;
         console.log(
           chalk.yellow(
-            `No input files specified, defaulting to ${defaultInputs.join(' ')}`
+            `Defaulting to "tsdx lint ${defaultInputs.join(' ')}"`,
+            '\nYou can override this in the package.json scripts, like "lint": "tsdx lint src otherDir"'
           )
         );
       }
 
+      const config = await createEslintConfig({
+        pkg: appPackageJson,
+        rootDir: paths.appRoot,
+        writeFile: opts['write-file'],
+      });
+
       const cli = new CLIEngine({
         baseConfig: {
-          ...createEslintConfig({
-            rootDir: paths.appRoot,
-            writeFile: opts['write-file'],
-          }),
+          ...config,
           ...appPackageJson.eslint,
         },
         extensions: ['.ts', '.tsx'],
@@ -625,9 +612,9 @@ prog
       }
       console.log(cli.getFormatter()(report.results));
       if (opts['report-file']) {
-        fs.mkdirsSync(path.dirname(opts['report-file']));
+        await fs.mkdirs(path.dirname(opts['report-file']));
 
-        fs.writeFileSync(
+        await fs.writeFile(
           opts['report-file'],
           cli.getFormatter('json')(report.results)
         );

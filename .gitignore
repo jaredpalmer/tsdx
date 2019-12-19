@@ -1,12 +1,9 @@
 *.log
 .DS_Store
 node_modules
-.rts2_cache_cjs
-.rts2_cache_esm
-.rts2_cache_umd
-.rts2_cache_system
 dist
 tester
 tester-react
+package-lock.json
 # Local Netlify folder
 .netlify

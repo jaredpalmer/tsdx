@@ -1,7 +1,25 @@
 ---
-id: starthere
+id: get-started
 title: Getting Started
 ---
+
+## Overview
+
+Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
+
+## Features
+
+TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
+
+- Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS & ESM by default, and also UMD if you want) plus development and production builds
+- Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
+- Live reload / watch-mode
+- Works with React
+- Human readable error messages (and in VSCode-friendly format)
+- Bundle size snapshots
+- Opt-in to extract `invariant` error codes
+- Jest test runner setup with sensible defaults via `tsdx test`
+- Zero-config, single dependency
 
 ## Quick Start
 

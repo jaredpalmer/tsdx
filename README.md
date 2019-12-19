@@ -13,6 +13,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
   - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
   - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
+  - [`prepare` script](#prepare-script)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
     - [Rollup Treeshaking](#rollup-treeshaking)
@@ -55,7 +56,7 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 
 ## Quick Start
 
-```
+```bash
 npx tsdx create mylib
 cd mylib
 yarn start
@@ -89,6 +90,11 @@ By default, runs tests related to files changed since the last commit.
 
 Runs Eslint with Prettier on .ts and .tsx files.
 If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
+
+### `prepare` script
+
+Bundles and packages to the `dist` folder.
+Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
 
 ## Optimizations
 
