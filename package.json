@@ -110,7 +110,7 @@
     "@types/jest": "^24.0.15",
     "@types/mkdirp": "^0.5.2",
     "@types/ms": "^0.7.30",
-    "@types/node": "^12.0.2",
+    "@types/node": "^13.1.0",
     "@types/ora": "^3.2.0",
     "@types/react": "^16.9.11",
     "@types/ps-tree": "^1.1.0",
