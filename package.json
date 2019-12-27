@@ -116,6 +116,7 @@
     "@types/ps-tree": "^1.1.0",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
+    "doctoc": "^1.4.0",
     "husky": "^3.0.9",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
@@ -123,7 +124,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint"
+      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint && doctoc README.md"
     }
   },
   "prettier": {
