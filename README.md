@@ -450,11 +450,16 @@ Examples
 
 This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
 
-If you would like to disable watch mode, this is one way to do it in your `package.json`:
+If you would like to disable watch mode, you can set the environment variable `CI=true`. For instance, you could set up your `package.json` `scripts` like:
 
-```
-"test": "CI=true tsdx test --color"
-"test:coverage": "CI=true tsdx test --color --coverage"
+```json
+{
+  "scripts": {
+    "test": "CI=true tsdx test",
+    "test:watch": "tsdx test",
+    "test:coverage": "CI=true tsdx test --coverage"
+  }
+}
 ```
 
 ### `tsdx lint`
