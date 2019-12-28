@@ -1,4 +1,4 @@
-'use strict';
+
 
 const shell = require('shelljs');
 const path = require('path');
@@ -9,6 +9,9 @@ shell.config.silent = true;
 module.exports = {
   setupStageWithFixture: (stageName, fixtureName) => {
     const stagePath = path.join(rootDir, stageName);
+    shell.chmod(755, rootDir);
+    shell.ls(rootDir);
+    shell.ls(stagePath);
     shell.mkdir(stagePath);
     shell.exec(`cp -a ${rootDir}/test/fixtures/${fixtureName}/. ${stagePath}/`);
     shell.ln(
