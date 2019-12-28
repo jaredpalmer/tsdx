@@ -365,16 +365,15 @@ prog
     let successKiller: Killer = null;
     let failureKiller: Killer = null;
 
-    function run(command: string) {
-      if (command) {
-        const [exec, ...args] = command.split(' ');
-
-        return execa(exec, args, {
-          stdio: 'inherit',
-        });
+    function run(command?: string) {
+      if (!command) {
+        return null;
       }
 
-      return null;
+      const [exec, ...args] = command.split(' ');
+      return execa(exec, args, {
+        stdio: 'inherit',
+      });
     }
 
     function killHooks() {
