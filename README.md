@@ -298,6 +298,9 @@ _TODO: Simple guide to host error codes to be completed_
 
 ### Rollup
 
+> **❗⚠️❗ Warning**: <br>
+> These modifications will override the default behavior and configuration of TSDX. As such they can invalidate internal guarantees and assumptions. These types of changes can break internal behavior and can be very fragile against updates. Use with discretion!
+
 TSDX uses Rollup under the hood. The defaults are solid for most packages (Formik uses the defaults!). However, if you do wish to alter the rollup configuration, you can do so by creating a file called `tsdx.config.js` at the root of your project like so:
 
 ```js
