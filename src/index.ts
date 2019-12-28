@@ -25,7 +25,7 @@ import shell from 'shelljs';
 import ora from 'ora';
 import { paths } from './constants';
 import * as Messages from './messages';
-import { createRollupConfig } from './createRollupConfig';
+import { createBuildConfigs } from './createBuildConfigs';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
 import { resolveApp, safePackageName, clearConsole } from './utils';
@@ -33,7 +33,13 @@ import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
 import { Input, Select } from 'enquirer';
-import { PackageJson, TsdxOptions } from './types';
+import {
+  PackageJson,
+  WatchOpts,
+  BuildOpts,
+  ModuleFormat,
+  NormalizedOpts,
+} from './types';
 import { createProgressEstimator } from './createProgressEstimator';
 import { templates } from './templates';
 import { composePackageJson } from './templates/utils';
@@ -46,17 +52,6 @@ let appPackageJson: PackageJson;
 try {
   appPackageJson = fs.readJSONSync(resolveApp('package.json'));
 } catch (e) {}
-
-// check for custom tsdx.config.js
-let tsdxConfig = {
-  rollup(config: RollupOptions, _options: TsdxOptions): RollupOptions {
-    return config;
-  },
-};
-
-if (fs.existsSync(paths.appConfig)) {
-  tsdxConfig = require(paths.appConfig);
-}
 
 export const isDir = (name: string) =>
   fs
@@ -80,8 +75,11 @@ async function jsOrTs(filename: string) {
   return resolveApp(`${filename}${extension}`);
 }
 
-async function getInputs(entries: string[], source?: string) {
-  let inputs: any[] = [];
+async function getInputs(
+  entries?: string | string[],
+  source?: string
+): Promise<string[]> {
+  let inputs: string[] = [];
   let stub: any[] = [];
   stub
     .concat(
@@ -94,67 +92,6 @@ async function getInputs(entries: string[], source?: string) {
     .forEach(input => inputs.push(input));
 
   return concatAllArray(inputs);
-}
-
-async function createBuildConfigs(
-  opts: any
-): Promise<Array<RollupOptions & { output: OutputOptions }>> {
-  return await Promise.all(
-    concatAllArray(
-      opts.input.map((input: string) =>
-        [
-          opts.format.includes('cjs') && {
-            ...opts,
-            format: 'cjs',
-            env: 'development',
-            input,
-          },
-          opts.format.includes('cjs') && {
-            ...opts,
-            format: 'cjs',
-            env: 'production',
-            input,
-          },
-          opts.format.includes('esm') && { ...opts, format: 'esm', input },
-          opts.format.includes('umd') && {
-            ...opts,
-            format: 'umd',
-            env: 'development',
-            input,
-          },
-          opts.format.includes('umd') && {
-            ...opts,
-            format: 'umd',
-            env: 'production',
-            input,
-          },
-          opts.format.includes('system') && {
-            ...opts,
-            format: 'system',
-            env: 'development',
-            input,
-          },
-          opts.format.includes('system') && {
-            ...opts,
-            format: 'system',
-            env: 'production',
-            input,
-          },
-        ]
-          .filter(Boolean)
-          .map((options: TsdxOptions, index: number) => ({
-            ...options,
-            // We want to know if this is the first run for each entryfile
-            // for certain plugins (e.g. css)
-            writeMeta: index === 0,
-          }))
-      )
-    ).map(async (options: TsdxOptions) => {
-      // pass the full rollup config to tsdx.config.js override
-      const config = await createRollupConfig(options);
-      return tsdxConfig.rollup(config, options);
-    })
-  );
 }
 
 async function moveTypes() {
@@ -320,7 +257,7 @@ prog
   .describe('Rebuilds on any change')
   .option('--entry, -i', 'Entry module(s)')
   .example('watch --entry src/foo.tsx')
-  .option('--target', 'Specify your target environment', 'web')
+  .option('--target', 'Specify your target environment', 'browser')
   .example('watch --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('watch --name Foo')
@@ -346,7 +283,7 @@ prog
   .example('build --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
-  .action(async (dirtyOpts: any) => {
+  .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
     if (!opts.noClean) {
@@ -365,7 +302,7 @@ prog
     let successKiller: Killer = null;
     let failureKiller: Killer = null;
 
-    function run(command: string) {
+    function run(command?: string) {
       if (command) {
         const [exec, ...args] = command.split(' ');
 
@@ -439,7 +376,7 @@ prog
   .describe('Build your project once and exit')
   .option('--entry, -i', 'Entry module(s)')
   .example('build --entry src/foo.tsx')
-  .option('--target', 'Specify your target environment', 'web')
+  .option('--target', 'Specify your target environment', 'browser')
   .example('build --target node')
   .option('--name', 'Specify name exposed in UMD builds')
   .example('build --name Foo')
@@ -456,7 +393,7 @@ prog
   .example(
     'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
   )
-  .action(async (dirtyOpts: any) => {
+  .action(async (dirtyOpts: BuildOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
     await cleanDistFolder();
@@ -492,7 +429,7 @@ prog
     }
   });
 
-async function normalizeOpts(opts: any) {
+async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
   return {
     ...opts,
     name: opts.name || appPackageJson.name,
@@ -502,7 +439,7 @@ async function normalizeOpts(opts: any) {
         return 'esm';
       }
       return format;
-    }),
+    }) as [ModuleFormat, ...ModuleFormat[]],
   };
 }
 

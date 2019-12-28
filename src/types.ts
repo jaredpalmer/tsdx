@@ -1,18 +1,46 @@
-export interface TsdxOptions {
-  // path to file
-  input: string;
-  // Name of package
-  name: string;
+interface SharedOpts {
   // JS target
   target: 'node' | 'browser';
-  // Module format
-  format: 'cjs' | 'umd' | 'esm' | 'system';
-  // Environment
-  env: 'development' | 'production';
   // Path to tsconfig file
   tsconfig?: string;
   // Is error extraction running?
   extractErrors?: boolean;
+}
+
+export type ModuleFormat = 'cjs' | 'umd' | 'esm' | 'system';
+
+export interface BuildOpts extends SharedOpts {
+  name?: string;
+  entry?: string | string[];
+  format: 'cjs,esm';
+  target: 'browser';
+}
+
+export interface WatchOpts extends BuildOpts {
+  verbose?: boolean;
+  noClean?: boolean;
+  // callback hooks
+  onFirstSuccess?: string;
+  onSuccess?: string;
+  onFailure?: string;
+}
+
+export interface NormalizedOpts
+  extends Omit<WatchOpts, 'name' | 'input' | 'format'> {
+  name: string;
+  input: string[];
+  format: [ModuleFormat, ...ModuleFormat[]];
+}
+
+export interface TsdxOptions extends SharedOpts {
+  // Name of package
+  name: string;
+  // path to file
+  input: string;
+  // Environment
+  env: 'development' | 'production';
+  // Module format
+  format: ModuleFormat;
   // Is minifying?
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
