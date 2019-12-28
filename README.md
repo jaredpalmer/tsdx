@@ -449,7 +449,7 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options. If you are using the React template, jest uses the flag `--env=jsdom` by default.
+This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options.
 
 If you would like to disable watch mode, you can set the environment variable `CI=true`. For instance, you could set up your `package.json` `scripts` like:
 
