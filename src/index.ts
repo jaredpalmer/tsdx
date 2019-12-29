@@ -44,7 +44,7 @@ const prog = sade('tsdx');
 let appPackageJson: PackageJson;
 
 try {
-  appPackageJson = fs.readJSONSync(resolveApp('package.json'));
+  appPackageJson = fs.readJSONSync(paths.appPackageJson);
 } catch (e) {}
 
 // check for custom tsdx.config.js
@@ -463,7 +463,7 @@ prog
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
       try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
+        await ensureDistFolder();
         const promise = writeCjsEntryFile(opts.name).catch(logError);
         logger(promise, 'Creating entry file');
       } catch (e) {
