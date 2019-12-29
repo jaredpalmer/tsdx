@@ -1,4 +1,5 @@
 {
+  "testEnvironment": "node",
   "roots": ["<rootDir>/tests"],
   "collectCoverageFrom": ["**/*.js"],
   "transform": {
