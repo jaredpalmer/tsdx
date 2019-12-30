@@ -50,7 +50,7 @@ const prog = sade('tsdx');
 let appPackageJson: PackageJson;
 
 try {
-  appPackageJson = fs.readJSONSync(resolveApp('package.json'));
+  appPackageJson = fs.readJSONSync(paths.appPackageJson);
 } catch (e) {}
 
 export const isDir = (name: string) =>
@@ -303,15 +303,14 @@ prog
     let failureKiller: Killer = null;
 
     function run(command?: string) {
-      if (command) {
-        const [exec, ...args] = command.split(' ');
-
-        return execa(exec, args, {
-          stdio: 'inherit',
-        });
+      if (!command) {
+        return null;
       }
 
-      return null;
+      const [exec, ...args] = command.split(' ');
+      return execa(exec, args, {
+        stdio: 'inherit',
+      });
     }
 
     function killHooks() {
@@ -401,7 +400,7 @@ prog
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
       try {
-        await util.promisify(mkdirp)(resolveApp('./dist'));
+        await ensureDistFolder();
         const promise = writeCjsEntryFile(opts.name).catch(logError);
         logger(promise, 'Creating entry file');
       } catch (e) {

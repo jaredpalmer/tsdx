@@ -1,6 +1,6 @@
 {
   "name": "tsdx",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
@@ -62,8 +62,8 @@
     "babylon": "^6.18.0",
     "camelcase": "^5.0.0",
     "chalk": "^2.4.2",
-    "cross-env": "6.0.3",
     "chokidar-cli": "^1.2.2",
+    "cross-env": "6.0.3",
     "cross-spawn": "^6.0.5",
     "enquirer": "^2.3.0",
     "eslint": "^6.1.0",
@@ -112,10 +112,11 @@
     "@types/ms": "^0.7.30",
     "@types/node": "^13.1.0",
     "@types/ora": "^3.2.0",
-    "@types/react": "^16.9.11",
     "@types/ps-tree": "^1.1.0",
+    "@types/react": "^16.9.11",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
+    "doctoc": "^1.4.0",
     "husky": "^3.0.9",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
@@ -123,7 +124,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint"
+      "pre-commit": "pretty-quick --staged --pattern '!test/tests/lint/**' && yarn lint && doctoc README.md"
     }
   },
   "prettier": {

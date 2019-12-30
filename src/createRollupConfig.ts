@@ -1,9 +1,4 @@
-import {
-  safeVariableName,
-  safePackageName,
-  external,
-  resolveApp,
-} from './utils';
+import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
@@ -50,7 +45,7 @@ export async function createRollupConfig(
 
   let tsconfigJSON;
   try {
-    tsconfigJSON = fs.readJSONSync(resolveApp('tsconfig.json'));
+    tsconfigJSON = await fs.readJSON(paths.tsconfigJson);
   } catch (e) {}
 
   return {
