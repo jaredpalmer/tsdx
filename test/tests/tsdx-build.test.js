@@ -47,22 +47,16 @@ describe('tsdx build', () => {
       ].join(' ')
     );
 
-    function testEntryOutput(filename) {
-      expect(shell.test('-f', `dist/${filename}.js`)).toBeTruthy();
-      expect(
-        shell.test('-f', `dist/${filename}.cjs.development.js`)
-      ).toBeTruthy();
-      expect(
-        shell.test('-f', `dist/${filename}.cjs.production.min.js`)
-      ).toBeTruthy();
-      expect(shell.test('-f', `dist/${filename}.esm.js`)).toBeTruthy();
-      expect(shell.test('-f', `dist/${filename}.d.ts`)).toBeTruthy();
-    }
+    const entries = ['index', 'foo', 'subdir1/subdir1-2/index', 'subdir1/glob'];
+    const outputFiles = shell.ls('-R', 'dist/');
 
-    testEntryOutput('index');
-    testEntryOutput('foo');
-    testEntryOutput('subdir1/subdir1-2/index');
-    testEntryOutput('subdir1/glob');
+    for (const entry of entries) {
+      expect(outputFiles).toContain(`${entry}.js`);
+      expect(outputFiles).toContain(`${entry}.cjs.development.js`);
+      expect(outputFiles).toContain(`${entry}.cjs.production.min.js`);
+      expect(outputFiles).toContain(`${entry}.esm.js`);
+      expect(outputFiles).toContain(`${entry}.d.ts`);
+    }
 
     expect(output.code).toBe(0);
   });
