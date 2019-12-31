@@ -46,17 +46,27 @@ describe('tsdx build', () => {
         '--format esm,cjs',
       ].join(' ')
     );
-
-    const entries = ['index', 'foo', 'subdir1/subdir1-2/index', 'subdir1/glob'];
     const outputFiles = shell.ls('-R', 'dist/');
 
-    for (const entry of entries) {
-      expect(outputFiles).toContain(`${entry}.js`);
-      expect(outputFiles).toContain(`${entry}.cjs.development.js`);
-      expect(outputFiles).toContain(`${entry}.cjs.production.min.js`);
-      expect(outputFiles).toContain(`${entry}.esm.js`);
-      expect(outputFiles).toContain(`${entry}.d.ts`);
+    function arrToDict(arr) {
+      return arr.reduce((dict, elem) => {
+        dict[elem] = true;
+        return dict;
+      }, {});
     }
+    const outputDict = arrToDict(outputFiles);
+
+    const entries = ['index', 'foo', 'subdir1/subdir1-2/index', 'subdir1/glob'];
+    const expected = entries.reduce((dict, entry) => {
+      dict[`${entry}.js`] = true;
+      dict[`${entry}.cjs.development.js`] = true;
+      dict[`${entry}.cjs.production.min.js`] = true;
+      dict[`${entry}.esm.js`] = true;
+      dict[`${entry}.d.ts`] = true;
+      return dict;
+    }, {});
+
+    expect(outputDict).toMatchObject(expected);
 
     expect(output.code).toBe(0);
   });
