@@ -1,8 +1,10 @@
 import fs from 'fs';
+import { addDefault } from '@babel/helper-module-imports';
+
+import { paths } from '../../constants';
+
 import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
-import { addDefault } from '@babel/helper-module-imports';
-import { paths } from '../constants';
 
 export default function transformErrorMessages(babel: any) {
   const t = babel.types;

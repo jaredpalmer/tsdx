@@ -7,11 +7,13 @@
 import fs from 'fs-extra';
 import * as babylon from 'babylon';
 import traverse from 'babel-traverse';
+import pascalCase from 'pascal-case';
+
+import { paths } from '../../constants';
+import { safeVariableName } from '../../utils';
+
 import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
-import { paths } from '../constants';
-import { safeVariableName } from '../utils';
-import pascalCase from 'pascal-case';
 
 const babylonOptions = {
   sourceType: 'module',
@@ -111,7 +113,7 @@ function ErrorDev(message) {
   return error;
 }
 
-export default ErrorDev;      
+export default ErrorDev;
       `,
       'utf-8'
     );
