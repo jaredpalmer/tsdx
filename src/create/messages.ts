@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+
 import getInstallCmd from './getInstallCmd';
 import * as Output from './output';
 
@@ -72,19 +73,19 @@ export const start = async function(projectName: string) {
 
   return `
   ${chalk.green('Awesome!')} You're now ready to start coding.
-  
+
   I already ran ${Output.cmd(commands.install)} for you, so your next steps are:
     ${Output.cmd(`cd ${projectName}`)}
-  
+
   To start developing (rebuilds on changes):
     ${Output.cmd(commands.start)}
-  
+
   To build for production:
     ${Output.cmd(commands.build)}
 
   To test your library with Jest:
     ${Output.cmd(commands.test)}
-    
+
   Questions? Feedback? Please let me know!
   ${chalk.green('https://github.com/jaredpalmer/tsdx/issues')}
 `;

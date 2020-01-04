@@ -1,6 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 import camelCase from 'camelcase';
+
 import { PackageJson } from './types';
 
 // Remove the package name scope if it exists

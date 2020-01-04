@@ -1,6 +1,8 @@
-import { paths } from './constants';
 import util from 'util';
 import mkdirp from 'mkdirp';
+
+import { paths } from '../constants';
+
 const progressEstimator = require('progress-estimator');
 
 export async function createProgressEstimator() {
