@@ -18,7 +18,6 @@ import jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
-import mkdirp from 'mkdirp';
 import rimraf from 'rimraf';
 import execa from 'execa';
 import shell from 'shelljs';
@@ -289,7 +288,6 @@ prog
     if (!opts.noClean) {
       await cleanDistFolder();
     }
-    await ensureDistFolder();
     opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     if (opts.format.includes('cjs')) {
@@ -396,16 +394,10 @@ prog
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
     await cleanDistFolder();
-    await ensureDistFolder();
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
-      try {
-        await ensureDistFolder();
-        const promise = writeCjsEntryFile(opts.name).catch(logError);
-        logger(promise, 'Creating entry file');
-      } catch (e) {
-        logError(e);
-      }
+      const promise = writeCjsEntryFile(opts.name).catch(logError);
+      logger(promise, 'Creating entry file');
     }
     try {
       const promise = asyncro
@@ -442,10 +434,6 @@ async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
   };
 }
 
-function ensureDistFolder() {
-  return util.promisify(mkdirp)(paths.appDist);
-}
-
 async function cleanDistFolder() {
   try {
     await util.promisify(fs.access)(paths.appDist);
@@ -468,7 +456,7 @@ if (process.env.NODE_ENV === 'production') {
   ${baseLine}.cjs.development.js')
 }
 `;
-  return fs.writeFile(path.join(paths.appDist, 'index.js'), contents);
+  return fs.outputFile(path.join(paths.appDist, 'index.js'), contents);
 }
 
 function getAuthorName() {
