@@ -144,7 +144,12 @@ export async function createRollupConfig(
             sourceMap: true,
             declaration: true,
             jsx: 'react',
-            target: 'es5',
+          },
+        },
+        tsconfigOverride: {
+          compilerOptions: {
+            // TS -> esnext, then leave the rest to babel-preset-env
+            target: 'esnext',
           },
         },
         check: opts.transpileOnly === false,
