@@ -490,6 +490,10 @@ Examples
   $ tsdx lint src --report-file report.json
 ```
 
+## Contributing
+
+Please see the [Contributing Guidelines](./CONTRIBUTING.md).
+
 ## Author
 
 - [Jared Palmer](https://twitter.com/jaredpalmer)
