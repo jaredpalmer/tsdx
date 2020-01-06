@@ -417,7 +417,7 @@ Examples
   $ tsdx watch --noClean
   $ tsdx watch --onFirstSuccess "echo The first successful build!"
   $ tsdx watch --onSuccess "echo Successful build!"
-  $ tsdx watch --onFailure "The build failed!"
+  $ tsdx watch --onFailure "echo The build failed!"
   $ tsdx watch --transpileOnly
 ```
 
