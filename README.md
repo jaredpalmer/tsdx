@@ -35,6 +35,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [`tsdx build`](#tsdx-build)
   - [`tsdx test`](#tsdx-test)
   - [`tsdx lint`](#tsdx-lint)
+- [Contributing](#contributing)
 - [Author](#author)
 - [License](#license)
 - [Contributors ✨](#contributors-)
