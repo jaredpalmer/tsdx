@@ -1,6 +1,8 @@
 name: Node CI
 
-on: [push, pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   lint:
@@ -42,4 +44,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Test package
-        run: yarn test
+        run: yarn test --runInBand
