@@ -452,16 +452,14 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v24.x in watch mode. See [https://jestjs.io](https://jestjs.io) for options.
-
-If you would like to disable watch mode, you can set the environment variable `CI=true`. For instance, you could set up your `package.json` `scripts` like:
+This runs Jest v24.x. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
 
 ```json
 {
   "scripts": {
-    "test": "CI=true tsdx test",
-    "test:watch": "tsdx test",
-    "test:coverage": "CI=true tsdx test --coverage"
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage"
   }
 }
 ```
