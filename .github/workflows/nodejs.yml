@@ -44,4 +44,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Test package
-        run: yarn test --runInBand --coverage
+        run: yarn test --runInBand
