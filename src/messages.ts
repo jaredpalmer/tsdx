@@ -89,3 +89,9 @@ export const start = async function(projectName: string) {
   ${chalk.green('https://github.com/jaredpalmer/tsdx/issues')}
 `;
 };
+
+export const incorrectNodeVersion = function(requiredVersion: string) {
+  return `Unsupported Node version! Your current Node version (${chalk.red(
+    process.version
+  )}) does not satisfy the requirement of Node ${chalk.cyan(requiredVersion)}.`;
+};

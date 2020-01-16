@@ -56,4 +56,7 @@ export interface PackageJson {
   eslint?: any;
   dependencies?: { [packageName: string]: string };
   devDependencies?: { [packageName: string]: string };
+  engines?: {
+    node?: string;
+  };
 }

@@ -12,6 +12,9 @@ const basicTemplate: Template = {
     // module: `dist/${safeName}.esm.js`,
     typings: `dist/index.d.ts`,
     files: ['dist'],
+    engines: {
+      node: '>=10',
+    },
     scripts: {
       start: 'tsdx watch',
       build: 'tsdx build',
