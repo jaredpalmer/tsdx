@@ -45,7 +45,7 @@ export async function createRollupConfig(
 
   let tsconfigJSON;
   try {
-    tsconfigJSON = await fs.readJSON(paths.tsconfigJson);
+    tsconfigJSON = await fs.readJSON(opts.tsconfig || paths.tsconfigJson);
   } catch (e) {}
 
   return {
