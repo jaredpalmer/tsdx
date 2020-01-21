@@ -1,6 +1,11 @@
-import * as React from 'react';
+import React, { FC, HTMLAttributes, ReactChild } from 'react';
 
-// Delete me
-export const Thing = () => {
-  return <div>the snozzberries taste like snozzberries</div>;
+export interface Props extends HTMLAttributes<HTMLDivElement> {
+  children?: ReactChild;
+}
+
+// Please do not use types off of a default export module or else Storybook Docs will suffer.
+// see: https://github.com/storybookjs/storybook/issues/9556
+export const Thing: FC<Props> = ({ children }) => {
+  return <div>{children || `the snozzberries taste like snozzberries`}</div>;
 };

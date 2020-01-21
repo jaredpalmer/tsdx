@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../src';
+import { Default as Thing } from '../stories/Thing.stories';
 
-describe('it', () => {
+describe('Thing', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<Thing />, div);
