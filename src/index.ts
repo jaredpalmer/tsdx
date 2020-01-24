@@ -47,6 +47,7 @@ const pkg = require('../package.json');
 const prog = sade('tsdx');
 
 let appPackageJson: PackageJson;
+const customTemplate = 'custom-template';
 
 try {
   appPackageJson = fs.readJSONSync(paths.appPackageJson);
@@ -115,6 +116,8 @@ prog
     )}]`
   )
   .example('create --template react mypackage')
+  .option('--custom-template', 'Remote template from npm')
+  .example('create --custom-template ~/Desktop/templates/custom')
   .action(async (pkg: string, opts: any) => {
     console.log(
       chalk.blue(`
@@ -129,8 +132,10 @@ prog
     );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
     let template;
-    // Helper fn to prompt the user for a different
-    // folder name if one already exists
+    let templatePath;
+    let templateConfig;
+    // // Helper fn to prompt the user for a different
+    // // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
       let exists = true;
       try {
@@ -155,53 +160,48 @@ prog
       bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
       return await getProjectPath(projectPath); // recursion!
     }
-
+    console.log(opts[customTemplate]);
     try {
       // get the project path
       const realPath = await fs.realpath(process.cwd());
       let projectPath = await getProjectPath(realPath + '/' + pkg);
 
-      const prompt = new Select({
-        message: 'Choose a template',
-        choices: Object.keys(templates),
-      });
-
-      if (opts.template) {
-        template = opts.template.trim();
-        if (!prompt.choices.includes(template)) {
-          bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
+      if (!opts[customTemplate]) {
+        const prompt = new Select({
+          message: 'Choose a template',
+          choices: Object.keys(templates),
+        });
+        if (opts.template) {
+          template = opts.template.trim();
+          if (!prompt.choices.includes(template)) {
+            bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
+            template = await prompt.run();
+          }
+        } else {
           template = await prompt.run();
         }
+        templatePath = [__dirname, `../templates/${template}`];
       } else {
-        template = await prompt.run();
+        templatePath = [opts[customTemplate]];
       }
-
       bootSpinner.start();
       // copy the template
-      await fs.copy(
-        path.resolve(__dirname, `../templates/${template}`),
-        projectPath,
-        {
-          overwrite: true,
-        }
-      );
+      await fs.copy(path.resolve(...templatePath), projectPath, {
+        overwrite: true,
+      });
       // fix gitignore
-      await fs.move(
+      fs.move(
         path.resolve(projectPath, './gitignore'),
         path.resolve(projectPath, './.gitignore')
-      );
-
+      ).catch(err => console.log(err));
       // update license year and author
       let license: string = await fs.readFile(
         path.resolve(projectPath, 'LICENSE'),
         { encoding: 'utf-8' }
       );
-
       license = license.replace(/<year>/, `${new Date().getFullYear()}`);
-
       // attempt to automatically derive author name
       let author = getAuthorName();
-
       if (!author) {
         bootSpinner.stop();
         const licenseInput = new Input({
@@ -212,16 +212,23 @@ prog
         setAuthorName(author);
         bootSpinner.start();
       }
-
       license = license.replace(/<author>/, author.trim());
-
       await fs.writeFile(path.resolve(projectPath, 'LICENSE'), license, {
         encoding: 'utf-8',
       });
 
-      const templateConfig = templates[template as keyof typeof templates];
-      const generatePackageJson = composePackageJson(templateConfig);
+      if (!opts[customTemplate]) {
+        templateConfig = templates[template as keyof typeof templates];
+      } else {
+        const templateConfigJSON = await fs.readFile(
+          path.resolve(projectPath, 'template.json'),
+          { encoding: 'utf-8' }
+        );
+        templateConfig = JSON.parse(templateConfigJSON);
+        await fs.unlink(path.resolve(projectPath, 'template.json'));
+      }
 
+      const generatePackageJson = composePackageJson(templateConfig);
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
@@ -234,10 +241,7 @@ prog
       logError(error);
       process.exit(1);
     }
-
-    const templateConfig = templates[template as keyof typeof templates];
     const { dependencies: deps } = templateConfig;
-
     const installSpinner = ora(Messages.installing(deps.sort())).start();
     try {
       const cmd = await getInstallCmd();
