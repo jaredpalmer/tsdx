@@ -22,12 +22,18 @@ import rimraf from 'rimraf';
 import execa from 'execa';
 import shell from 'shelljs';
 import ora from 'ora';
+import semver from 'semver';
 import { paths } from './constants';
 import * as Messages from './messages';
 import { createBuildConfigs } from './createBuildConfigs';
 import { createJestConfig } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
-import { resolveApp, safePackageName, clearConsole } from './utils';
+import {
+  resolveApp,
+  safePackageName,
+  clearConsole,
+  getNodeEngineRequirement,
+} from './utils';
 import { concatAllArray } from 'jpjs';
 import getInstallCmd from './getInstallCmd';
 import getInstallArgs from './getInstallArgs';
@@ -226,6 +232,16 @@ prog
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
       const pkgJson = generatePackageJson({ name: safeName, author });
+
+      const nodeVersionReq = getNodeEngineRequirement(pkgJson);
+      if (
+        nodeVersionReq &&
+        !semver.satisfies(process.version, nodeVersionReq)
+      ) {
+        bootSpinner.fail(Messages.incorrectNodeVersion(nodeVersionReq));
+        process.exit(1);
+      }
+
       await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
       bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
       await Messages.start(pkg);
