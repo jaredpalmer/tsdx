@@ -67,6 +67,18 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "agilgur5",
+      "name": "Anton Gilgur",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4970083?v=4",
+      "profile": "https://twitter.com/agilgur5",
+      "contributions": [
+        "maintenance",
+        "doc",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
