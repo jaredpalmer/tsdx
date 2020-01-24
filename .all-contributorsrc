@@ -67,6 +67,18 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "hedgerh",
+      "name": "Harry Hedger",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2524280?v=4",
+      "profile": "https://twitter.com/harry_hedger",
+      "contributions": [
+        "ideas",
+        "doc",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
