@@ -83,7 +83,7 @@
     "jest-watch-typeahead": "^0.4.0",
     "jpjs": "^1.2.1",
     "lodash.merge": "^4.6.2",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.0",
     "ora": "^3.4.0",
     "pascal-case": "^2.0.1",
     "prettier": "^1.19.1",
