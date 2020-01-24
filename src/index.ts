@@ -160,7 +160,6 @@ prog
       bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
       return await getProjectPath(projectPath); // recursion!
     }
-    console.log(opts[customTemplate]);
     try {
       // get the project path
       const realPath = await fs.realpath(process.cwd());
@@ -190,10 +189,12 @@ prog
         overwrite: true,
       });
       // fix gitignore
-      fs.move(
-        path.resolve(projectPath, './gitignore'),
-        path.resolve(projectPath, './.gitignore')
-      ).catch(err => console.log(err));
+      await fs
+        .move(
+          path.resolve(projectPath, './gitignore'),
+          path.resolve(projectPath, './.gitignore')
+        )
+        .catch(err => console.log(err));
       // update license year and author
       let license: string = await fs.readFile(
         path.resolve(projectPath, 'LICENSE'),
@@ -343,11 +344,6 @@ prog
         spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {
-        spinner.fail(chalk.bold.red('Failed to compile'));
-        logError(event.error);
-        failureKiller = run(opts.onFailure);
-      }
-      if (event.code === 'FATAL') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
         failureKiller = run(opts.onFailure);
