@@ -67,6 +67,18 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "Carl-Foster",
+      "name": "Carl",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5793483?v=4",
+      "profile": "https://carlfoster.io",
+      "contributions": [
+        "ideas",
+        "doc",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
