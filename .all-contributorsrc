@@ -67,6 +67,16 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "LoicMahieu",
+      "name": "Loïc Mahieu",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/900947?v=4",
+      "profile": "http://iGLOO.be",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
