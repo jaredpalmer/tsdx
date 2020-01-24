@@ -77,6 +77,79 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "Carl-Foster",
+      "name": "Carl",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5793483?v=4",
+      "profile": "https://carlfoster.io",
+      "contributions": [
+        "ideas",
+        "doc",
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "LoicMahieu",
+      "name": "Loïc Mahieu",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/900947?v=4",
+      "profile": "http://iGLOO.be",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "sebald",
+      "name": "Sebastian Sebald",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/985701?v=4",
+      "profile": "https://github.com/sebald",
+      "contributions": [
+        "doc",
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "karlhorky",
+      "name": "Karl Horky",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1935696?v=4",
+      "profile": "https://twitter.com/karlhorky",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "jamesgeorge007",
+      "name": "James George",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/25279263?v=4",
+      "profile": "https://ghuser.io/jamesgeorge007",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "agilgur5",
+      "name": "Anton Gilgur",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4970083?v=4",
+      "profile": "https://twitter.com/agilgur5",
+      "contributions": [
+        "maintenance",
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "kylemh",
+      "name": "Kyle Holmberg",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/9523719?v=4",
+      "profile": "https://kylemh.com",
+      "contributions": [
+        "code",
+        "example",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
