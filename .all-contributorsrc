@@ -69,6 +69,17 @@
       ]
     },
     {
+      "login": "sebald",
+      "name": "Sebastian Sebald",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/985701?v=4",
+      "profile": "https://github.com/sebald",
+      "contributions": [
+        "doc",
+        "code",
+        "test"
+      ]
+    },
+    {
       "login": "karlhorky",
       "name": "Karl Horky",
       "avatar_url": "https://avatars2.githubusercontent.com/u/1935696?v=4",
