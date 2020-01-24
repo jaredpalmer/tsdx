@@ -76,6 +76,37 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "jamesgeorge007",
+      "name": "James George",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/25279263?v=4",
+      "profile": "https://ghuser.io/jamesgeorge007",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "agilgur5",
+      "name": "Anton Gilgur",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/4970083?v=4",
+      "profile": "https://twitter.com/agilgur5",
+      "contributions": [
+        "maintenance",
+        "doc",
+        "code"
+      ]
+    },
+    {
+      "login": "kylemh",
+      "name": "Kyle Holmberg",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/9523719?v=4",
+      "profile": "https://kylemh.com",
+      "contributions": [
+        "code",
+        "example",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
