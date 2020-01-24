@@ -67,6 +67,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "sebald",
+      "name": "Sebastian Sebald",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/985701?v=4",
+      "profile": "https://github.com/sebald",
+      "contributions": [
+        "doc",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
