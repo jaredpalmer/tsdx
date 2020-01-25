@@ -11,7 +11,7 @@ jobs:
       - name: Use Node 12
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x # match with .nvmrc
+          node-version: 12.x
 
       - name: Use cached node_modules
         uses: actions/cache@v1
