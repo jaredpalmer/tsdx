@@ -116,7 +116,7 @@
     "@types/react": "^16.9.11",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
-    "@types/semver": "^6.2.0",
+    "@types/semver": "^7.1.0",
     "doctoc": "^1.4.0",
     "husky": "^3.0.9",
     "pretty-quick": "^2.0.0",
