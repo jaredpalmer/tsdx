@@ -165,6 +165,9 @@ export async function createRollupConfig(
           },
         },
         check: !opts.transpileOnly,
+        useTsconfigDeclarationDir: Boolean(
+          tsconfigJSON?.compilerOptions?.declarationDir
+        ),
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',

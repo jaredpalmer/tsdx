@@ -102,6 +102,27 @@ describe('tsdx build', () => {
     expect(code).toBe(0);
   });
 
+  it('should use the declarationDir when set in tsconfig', () => {
+    util.setupStageWithFixture(stageName, 'build-declarationDir');
+
+    const output = shell.exec('node ../dist/index.js build --format esm,cjs');
+
+    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(
+      shell.test('-f', 'dist/build-declarationdir.cjs.development.js')
+    ).toBeTruthy();
+    expect(
+      shell.test('-f', 'dist/build-declarationdir.cjs.production.min.js')
+    ).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-declarationdir.esm.js')).toBeTruthy();
+
+    expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
+    expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'typings/index.d.ts.map')).toBeTruthy();
+
+    expect(output.code).toBe(0);
+  });
+
   afterEach(() => {
     util.teardownStage(stageName);
   });
