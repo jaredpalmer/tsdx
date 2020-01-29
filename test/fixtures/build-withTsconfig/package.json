@@ -2,6 +2,6 @@
   "scripts": {
     "build": "tsdx build"
   },
-  "name": "build-declarationdir",
+  "name": "build-withtsconfig",
   "license": "MIT"
 }
