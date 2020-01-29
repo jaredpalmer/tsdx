@@ -384,7 +384,7 @@ TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build to
 
 - TSDX includes out-of-the-box test running via Jest
 - TSDX includes a bootstrap command and default package template
-- TSDX is 100% TypeScript focused. While yes, TSDX does use Babel to run a few optimizations (related to treeshaking and lodash), it does not support custom babel configurations.
+- TSDX is 100% TypeScript focused
 - TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
 
 ## API Reference
