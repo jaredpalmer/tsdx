@@ -294,7 +294,7 @@ prog
   .example('watch --onSuccess "echo Successful build!"')
   .option('--onFailure', 'Run a command on a failed build')
   .example('watch --onFailure "The build failed!"')
-  .option('--transpileOnly', 'Skip type checking', false)
+  .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
@@ -397,7 +397,7 @@ prog
   .example('build --format cjs,esm')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
-  .option('--transpileOnly', 'Skip type checking', false)
+  .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
   .option(
     '--extractErrors',

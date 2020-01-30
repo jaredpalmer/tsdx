@@ -1098,6 +1098,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/mri@*":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/mri/-/mri-1.1.0.tgz#66555e4d797713789ea0fefdae0898d8170bf5af"
+  integrity sha512-fMl88ZoZXOB7VKazJ6wUMpZc9QIn+jcigSFRf2K/rrw4DcXn+/uGxlWX8DDlcE7JkwgIZ7BDH+JgxZPlc/Ap3g==
+
 "@types/ms@^0.7.30":
   version "0.7.31"
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
@@ -1178,6 +1183,13 @@
   dependencies:
     "@types/node" "*"
     rollup "^0.63.4"
+
+"@types/sade@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@types/sade/-/sade-1.6.0.tgz#eef2efa892b035b42693b00c554fc9713c6fefb2"
+  integrity sha512-Db3m69LUsLG4jqrJrf+X/IwwtvdxeazrDodWSNEcAGe60dxQJPXil9uNl2tJj6IRjjadNv2eDYV1XHM0utCSLQ==
+  dependencies:
+    "@types/mri" "*"
 
 "@types/semver@^7.1.0":
   version "7.1.0"
