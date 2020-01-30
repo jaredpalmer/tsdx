@@ -11,8 +11,10 @@
     "module": "commonjs",
     "rootDir": "src",
     "strict": true,
-    "noImplicitAny": true,
     "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "target": "es2017"
   }
