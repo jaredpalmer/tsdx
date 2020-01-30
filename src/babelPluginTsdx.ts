@@ -104,11 +104,13 @@ export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
     );
 
     const babelOptions = config.options || {};
+    babelOptions.presets = babelOptions.presets || [];
 
-    const envIdx = (babelOptions.presets || []).findIndex((preset: any) =>
+    const envIdx = babelOptions.presets.findIndex((preset: any) =>
       preset.file.request.includes('@babel/preset-env')
     );
 
+    // if they use preset-env, merge their options with ours
     if (envIdx !== -1) {
       const preset = babelOptions.presets[envIdx];
       babelOptions.presets[envIdx] = createConfigItem(
@@ -134,7 +136,8 @@ export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
         }
       );
     } else {
-      babelOptions.presets = createConfigItems('preset', [
+      // if no preset-env, add it & merge with their presets
+      const defaultPresets = createConfigItems('preset', [
         {
           name: '@babel/preset-env',
           targets: customOptions.targets,
@@ -143,6 +146,12 @@ export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
           exclude: ['transform-async-to-generator', 'transform-regenerator'],
         },
       ]);
+
+      babelOptions.presets = mergeConfigItems(
+        'preset',
+        defaultPresets,
+        babelOptions.presets
+      );
     }
 
     // Merge babelrc & our plugins together
