@@ -1,11 +1,14 @@
 {
   "include": ["src", "types", "test"],
   "exclude": [
-    "src/**/*.spec.ts",
-    "src/**/*.test.ts",
-    "src/**/*.spec.tsx",
-    "src/**/*.test.tsx",
-    "node_modules"
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx",
+    "node_modules",
+    "bower_components",
+    "jspm_packages",
+    "dist"
   ],
   "compilerOptions": {
     "module": "esnext",
