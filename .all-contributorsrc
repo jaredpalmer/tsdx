@@ -157,7 +157,12 @@
       "contributions": [
         "maintenance",
         "doc",
-        "code"
+        "code",
+        "bug",
+        "example",
+        "ideas",
+        "question",
+        "review"
       ]
     },
     {
