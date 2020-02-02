@@ -14,7 +14,7 @@ export async function createEslintConfig({
   pkg,
   rootDir,
   writeFile,
-}: CreateEslintConfigArgs): Promise<CLIEngine.Options['baseConfig']> {
+}: CreateEslintConfigArgs): Promise<CLIEngine.Options['baseConfig'] | void> {
   const isReactLibrary = Boolean(getReactVersion(pkg));
 
   const config = {

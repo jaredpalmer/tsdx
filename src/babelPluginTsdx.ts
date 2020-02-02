@@ -47,7 +47,7 @@ export const createConfigItems = (type: any, items: any[]) => {
   });
 };
 
-export const babelPluginTsdx = babelPlugin.custom((babelCore: any) => ({
+export const babelPluginTsdx = babelPlugin.custom(() => ({
   // Passed the plugin options.
   options({ custom: customOptions, ...pluginOptions }: any) {
     return {
