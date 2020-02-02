@@ -532,6 +532,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://kylemh.com"><img src="https://avatars1.githubusercontent.com/u/9523719?v=4" width="100px;" alt=""/><br /><sub><b>Kyle Holmberg</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=kylemh" title="Code">💻</a> <a href="#example-kylemh" title="Examples">💡</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=kylemh" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/sisp"><img src="https://avatars1.githubusercontent.com/u/2206639?v=4" width="100px;" alt=""/><br /><sub><b>Sigurd Spieckermann</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Asisp" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=sisp" title="Code">💻</a></td>
   </tr>
 </table>
 
