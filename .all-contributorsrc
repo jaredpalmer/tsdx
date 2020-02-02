@@ -175,6 +175,16 @@
         "example",
         "test"
       ]
+    },
+    {
+      "login": "sisp",
+      "name": "Sigurd Spieckermann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2206639?v=4",
+      "profile": "https://github.com/sisp",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
