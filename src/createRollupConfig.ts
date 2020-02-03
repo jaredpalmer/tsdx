@@ -145,6 +145,7 @@ export async function createRollupConfig(
             '**/*.test.ts',
             '**/*.spec.tsx',
             '**/*.test.tsx',
+            // TS defaults below
             'node_modules',
             'bower_components',
             'jspm_packages',
