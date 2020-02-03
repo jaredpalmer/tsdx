@@ -1,5 +1,3 @@
-'use strict';
-
 const shell = require('shelljs');
 const path = require('path');
 const rootDir = process.cwd();
