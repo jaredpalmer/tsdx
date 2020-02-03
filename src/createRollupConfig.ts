@@ -141,6 +141,7 @@ export async function createRollupConfig(
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           exclude: [
+            // all TS test files, regardless whether co-located or in test/ etc
             '**/*.spec.ts',
             '**/*.test.ts',
             '**/*.spec.tsx',
