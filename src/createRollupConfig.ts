@@ -148,7 +148,7 @@ export async function createRollupConfig(
             'node_modules',
             'bower_components',
             'jspm_packages',
-            'dist',
+            paths.appDist,
           ],
           compilerOptions: {
             sourceMap: true,
