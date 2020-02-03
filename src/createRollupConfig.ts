@@ -140,6 +140,16 @@ export async function createRollupConfig(
         cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
+          exclude: [
+            '**/*.spec.ts',
+            '**/*.test.ts',
+            '**/*.spec.tsx',
+            '**/*.test.tsx',
+            'node_modules',
+            'bower_components',
+            'jspm_packages',
+            'dist',
+          ],
           compilerOptions: {
             sourceMap: true,
             declaration: true,

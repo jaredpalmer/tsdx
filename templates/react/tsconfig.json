@@ -1,15 +1,5 @@
 {
   "include": ["src", "types", "test"],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.test.ts",
-    "**/*.spec.tsx",
-    "**/*.test.tsx",
-    "node_modules",
-    "bower_components",
-    "jspm_packages",
-    "dist"
-  ],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],
