@@ -155,6 +155,7 @@ export async function createRollupConfig(
           compilerOptions: {
             sourceMap: true,
             declaration: true,
+            declarationDir: paths.appDist,
             jsx: 'react',
           },
         },
@@ -165,9 +166,8 @@ export async function createRollupConfig(
           },
         },
         check: !opts.transpileOnly,
-        useTsconfigDeclarationDir: Boolean(
-          tsconfigJSON?.compilerOptions?.declarationDir
-        ),
+        // declarationDir is used internally above as a default
+        useTsconfigDeclarationDir: true,
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',

@@ -3,6 +3,7 @@
     "module": "ESNext",
     "lib": ["dom", "esnext"],
     "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "rootDir": "./src",
     "strict": true,

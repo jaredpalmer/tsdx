@@ -3,6 +3,8 @@
  */
 
 const shell = require('shelljs');
+const fs = require('fs-extra');
+
 const util = require('../fixtures/util');
 
 shell.config.silent = false;
@@ -40,6 +42,17 @@ describe('tsdx build', () => {
 
     const lib = require(`../../${stageName}/dist`);
     expect(lib.foo()).toBe('bar');
+  });
+
+  it('should create declarationMap files (*.d.ts.map) correctly', async () => {
+    util.setupStageWithFixture(stageName, 'build-default');
+
+    shell.exec('node ../dist/index.js build');
+
+    expect(shell.test('-f', 'dist/index.d.ts.map')).toBeTruthy();
+
+    const dtsmap = await fs.readJSON('dist/index.d.ts.map');
+    expect(dtsmap.sources[0]).toBe('../src/index.ts');
   });
 
   it('should clean the dist directory before rebuilding', () => {
@@ -102,7 +115,7 @@ describe('tsdx build', () => {
     expect(code).toBe(0);
   });
 
-  it('should use the declarationDir when set in tsconfig', () => {
+  it('should use the declarationDir when set in tsconfig', async () => {
     util.setupStageWithFixture(stageName, 'build-withTsconfig');
 
     const output = shell.exec('node ../dist/index.js build --format esm,cjs');
@@ -119,6 +132,9 @@ describe('tsdx build', () => {
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
     expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();
     expect(shell.test('-f', 'typings/index.d.ts.map')).toBeTruthy();
+
+    const dtsmap = await fs.readJSON('typings/index.d.ts.map');
+    expect(dtsmap.sources[0]).toBe('../src/index.ts');
 
     expect(output.code).toBe(0);
   });
