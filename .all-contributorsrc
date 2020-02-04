@@ -185,6 +185,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "selbekk",
+      "name": "Kristofer Giltvedt Selbekk",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1307267?v=4",
+      "profile": "https://www.selbekk.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
