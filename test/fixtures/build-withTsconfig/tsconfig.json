@@ -6,7 +6,7 @@
     "declarationDir": "typings",
     "declarationMap": true,
     "sourceMap": true,
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
