@@ -5,11 +5,12 @@ export function createJestConfig(
   const config = {
     transform: {
       '.(ts|tsx)': require.resolve('ts-jest/dist'),
+      '.(js|jsx)': require.resolve('babel-jest'), // jest's default
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-    collectCoverageFrom: ['src/**/*.{ts,tsx}'],
-    testMatch: ['<rootDir>/**/*.(spec|test).{ts,tsx}'],
+    collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}'],
+    testMatch: ['<rootDir>/**/*.(spec|test).{ts,tsx,js,jsx}'],
     testURL: 'http://localhost',
     rootDir,
     watchPlugins: [
