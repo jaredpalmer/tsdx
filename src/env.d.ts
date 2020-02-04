@@ -2,7 +2,6 @@ declare module 'asyncro';
 declare module 'enquirer';
 declare module 'jpjs';
 declare module 'ora';
-declare module 'sade';
 declare module 'tiny-glob/sync';
 declare module 'ansi-escapes';
 declare module 'eslint-config-react-app';
