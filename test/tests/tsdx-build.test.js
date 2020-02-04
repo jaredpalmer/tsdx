@@ -117,8 +117,8 @@ describe('tsdx build', () => {
     expect(shell.test('-f', 'dist/build-withtsconfig.esm.js')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
-    expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();
-    expect(shell.test('-f', 'typings/index.d.ts.map')).toBeTruthy();
+    expect(shell.test('-f', 'typings/src/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'typings/src/index.d.ts.map')).toBeTruthy();
 
     expect(output.code).toBe(0);
   });
