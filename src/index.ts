@@ -593,7 +593,7 @@ prog
           ...config,
           ...appPackageJson.eslint,
         },
-        extensions: ['.ts', '.tsx'],
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
         fix: opts.fix,
         ignorePattern: opts['ignore-pattern'],
       });
