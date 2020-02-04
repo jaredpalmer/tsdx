@@ -8,6 +8,8 @@ const util = require('../fixtures/util');
 shell.config.silent = false;
 
 const stageName = 'stage-build';
+const buildCommand =
+  'ts-node --project ../tsconfig.json --files ../src/index.ts build';
 
 describe('tsdx build', () => {
   beforeAll(() => {
@@ -17,7 +19,7 @@ describe('tsdx build', () => {
   it('should compile files into a dist directory', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 
-    const output = shell.exec('node ../dist/index.js build --format esm,cjs');
+    const output = shell.exec(`${buildCommand} --format esm,cjs`);
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
@@ -36,7 +38,7 @@ describe('tsdx build', () => {
   it('should create the library correctly', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 
-    shell.exec('node ../dist/index.js build');
+    shell.exec(`${buildCommand}`);
 
     const lib = require(`../../${stageName}/dist`);
     expect(lib.foo()).toBe('bar');
@@ -48,7 +50,7 @@ describe('tsdx build', () => {
     shell.mv('package.json', 'package-og.json');
     shell.mv('package2.json', 'package.json');
 
-    const output = shell.exec('node ../dist/index.js build --format esm,cjs');
+    const output = shell.exec(`${buildCommand} --format esm,cjs`);
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
 
     // build-default files have been cleaned out
@@ -80,13 +82,13 @@ describe('tsdx build', () => {
 
   it('should fail gracefully with exit code 1 when build failed', () => {
     util.setupStageWithFixture(stageName, 'build-invalid');
-    const code = shell.exec('node ../dist/index.js build').code;
+    const code = shell.exec(`${buildCommand}`).code;
     expect(code).toBe(1);
   });
 
   it('should only transpile and not type check', () => {
     util.setupStageWithFixture(stageName, 'build-invalid');
-    const code = shell.exec('node ../dist/index.js build --transpileOnly').code;
+    const code = shell.exec(`${buildCommand} --transpileOnly`).code;
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
