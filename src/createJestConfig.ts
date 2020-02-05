@@ -6,7 +6,7 @@ export function createJestConfig(
     transform: {
       '.(ts|tsx)': require.resolve('ts-jest/dist'),
     },
-    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
+    transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|json)$'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
     collectCoverageFrom: ['src/**/*.{ts,tsx}'],
     testMatch: ['<rootDir>/**/*.(spec|test).{ts,tsx}'],
