@@ -534,11 +534,13 @@ prog
       ),
       ...appPackageJson.jest,
     };
-    try {
-      // Allow overriding with jest.config
+
+    // Allow overriding with jest.config
+    const jestConfigExists = await fs.pathExists(paths.jestConfig);
+    if (jestConfigExists) {
       const jestConfigContents = require(paths.jestConfig);
       jestConfig = { ...jestConfig, ...jestConfigContents };
-    } catch {}
+    }
 
     argv.push(
       '--config',
