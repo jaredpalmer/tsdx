@@ -12,13 +12,11 @@ import {
 } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
-import util from 'util';
 import * as fs from 'fs-extra';
 import jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
-import rimraf from 'rimraf';
 import execa from 'execa';
 import shell from 'shelljs';
 import ora from 'ora';
@@ -102,13 +100,26 @@ async function getInputs(
 }
 
 async function moveTypes() {
+  const appDistSrc = paths.appDist + '/src';
+
+  const pathExists = await fs.pathExists(appDistSrc);
+  if (!pathExists) return;
+
   try {
     // Move the typescript types to the base of the ./dist folder
-    await fs.copy(paths.appDist + '/src', paths.appDist, {
+    await fs.copy(appDistSrc, paths.appDist, {
       overwrite: true,
     });
-    await fs.remove(paths.appDist + '/src');
-  } catch (e) {}
+  } catch (err) {
+    // ignore errors about the destination dir already existing or files not
+    // existing as those always occur for some reason, re-throw any other
+    // unexpected failures
+    if (err.code !== 'EEXIST' && err.code !== 'ENOENT') {
+      throw err;
+    }
+  }
+
+  await fs.remove(appDistSrc);
 }
 
 prog
@@ -140,16 +151,11 @@ prog
     // Helper fn to prompt the user for a different
     // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
-      let exists = true;
-      try {
-        // will throw an exception if it does not exists
-        await util.promisify(fs.access)(projectPath);
-      } catch {
-        exists = false;
-      }
+      const exists = await fs.pathExists(projectPath);
       if (!exists) {
         return projectPath;
       }
+
       bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
       const prompt = new Input({
         message: `A folder named ${chalk.bold.red(
@@ -158,6 +164,7 @@ prog
         initial: pkg + '-1',
         result: (v: string) => v.trim(),
       });
+
       pkg = await prompt.run();
       projectPath = (await fs.realpath(process.cwd())) + '/' + pkg;
       bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
@@ -453,14 +460,7 @@ async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
 }
 
 async function cleanDistFolder() {
-  try {
-    await util.promisify(fs.access)(paths.appDist);
-    return util.promisify(rimraf)(paths.appDist);
-  } catch {
-    // if an exception is throw, the files does not exists or it is not visible
-    // either way, we just return
-    return;
-  }
+  await fs.remove(paths.appDist);
 }
 
 function writeCjsEntryFile(name: string) {
