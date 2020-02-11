@@ -20,7 +20,9 @@ export async function moveTypes() {
   console.warn(
     '[tsdx]: Your rootDir is currently set to "./". Please change your ' +
       'rootDir to "./src".\n' +
-      'TSDX has deprecated setting tsconfig.compilerOptions.rootDir to "./".'
+      'TSDX has deprecated setting tsconfig.compilerOptions.rootDir to ' +
+      '"./" as it caused buggy output for declarationMaps and occassionally ' +
+      'for type declarations themselves.'
   );
 
   try {
