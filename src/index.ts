@@ -46,6 +46,7 @@ import {
 import { createProgressEstimator } from './createProgressEstimator';
 import { templates } from './templates';
 import { composePackageJson } from './templates/utils';
+import * as deprecated from './deprecated';
 const pkg = require('../package.json');
 
 const prog = sade('tsdx');
@@ -97,29 +98,6 @@ async function getInputs(
     .forEach(input => inputs.push(input));
 
   return concatAllArray(inputs);
-}
-
-async function moveTypes() {
-  const appDistSrc = paths.appDist + '/src';
-
-  const pathExists = await fs.pathExists(appDistSrc);
-  if (!pathExists) return;
-
-  try {
-    // Move the typescript types to the base of the ./dist folder
-    await fs.copy(appDistSrc, paths.appDist, {
-      overwrite: true,
-    });
-  } catch (err) {
-    // ignore errors about the destination dir already existing or files not
-    // existing as those always occur for some reason, re-throw any other
-    // unexpected failures
-    if (err.code !== 'EEXIST' && err.code !== 'ENOENT') {
-      throw err;
-    }
-  }
-
-  await fs.remove(appDistSrc);
 }
 
 prog
@@ -380,7 +358,7 @@ prog
 `);
 
         try {
-          await moveTypes();
+          await deprecated.moveTypes();
 
           if (firstTime && opts.onFirstSuccess) {
             firstTime = false;
@@ -431,7 +409,7 @@ prog
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
-            await moveTypes();
+            await deprecated.moveTypes();
           }
         )
         .catch((e: any) => {
