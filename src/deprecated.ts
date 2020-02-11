@@ -34,6 +34,8 @@ export async function moveTypes() {
     // ignore errors about the destination dir already existing or files not
     // existing as those always occur for some reason, re-throw any other
     // unexpected failures
+    // NOTE: these errors mean that sometimes files don't get moved properly,
+    // meaning that it's buggy / unreliable (see console.warn above)
     if (err.code !== 'EEXIST' && err.code !== 'ENOENT') {
       throw err;
     }
