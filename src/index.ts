@@ -12,13 +12,11 @@ import {
 } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
-import util from 'util';
 import * as fs from 'fs-extra';
 import jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
-import rimraf from 'rimraf';
 import execa from 'execa';
 import shell from 'shelljs';
 import ora from 'ora';
@@ -48,6 +46,7 @@ import {
 import { createProgressEstimator } from './createProgressEstimator';
 import { templates } from './templates';
 import { composePackageJson } from './templates/utils';
+import * as deprecated from './deprecated';
 const pkg = require('../package.json');
 
 const prog = sade('tsdx');
@@ -101,16 +100,6 @@ async function getInputs(
   return concatAllArray(inputs);
 }
 
-async function moveTypes() {
-  try {
-    // Move the typescript types to the base of the ./dist folder
-    await fs.copy(paths.appDist + '/src', paths.appDist, {
-      overwrite: true,
-    });
-    await fs.remove(paths.appDist + '/src');
-  } catch (e) {}
-}
-
 prog
   .version(pkg.version)
   .command('create <pkg>')
@@ -140,16 +129,11 @@ prog
     // Helper fn to prompt the user for a different
     // folder name if one already exists
     async function getProjectPath(projectPath: string): Promise<string> {
-      let exists = true;
-      try {
-        // will throw an exception if it does not exists
-        await util.promisify(fs.access)(projectPath);
-      } catch {
-        exists = false;
-      }
+      const exists = await fs.pathExists(projectPath);
       if (!exists) {
         return projectPath;
       }
+
       bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
       const prompt = new Input({
         message: `A folder named ${chalk.bold.red(
@@ -158,6 +142,7 @@ prog
         initial: pkg + '-1',
         result: (v: string) => v.trim(),
       });
+
       pkg = await prompt.run();
       projectPath = (await fs.realpath(process.cwd())) + '/' + pkg;
       bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
@@ -373,7 +358,7 @@ prog
 `);
 
         try {
-          await moveTypes();
+          await deprecated.moveTypes();
 
           if (firstTime && opts.onFirstSuccess) {
             firstTime = false;
@@ -424,7 +409,7 @@ prog
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
-            await moveTypes();
+            await deprecated.moveTypes();
           }
         )
         .catch((e: any) => {
@@ -453,14 +438,7 @@ async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
 }
 
 async function cleanDistFolder() {
-  try {
-    await util.promisify(fs.access)(paths.appDist);
-    return util.promisify(rimraf)(paths.appDist);
-  } catch {
-    // if an exception is throw, the files does not exists or it is not visible
-    // either way, we just return
-    return;
-  }
+  await fs.remove(paths.appDist);
 }
 
 function writeCjsEntryFile(name: string) {
