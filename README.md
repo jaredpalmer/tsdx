@@ -99,7 +99,7 @@ If you want to customize eslint you can add an `eslint` block to your package.js
 ### `prepare` script
 
 Bundles and packages to the `dist` folder.
-Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
+Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git, but it will be slow when people run `npm install`, because the npm will run `build` command for you.
 
 ## Optimizations
 
