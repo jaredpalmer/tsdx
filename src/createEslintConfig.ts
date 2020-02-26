@@ -1,6 +1,5 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
-import util from 'util';
 import { CLIEngine } from 'eslint';
 import { PackageJson } from './types';
 import { getReactVersion } from './utils';
@@ -37,7 +36,7 @@ export async function createEslintConfig({
 
   const file = path.join(rootDir, '.eslintrc.js');
   try {
-    await util.promisify(fs.writeFile)(
+    await fs.writeFile(
       file,
       `module.exports = ${JSON.stringify(config, null, 2)}`,
       { flag: 'wx' }
