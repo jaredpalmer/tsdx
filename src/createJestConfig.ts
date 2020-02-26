@@ -4,8 +4,8 @@ export function createJestConfig(
 ) {
   const config = {
     transform: {
-      '.(ts|tsx)': require.resolve('ts-jest/dist'),
-      '.(js|jsx)': require.resolve('babel-jest'), // jest's default
+      '.(ts|tsx)$': require.resolve('ts-jest/dist'),
+      '.(js|jsx)$': require.resolve('babel-jest'), // jest's default
     },
     transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
