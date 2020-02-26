@@ -119,7 +119,7 @@
     "@types/sade": "^1.6.0",
     "@types/semver": "^7.1.0",
     "doctoc": "^1.4.0",
-    "husky": "^3.0.9",
+    "husky": "^4.2.2",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
     "react": "^16.8.6",
