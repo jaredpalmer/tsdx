@@ -17,6 +17,15 @@ import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
 
+const USE_COMPILER = Boolean(process.env.CLOSURE_COMPILER);
+let compilerConfig: any;
+
+// check for closure-compiler.config.js
+if (USE_COMPILER && fs.existsSync(paths.compilerConfig)) {
+  // for ex. module.exports = { compilation_level: 'ADVANCED_OPTIMIZATIONS' }
+  compilerConfig = require(paths.compilerConfig);
+}
+
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
 };
@@ -195,20 +204,21 @@ export async function createRollupConfig(
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      shouldMinify && process.env.CLOSURE_COMPILER
-        ? compiler({ compilation_level: 'ADVANCED_OPTIMIZATIONS' })
-        : terser({
-            sourcemap: true,
-            output: { comments: false },
-            compress: {
-              keep_infinity: true,
-              pure_getters: true,
-              passes: 10,
-            },
-            ecma: 5,
-            toplevel: opts.format === 'cjs',
-            warnings: true,
-          }),
+      shouldMinify &&
+        (USE_COMPILER
+          ? compiler(compilerConfig)
+          : terser({
+              sourcemap: true,
+              output: { comments: false },
+              compress: {
+                keep_infinity: true,
+                pure_getters: true,
+                passes: 10,
+              },
+              ecma: 5,
+              toplevel: opts.format === 'cjs',
+              warnings: true,
+            })),
     ],
   };
 }
