@@ -24,7 +24,7 @@ import semver from 'semver';
 import { paths } from './constants';
 import * as Messages from './messages';
 import { createBuildConfigs } from './createBuildConfigs';
-import { createJestConfig } from './createJestConfig';
+import { createJestConfig, JestConfigOptions } from './createJestConfig';
 import { createEslintConfig } from './createEslintConfig';
 import {
   resolveApp,
@@ -505,7 +505,7 @@ prog
     });
 
     const argv = process.argv.slice(2);
-    let jestConfig = {
+    let jestConfig: JestConfigOptions = {
       ...createJestConfig(
         relativePath => path.resolve(__dirname, '..', relativePath),
         opts.config ? path.dirname(opts.config) : paths.appRoot
@@ -517,7 +517,7 @@ prog
     const defaultPathExists = await fs.pathExists(paths.jestConfig);
     if (opts.config || defaultPathExists) {
       const jestConfigPath = resolveApp(opts.config || paths.jestConfig);
-      const jestConfigContents = require(jestConfigPath);
+      const jestConfigContents: JestConfigOptions = require(jestConfigPath);
       jestConfig = { ...jestConfig, ...jestConfigContents };
     }
 
