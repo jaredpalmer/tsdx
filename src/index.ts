@@ -502,7 +502,7 @@ prog
     let jestConfig = {
       ...createJestConfig(
         relativePath => path.resolve(__dirname, '..', relativePath),
-        paths.appRoot
+        opts.config ? path.dirname(opts.config) : paths.appRoot
       ),
       ...appPackageJson.jest,
     };
