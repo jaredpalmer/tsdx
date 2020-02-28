@@ -6,6 +6,7 @@ const shell = require('shelljs');
 const util = require('../fixtures/util');
 
 shell.config.silent = false;
+shell.env['CLOSURE_COMPILER'] = process.env.CLOSURE_COMPILER;
 
 const stageName = 'stage-build';
 

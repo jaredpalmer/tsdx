@@ -2,6 +2,7 @@ import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
+import compiler from '@ampproject/rollup-plugin-closure-compiler';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -194,19 +195,20 @@ export async function createRollupConfig(
       // sizeSnapshot({
       //   printInfo: false,
       // }),
-      shouldMinify &&
-        terser({
-          sourcemap: true,
-          output: { comments: false },
-          compress: {
-            keep_infinity: true,
-            pure_getters: true,
-            passes: 10,
-          },
-          ecma: 5,
-          toplevel: opts.format === 'cjs',
-          warnings: true,
-        }),
+      shouldMinify && process.env.CLOSURE_COMPILER
+        ? compiler({ compilation_level: 'ADVANCED_OPTIMIZATIONS' })
+        : terser({
+            sourcemap: true,
+            output: { comments: false },
+            compress: {
+              keep_infinity: true,
+              pure_getters: true,
+              passes: 10,
+            },
+            ecma: 5,
+            toplevel: opts.format === 'cjs',
+            warnings: true,
+          }),
     ],
   };
 }
