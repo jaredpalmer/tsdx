@@ -1,8 +1,12 @@
+import { Config } from '@jest/types';
+
+export type JestConfigOptions = Partial<Config.InitialOptions>;
+
 export function createJestConfig(
   _: (relativePath: string) => void,
   rootDir: string
-) {
-  const config = {
+): JestConfigOptions {
+  const config: JestConfigOptions = {
     transform: {
       '.(ts|tsx)$': require.resolve('ts-jest/dist'),
       '.(js|jsx)$': require.resolve('babel-jest'), // jest's default
