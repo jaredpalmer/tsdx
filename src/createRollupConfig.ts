@@ -17,15 +17,6 @@ import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
 
-const USE_COMPILER = Boolean(process.env.CLOSURE_COMPILER);
-let compilerConfig: any;
-
-// check for closure-compiler.config.js
-if (USE_COMPILER && fs.existsSync(paths.compilerConfig)) {
-  // for ex. module.exports = { compilation_level: 'ADVANCED_OPTIMIZATIONS' }
-  compilerConfig = require(paths.compilerConfig);
-}
-
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
 };
@@ -43,6 +34,14 @@ export async function createRollupConfig(
 
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
+
+  let closureCompilerOptions: any;
+
+  if (await fs.pathExists(paths.appConfig)) {
+    // use closureCompilerOptions section from tsdx.config.js
+    const tsdxConfig = require(paths.appConfig);
+    closureCompilerOptions = tsdxConfig.closureCompilerOptions;
+  }
 
   const outputName = [
     `${paths.appDist}/${safePackageName(opts.name)}`,
@@ -205,8 +204,8 @@ export async function createRollupConfig(
       //   printInfo: false,
       // }),
       shouldMinify &&
-        (USE_COMPILER
-          ? compiler(compilerConfig)
+        (opts.closureCompiler
+          ? compiler(closureCompilerOptions)
           : terser({
               sourcemap: true,
               output: { comments: false },

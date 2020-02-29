@@ -15,7 +15,8 @@ let tsdxConfig = {
 };
 
 if (fs.existsSync(paths.appConfig)) {
-  tsdxConfig = require(paths.appConfig);
+  const customConfig = require(paths.appConfig);
+  tsdxConfig = { ...tsdxConfig, ...customConfig };
 }
 
 export async function createBuildConfigs(

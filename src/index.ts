@@ -381,6 +381,11 @@ prog
   .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
   .option(
+    '--closureCompiler',
+    'EXPERIMENTAL: Use closure compiler to minify production bundle'
+  )
+  .example('build --env production --closureCompiler')
+  .option(
     '--extractErrors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'
   )
