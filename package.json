@@ -64,7 +64,7 @@
     "camelcase": "^5.0.0",
     "chalk": "^2.4.2",
     "chokidar-cli": "^1.2.2",
-    "cross-env": "7.0.0",
+    "cross-env": "7.0.1",
     "cross-spawn": "^6.0.5",
     "enquirer": "^2.3.0",
     "eslint": "^6.1.0",
