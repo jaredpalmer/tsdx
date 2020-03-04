@@ -1,4 +1,6 @@
 interface SharedOpts {
+  // Should preserve source structure? If true, files will not be bundled
+  preserveModules: false;
   // JS target
   target: 'node' | 'browser';
   // Path to tsconfig file
