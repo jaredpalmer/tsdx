@@ -88,8 +88,7 @@ The package is optimized and bundled with Rollup into multiple formats (CommonJS
 
 ### `npm test` or `yarn test`
 
-Runs the test watcher (Jest) in an interactive mode.
-By default, runs tests related to files changed since the last commit.
+Runs your tests using Jest.
 
 ### `npm run lint` or `yarn lint`
 
