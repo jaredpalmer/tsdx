@@ -285,6 +285,8 @@ prog
   .example('build --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('build --extractErrors')
+  .option('--preserveModules', 'Preserve module structure; do not bundle')
+  .example('watch --preserveModules')
   .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
@@ -393,6 +395,8 @@ prog
   .example(
     'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
   )
+  .option('--preserveModules', 'Preserve module structure; do not bundle')
+  .example('build --preserveModules')
   .action(async (dirtyOpts: BuildOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);

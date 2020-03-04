@@ -102,6 +102,32 @@ describe('tsdx build', () => {
     expect(code).toBe(0);
   });
 
+  it('should preserve modules after compilation', () => {
+    util.setupStageWithFixture(stageName, 'build-default');
+
+    const output = shell.exec(
+      'node ../dist/index.js build --format esm,cjs --preserveModules'
+    );
+
+    // ESM build
+    expect(shell.test('-f', 'dist/esm/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/esm/foo.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/esm/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'dist/esm/foo.d.ts')).toBeTruthy();
+    // CJS dev build
+    expect(shell.test('-f', 'dist/cjs/development/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/development/foo.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/development/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/development/foo.d.ts')).toBeTruthy();
+    // CJS prod build
+    expect(shell.test('-f', 'dist/cjs/production/min/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/production/min/foo.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/production/min/index.d.ts')).toBeTruthy();
+    expect(shell.test('-f', 'dist/cjs/production/min/foo.d.ts')).toBeTruthy();
+
+    expect(output.code).toBe(0);
+  });
+
   afterEach(() => {
     util.teardownStage(stageName);
   });

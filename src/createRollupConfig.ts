@@ -43,6 +43,18 @@ export async function createRollupConfig(
     .filter(Boolean)
     .join('.');
 
+  const outputDir = [
+    `${paths.appDist}/${opts.format}`,
+    opts.env,
+    shouldMinify ? 'min' : '',
+  ]
+    .filter(Boolean)
+    .join('/');
+
+  const output = opts.preserveModules
+    ? { dir: outputDir }
+    : { file: outputName };
+
   let tsconfigJSON;
   try {
     tsconfigJSON = await fs.readJSON(opts.tsconfig || paths.tsconfigJson);
@@ -79,10 +91,11 @@ export async function createRollupConfig(
       // Punchline....Don't use getters and setters
       propertyReadSideEffects: false,
     },
+    preserveModules: opts.preserveModules,
     // Establish Rollup output
     output: {
-      // Set filenames of the consumer's package
-      file: outputName,
+      // Set filenames or directories of the consumer's package
+      ...output,
       // Pass through the file format
       format: opts.format,
       // Do not let Rollup call Object.freeze() on namespace import objects

@@ -410,6 +410,7 @@ Options
   --onFailure           Run a command on a failed build
   --noClean             Don't clean the dist folder
   --transpileOnly       Skip type checking
+  --preserveModules     Preserve module structure; do not bundle
   -h, --help            Displays this message
 
 Examples
@@ -423,6 +424,7 @@ Examples
   $ tsdx watch --onSuccess "echo Successful build!"
   $ tsdx watch --onFailure "echo The build failed!"
   $ tsdx watch --transpileOnly
+  $ tsdx watch --preserveModules
 ```
 
 ### `tsdx build`
@@ -442,6 +444,7 @@ Options
   --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --transpileOnly       Skip type checking
+  --preserveModules     Preserve module structure; do not bundle
   -h, --help            Displays this message
 
 Examples
@@ -452,6 +455,7 @@ Examples
   $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
   $ tsdx build --transpileOnly
+  $ tsdx build --preserveModules
 ```
 
 ### `tsdx test`
