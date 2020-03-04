@@ -274,7 +274,6 @@ prog
   .example('watch --noClean')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('watch --tsconfig ./tsconfig.foo.json')
-  .example('build --tsconfig ./tsconfig.foo.json')
   .option('--onFirstSuccess', 'Run a command on the first successful build')
   .example('watch --onFirstSuccess "echo The first successful build!"')
   .option('--onSuccess', 'Run a command on a successful build')
@@ -282,9 +281,9 @@ prog
   .option('--onFailure', 'Run a command on a failed build')
   .example('watch --onFailure "The build failed!"')
   .option('--transpileOnly', 'Skip type checking')
-  .example('build --transpileOnly')
+  .example('watch --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('build --extractErrors')
+  .example('watch --extractErrors')
   .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
