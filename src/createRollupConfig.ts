@@ -56,6 +56,12 @@ export async function createRollupConfig(
       if (id === 'babel-plugin-transform-async-to-promises/helpers') {
         return false;
       }
+      /**
+       * ~/ or @/ for srcDir
+       */
+      if (id.startsWith('@/') || id.startsWith('~/')) {
+        return false;
+      }
       return external(id);
     },
     // Rollup has treeshaking by default, but we can optimize it further...
