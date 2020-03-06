@@ -10,7 +10,7 @@ declare module 'eslint-config-react-app';
 // @see line 226 of https://unpkg.com/@babel/core@7.4.4/lib/index.js
 declare module '@babel/core' {
   export const DEFAULT_EXTENSIONS: string[];
-  export function createConfigItem(boop: any[], options: any) {}
+  export function createConfigItem(boop: any[], options: any): any[];
 }
 
 // Rollup plugins
