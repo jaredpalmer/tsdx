@@ -38,12 +38,8 @@ export interface NormalizedOpts
 export interface TsdxOptions extends SharedOpts {
   // Name of package
   name: string;
-  // path to file
-  input: string;
-  // output path
-  output: {
-    file: string;
-  };
+  // map: dist path -> entry path
+  input: { [entryAlias: string]: string };
   // Environment
   env: 'development' | 'production';
   // Module format

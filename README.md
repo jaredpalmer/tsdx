@@ -323,14 +323,10 @@ The `options` object contains the following:
 
 ```tsx
 export interface TsdxOptions {
-  // path to file
-  input: string;
+  // map: dist path -> entry path
+  input: { [entryAlias: string]: string };
   // Name of package
   name: string;
-  // output path
-  output: {
-    file: string;
-  };
   // JS target
   target: 'node' | 'browser';
   // Module format

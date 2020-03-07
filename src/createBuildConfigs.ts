@@ -1,6 +1,5 @@
-import { RollupOptions, OutputOptions } from 'rollup';
+import { RollupOptions } from 'rollup';
 import * as fs from 'fs-extra';
-import { concatAllArray } from 'jpjs';
 
 import { paths } from './constants';
 import { TsdxOptions, NormalizedOpts } from './types';
@@ -20,18 +19,14 @@ if (fs.existsSync(paths.appConfig)) {
 
 export async function createBuildConfigs(
   opts: NormalizedOpts
-): Promise<Array<RollupOptions & { output: OutputOptions }>> {
-  const allInputs = concatAllArray(
-    opts.input.map((input: string, index: number) =>
-      createAllFormats(opts, input, index).map(
-        (options: TsdxOptions, index: number) => ({
-          ...options,
-          // We want to know if this is the first run for each entryfile
-          // for certain plugins (e.g. css)
-          writeMeta: index === 0,
-        })
-      )
-    )
+): Promise<RollupOptions[]> {
+  const allInputs = createAllFormats(opts).map(
+    (options: TsdxOptions, index: number) => ({
+      ...options,
+      // We want to know if this is the first run for each entryfile
+      // for certain plugins (e.g. css)
+      writeMeta: index === 0,
+    })
   );
 
   return await Promise.all(
@@ -44,17 +39,19 @@ export async function createBuildConfigs(
 }
 
 function createAllFormats(
-  opts: NormalizedOpts,
-  input: string,
-  index: number
+  opts: NormalizedOpts
 ): [TsdxOptions, ...TsdxOptions[]] {
-  const sharedOpts = {
+  const sharedOpts: Omit<TsdxOptions, 'format' | 'env'> = {
     ...opts,
-    input,
-    name: opts.name[index],
-    output: {
-      file: opts.output.file[index],
-    },
+    // for multi-entry, we use an input object to specify where to put each
+    // file instead of output.file
+    input: opts.input.reduce((dict: TsdxOptions['input'], input, index) => {
+      dict[`${opts.output.file[index]}`] = input;
+      return dict;
+    }, {}),
+    // multiple UMD names aren't currently supported for multi-entry
+    // (can't code-split UMD anyway)
+    name: opts.name[0],
   };
 
   return [

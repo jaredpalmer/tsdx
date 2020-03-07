@@ -34,15 +34,16 @@ export async function createRollupConfig(
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
-  const outputName = [
-    `${paths.appDist}/${opts.output.file}`,
-    opts.format,
-    opts.env,
-    shouldMinify ? 'min' : '',
-    'js',
-  ]
+  const outputSuffix = [opts.format, opts.env, shouldMinify ? 'min' : '', 'js']
     .filter(Boolean)
     .join('.');
+  let entryFileNames = `[name].${outputSuffix}`;
+
+  // if there's only one input, uses the package name instead of the filename
+  const inputKeys = Object.keys(opts.input);
+  if (inputKeys.length === 1) {
+    entryFileNames = `${inputKeys[0]}.${outputSuffix}`;
+  }
 
   let tsconfigJSON;
   try {
@@ -82,8 +83,10 @@ export async function createRollupConfig(
     },
     // Establish Rollup output
     output: {
+      // Set dir to output to
+      dir: paths.appDist,
       // Set filenames of the consumer's package
-      file: outputName,
+      entryFileNames,
       // Pass through the file format
       format: opts.format,
       // Do not let Rollup call Object.freeze() on namespace import objects
