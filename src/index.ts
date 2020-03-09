@@ -321,7 +321,7 @@ prog
     }
 
     const spinner = ora().start();
-    await watch(
+    watch(
       (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
         watch: {
           silent: true,
@@ -341,11 +341,6 @@ prog
         spinner.start(chalk.bold.cyan('Compiling modules...'));
       }
       if (event.code === 'ERROR') {
-        spinner.fail(chalk.bold.red('Failed to compile'));
-        logError(event.error);
-        failureKiller = run(opts.onFailure);
-      }
-      if (event.code === 'FATAL') {
         spinner.fail(chalk.bold.red('Failed to compile'));
         logError(event.error);
         failureKiller = run(opts.onFailure);
