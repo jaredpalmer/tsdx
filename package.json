@@ -24,7 +24,7 @@
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
-    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
+    "lint:post-build": "node dist/index.js lint src test",
     "test": "yarn build && jest --config ./test/jest.config.json",
     "watch": "chokidar \"./package.json\" \"./src/**/*.ts\" \"node_modules\\@jaredpalmer\\rollup-plugin-preserve-shebang\\dist\\index.js\" -c \"yarn build && echo Success\"",
     "start": "tsc -p tsconfig.json --watch"
