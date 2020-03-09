@@ -215,6 +215,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "etienne-dldc",
+      "name": "Etienne Dldc",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14336608?v=4",
+      "profile": "http://www.etiennedeladonchamps.fr/",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
