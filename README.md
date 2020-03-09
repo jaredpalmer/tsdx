@@ -538,6 +538,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://www.etiennedeladonchamps.fr/"><img src="https://avatars3.githubusercontent.com/u/14336608?v=4" width="100px;" alt=""/><br /><sub><b>Etienne Dldc</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Aetienne-dldc" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=etienne-dldc" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=etienne-dldc" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/fknop"><img src="https://avatars2.githubusercontent.com/u/6775689?v=4" width="100px;" alt=""/><br /><sub><b>Florian Knop</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Afknop" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/gndelia"><img src="https://avatars1.githubusercontent.com/u/352474?v=4" width="100px;" alt=""/><br /><sub><b>Gonzalo D'Elia</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=gndelia" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
