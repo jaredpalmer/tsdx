@@ -244,6 +244,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "aleclarson",
+      "name": "Alec Larson",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1925840?v=4",
+      "profile": "https://patreon.com/aleclarson",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
