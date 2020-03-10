@@ -253,6 +253,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "justingrant",
+      "name": "Justin Grant",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/277214?v=4",
+      "profile": "http://cantaloupesys.com/",
+      "contributions": [
+        "bug",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,

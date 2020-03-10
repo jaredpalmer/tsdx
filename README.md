@@ -541,6 +541,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/gndelia"><img src="https://avatars1.githubusercontent.com/u/352474?v=4" width="100px;" alt=""/><br /><sub><b>Gonzalo D'Elia</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=gndelia" title="Code">💻</a></td>
     <td align="center"><a href="https://patreon.com/aleclarson"><img src="https://avatars2.githubusercontent.com/u/1925840?v=4" width="100px;" alt=""/><br /><sub><b>Alec Larson</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=aleclarson" title="Code">💻</a></td>
+    <td align="center"><a href="http://cantaloupesys.com/"><img src="https://avatars2.githubusercontent.com/u/277214?v=4" width="100px;" alt=""/><br /><sub><b>Justin Grant</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Ajustingrant" title="Bug reports">🐛</a> <a href="#ideas-justingrant" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
