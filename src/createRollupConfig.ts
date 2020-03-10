@@ -95,7 +95,7 @@ export async function createRollupConfig(
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
       // Respect tsconfig esModuleInterop when setting __esModule.
-      esModule: tsCompilerOptions ? tsCompilerOptions.esModuleInterop : false,
+      esModule: Boolean(tsCompilerOptions?.esModuleInterop),
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },
