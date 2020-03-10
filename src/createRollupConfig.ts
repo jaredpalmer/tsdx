@@ -10,10 +10,11 @@ import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
+import ts from 'typescript';
+
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
-import * as fs from 'fs-extra';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -43,10 +44,15 @@ export async function createRollupConfig(
     .filter(Boolean)
     .join('.');
 
-  let tsconfigJSON;
-  try {
-    tsconfigJSON = await fs.readJSON(opts.tsconfig || paths.tsconfigJson);
-  } catch (e) {}
+  const tsconfigPath = opts.tsconfig || paths.tsconfigJson;
+  // borrowed from https://github.com/facebook/create-react-app/pull/7248
+  const tsconfigJSON = ts.readConfigFile(tsconfigPath, ts.sys.readFile).config;
+  // borrowed from https://github.com/ezolenko/rollup-plugin-typescript2/blob/42173460541b0c444326bf14f2c8c27269c4cb11/src/parse-tsconfig.ts#L48
+  const tsCompilerOptions = ts.parseJsonConfigFileContent(
+    tsconfigJSON,
+    ts.sys,
+    './'
+  ).options;
 
   return {
     // Tell Rollup the entry point to the package
@@ -89,7 +95,7 @@ export async function createRollupConfig(
       // (i.e. import * as namespaceImportObject from...) that are accessed dynamically.
       freeze: false,
       // Respect tsconfig esModuleInterop when setting __esModule.
-      esModule: tsconfigJSON ? tsconfigJSON.esModuleInterop : false,
+      esModule: tsCompilerOptions ? tsCompilerOptions.esModuleInterop : false,
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },
@@ -136,7 +142,7 @@ export async function createRollupConfig(
         },
       },
       typescript({
-        typescript: require('typescript'),
+        typescript: ts,
         cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
@@ -165,9 +171,7 @@ export async function createRollupConfig(
           },
         },
         check: !opts.transpileOnly,
-        useTsconfigDeclarationDir: Boolean(
-          tsconfigJSON?.compilerOptions?.declarationDir
-        ),
+        useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
