@@ -55,7 +55,10 @@
         "code",
         "test",
         "bug",
-        "doc"
+        "doc",
+        "review",
+        "ideas",
+        "question"
       ]
     },
     {
@@ -273,6 +276,16 @@
         "code",
         "test",
         "bug"
+      ]
+    },
+    {
+      "login": "natemoo-re",
+      "name": "Nate Moore",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7118177?v=4",
+      "profile": "http://natemoo.re",
+      "contributions": [
+        "code",
+        "ideas"
       ]
     },
     {
