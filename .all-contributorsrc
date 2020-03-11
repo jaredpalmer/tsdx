@@ -393,6 +393,15 @@
         "ideas",
         "bug"
       ]
+    },
+    {
+      "login": "quentin-sommer",
+      "name": "Quentin Sommer",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9129496?v=4",
+      "profile": "http://www.quentin-sommer.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
