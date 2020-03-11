@@ -274,6 +274,15 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "kirjai",
+      "name": "Kirils Ladovs",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/9858620?v=4",
+      "profile": "https://kirjai.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
