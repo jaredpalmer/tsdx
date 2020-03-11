@@ -359,6 +359,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "enesTufekci",
+      "name": "Enes Tüfekçi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16020295?v=4",
+      "profile": "https://github.com/enesTufekci",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
