@@ -558,6 +558,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/FredyC"><img src="https://avatars0.githubusercontent.com/u/1096340?v=4" width="100px;" alt=""/><br /><sub><b>Daniel K.</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=FredyC" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=FredyC" title="Documentation">📖</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=FredyC" title="Tests">⚠️</a> <a href="#ideas-FredyC" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3AFredyC" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://www.quentin-sommer.com"><img src="https://avatars2.githubusercontent.com/u/9129496?v=4" width="100px;" alt=""/><br /><sub><b>Quentin Sommer</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=quentin-sommer" title="Documentation">📖</a></td>
   </tr>
 </table>
 
