@@ -371,6 +371,17 @@
       ]
     },
     {
+      "login": "TrySound",
+      "name": "Bogdan Chadkin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5635476?v=4",
+      "profile": "https://twitter.com/IAmTrySound",
+      "contributions": [
+        "review",
+        "question",
+        "ideas"
+      ]
+    },
+    {
       "login": "FredyC",
       "name": "Daniel K.",
       "avatar_url": "https://avatars0.githubusercontent.com/u/1096340?v=4",
@@ -379,7 +390,8 @@
         "code",
         "doc",
         "test",
-        "ideas"
+        "ideas",
+        "bug"
       ]
     }
   ],
