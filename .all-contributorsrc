@@ -402,6 +402,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "hyanmandian",
+      "name": "Hyan Mandian",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5044101?v=4",
+      "profile": "https://hyan.com.br",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
