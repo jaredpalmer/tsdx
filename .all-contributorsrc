@@ -287,6 +287,15 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "diegohaz",
+      "name": "Haz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3068563?v=4",
+      "profile": "https://twitter.com/diegohaz",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
