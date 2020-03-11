@@ -369,6 +369,17 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "TrySound",
+      "name": "Bogdan Chadkin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5635476?v=4",
+      "profile": "https://twitter.com/IAmTrySound",
+      "contributions": [
+        "review",
+        "question",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,

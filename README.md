@@ -554,6 +554,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://sebastienlorber.com/"><img src="https://avatars0.githubusercontent.com/u/749374?v=4" width="100px;" alt=""/><br /><sub><b>Sébastien Lorber</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=slorber" title="Code">💻</a></td>
     <td align="center"><a href="https://kirjai.com"><img src="https://avatars1.githubusercontent.com/u/9858620?v=4" width="100px;" alt=""/><br /><sub><b>Kirils Ladovs</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=kirjai" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/enesTufekci"><img src="https://avatars3.githubusercontent.com/u/16020295?v=4" width="100px;" alt=""/><br /><sub><b>Enes Tüfekçi</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=enesTufekci" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=enesTufekci" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://twitter.com/IAmTrySound"><img src="https://avatars0.githubusercontent.com/u/5635476?v=4" width="100px;" alt=""/><br /><sub><b>Bogdan Chadkin</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/pulls?q=is%3Apr+reviewed-by%3ATrySound" title="Reviewed Pull Requests">👀</a> <a href="#question-TrySound" title="Answering Questions">💬</a> <a href="#ideas-TrySound" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
