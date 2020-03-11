@@ -274,6 +274,15 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "slorber",
+      "name": "Sébastien Lorber",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/749374?v=4",
+      "profile": "https://sebastienlorber.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
