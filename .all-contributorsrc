@@ -296,6 +296,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "bastibuck",
+      "name": "Basti Buck",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6306291?v=4",
+      "profile": "http://bastibuck.de",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
