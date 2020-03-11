@@ -380,6 +380,19 @@
         "question",
         "ideas"
       ]
+    },
+    {
+      "login": "FredyC",
+      "name": "Daniel K.",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1096340?v=4",
+      "profile": "https://github.com/FredyC",
+      "contributions": [
+        "code",
+        "doc",
+        "test",
+        "ideas",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
