@@ -549,6 +549,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://pablosz.tech"><img src="https://avatars3.githubusercontent.com/u/8672915?v=4" width="100px;" alt=""/><br /><sub><b>Pablo Saez</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=PabloSzx" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3APabloSzx" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://www.twitter.com/jake_gavin"><img src="https://avatars2.githubusercontent.com/u/5965895?v=4" width="100px;" alt=""/><br /><sub><b>Jake Gavin</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Ajakegavin" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jakegavin" title="Code">💻</a></td>
   </tr>
 </table>
 
