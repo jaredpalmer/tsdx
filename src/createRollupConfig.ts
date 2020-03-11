@@ -114,6 +114,8 @@ export async function createRollupConfig(
           'main',
           opts.target !== 'node' ? 'browser' : undefined,
         ].filter(Boolean) as string[],
+        // defaults + .jsx
+        extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
       }),
       opts.format === 'umd' &&
         commonjs({
