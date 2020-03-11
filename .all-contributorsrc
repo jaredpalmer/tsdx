@@ -55,7 +55,10 @@
         "code",
         "test",
         "bug",
-        "doc"
+        "doc",
+        "review",
+        "ideas",
+        "question"
       ]
     },
     {
@@ -85,7 +88,8 @@
       "contributions": [
         "ideas",
         "doc",
-        "code"
+        "code",
+        "question"
       ]
     },
     {
@@ -269,6 +273,66 @@
       "name": "Jirat Ki.",
       "avatar_url": "https://avatars3.githubusercontent.com/u/155392?v=4",
       "profile": "http://n3tr.com",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
+    },
+    {
+      "login": "natemoo-re",
+      "name": "Nate Moore",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7118177?v=4",
+      "profile": "http://natemoo.re",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "diegohaz",
+      "name": "Haz",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3068563?v=4",
+      "profile": "https://twitter.com/diegohaz",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "bastibuck",
+      "name": "Basti Buck",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6306291?v=4",
+      "profile": "http://bastibuck.de",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "PabloSzx",
+      "name": "Pablo Saez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8672915?v=4",
+      "profile": "https://pablosz.tech",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "jakegavin",
+      "name": "Jake Gavin",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5965895?v=4",
+      "profile": "http://www.twitter.com/jake_gavin",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "a-type",
+      "name": "Grant Forrest",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2829772?v=4",
+      "profile": "https://grantforrest.dev",
       "contributions": [
         "code",
         "test",
