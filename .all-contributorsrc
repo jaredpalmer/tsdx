@@ -55,7 +55,10 @@
         "code",
         "test",
         "bug",
-        "doc"
+        "doc",
+        "review",
+        "ideas",
+        "question"
       ]
     },
     {
