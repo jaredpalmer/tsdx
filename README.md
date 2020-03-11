@@ -543,6 +543,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://patreon.com/aleclarson"><img src="https://avatars2.githubusercontent.com/u/1925840?v=4" width="100px;" alt=""/><br /><sub><b>Alec Larson</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=aleclarson" title="Code">💻</a></td>
     <td align="center"><a href="http://cantaloupesys.com/"><img src="https://avatars2.githubusercontent.com/u/277214?v=4" width="100px;" alt=""/><br /><sub><b>Justin Grant</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Ajustingrant" title="Bug reports">🐛</a> <a href="#ideas-justingrant" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="http://n3tr.com"><img src="https://avatars3.githubusercontent.com/u/155392?v=4" width="100px;" alt=""/><br /><sub><b>Jirat Ki.</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=n3tr" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=n3tr" title="Tests">⚠️</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3An3tr" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://kirjai.com"><img src="https://avatars1.githubusercontent.com/u/9858620?v=4" width="100px;" alt=""/><br /><sub><b>Kirils Ladovs</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=kirjai" title="Documentation">📖</a></td>
   </tr>
 </table>
 
