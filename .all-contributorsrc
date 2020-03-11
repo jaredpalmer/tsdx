@@ -263,6 +263,17 @@
         "bug",
         "ideas"
       ]
+    },
+    {
+      "login": "n3tr",
+      "name": "Jirat Ki.",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/155392?v=4",
+      "profile": "http://n3tr.com",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
