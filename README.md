@@ -547,6 +547,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://twitter.com/diegohaz"><img src="https://avatars3.githubusercontent.com/u/3068563?v=4" width="100px;" alt=""/><br /><sub><b>Haz</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=diegohaz" title="Documentation">📖</a></td>
     <td align="center"><a href="http://bastibuck.de"><img src="https://avatars1.githubusercontent.com/u/6306291?v=4" width="100px;" alt=""/><br /><sub><b>Basti Buck</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=bastibuck" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Abastibuck" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://pablosz.tech"><img src="https://avatars3.githubusercontent.com/u/8672915?v=4" width="100px;" alt=""/><br /><sub><b>Pablo Saez</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=PabloSzx" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3APabloSzx" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->

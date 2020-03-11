@@ -307,6 +307,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "PabloSzx",
+      "name": "Pablo Saez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8672915?v=4",
+      "profile": "https://pablosz.tech",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
