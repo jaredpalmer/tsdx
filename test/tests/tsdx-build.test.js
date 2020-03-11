@@ -40,6 +40,7 @@ describe('tsdx build', () => {
 
     const lib = require(`../../${stageName}/dist`);
     expect(lib.foo()).toBe('bar');
+    expect(lib.__esModule).toBe(true);
   });
 
   it('should clean the dist directory before rebuilding', () => {
@@ -119,6 +120,18 @@ describe('tsdx build', () => {
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
     expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();
     expect(shell.test('-f', 'typings/index.d.ts.map')).toBeTruthy();
+
+    expect(output.code).toBe(0);
+  });
+
+  it('should set __esModule according to esModuleInterop in tsconfig', () => {
+    util.setupStageWithFixture(stageName, 'build-withTsconfig');
+
+    const output = shell.exec('node ../dist/index.js build --format cjs');
+
+    const lib = require(`../../${stageName}/dist/build-withtsconfig.cjs.production.min.js`);
+    // if esModuleInterop: false, no __esModule is added, therefore undefined
+    expect(lib.__esModule).toBe(undefined);
 
     expect(output.code).toBe(0);
   });

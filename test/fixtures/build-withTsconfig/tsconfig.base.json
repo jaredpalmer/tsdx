@@ -24,7 +24,7 @@
       "*": ["src/*", "node_modules/*"]
     },
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": false
   },
   "include": ["src", "types"], // test parsing of trailing comma & comment
 }
