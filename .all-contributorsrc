@@ -274,6 +274,17 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "a-type",
+      "name": "Grant Forrest",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2829772?v=4",
+      "profile": "https://grantforrest.dev",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
