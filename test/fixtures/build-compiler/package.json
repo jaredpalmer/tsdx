@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "build": "tsdx build --minify --closureCompiler"
-  },
-  "name": "build-compiler",
-  "license": "MIT"
-}
