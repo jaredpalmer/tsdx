@@ -1,12 +1,9 @@
-import invariant from 'tiny-invariant';
-import warning from 'tiny-warning';
-invariant(true, 'error occurred! o no');
-warning(false, 'warning - water is wet');
-export { foo } from './foo';
+import { split } from './foo';
 
 export const sum = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    console.log('fuck');
-  }
   return a + b;
 };
+
+const bar = split('bar');
+
+console.log(`${split('bar').join('')} ${sum(bar.length, -3)}`);

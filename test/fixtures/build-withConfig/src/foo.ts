@@ -1,1 +1,1 @@
-export const foo = () => 'bar';
+export const split = (str: string) => str.split('');
