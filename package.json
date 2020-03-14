@@ -27,7 +27,8 @@
     "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/tests/lint'",
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test --config ./test/jest.config.json",
-    "start": "tsc -p tsconfig.json --watch"
+    "start": "tsc -p tsconfig.json --watch",
+    "publish": "np"
   },
   "files": [
     "dist",
@@ -113,6 +114,7 @@
     "@types/semver": "^7.1.0",
     "doctoc": "^1.4.0",
     "husky": "^4.2.2",
+    "np": "^6.2.0",
     "pretty-quick": "^2.0.0",
     "ps-tree": "^1.2.0",
     "react": "^16.8.6",
