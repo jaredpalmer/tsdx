@@ -14,7 +14,7 @@ describe('tsdx build with closure compiler', () => {
     util.teardownStage(stageName);
   });
 
-  it('should compile files with default options', () => {
+  it('should minify bundle with default options', () => {
     util.setupStageWithFixture(stageName, 'build-withConfig');
     shell.mv('-f', 'tsdx.config.closure-simple.js', 'tsdx.config.js');
 
@@ -36,12 +36,14 @@ describe('tsdx build with closure compiler', () => {
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 
-    output = shell.exec('node dist/index.js');
-    expect(output.code).toBe(0);
+    // only closure compiler minifies bundle to `signature="bar 0"`
+    output = shell.grep('bar 0', [
+      'dist/build-withconfig.esm.production.min.js',
+    ]);
     expect(/bar 0/.test(output.stdout)).toBeTruthy();
   });
 
-  it('should compile files with advanced options', () => {
+  it('should minify bundle with advanced options', () => {
     util.setupStageWithFixture(stageName, 'build-withConfig');
     shell.mv('-f', 'tsdx.config.closure-advanced.js', 'tsdx.config.js');
 
@@ -49,11 +51,6 @@ describe('tsdx build with closure compiler', () => {
       'node ../dist/index.js build --env production --closureCompiler'
     );
     expect(output.code).toBe(0);
-
-    // ensure we use closure-compiler instead of terser
-    const plugins = require(`../../${stageName}/plugins.json`);
-    expect(plugins.includes('closure-compiler')).toBeTruthy();
-    expect(plugins.includes('terser')).toBeFalsy();
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
@@ -68,8 +65,10 @@ describe('tsdx build with closure compiler', () => {
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 
-    output = shell.exec('node dist/index.js');
-    expect(output.code).toBe(0);
+    // only closure compiler minifies bundle to `signature="bar 0"`
+    output = shell.grep('bar 0', [
+      'dist/build-withconfig.esm.production.min.js',
+    ]);
     expect(/bar 0/.test(output.stdout)).toBeTruthy();
   });
 

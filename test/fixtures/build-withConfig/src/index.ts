@@ -6,4 +6,4 @@ export const sum = (a: number, b: number) => {
 
 const bar = split('bar');
 
-console.log(`${split('bar').join('')} ${sum(bar.length, -3)}`);
+export const signature = `${split('bar').join('')} ${sum(bar.length, -3)}`;
