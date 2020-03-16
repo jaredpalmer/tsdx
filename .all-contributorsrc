@@ -531,6 +531,17 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "tunnckoCore",
+      "name": "Charlike Mike Reagent",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5038030?v=4",
+      "profile": "https://tunnckoCore.com",
+      "contributions": [
+        "review",
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
