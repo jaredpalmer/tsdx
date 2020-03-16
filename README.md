@@ -567,6 +567,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://honzabrecka.com"><img src="https://avatars3.githubusercontent.com/u/1021827?v=4" width="100px;" alt=""/><br /><sub><b>Honza Břečka</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=honzabrecka" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Ahonzabrecka" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://chatlayer.ai"><img src="https://avatars1.githubusercontent.com/u/4059732?v=4" width="100px;" alt=""/><br /><sub><b>Ward Loos</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=wrdls" title="Code">💻</a> <a href="#ideas-wrdls" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
