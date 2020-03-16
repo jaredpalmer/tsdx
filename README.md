@@ -577,6 +577,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://fabulas.io"><img src="https://avatars1.githubusercontent.com/u/14793389?v=4" width="100px;" alt=""/><br /><sub><b>Michael Edelman </b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=medelman17" title="Code">💻</a> <a href="#ideas-medelman17" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://tunnckoCore.com"><img src="https://avatars3.githubusercontent.com/u/5038030?v=4" width="100px;" alt=""/><br /><sub><b>Charlike Mike Reagent</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/pulls?q=is%3Apr+reviewed-by%3AtunnckoCore" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=tunnckoCore" title="Code">💻</a> <a href="#ideas-tunnckoCore" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/wessberg"><img src="https://avatars0.githubusercontent.com/u/20454213?v=4" width="100px;" alt=""/><br /><sub><b>Frederik Wessberg</b></sub></a><br /><a href="#question-wessberg" title="Answering Questions">💬</a></td>
   </tr>
 </table>
 
