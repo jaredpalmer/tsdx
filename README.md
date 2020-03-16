@@ -574,6 +574,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://albizures.com"><img src="https://avatars3.githubusercontent.com/u/6843073?v=4" width="100px;" alt=""/><br /><sub><b>Jose Albizures</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=albizures" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=albizures" title="Tests">⚠️</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Aalbizures" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://netzwerg.ch"><img src="https://avatars3.githubusercontent.com/u/439387?v=4" width="100px;" alt=""/><br /><sub><b>Rahel Lüthy</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=netzwerg" title="Documentation">📖</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://fabulas.io"><img src="https://avatars1.githubusercontent.com/u/14793389?v=4" width="100px;" alt=""/><br /><sub><b>Michael Edelman </b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=medelman17" title="Code">💻</a> <a href="#ideas-medelman17" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
