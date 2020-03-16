@@ -453,6 +453,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "honzabrecka",
+      "name": "Honza Břečka",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1021827?v=4",
+      "profile": "https://honzabrecka.com",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
