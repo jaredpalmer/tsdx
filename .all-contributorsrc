@@ -501,6 +501,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "albizures",
+      "name": "Jose Albizures",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6843073?v=4",
+      "profile": "http://albizures.com",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
