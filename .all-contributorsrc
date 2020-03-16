@@ -551,6 +551,17 @@
       "contributions": [
         "question"
       ]
+    },
+    {
+      "login": "elado",
+      "name": "Elad Ossadon",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/51488?v=4",
+      "profile": "http://elad.ossadon.com",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
