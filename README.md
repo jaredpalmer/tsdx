@@ -565,6 +565,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jooohn"><img src="https://avatars0.githubusercontent.com/u/2661835?v=4" width="100px;" alt=""/><br /><sub><b>Jun Tomioka</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=jooohn" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=jooohn" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://kunst.com.br"><img src="https://avatars2.githubusercontent.com/u/8649362?v=4" width="100px;" alt=""/><br /><sub><b>Leonardo Dino</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=leonardodino" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Aleonardodino" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://honzabrecka.com"><img src="https://avatars3.githubusercontent.com/u/1021827?v=4" width="100px;" alt=""/><br /><sub><b>Honza Břečka</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=honzabrecka" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Ahonzabrecka" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
