@@ -463,6 +463,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "wrdls",
+      "name": "Ward Loos",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4059732?v=4",
+      "profile": "http://chatlayer.ai",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
