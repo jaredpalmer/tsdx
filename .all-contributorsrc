@@ -473,6 +473,16 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "bbugh",
+      "name": "Brian Bugh",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/438465?v=4",
+      "profile": "https://github.com/bbugh",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
