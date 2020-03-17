@@ -592,6 +592,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://joeflateau.net"><img src="https://avatars0.githubusercontent.com/u/643331?v=4" width="100px;" alt=""/><br /><sub><b>Joe Flateau</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=joeflateau" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=joeflateau" title="Documentation">📖</a></td>
     <td align="center"><a href="http://goznauk.github.io"><img src="https://avatars0.githubusercontent.com/u/4438903?v=4" width="100px;" alt=""/><br /><sub><b>H.John Choi</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=goznauk" title="Documentation">📖</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://brave.com/loo095"><img src="https://avatars0.githubusercontent.com/u/85355?v=4" width="100px;" alt=""/><br /><sub><b>Jon Stevens</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=lookfirst" title="Documentation">📖</a> <a href="#ideas-lookfirst" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
