@@ -610,6 +610,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ncphillips",
+      "name": "NCPhillips",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/824015?v=4",
+      "profile": "http://www.ncphi.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,

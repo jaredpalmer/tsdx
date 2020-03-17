@@ -586,6 +586,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://audiolion.github.io"><img src="https://avatars1.githubusercontent.com/u/2430381?v=4" width="100px;" alt=""/><br /><sub><b>Ryan Castner</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=audiolion" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=audiolion" title="Tests">⚠️</a> <a href="#ideas-audiolion" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/yordis"><img src="https://avatars0.githubusercontent.com/u/4237280?v=4" width="100px;" alt=""/><br /><sub><b>Yordis Prieto</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=yordis" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.ncphi.com"><img src="https://avatars2.githubusercontent.com/u/824015?v=4" width="100px;" alt=""/><br /><sub><b>NCPhillips</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=ncphillips" title="Documentation">📖</a></td>
   </tr>
 </table>
 
