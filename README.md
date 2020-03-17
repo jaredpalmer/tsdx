@@ -595,6 +595,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://brave.com/loo095"><img src="https://avatars0.githubusercontent.com/u/85355?v=4" width="100px;" alt=""/><br /><sub><b>Jon Stevens</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=lookfirst" title="Documentation">📖</a> <a href="#ideas-lookfirst" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/apps/greenkeeper"><img src="https://avatars3.githubusercontent.com/in/505?v=4" width="100px;" alt=""/><br /><sub><b>greenkeeper[bot]</b></sub></a><br /><a href="#infra-greenkeeper[bot]" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=greenkeeper[bot]" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/apps/allcontributors"><img src="https://avatars0.githubusercontent.com/in/23186?v=4" width="100px;" alt=""/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="#infra-allcontributors[bot]" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=allcontributors[bot]" title="Documentation">📖</a></td>
   </tr>
 </table>
 
