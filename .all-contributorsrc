@@ -649,6 +649,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "goznauk",
+      "name": "H.John Choi",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4438903?v=4",
+      "profile": "http://goznauk.github.io",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
