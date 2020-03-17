@@ -701,6 +701,15 @@
         "security",
         "code"
       ]
+    },
+    {
+      "login": "github",
+      "name": "GitHub",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/9919?v=4",
+      "profile": "https://github.com/about",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "contributorsPerLine": 7,
