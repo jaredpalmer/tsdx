@@ -619,6 +619,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "ArnaudBarre",
+      "name": "Arnaud Barré",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/14235743?v=4",
+      "profile": "https://github.com/ArnaudBarre",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
