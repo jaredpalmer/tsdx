@@ -562,6 +562,15 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "third774",
+      "name": "Kevin Kipp",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8732191?v=4",
+      "profile": "https://github.com/third774",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
