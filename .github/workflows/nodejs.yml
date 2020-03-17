@@ -21,7 +21,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Lint codebase
-        run: yarn lint
+        run: yarn lint:post-build
 
   test:
     runs-on: ${{ matrix.os }}
@@ -44,4 +44,4 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Test package
-        run: yarn test --runInBand
+        run: yarn test:post-build --runInBand
