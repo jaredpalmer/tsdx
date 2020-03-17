@@ -583,6 +583,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/mfolnovic"><img src="https://avatars3.githubusercontent.com/u/20919?v=4" width="100px;" alt=""/><br /><sub><b>Matija Folnovic</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=mfolnovic" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=mfolnovic" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/Aidurber"><img src="https://avatars1.githubusercontent.com/u/5732291?v=4" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=Aidurber" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://audiolion.github.io"><img src="https://avatars1.githubusercontent.com/u/2430381?v=4" width="100px;" alt=""/><br /><sub><b>Ryan Castner</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=audiolion" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=audiolion" title="Tests">⚠️</a> <a href="#ideas-audiolion" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
