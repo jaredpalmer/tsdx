@@ -588,6 +588,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/yordis"><img src="https://avatars0.githubusercontent.com/u/4237280?v=4" width="100px;" alt=""/><br /><sub><b>Yordis Prieto</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=yordis" title="Code">💻</a></td>
     <td align="center"><a href="http://www.ncphi.com"><img src="https://avatars2.githubusercontent.com/u/824015?v=4" width="100px;" alt=""/><br /><sub><b>NCPhillips</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=ncphillips" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/ArnaudBarre"><img src="https://avatars1.githubusercontent.com/u/14235743?v=4" width="100px;" alt=""/><br /><sub><b>Arnaud Barré</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=ArnaudBarre" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=ArnaudBarre" title="Documentation">📖</a></td>
+    <td align="center"><a href="http://twitter.com/techieshark"><img src="https://avatars2.githubusercontent.com/u/1072292?v=4" width="100px;" alt=""/><br /><sub><b>Peter W</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=techieshark" title="Documentation">📖</a></td>
   </tr>
 </table>
 
