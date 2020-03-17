@@ -594,9 +594,7 @@ prog
       }
       console.log(cli.getFormatter()(report.results));
       if (opts['report-file']) {
-        await fs.mkdirs(path.dirname(opts['report-file']));
-
-        await fs.writeFile(
+        await fs.outputFile(
           opts['report-file'],
           cli.getFormatter('json')(report.results)
         );
