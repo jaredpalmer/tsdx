@@ -690,6 +690,17 @@
         "infra",
         "doc"
       ]
+    },
+    {
+      "login": "dependabot[bot]",
+      "name": "dependabot[bot]",
+      "avatar_url": "https://avatars0.githubusercontent.com/in/29110?v=4",
+      "profile": "https://github.com/apps/dependabot",
+      "contributions": [
+        "infra",
+        "security",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
