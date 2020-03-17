@@ -5,10 +5,12 @@ const rootDir = process.cwd();
 shell.config.silent = true;
 
 module.exports = {
-  setupStageWithFixture: (stageName, fixtureName) => {
+  setupStageWithFixture: (testDir, stageName, fixtureName) => {
     const stagePath = path.join(rootDir, stageName);
     shell.mkdir(stagePath);
-    shell.exec(`cp -a ${rootDir}/test/fixtures/${fixtureName}/. ${stagePath}/`);
+    shell.exec(
+      `cp -a ${rootDir}/test/${testDir}/fixtures/${fixtureName}/. ${stagePath}/`
+    );
     shell.ln(
       '-s',
       path.join(rootDir, 'node_modules'),

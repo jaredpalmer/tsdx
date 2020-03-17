@@ -4,10 +4,11 @@
 'use strict';
 
 const shell = require('shelljs');
-const util = require('../../fixtures/util');
+const util = require('../../utils/fixture');
 
 shell.config.silent = true;
 
+const testDir = 'tests';
 const stageName = 'stage-lint';
 
 describe('tsdx lint', () => {
@@ -56,7 +57,7 @@ describe('tsdx lint', () => {
   describe('when --write-file is used', () => {
     beforeEach(() => {
       util.teardownStage(stageName);
-      util.setupStageWithFixture(stageName, 'build-default');
+      util.setupStageWithFixture(testDir, stageName, 'build-default');
     });
 
     it('should create the file', () => {
