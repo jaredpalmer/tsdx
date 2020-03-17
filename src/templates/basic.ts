@@ -11,7 +11,7 @@ const basicTemplate: Template = {
     main: 'dist/index.js',
     // module: `dist/${safeName}.esm.js`,
     typings: `dist/index.d.ts`,
-    files: ['dist'],
+    files: ['dist', 'src'],
     engines: {
       node: '>=10',
     },
