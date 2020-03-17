@@ -571,6 +571,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mfolnovic",
+      "name": "Matija Folnovic",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/20919?v=4",
+      "profile": "https://github.com/mfolnovic",
+      "contributions": [
+        "code",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
