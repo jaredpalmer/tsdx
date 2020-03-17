@@ -581,6 +581,15 @@
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "Aidurber",
+      "name": "Andrew",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/5732291?v=4",
+      "profile": "https://github.com/Aidurber",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

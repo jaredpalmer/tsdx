@@ -581,6 +581,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://elad.ossadon.com"><img src="https://avatars0.githubusercontent.com/u/51488?v=4" width="100px;" alt=""/><br /><sub><b>Elad Ossadon</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=elado" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=elado" title="Tests">⚠️</a> <a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Aelado" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/third774"><img src="https://avatars3.githubusercontent.com/u/8732191?v=4" width="100px;" alt=""/><br /><sub><b>Kevin Kipp</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=third774" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mfolnovic"><img src="https://avatars3.githubusercontent.com/u/20919?v=4" width="100px;" alt=""/><br /><sub><b>Matija Folnovic</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=mfolnovic" title="Code">💻</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=mfolnovic" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/Aidurber"><img src="https://avatars1.githubusercontent.com/u/5732291?v=4" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=Aidurber" title="Code">💻</a></td>
   </tr>
 </table>
 
