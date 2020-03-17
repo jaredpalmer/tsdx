@@ -1,5 +1,6 @@
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
+import path from 'path';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
@@ -145,7 +146,7 @@ export async function createRollupConfig(
       },
       typescript({
         typescript: ts,
-        cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
+        cacheRoot: path.join(paths.cacheRoot, opts.format),
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           exclude: [

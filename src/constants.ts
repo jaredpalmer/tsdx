@@ -11,5 +11,8 @@ export const paths = {
   appDist: resolveApp('dist'),
   appConfig: resolveApp('tsdx.config.js'),
   jestConfig: resolveApp('jest.config.js'),
-  progressEstimatorCache: resolveApp('node_modules/.cache/.progress-estimator'),
+  cacheRoot: resolveApp('node_modules/.cache/tsdx'),
+  progressEstimatorCache: resolveApp(
+    'node_modules/.cache/tsdx/.progress-estimator'
+  ),
 };
