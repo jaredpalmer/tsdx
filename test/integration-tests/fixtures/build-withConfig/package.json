@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build": "tsdx build --extractErrors"
+  },
+  "name": "build-withconfig",
+  "license": "MIT"
+}

@@ -1,8 +1,5 @@
-## Fixtures testing
-
-here are some fixtures for manual testing things we don't have Jest tests for.
+# E2E Test Fixtures Directory
 
 - `build-default` focuses on our zero config defaults
 - `build-invalid` lets us check what happens when we have invalid builds due to type errors
-- `build-withConfig` lets us check that `tsdx.config.js` works as expected
 - `build-withTsconfig` lets us check that `tsconfig.json` options are correctly used

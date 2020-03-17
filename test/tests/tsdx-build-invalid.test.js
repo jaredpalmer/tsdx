@@ -1,16 +1,17 @@
 const shell = require('shelljs');
-const util = require('../fixtures/util');
+const util = require('../utils/fixture');
 const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
+const testDir = 'tests';
 const fixtureName = 'build-invalid';
 const stageName = `stage-${fixtureName}`;
 
 describe('tsdx build :: invalid build', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
-    util.setupStageWithFixture(stageName, fixtureName);
+    util.setupStageWithFixture(testDir, stageName, fixtureName);
   });
 
   it('should fail gracefully with exit code 1 when build failed', () => {

@@ -1,16 +1,17 @@
 const shell = require('shelljs');
-const util = require('../fixtures/util');
+const util = require('../utils/fixture');
 const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
+const testDir = 'tests';
 const fixtureName = 'build-withTsconfig';
 const stageName = `stage-${fixtureName}`;
 
 describe('tsdx build :: build with custom tsconfig.json options', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
-    util.setupStageWithFixture(stageName, fixtureName);
+    util.setupStageWithFixture(testDir, stageName, fixtureName);
   });
 
   it('should use the declarationDir when set', () => {
