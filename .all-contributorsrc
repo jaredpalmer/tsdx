@@ -601,6 +601,15 @@
         "test",
         "ideas"
       ]
+    },
+    {
+      "login": "yordis",
+      "name": "Yordis Prieto",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/4237280?v=4",
+      "profile": "https://github.com/yordis",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
