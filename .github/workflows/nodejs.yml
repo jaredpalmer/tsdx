@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: 10.x
 
-      - name: Install deps and build
-        run: yarn install --frozen-lockfile
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Lint codebase
         run: yarn lint:post-build
@@ -40,8 +40,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Install deps and build
-        run: yarn install --frozen-lockfile
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Test package
         run: yarn test:post-build
