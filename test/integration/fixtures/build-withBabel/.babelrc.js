@@ -1,5 +1,6 @@
 module.exports = {
   plugins: [
-    'styled-components'
+    'styled-components',
+   ['@babel/plugin-transform-runtime', { helpers: false }],
   ]
 }

@@ -34,6 +34,16 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(output.code).toBe(1);
   });
 
+  it('should add an import of regeneratorRuntime', () => {
+    let output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    output = shell.grep(/@babel\/runtime\/regenerator/, [
+      'dist/build-withbabel.*.js',
+    ]);
+    expect(output.code).toBe(0);
+  });
+
   it('should compile files into a dist directory', () => {
     const output = execWithCache('node ../dist/index.js build');
 
