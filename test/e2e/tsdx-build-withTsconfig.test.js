@@ -4,7 +4,7 @@ const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
-const testDir = 'tests';
+const testDir = 'e2e';
 const fixtureName = 'build-withTsconfig';
 const stageName = `stage-${fixtureName}`;
 
