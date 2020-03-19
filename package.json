@@ -28,7 +28,7 @@
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test --config ./test/jest.config.json",
     "start": "tsc -p tsconfig.json --watch",
-    "publish": "np"
+    "release": "np"
   },
   "files": [
     "dist",
