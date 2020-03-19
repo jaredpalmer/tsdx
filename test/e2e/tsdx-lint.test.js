@@ -1,17 +1,13 @@
-/**
- * @jest-environment node
- */
-'use strict';
-
 const shell = require('shelljs');
-const util = require('../../utils/fixture');
+
+const util = require('../utils/fixture');
 
 shell.config.silent = true;
 
 const testDir = 'e2e';
 const stageName = 'stage-lint';
 
-const lintDir = `test/${testDir}/lint`
+const lintDir = `test/${testDir}/fixtures/lint`;
 
 describe('tsdx lint', () => {
   it('should fail to lint a ts file with errors', () => {
