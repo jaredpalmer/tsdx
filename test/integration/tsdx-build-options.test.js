@@ -5,7 +5,7 @@ const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
-const testDir = 'integration-tests';
+const testDir = 'integration';
 const fixtureName = 'build-options';
 const stageName = `stage-integration-${fixtureName}`;
 
