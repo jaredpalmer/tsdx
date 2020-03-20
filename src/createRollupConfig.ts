@@ -2,7 +2,7 @@ import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
-import compiler from '@ampproject/rollup-plugin-closure-compiler';
+import closureCompiler from '@ampproject/rollup-plugin-closure-compiler';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 // import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -12,7 +12,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
-import * as fs from 'fs-extra';
 
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
@@ -35,14 +34,6 @@ export async function createRollupConfig(
 
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
-
-  let closureCompilerOptions: any;
-
-  if (await fs.pathExists(paths.appConfig)) {
-    // use closureCompilerOptions section from tsdx.config.js
-    const tsdxConfig = require(paths.appConfig);
-    closureCompilerOptions = tsdxConfig.closureCompilerOptions;
-  }
 
   const outputName = [
     `${paths.appDist}/${safePackageName(opts.name)}`,
@@ -206,7 +197,9 @@ export async function createRollupConfig(
       // }),
       shouldMinify &&
         (opts.closureCompiler
-          ? compiler(closureCompilerOptions)
+          ? closureCompiler({
+              compilation_level: 'SIMPLE_OPTIMIZATIONS',
+            })
           : terser({
               sourcemap: true,
               output: { comments: false },

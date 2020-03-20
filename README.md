@@ -342,7 +342,6 @@ export interface TsdxOptions {
   // Only transpile, do not type check (makes compilation faster)
   transpileOnly?: boolean;
   // EXPERIMENTAL: Use closure compiler to minify production bundle instead of terser
-  // use closureCompilerOptions section from tsdx.config.js for advanced options
   closureCompiler?: boolean;
 }
 ```
