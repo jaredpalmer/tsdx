@@ -197,9 +197,7 @@ export async function createRollupConfig(
       // }),
       shouldMinify &&
         (opts.closureCompiler
-          ? closureCompiler({
-              compilation_level: 'SIMPLE_OPTIMIZATIONS',
-            })
+          ? closureCompiler()
           : terser({
               sourcemap: true,
               output: { comments: false },

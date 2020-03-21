@@ -4,6 +4,17 @@ const rootDir = process.cwd();
 
 shell.config.silent = true;
 
+// shelljs.grep wrapper
+// @param {string|RegExp} pattern
+// @param {string} fileName
+// @returns {boolean} true if pattern has matches in file
+function grep(pattern, fileName) {
+  const output = shell.grep(pattern, fileName);
+  // output.code is always 0 regardless of matched/unmatched patterns
+  // so need to test output.stdout
+  return Boolean(output.stdout.match(pattern));
+}
+
 module.exports = {
   setupStageWithFixture: (stageName, fixtureName) => {
     const stagePath = path.join(rootDir, stageName);
@@ -22,5 +33,6 @@ module.exports = {
     shell.rm('-rf', path.join(rootDir, stageName));
   },
 
+  grep,
   rootDir,
 };

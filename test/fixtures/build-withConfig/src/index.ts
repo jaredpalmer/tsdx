@@ -1,4 +1,4 @@
-import { split } from './foo';
+export { signature } from './closure';
 
 export const sum = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {
@@ -6,7 +6,3 @@ export const sum = (a: number, b: number) => {
   }
   return a + b;
 };
-
-const bar = split('bar');
-
-export const signature = `${split('bar').join('')} ${sum(bar.length, -3)}`;

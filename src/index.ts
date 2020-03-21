@@ -384,7 +384,7 @@ prog
     '--closureCompiler',
     'EXPERIMENTAL: Use closure compiler to minify production bundle instead of terser'
   )
-  .example('build --env production --closureCompiler')
+  .example('build --closureCompiler')
   .option(
     '--extractErrors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'
