@@ -183,7 +183,6 @@ export async function createRollupConfig(
           targets: opts.target === 'node' ? { node: '8' } : undefined,
           extractErrors: opts.extractErrors,
           format: opts.format,
-          // defines: opts.defines,
         },
       }),
       opts.env !== undefined &&

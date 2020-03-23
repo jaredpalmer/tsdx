@@ -73,10 +73,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           name: 'babel-plugin-transform-rename-import',
           replacements,
         },
-        isTruthy(customOptions.defines) && {
-          name: 'babel-plugin-transform-replace-expressions',
-          replace: customOptions.defines,
-        },
         {
           name: 'babel-plugin-transform-async-to-promises',
           inlineHelpers: true,
