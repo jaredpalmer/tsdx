@@ -33,6 +33,44 @@ describe('tsdx build', () => {
     expect(output.code).toBe(0);
   });
 
+  it('should compile multiple entries into a dist directory', () => {
+    util.setupStageWithFixture(stageName, 'build-default');
+
+    const output = shell.exec(
+      [
+        'node ../dist/index.js build',
+        '--entry src/index.ts',
+        '--entry src/foo.ts',
+        '--entry src/subdir1/subdir1-2/index.ts',
+        '--entry src/**/*.ts',
+        '--format esm,cjs',
+      ].join(' ')
+    );
+    const outputFiles = shell.ls('-R', 'dist/');
+
+    function arrToDict(arr) {
+      return arr.reduce((dict, elem) => {
+        dict[elem] = true;
+        return dict;
+      }, {});
+    }
+    const outputDict = arrToDict(outputFiles);
+
+    const entries = ['index', 'foo', 'subdir1/subdir1-2/index', 'subdir1/glob'];
+    const expected = entries.reduce((dict, entry) => {
+      dict[`${entry}.js`] = true;
+      dict[`${entry}.cjs.development.js`] = true;
+      dict[`${entry}.cjs.production.min.js`] = true;
+      dict[`${entry}.esm.js`] = true;
+      dict[`${entry}.d.ts`] = true;
+      return dict;
+    }, {});
+
+    expect(outputDict).toMatchObject(expected);
+
+    expect(output.code).toBe(0);
+  });
+
   it('should create the library correctly', () => {
     util.setupStageWithFixture(stageName, 'build-default');
 

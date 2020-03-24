@@ -1,4 +1,4 @@
-import { safeVariableName, safePackageName, external } from './utils';
+import { safeVariableName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
@@ -24,7 +24,8 @@ const errorCodeOpts = {
 let shebang: any = {};
 
 export async function createRollupConfig(
-  opts: TsdxOptions
+  opts: TsdxOptions,
+  outputNum: number
 ): Promise<RollupOptions> {
   const findAndRecordErrorCodes = await extractErrors({
     ...errorCodeOpts,
@@ -34,15 +35,16 @@ export async function createRollupConfig(
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
-  const outputName = [
-    `${paths.appDist}/${safePackageName(opts.name)}`,
-    opts.format,
-    opts.env,
-    shouldMinify ? 'min' : '',
-    'js',
-  ]
+  const outputSuffix = [opts.format, opts.env, shouldMinify ? 'min' : '', 'js']
     .filter(Boolean)
     .join('.');
+  let entryFileNames = `[name].${outputSuffix}`;
+
+  // if there's only one input, uses the package name instead of the filename
+  const inputKeys = Object.keys(opts.input);
+  if (inputKeys.length === 1) {
+    entryFileNames = `${inputKeys[0]}.${outputSuffix}`;
+  }
 
   const tsconfigPath = opts.tsconfig || paths.tsconfigJson;
   // borrowed from https://github.com/facebook/create-react-app/pull/7248
@@ -87,8 +89,10 @@ export async function createRollupConfig(
     },
     // Establish Rollup output
     output: {
+      // Set dir to output to
+      dir: paths.appDist,
       // Set filenames of the consumer's package
-      file: outputName,
+      entryFileNames,
       // Pass through the file format
       format: opts.format,
       // Do not let Rollup call Object.freeze() on namespace import objects
@@ -170,6 +174,8 @@ export async function createRollupConfig(
           compilerOptions: {
             // TS -> esnext, then leave the rest to babel-preset-env
             target: 'esnext',
+            // only output declarations once
+            declaration: outputNum !== 0 ? false : undefined,
           },
         },
         check: !opts.transpileOnly,
