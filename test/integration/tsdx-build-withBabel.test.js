@@ -1,7 +1,7 @@
 const shell = require('shelljs');
 
 const util = require('../utils/fixture');
-const { execWithCache } = require('../utils/shell');
+const { execWithCache, grep } = require('../utils/shell');
 
 shell.config.silent = false;
 
@@ -16,32 +16,32 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
   });
 
   it('should convert styled-components template tags', () => {
-    let output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
     // from styled.h1` to styled.h1(
-    output = shell.grep(/styled.h1\(/, ['dist/build-withbabel.*.js']);
-    expect(output.code).toBe(0);
+    const matched = grep(/styled.h1\(/, ['dist/build-withbabel.*.js']);
+    expect(matched).toBeTruthy();
   });
 
   // TODO: make this test work by allowing customization of plugin order
   it.skip('should remove comments in the CSS', () => {
-    let output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
     // the "should be removed" comment shouldn't be there (gets error code)
-    output = shell.grep(/should be removed/, ['dist/build-withbabel.*.js']);
-    expect(output.code).toBe(1);
+    const matched = grep(/should be removed/, ['dist/build-withbabel.*.js']);
+    expect(matched).toBeTruthy();
   });
 
   it('should add an import of regeneratorRuntime', () => {
-    let output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
-    output = shell.grep(/@babel\/runtime\/regenerator/, [
+    const matched = grep(/@babel\/runtime\/regenerator/, [
       'dist/build-withbabel.*.js',
     ]);
-    expect(output.code).toBe(0);
+    expect(matched).toBeTruthy();
   });
 
   it('should compile files into a dist directory', () => {
