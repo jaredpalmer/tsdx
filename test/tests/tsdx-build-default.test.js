@@ -1,5 +1,6 @@
 const shell = require('shelljs');
 const util = require('../fixtures/util');
+const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
@@ -13,7 +14,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should compile files into a dist directory', () => {
-    const output = shell.exec('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build');
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
@@ -30,16 +31,24 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should create the library correctly', () => {
+    const output = execWithCache('node ../dist/index.js build');
+
     const lib = require(`../../${stageName}/dist`);
     expect(lib.foo()).toBe('bar');
     expect(lib.__esModule).toBe(true);
+
+    expect(output.code).toBe(0);
   });
 
   it('should clean the dist directory before rebuilding', () => {
+    let output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
     shell.mv('package.json', 'package-og.json');
     shell.mv('package2.json', 'package.json');
 
-    const output = shell.exec('node ../dist/index.js build');
+    // cache bust because we want to re-run this command with new package.json
+    output = execWithCache('node ../dist/index.js build', { noCache: true });
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
 
     // build-default files have been cleaned out

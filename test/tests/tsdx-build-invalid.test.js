@@ -1,5 +1,6 @@
 const shell = require('shelljs');
 const util = require('../fixtures/util');
+const { execWithCache } = require('../utils/shell');
 
 shell.config.silent = false;
 
@@ -13,12 +14,12 @@ describe('tsdx build :: invalid build', () => {
   });
 
   it('should fail gracefully with exit code 1 when build failed', () => {
-    const code = shell.exec('node ../dist/index.js build').code;
-    expect(code).toBe(1);
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(1);
   });
 
   it('should only transpile and not type check', () => {
-    const code = shell.exec('node ../dist/index.js build --transpileOnly').code;
+    const output = execWithCache('node ../dist/index.js build --transpileOnly');
 
     expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
     expect(
@@ -31,7 +32,7 @@ describe('tsdx build :: invalid build', () => {
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 
-    expect(code).toBe(0);
+    expect(output.code).toBe(0);
   });
 
   afterAll(() => {
