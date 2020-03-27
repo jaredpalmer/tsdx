@@ -31,6 +31,15 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(output.code).toBe(0);
   });
 
+  it("shouldn't compile files in test/ or types/", () => {
+    const output = execWithCache('node ../dist/index.js build');
+
+    expect(shell.test('-d', 'dist/test/')).toBeFalsy();
+    expect(shell.test('-d', 'dist/types/')).toBeFalsy();
+
+    expect(output.code).toBe(0);
+  });
+
   it('should create the library correctly', () => {
     const output = execWithCache('node ../dist/index.js build');
 
