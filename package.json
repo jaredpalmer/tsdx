@@ -24,7 +24,7 @@
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
     "lint": "yarn build && yarn lint:post-build",
-    "lint:post-build": "node dist/index.js lint src test --ignore-pattern 'test/e2e/fixtures/lint'",
+    "lint:post-build": "node dist/index.js lint ./ --ignore-pattern 'test/e2e/fixtures/lint'",
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test",
     "start": "tsc -p tsconfig.json --watch",
