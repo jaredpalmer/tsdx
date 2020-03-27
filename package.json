@@ -113,6 +113,7 @@
     "@types/semver": "^7.1.0",
     "@types/styled-components": "^5.0.1",
     "autoprefixer": "^9.7.4",
+    "babel-plugin-replace-identifiers": "^0.1.1",
     "cssnano": "^4.1.10",
     "doctoc": "^1.4.0",
     "husky": "^4.2.2",

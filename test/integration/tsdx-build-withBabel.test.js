@@ -44,6 +44,15 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(matched).toBeTruthy();
   });
 
+  it('should merge and apply presets', () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    // ensures replace-identifiers was used
+    const matched = grep(/replacedSum/, ['dist/build-withbabel.*.js']);
+    expect(matched).toBeTruthy();
+  });
+
   it('should compile files into a dist directory', () => {
     const output = execWithCache('node ../dist/index.js build');
 
