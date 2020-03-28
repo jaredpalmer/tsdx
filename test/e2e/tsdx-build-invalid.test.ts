@@ -1,6 +1,7 @@
-const shell = require('shelljs');
-const util = require('../utils/fixture');
-const { execWithCache } = require('../utils/shell');
+import * as shell from 'shelljs';
+
+import * as util from '../utils/fixture';
+import { execWithCache } from '../utils/shell';
 
 shell.config.silent = false;
 
