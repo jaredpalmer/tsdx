@@ -669,7 +669,10 @@
       "profile": "https://brave.com/loo095",
       "contributions": [
         "doc",
-        "ideas"
+        "ideas",
+        "test",
+        "code",
+        "bug"
       ]
     },
     {
