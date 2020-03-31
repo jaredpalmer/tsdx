@@ -1308,10 +1308,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@^16.9.11":
-  version "16.9.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.14.tgz#7f1158ce450b4b5aa83b1c5e1324fa75f348bdd1"
-  integrity sha512-Q4tW4RGmR+u/CgzR8VqZcsUWjP4Pz/LcHfs9AzSG+aBnwq8As3Bid3vG1eGGsXg/xuR2k2tqNlI8pzyV8kxe0g==
+"@types/react@^16.9.29":
+  version "16.9.29"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.29.tgz#41c0353b5ea916cdb7a7e89b80b09b268c87a2f8"
+  integrity sha512-aE5sV9XVqKvIR8Lqa73hXvlqBzz5hBG0jtV9jZ1uuEWRmW8KN/mdQQmsYlPx6z/b2xa8zR3jtk7WoT+2/m4suA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
