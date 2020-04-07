@@ -62,7 +62,7 @@
     "babel-plugin-transform-rename-import": "^2.3.0",
     "babel-traverse": "^6.26.0",
     "babylon": "^6.18.0",
-    "camelcase": "^5.0.0",
+    "camelcase": "^6.0.0",
     "chalk": "^2.4.2",
     "enquirer": "^2.3.4",
     "eslint": "^6.1.0",
