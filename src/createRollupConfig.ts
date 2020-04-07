@@ -154,6 +154,8 @@ export async function createRollupConfig(
             '**/*.test.ts',
             '**/*.spec.tsx',
             '**/*.test.tsx',
+            // storybook files
+            '**/*.stories.tsx',
             // TS defaults below
             'node_modules',
             'bower_components',
