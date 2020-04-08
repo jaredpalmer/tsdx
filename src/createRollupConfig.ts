@@ -35,7 +35,7 @@ export async function createRollupConfig(
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
   const outputName = [
-    `${paths.appDist}/${safePackageName(opts.name)}`,
+    `${paths.appDist}/${safePackageName(opts.outputName)}`,
     opts.format,
     opts.env,
     shouldMinify ? 'min' : '',

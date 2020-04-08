@@ -290,10 +290,9 @@ prog
     if (!opts.noClean) {
       await cleanDistFolder();
     }
-    opts.name = opts.name || appPackageJson.name;
     opts.input = await getInputs(opts.entry, appPackageJson.source);
     if (opts.format.includes('cjs')) {
-      await writeCjsEntryFile(opts.name);
+      await writeCjsEntryFile(opts.outputName);
     }
 
     type Killer = execa.ExecaChildProcess | null;
@@ -393,7 +392,7 @@ prog
     await cleanDistFolder();
     const logger = await createProgressEstimator();
     if (opts.format.includes('cjs')) {
-      const promise = writeCjsEntryFile(opts.name).catch(logError);
+      const promise = writeCjsEntryFile(opts.outputName).catch(logError);
       logger(promise, 'Creating entry file');
     }
     try {
@@ -421,6 +420,7 @@ async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
   return {
     ...opts,
     name: opts.name || appPackageJson.name,
+    outputName: appPackageJson.name,
     input: await getInputs(opts.entry, appPackageJson.source),
     format: opts.format.split(',').map((format: string) => {
       if (format === 'es') {
