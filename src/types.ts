@@ -28,7 +28,6 @@ export interface WatchOpts extends BuildOpts {
 export interface NormalizedOpts
   extends Omit<WatchOpts, 'name' | 'input' | 'format'> {
   name: string;
-  outputName: string;
   input: string[];
   format: [ModuleFormat, ...ModuleFormat[]];
 }
@@ -36,8 +35,6 @@ export interface NormalizedOpts
 export interface TsdxOptions extends SharedOpts {
   // Name of package
   name: string;
-  // Output name of package
-  outputName: string;
   // path to file
   input: string;
   // Environment
