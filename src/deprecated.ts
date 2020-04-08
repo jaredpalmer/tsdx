@@ -22,7 +22,9 @@ export async function moveTypes() {
       'rootDir to "./src".\n' +
       'TSDX has deprecated setting tsconfig.compilerOptions.rootDir to ' +
       '"./" as it caused buggy output for declarationMaps and occassionally ' +
-      'for type declarations themselves.'
+      'for type declarations themselves.\n' +
+      'You may also need to change your include to remove "test", which also ' +
+      'caused declarations to be unnecessarily created for test files.'
   );
 
   try {

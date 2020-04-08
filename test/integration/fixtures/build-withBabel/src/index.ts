@@ -1,4 +1,6 @@
-export { signature } from './closure';
+export { Title } from './styled';
+
+export { testGenerator } from './generator';
 
 export const sum = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {

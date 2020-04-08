@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build": "tsdx build"
+  },
+  "name": "build-withconfig",
+  "license": "MIT"
+}

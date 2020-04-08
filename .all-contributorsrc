@@ -669,7 +669,8 @@
       "profile": "https://brave.com/loo095",
       "contributions": [
         "doc",
-        "ideas"
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -710,6 +711,18 @@
       "profile": "https://github.com/about",
       "contributions": [
         "infra"
+      ]
+    },
+    {
+      "login": "ambroseus",
+      "name": "Eugene Samonenko",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/380645?v=4",
+      "profile": "http://linkedin.com/in/ambroseus",
+      "contributions": [
+        "test",
+        "example",
+        "question",
+        "ideas"
       ]
     }
   ],
