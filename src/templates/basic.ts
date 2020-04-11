@@ -2,7 +2,7 @@ import { Template } from './template';
 
 const basicTemplate: Template = {
   name: 'basic',
-  dependencies: ['@types/jest', 'husky', 'tsdx', 'tslib', 'typescript'],
+  dependencies: ['husky', 'tsdx', 'tslib', 'typescript'],
   packageJson: {
     // name: safeName,
     version: '0.1.0',
