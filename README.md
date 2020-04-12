@@ -465,7 +465,7 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v24.x, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
+This runs Jest, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
 
 ```json
 {
