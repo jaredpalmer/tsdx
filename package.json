@@ -62,7 +62,7 @@
     "babel-plugin-transform-rename-import": "^2.3.0",
     "babel-traverse": "^6.26.0",
     "babylon": "^6.18.0",
-    "camelcase": "^5.0.0",
+    "camelcase": "^5.2.0",
     "chalk": "^2.4.2",
     "enquirer": "^2.3.4",
     "eslint": "^6.1.0",
@@ -97,13 +97,9 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
-    "@types/ansi-escapes": "^4.0.0",
-    "@types/camelcase": "^5.2.0",
     "@types/eslint": "^6.1.2",
-    "@types/execa": "^0.9.0",
     "@types/fs-extra": "^8.0.0",
     "@types/node": "^13.1.0",
-    "@types/ora": "^3.2.0",
     "@types/react": "^16.9.11",
     "@types/rollup-plugin-json": "^3.0.2",
     "@types/rollup-plugin-sourcemaps": "^0.4.2",
