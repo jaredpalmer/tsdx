@@ -102,7 +102,6 @@
     "@types/eslint": "^6.1.2",
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "^8.0.0",
-    "@types/ms": "^0.7.30",
     "@types/node": "^13.1.0",
     "@types/ora": "^3.2.0",
     "@types/react": "^16.9.11",
