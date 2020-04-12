@@ -90,6 +90,7 @@
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.26.0",
     "sade": "^1.4.2",
+    "semver": "^7.1.1",
     "shelljs": "^0.8.3",
     "tiny-glob": "^0.2.6",
     "ts-jest": "^24.0.2",
@@ -118,7 +119,6 @@
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
     "rollup-plugin-postcss": "^2.5.0",
-    "semver": "^7.1.1",
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3"
