@@ -4,6 +4,7 @@
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
+  "homepage": "https://github.com/jaredpalmer/tsdx",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaredpalmer/tsdx.git"
