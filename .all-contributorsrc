@@ -733,6 +733,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "kotarella1110",
+      "name": "Kotaro Sugawara",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/12913947?v=4",
+      "profile": "https://qiita.com/kotarella1110",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
