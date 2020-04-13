@@ -601,6 +601,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://linkedin.com/in/ambroseus"><img src="https://avatars0.githubusercontent.com/u/380645?v=4" width="100px;" alt=""/><br /><sub><b>Eugene Samonenko</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/commits?author=ambroseus" title="Tests">⚠️</a> <a href="#example-ambroseus" title="Examples">💡</a> <a href="#question-ambroseus" title="Answering Questions">💬</a> <a href="#ideas-ambroseus" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/rockmandash"><img src="https://avatars2.githubusercontent.com/u/7580792?v=4" width="100px;" alt=""/><br /><sub><b>Joseph Wang</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Arockmandash" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://qiita.com/kotarella1110"><img src="https://avatars1.githubusercontent.com/u/12913947?v=4" width="100px;" alt=""/><br /><sub><b>Kotaro Sugawara</b></sub></a><br /><a href="https://github.com/jaredpalmer/tsdx/issues?q=author%3Akotarella1110" title="Bug reports">🐛</a> <a href="https://github.com/jaredpalmer/tsdx/commits?author=kotarella1110" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
