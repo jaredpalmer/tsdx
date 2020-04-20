@@ -401,11 +401,13 @@ prog
           async (inputOptions: RollupOptions & { output: OutputOptions }) => {
             let bundle = await rollup(inputOptions);
             await bundle.write(inputOptions.output);
-            await deprecated.moveTypes();
           }
         )
         .catch((e: any) => {
           throw e;
+        })
+        .then(async () => {
+          await deprecated.moveTypes();
         });
       logger(promise, 'Building modules');
       await promise;
