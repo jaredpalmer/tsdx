@@ -146,7 +146,6 @@ export async function createRollupConfig(
       },
       typescript({
         typescript: ts,
-        cacheRoot: `./node_modules/.cache/tsdx/${opts.format}/`,
         tsconfig: opts.tsconfig,
         tsconfigDefaults: {
           exclude: [
