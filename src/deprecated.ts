@@ -21,27 +21,14 @@ export async function moveTypes() {
     '[tsdx]: Your rootDir is currently set to "./". Please change your ' +
       'rootDir to "./src".\n' +
       'TSDX has deprecated setting tsconfig.compilerOptions.rootDir to ' +
-      '"./" as it caused buggy output for declarationMaps and occassionally ' +
-      'for type declarations themselves.\n' +
+      '"./" as it caused buggy output for declarationMaps and more.\n' +
       'You may also need to change your include to remove "test", which also ' +
       'caused declarations to be unnecessarily created for test files.'
   );
 
-  try {
-    // Move the typescript types to the base of the ./dist folder
-    await fs.copy(appDistSrc, paths.appDist, {
-      overwrite: true,
-    });
-  } catch (err) {
-    // ignore errors about the destination dir already existing or files not
-    // existing as those always occur for some reason, re-throw any other
-    // unexpected failures
-    // NOTE: these errors mean that sometimes files don't get moved properly,
-    // meaning that it's buggy / unreliable (see console.warn above)
-    if (err.code !== 'EEXIST' && err.code !== 'ENOENT') {
-      throw err;
-    }
-  }
-
+  // Move the typescript types to the base of the ./dist folder
+  await fs.copy(appDistSrc, paths.appDist, {
+    overwrite: true,
+  });
   await fs.remove(appDistSrc);
 }
