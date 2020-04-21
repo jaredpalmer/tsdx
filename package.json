@@ -118,7 +118,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
-    "rollup-plugin-postcss": "^2.5.0",
+    "rollup-plugin-postcss": "^3.0.0",
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3"
