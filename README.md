@@ -28,6 +28,8 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [Rollup](#rollup)
     - [Example: Adding Postcss](#example-adding-postcss)
   - [Babel](#babel)
+  - [Jest](#jest)
+  - [ESLint](#eslint)
 - [Inspiration](#inspiration)
   - [Comparison to Microbundle](#comparison-to-microbundle)
 - [API Reference](#api-reference)
@@ -373,7 +375,15 @@ module.exports = {
 
 ### Babel
 
-You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with its own babel transforms (which are mostly for optimization).
+You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with [its own Babel transforms](./src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
+
+### Jest
+
+You can add your own `jest.config.js` to the root of your project and TSDX will **shallow merge** it with [its own Jest config](./src/createJestConfig.ts).
+
+### ESLint
+
+You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
 
 ## Inspiration
 
@@ -455,7 +465,7 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v24.x. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
+This runs Jest v24.x, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
 
 ```json
 {
