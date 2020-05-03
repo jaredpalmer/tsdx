@@ -74,13 +74,12 @@ TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rol
 
 ## Continuous Integration
 
-### Travis
+### GitHub Actions
 
-_to be completed_
+A simple action is included that runs these steps on all pushes:
 
-### Circle
-
-_to be completed_
+- Installs deps w/ cache
+- Lints, tests, and builds
 
 ## Optimizations
 
