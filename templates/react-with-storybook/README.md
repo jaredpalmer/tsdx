@@ -1,4 +1,4 @@
-# TSDX React User Guide
+# TSDX React w/ Storybook User Guide
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
@@ -12,7 +12,7 @@ TSDX scaffolds your new library inside `/src`, and also sets up a [Parcel-based]
 
 The recommended workflow is to run TSDX in one terminal:
 
-```
+```bash
 npm start # or yarn start
 ```
 
@@ -24,7 +24,7 @@ Then run either example playground or storybook:
 
 Run inside another terminal:
 
-```
+```bash
 yarn storybook
 ```
 
@@ -36,7 +36,7 @@ This loads the stories from `./stories`.
 
 Then run the example inside another:
 
-```
+```bash
 cd example
 npm i # or yarn to install dependencies
 npm start # or yarn start
@@ -60,7 +60,7 @@ Jest tests are set up to run with `npm test` or `yarn test`.
 
 This is the folder structure we set up for you:
 
-```
+```txt
 /example
   index.html
   index.tsx       # test your component here in a demo app
@@ -161,7 +161,7 @@ For vanilla CSS, you can include it at the root directory and add it to the `fil
 
 ## Publishing to NPM
 
-We recommend using https://github.com/sindresorhus/np.
+We recommend using [np](https://github.com/sindresorhus/np).
 
 ## Usage with Lerna
 
