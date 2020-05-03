@@ -44,7 +44,7 @@ Jest tests are set up to run with `npm test` or `yarn test`.
 
 This is the folder structure we set up for you:
 
-```shell
+```txt
 /example
   index.html
   index.tsx       # test your component here in a demo app
