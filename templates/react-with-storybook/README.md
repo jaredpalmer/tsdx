@@ -54,7 +54,7 @@ Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files)
 
 ### Jest
 
-Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
+Jest tests are set up to run with `npm test` or `yarn test`.
 
 #### Setup Files
 
