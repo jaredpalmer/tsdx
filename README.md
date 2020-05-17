@@ -4,6 +4,8 @@
 
 Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
+<a name="toc"></a>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
@@ -58,6 +60,8 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Jest test runner setup with sensible defaults via `tsdx test`
 - Zero-config, single dependency
 
+[🔝](#toc)<!-- Link generated with jump2header -->
+
 ## Quick Start
 
 ```bash
@@ -101,6 +105,8 @@ If you want to customize eslint you can add an `eslint` block to your package.js
 
 Bundles and packages to the `dist` folder.
 Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
+
+[🔝](#toc)<!-- Link generated with jump2header -->
 
 ## Optimizations
 
@@ -300,6 +306,8 @@ Note: We don't provide this function for you, it is up to you how you want it to
 
 _TODO: Simple guide to host error codes to be completed_
 
+[🔝](#toc)<!-- Link generated with jump2header -->
+
 ## Customization
 
 ### Rollup
@@ -385,6 +393,8 @@ You can add your own `jest.config.js` to the root of your project and TSDX will 
 
 You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
 
+[🔝](#toc)<!-- Link generated with jump2header -->
+
 ## Inspiration
 
 TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
@@ -395,6 +405,8 @@ TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build to
 - TSDX includes a bootstrap command and default package template
 - TSDX is 100% TypeScript focused
 - TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
+
+[🔝](#toc)<!-- Link generated with jump2header -->
 
 ## API Reference
 
@@ -500,6 +512,8 @@ Examples
   $ tsdx lint src --write-file
   $ tsdx lint src --report-file report.json
 ```
+
+[🔝](#toc)<!-- Link generated with jump2header -->
 
 ## Contributing
 
@@ -621,3 +635,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+
+[🔝](#toc)<!-- Link generated with jump2header -->
