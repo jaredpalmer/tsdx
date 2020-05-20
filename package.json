@@ -48,7 +48,7 @@
     "@babel/preset-env": "^7.4.4",
     "@rollup/plugin-commonjs": "^11.0.0",
     "@rollup/plugin-json": "^4.0.0",
-    "@rollup/plugin-node-resolve": "^7.1.0",
+    "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.2.1",
     "@types/jest": "^24.0.15",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
