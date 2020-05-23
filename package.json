@@ -88,7 +88,7 @@
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-terser": "^6.0.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "sade": "^1.4.2",
     "semver": "^7.1.1",
