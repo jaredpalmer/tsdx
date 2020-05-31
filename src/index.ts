@@ -218,7 +218,11 @@ prog
       // Install deps
       process.chdir(projectPath);
       const safeName = safePackageName(pkg);
-      const pkgJson = generatePackageJson({ name: safeName, author });
+      const pkgJson = generatePackageJson({
+        safeName,
+        author,
+        pkg,
+      });
 
       const nodeVersionReq = getNodeEngineRequirement(pkgJson);
       if (
