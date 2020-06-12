@@ -31,7 +31,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [Jest](#jest)
   - [ESLint](#eslint)
 - [Inspiration](#inspiration)
-  - [Comparison to Microbundle](#comparison-to-microbundle)
+  - [Comparison with Microbundle](#comparison-with-microbundle)
 - [API Reference](#api-reference)
   - [`tsdx watch`](#tsdx-watch)
   - [`tsdx build`](#tsdx-build)
@@ -389,7 +389,7 @@ You can add your own `.eslintrc.js` to the root of your project and TSDX will **
 
 TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
 
-### Comparison to Microbundle
+### Comparison with Microbundle
 
 - TSDX includes out-of-the-box test running via Jest
 - TSDX includes a bootstrap command and default package template
