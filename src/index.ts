@@ -85,19 +85,16 @@ async function getInputs(
   entries?: string | string[],
   source?: string
 ): Promise<string[]> {
-  let inputs: string[] = [];
-  let stub: any[] = [];
-  stub
-    .concat(
-      entries && entries.length
-        ? entries
-        : (source && resolveApp(source)) ||
-            ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
-    )
-    .map(file => glob(file))
-    .forEach(input => inputs.push(input));
-
-  return concatAllArray(inputs);
+  return concatAllArray(
+    ([] as any[])
+      .concat(
+        entries && entries.length
+          ? entries
+          : (source && resolveApp(source)) ||
+              ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
+      )
+      .map(file => glob(file))
+  );
 }
 
 prog
