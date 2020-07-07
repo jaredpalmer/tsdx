@@ -26,7 +26,7 @@ export async function moveTypes() {
       'caused declarations to be unnecessarily created for test files.'
   );
 
-  // Move the typescript types to the base of the ./dist folder
+  // Move the type declarations to the base of the ./dist folder
   await fs.copy(appDistSrc, paths.appDist, {
     overwrite: true,
   });
