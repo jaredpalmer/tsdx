@@ -11,7 +11,7 @@ export const help = function() {
   return `
     Only ${chalk.green('<project-directory>')} is required.
     If you have any problems, do not hesitate to file an issue:
-      ${chalk.cyan('https://github.com/jaredpalmer/tsdx/issues/new')}
+      ${chalk.cyan('https://github.com/formik/tsdx/issues/new')}
   `;
 };
 
@@ -86,7 +86,7 @@ export const start = async function(projectName: string) {
     ${Output.cmd(commands.test)}
     
   Questions? Feedback? Please let me know!
-  ${chalk.green('https://github.com/jaredpalmer/tsdx/issues')}
+  ${chalk.green('https://github.com/formik/tsdx/issues')}
 `;
 };
 
