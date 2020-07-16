@@ -86,7 +86,7 @@ export const start = async function(projectName: string) {
     ${Output.cmd(commands.test)}
     
   Questions? Feedback? Please let me know!
-  ${chalk.green('https://github.com/formik/tsdx/issues')}
+  ${chalk.green('https://github.com/formium/tsdx/issues')}
 `;
 };
 
