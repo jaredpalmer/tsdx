@@ -11,7 +11,7 @@ export const help = function() {
   return `
     Only ${chalk.green('<project-directory>')} is required.
     If you have any problems, do not hesitate to file an issue:
-      ${chalk.cyan('https://github.com/formik/tsdx/issues/new')}
+    ${chalk.cyan('https://github.com/formium/tsdx/issues/new')}
   `;
 };
 
