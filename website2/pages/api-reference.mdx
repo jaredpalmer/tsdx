@@ -1,0 +1,104 @@
+# API Reference
+
+## `tsdx watch`
+
+```sh
+Description
+  Rebuilds on any change
+
+Usage
+  $ tsdx watch [options]
+
+Options
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --verbose             Keep outdated console output in watch mode instead of clearing the screen
+  --onFirstSuccess      Run a command on the first successful build
+  --onSuccess           Run a command on a successful build
+  --onFailure           Run a command on a failed build
+  --noClean             Don't clean the dist folder
+  --transpileOnly       Skip type checking
+  -h, --help            Displays this message
+
+Examples
+  $ tsdx watch --entry src/foo.tsx
+  $ tsdx watch --target node
+  $ tsdx watch --name Foo
+  $ tsdx watch --format cjs,esm,umd
+  $ tsdx watch --tsconfig ./tsconfig.foo.json
+  $ tsdx watch --noClean
+  $ tsdx watch --onFirstSuccess "echo The first successful build!"
+  $ tsdx watch --onSuccess "echo Successful build!"
+  $ tsdx watch --onFailure "echo The build failed!"
+  $ tsdx watch --transpileOnly
+```
+
+## `tsdx build`
+
+```sh
+Description
+  Build your project once and exit
+
+Usage
+  $ tsdx build [options]
+
+Options
+  -i, --entry           Entry module(s)
+  --target              Specify your target environment  (default web)
+  --name                Specify name exposed in UMD builds
+  --format              Specify module format(s)  (default cjs,esm)
+  --extractErrors       Opt-in to extracting invariant error codes
+  --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
+  --transpileOnly       Skip type checking
+  -h, --help            Displays this message
+
+Examples
+  $ tsdx build --entry src/foo.tsx
+  $ tsdx build --target node
+  $ tsdx build --name Foo
+  $ tsdx build --format cjs,esm,umd
+  $ tsdx build --extractErrors
+  $ tsdx build --tsconfig ./tsconfig.foo.json
+  $ tsdx build --transpileOnly
+```
+
+## `tsdx test`
+
+This runs Jest v24.x, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
+
+```json
+{
+  "scripts": {
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "test:coverage": "tsdx test --coverage"
+  }
+}
+```
+
+## `tsdx lint`
+
+```sh
+Description
+  Run eslint with Prettier
+
+Usage
+  $ tsdx lint [options]
+
+Options
+  --fix               Fixes fixable errors and warnings
+  --ignore-pattern    Ignore a pattern
+  --write-file        Write the config file locally
+  --report-file       Write JSON report to file locally
+  -h, --help          Displays this message
+
+Examples
+  $ tsdx lint src
+  $ tsdx lint src --fix
+  $ tsdx lint src test --ignore-pattern test/foo.ts
+  $ tsdx lint src --write-file
+  $ tsdx lint src --report-file report.json
+```

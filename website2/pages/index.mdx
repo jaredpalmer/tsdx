@@ -1,0 +1,77 @@
+import Features from 'components/features';
+
+# TSDX
+
+<Features />
+
+Despite all the recent hype, setting up a new TypeScript (x React)
+library can be tough. Between Rollup, Jest, tsconfig, Yarn resolutions,
+TSLint, and getting VSCode to play nicely....there is just a whole lot
+of stuff to do (and things to screw up).
+
+**TSDX is a zero-config CLI that helps you develop, test, and publish
+modern TypeScript packages** with ease--so you can focus on your awesome
+new library and not waste another afternoon on the configuration.
+
+## Quick Start
+
+With TSDX, you can quickly bootstrap a new TypeScript project in seconds, instead of hours. Open up Terminal and enter:
+
+```bash
+npx tsdx create mylib
+```
+
+You'll be prompted to choose from one of three project templates:
+
+| Template               | Description                                                                                                                                                                                     |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `basic`                | A plain TypeScript project setup you can use for any kind of module.                                                                                                                            |
+| `react`                | A React package with necessary development dependencies and `@types` installed. In addition, there is a [Parcel](https://parceljs.org/)-powered React playground you can use while you develop. |
+| `react-with-storybook` | Same as the basic React template, but with [React Storybook](https://storybook.js.org/) already setup as well.                                                                                  |
+
+After you select one, TSDX will create a folder with the project template in it and install all dependencies. Once that's done, you're ready-to-rock! Typescript, Rollup, Jest, ESlint and all other plumbing is already setup with best practices. Just start editing `src/index.ts` (or `src/index.tsx` if you chose one of the React templates) and go!
+
+## Useful Commands
+
+Below is a list of commands you will probably find useful:
+
+### `npm start` or `yarn start`
+
+Runs the project in development/watch mode. Your project will be rebuilt upon changes. TSDX has a special logger for your convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
+
+<img
+  src="https://user-images.githubusercontent.com/4060187/52168303-574d3a00-26f6-11e9-9f3b-71dbec9ebfcb.gif"
+  width="600"
+/>
+
+Your library will be rebuilt if you make edits.
+
+### `npm run build` or `yarn build`
+
+Bundles the package to the `dist` folder.
+The package is optimized and bundled with Rollup into multiple formats (CommonJS, UMD, and ES Module).
+
+<img
+  src="https://user-images.githubusercontent.com/4060187/52168322-a98e5b00-26f6-11e9-8cf6-222d716b75ef.gif"
+  width="600"
+/>
+
+### `npm test` or `yarn test`
+
+Runs your tests using Jest.
+
+### `npm run lint` or `yarn lint`
+
+Runs Eslint with Prettier on .ts and .tsx files.
+If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
+
+### `prepare` script
+
+Bundles and packages to the `dist` folder.
+Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
+
+## Best Practices
+
+TSDX includes best-practices and optimizations for modern NPM packages. These include things like the ability to have different development and production builds, multiple bundle formats, proper lodash-optimizations, treeshaking, and minification to name a few. All of these come out-of-the-box with TSDX. While you probably won't need to configure anything, [you totally can do so with tsdx.config.js](customization).
+
+Before you start extending TSDX though, you'll want to fully understand what _exactly_ TSDX does. In the next section, we'll go over all of these optimizations in finer detail.
