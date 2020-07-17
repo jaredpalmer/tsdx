@@ -76,7 +76,7 @@ export default {
         <a
           className="text-sm"
           href={
-            'https://github.com/formium/tsdx/tree/master/website2/pages' +
+            'https://github.com/formium/tsdx/tree/master/website/pages' +
             filepath
           }
           target="_blank"
