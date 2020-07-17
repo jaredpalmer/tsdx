@@ -1,5 +1,0 @@
-# example netlify.toml
-[build]
-  command = "yarn run build"
-  publish = "build"
-  base = "website"
