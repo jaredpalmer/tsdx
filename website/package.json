@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "next",
     "start": "next",
-    "build": "next build"
+    "build": "next build",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "author": "Jared Palmer",
   "license": "MIT",
@@ -24,7 +26,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-intersection-observer": "^8.26.2",
-    "string-strip-html": "^4.5.0"
+    "string-strip-html": "^4.5.0",
+    "snyk": "^1.362.1"
   },
   "devDependencies": {
     "@mdx-js/loader": "^1.6.5",
@@ -33,5 +36,6 @@
     "preval.macro": "^5.0.0",
     "tailwindcss": "^1.4.6",
     "title": "^3.4.2"
-  }
+  },
+  "snyk": true
 }
