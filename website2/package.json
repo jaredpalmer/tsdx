@@ -1,0 +1,37 @@
+{
+  "name": "tsdx-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "start": "next",
+    "build": "next build"
+  },
+  "author": "Jared Palmer",
+  "license": "MIT",
+  "dependencies": {
+    "@reach/skip-nav": "^0.10.5",
+    "@sindresorhus/slugify": "^1.0.0",
+    "classnames": "^2.2.6",
+    "focus-visible": "^5.1.0",
+    "intersection-observer": "^0.10.0",
+    "markdown-to-jsx": "^6.11.4",
+    "match-sorter": "^4.1.0",
+    "next": "^9.4.4",
+    "next-google-fonts": "^1.1.0",
+    "prism-react-renderer": "^1.1.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-intersection-observer": "^8.26.2",
+    "string-strip-html": "^4.5.0"
+  },
+  "devDependencies": {
+    "@mdx-js/loader": "^1.6.5",
+    "babel-plugin-macros": "^2.8.0",
+    "postcss-preset-env": "^6.7.0",
+    "preval.macro": "^5.0.0",
+    "tailwindcss": "^1.4.6",
+    "title": "^3.4.2"
+  }
+}
