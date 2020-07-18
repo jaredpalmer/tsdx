@@ -15,7 +15,7 @@
     "@sindresorhus/slugify": "^1.0.0",
     "classnames": "^2.2.6",
     "focus-visible": "^5.1.0",
-    "intersection-observer": "^0.10.0",
+    "intersection-observer": "^0.11.0",
     "markdown-to-jsx": "^6.11.4",
     "match-sorter": "^4.1.0",
     "next": "^9.4.4",
