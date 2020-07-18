@@ -681,7 +681,7 @@ export default () => (
         }
       />
       <Feature
-        text="VSCode-friendly"
+        text="VSCode"
         icon={
           <svg
             width="24"
