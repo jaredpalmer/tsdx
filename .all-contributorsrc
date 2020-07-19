@@ -788,6 +788,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "devrelm",
+      "name": "Mike Deverell",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2008333?v=4",
+      "profile": "https://twitter.com/devrelm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
