@@ -770,6 +770,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "yuriy636",
+      "name": "Yuriy Burychka",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6631050?v=4",
+      "profile": "https://github.com/yuriy636",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
