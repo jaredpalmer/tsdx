@@ -615,6 +615,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://qiita.com/kotarella1110"><img src="https://avatars1.githubusercontent.com/u/12913947?v=4" width="100px;" alt=""/><br /><sub><b>Kotaro Sugawara</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Akotarella1110" title="Bug reports">🐛</a> <a href="https://github.com/formium/tsdx/commits?author=kotarella1110" title="Code">💻</a></td>
     <td align="center"><a href="https://blog.semesse.me"><img src="https://avatars1.githubusercontent.com/u/13726406?v=4" width="100px;" alt=""/><br /><sub><b>Semesse</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=Semperia" title="Code">💻</a></td>
     <td align="center"><a href="https://informatikamihelac.com"><img src="https://avatars0.githubusercontent.com/u/13813?v=4" width="100px;" alt=""/><br /><sub><b>Bojan Mihelac</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=bmihelac" title="Code">💻</a></td>
+    <td align="center"><a href="https://dandascalescu.com/"><img src="https://avatars3.githubusercontent.com/u/33569?v=4" width="100px;" alt=""/><br /><sub><b>Dan Dascalescu</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=dandv" title="Documentation">📖</a></td>
   </tr>
 </table>
 
