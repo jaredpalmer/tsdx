@@ -743,6 +743,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "Semperia",
+      "name": "Semesse",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13726406?v=4",
+      "profile": "https://blog.semesse.me",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
