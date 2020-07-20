@@ -11,10 +11,10 @@ Unlike other TSDX templates, the developer experience for this template is curre
 
 Your first order of business will be to search and replace `@mono` for the npm organization of your own.
 
-After that you can install all the dependencies in the root directory
+After that you can install all the dependencies in the root directory. Since the monorepo uses Lerna and Yarn Workspaces, npm CLI is not supported (only yarn).
 
 ```sh
-npm install # or yarn install
+yarn install
 ```
 
 This will install all dependencies in each project, build them, and symlink them via Lerna
@@ -24,7 +24,7 @@ This will install all dependencies in each project, build them, and symlink them
 In one terminal, run tsdx watch in parallel:
 
 ```sh
-npm dev # or yarn dev
+yarn start
 ```
 
 This builds each package to `<packages>/<package>/dist` and runs the project in watch mode so any edits you save inside `<packages>/<package>/src` causes a rebuild to `<packages>/<package>/dist`. The results wil stream to to the terminal.
@@ -35,8 +35,8 @@ YOu can play with local packages in the Parcel-powered example/playground.
 
 ```sh
 cd example
-npm install # or yarn install
-npm start
+yarn install # or yarn install
+yarn start
 ```
 
 This will start the example/playground on `localhost:1234`. If you have lerna running watch in parallel mode in one terminal, and then you run parcel, your playground will hot reload when you make changes to any imported module whose source is inside of `packages/*/src/*`. Note that to accomplish this, each package's `start` command passes TDSX the `--noClean` flag. This prevents Parcel from exploding between rebuilds because of File Not Found errors.
