@@ -1,5 +1,5 @@
-# @formium/react
+# @mono/react
 
-[![Stable release](https://img.shields.io/npm/v/@formium/utils.svg)](https://npm.im/@formium/utils)
+[![Stable release](https://img.shields.io/npm/v/@mono/utils.svg)](https://npm.im/@mono/utils)
 
-Official React SDK for Formium
+Official React SDK for @mono
