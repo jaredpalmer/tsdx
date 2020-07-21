@@ -4,7 +4,7 @@
   "description": "Internal, shared utilities",
   "author": "Jared Palmer <hello@formium.io>",
   "scripts": {
-    "start": "tsdx watch --verbose --noClean",
+    "start": "tsdx watch --tsconfig tsconfig.build.json --verbose --noClean",
     "build": "tsdx build --tsconfig tsconfig.build.json",
     "test": "tsdx test",
     "lint": "tsdx lint",
