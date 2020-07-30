@@ -176,7 +176,7 @@ export async function createRollupConfig(
               : {}),
           },
         },
-        check: !opts.transpileOnly,
+        check: !opts.transpileOnly && outputNum === 0,
         useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
       babelPluginTsdx({

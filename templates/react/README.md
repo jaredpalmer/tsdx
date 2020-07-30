@@ -2,7 +2,7 @@
 
 Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
 
-> This TSDX setup is meant for developing React components (not apps!) that can be published to NPM. If you’re looking to build an app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
+> This TSDX setup is meant for developing React component libraries (not apps!) that can be published to NPM. If you’re looking to build a React-based app, you should use `create-react-app`, `razzle`, `nextjs`, `gatsby`, or `react-static`.
 
 > If you’re new to TypeScript and React, checkout [this handy cheatsheet](https://github.com/sw-yx/react-typescript-cheatsheet/)
 
@@ -26,7 +26,7 @@ npm i # or yarn to install dependencies
 npm start # or yarn start
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, [we use Parcel's aliasing](https://github.com/palmerhq/tsdx/pull/88/files).
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
 
 To do a one-off build, use `npm run build` or `yarn build`.
 
@@ -34,17 +34,17 @@ To run tests, use `npm test` or `yarn test`.
 
 ## Configuration
 
-Code quality is [set up for you](https://github.com/palmerhq/tsdx/pull/45/files) with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
 
 ### Jest
 
-Jest tests are set up to run with `npm test` or `yarn test`. This runs the test watcher (Jest) in an interactive mode. By default, runs tests related to files changed since the last commit.
+Jest tests are set up to run with `npm test` or `yarn test`.
 
 #### Setup Files
 
 This is the folder structure we set up for you:
 
-```shell
+```txt
 /example
   index.html
   index.tsx       # test your component here in a demo app
@@ -66,7 +66,7 @@ We do not set up `react-testing-library` for you yet, we welcome contributions a
 
 ### Rollup
 
-TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
 
 ### TypeScript
 
@@ -74,13 +74,12 @@ TSDX uses [Rollup v1.x](https://rollupjs.org) as a bundler and generates multipl
 
 ## Continuous Integration
 
-### Travis
+### GitHub Actions
 
-_to be completed_
+A simple action is included that runs these steps on all pushes:
 
-### Circle
-
-_to be completed_
+- Installs deps w/ cache
+- Lints, tests, and builds
 
 ## Optimizations
 
@@ -104,17 +103,7 @@ CJS, ESModules, and UMD module formats are supported.
 
 The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
 
-## Using the Playground
-
-```bash
-cd example
-npm i # or yarn to install dependencies
-npm start # or yarn start
-```
-
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure TSDX is running in watch mode like we recommend above. **No symlinking required**!
-
-## Deploying the Playground
+## Deploying the Example Playground
 
 The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
 

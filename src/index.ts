@@ -85,19 +85,16 @@ async function getInputs(
   entries?: string | string[],
   source?: string
 ): Promise<string[]> {
-  let inputs: string[] = [];
-  let stub: any[] = [];
-  stub
-    .concat(
-      entries && entries.length
-        ? entries
-        : (source && resolveApp(source)) ||
-            ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
-    )
-    .map(file => glob(file))
-    .forEach(input => inputs.push(input));
-
-  return concatAllArray(inputs);
+  return concatAllArray(
+    ([] as any[])
+      .concat(
+        entries && entries.length
+          ? entries
+          : (source && resolveApp(source)) ||
+              ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
+      )
+      .map(file => glob(file))
+  );
 }
 
 prog
@@ -485,7 +482,7 @@ function setAuthorName(author: string) {
 prog
   .command('test')
   .describe(
-    'Run jest test runner in watch mode. Passes through all flags directly to Jest'
+    'Run jest test runner. Passes through all flags directly to Jest'
   )
   .action(async (opts: { config?: string }) => {
     // Do this as the first thing so that any code reading it knows the right env.

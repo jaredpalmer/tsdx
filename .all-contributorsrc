@@ -743,11 +743,65 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "Semperia",
+      "name": "Semesse",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13726406?v=4",
+      "profile": "https://blog.semesse.me",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "bmihelac",
+      "name": "Bojan Mihelac",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13813?v=4",
+      "profile": "https://informatikamihelac.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dandv",
+      "name": "Dan Dascalescu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/33569?v=4",
+      "profile": "https://dandascalescu.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "yuriy636",
+      "name": "Yuriy Burychka",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/6631050?v=4",
+      "profile": "https://github.com/yuriy636",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jssee",
+      "name": "Jesse Hoyos",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/2642936?v=4",
+      "profile": "https://github.com/jssee",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "devrelm",
+      "name": "Mike Deverell",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2008333?v=4",
+      "profile": "https://twitter.com/devrelm",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "tsdx",
-  "projectOwner": "jaredpalmer",
+  "projectOwner": "formium",
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true

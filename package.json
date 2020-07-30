@@ -4,9 +4,10 @@
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
+  "homepage": "https://github.com/formium/tsdx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jaredpalmer/tsdx.git"
+    "url": "git+https://github.com/formium/tsdx.git"
   },
   "keywords": [
     "react",
@@ -15,7 +16,7 @@
     "rollup"
   ],
   "bugs": {
-    "url": "https://github.com/jaredpalmer/tsdx/issues"
+    "url": "https://github.com/formium/tsdx/issues"
   },
   "bin": {
     "tsdx": "./dist/index.js"
