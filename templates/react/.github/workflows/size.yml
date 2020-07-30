@@ -1,8 +1,5 @@
-name: "size"
-on:
-  pull_request:
-    branches:
-      - master
+name: size
+on: [pull_request]
 jobs:
   size:
     runs-on: ubuntu-latest
@@ -10,6 +7,6 @@ jobs:
       CI_JOB_NUMBER: 1
     steps:
       - uses: actions/checkout@v1
-      - uses: andresz1/size-limit-action@v1.3.0
+      - uses: andresz1/size-limit-action@v1.4.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
