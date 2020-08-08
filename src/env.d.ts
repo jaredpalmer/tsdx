@@ -11,7 +11,6 @@ declare module '@babel/core' {
 }
 
 // Rollup plugins
-declare module 'rollup-plugin-babel';
 declare module 'rollup-plugin-terser';
 declare module 'babel-traverse';
 declare module 'babylon';

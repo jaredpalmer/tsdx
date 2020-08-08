@@ -1,5 +1,5 @@
 import { createConfigItem } from '@babel/core';
-import babelPlugin from 'rollup-plugin-babel';
+import { createBabelInputPluginFactory } from '@rollup/plugin-babel';
 import merge from 'lodash.merge';
 
 export const isTruthy = (obj?: any) => {
@@ -47,7 +47,7 @@ export const createConfigItems = (type: any, items: any[]) => {
   });
 };
 
-export const babelPluginTsdx = babelPlugin.custom(() => ({
+export const babelPluginTsdx = createBabelInputPluginFactory(() => ({
   // Passed the plugin options.
   options({ custom: customOptions, ...pluginOptions }: any) {
     return {
