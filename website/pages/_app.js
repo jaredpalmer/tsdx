@@ -1,5 +1,5 @@
-import '.nextra/styles.css'
-import GoogleFonts from 'next-google-fonts'
+import '.nextra/styles.css';
+import GoogleFonts from 'next-google-fonts';
 
 export default function Nextra({ Component, pageProps }) {
   return (
@@ -10,5 +10,5 @@ export default function Nextra({ Component, pageProps }) {
       />
       <Component {...pageProps} />
     </>
-  )
+  );
 }

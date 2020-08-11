@@ -1,5 +1,11 @@
 module.exports = {
-  purge: ['./components/**/*.js', './pages/**/*.md', './pages/**/*.mdx', './.nextra/**/*.js', './nextra.config.js'],
+  purge: [
+    './components/**/*.js',
+    './pages/**/*.md',
+    './pages/**/*.mdx',
+    './.nextra/**/*.js',
+    './nextra.config.js',
+  ],
   theme: {
     screens: {
       sm: '640px',
@@ -11,7 +17,7 @@ module.exports = {
       display: ['inter', 'sans-serif'],
     },
     letterSpacing: {
-      tight: '-0.015em'
-    }
-  }
-}
+      tight: '-0.015em',
+    },
+  },
+};
