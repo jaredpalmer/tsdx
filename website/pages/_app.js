@@ -1,3 +1,4 @@
+import React from 'react';
 import '.nextra/styles.css';
 import GoogleFonts from 'next-google-fonts';
 

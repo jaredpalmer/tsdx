@@ -1,3 +1,4 @@
+import React from 'react';
 import { Logo } from 'components/logo';
 
 export default {
@@ -67,7 +68,7 @@ export default {
         <a
           href="https://jaredpalmer.com/?utm_source=tsdx"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           className="inline-flex items-center no-underline text-current font-semibold"
         >
           <span className="mr-1">A Jared Palmer Project</span>
@@ -80,7 +81,7 @@ export default {
             filepath
           }
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
         >
           Edit this page on GitHub
         </a>
