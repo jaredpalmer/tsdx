@@ -643,7 +643,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-regenerator@^7.10.4", "@babel/plugin-transform-regenerator@^7.4.5":
+"@babel/plugin-transform-regenerator@^7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.10.4.tgz#2015e59d839074e76838de2159db421966fd8b63"
   integrity sha512-3thAHwtor39A7C04XucbMg17RcZ3Qppfxr22wYzZNcVIkPHfpM9J0SO8zuCV6SZa265kxBJSrfKTvDCYqBFXGw==
@@ -719,14 +719,6 @@
   dependencies:
     "@babel/helper-create-regexp-features-plugin" "^7.10.4"
     "@babel/helper-plugin-utils" "^7.10.4"
-
-"@babel/polyfill@^7.4.4":
-  version "7.7.0"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.7.0.tgz#e1066e251e17606ec7908b05617f9b7f8180d8f3"
-  integrity sha512-/TS23MVvo34dFmf8mwCisCbWGrfhbiWZSwBo6HkADTBhUa2Q/jWltyY/tpofz/b6/RIhqaqQcquptCirqIhOaQ==
-  dependencies:
-    core-js "^2.6.5"
-    regenerator-runtime "^0.13.2"
 
 "@babel/preset-env@^7.11.0":
   version "7.11.0"
@@ -1908,11 +1900,6 @@ babel-plugin-syntax-jsx@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
   integrity sha1-CvMqmm4Tyno/1QaeYtew9Y0NiUY=
-
-babel-plugin-transform-async-to-promises@^0.8.14:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-async-to-promises/-/babel-plugin-transform-async-to-promises-0.8.15.tgz#13b6d8ef13676b4e3c576d3600b85344bb1ba346"
-  integrity sha512-fDXP68ZqcinZO2WCiimCL9zhGjGXOnn3D33zvbh+yheZ/qOrNVVDDIBtAaM3Faz8TRvQzHiRKsu3hfrBAhEncQ==
 
 babel-plugin-transform-rename-import@^2.3.0:
   version "2.3.0"
@@ -6961,7 +6948,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
+regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
   integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==
