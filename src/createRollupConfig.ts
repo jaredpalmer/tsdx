@@ -60,9 +60,11 @@ export async function createRollupConfig(
     input: opts.input,
     // Tell Rollup which packages to ignore
     external: (id: string) => {
-      if (id === 'babel-plugin-transform-async-to-promises/helpers') {
+      // bundle in any polyfills as TSDX can't control whether polyfills are installed as deps
+      if (id.startsWith('regenerator-runtime') || id.startsWith('core-js')) {
         return false;
       }
+
       return external(id);
     },
     // Rollup has treeshaking by default, but we can optimize it further...
@@ -118,11 +120,12 @@ export async function createRollupConfig(
         // defaults + .jsx
         extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
       }),
-      opts.format === 'umd' &&
-        commonjs({
-          // use a regex to make sure to include eventual hoisted packages
-          include: /\/node_modules\//,
-        }),
+      commonjs({
+        // Use a regex to make sure to include eventual hoisted packages (umd).
+        // Always transform core-js, so its internal dependencies are found
+        // by rollup's external() resolution.
+        include: opts.format === 'umd' ? /\/node_modules\// : /core-js\//,
+      }),
       json(),
       {
         // Custom plugin that removes shebang from code because newer
