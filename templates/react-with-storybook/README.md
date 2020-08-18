@@ -70,6 +70,10 @@ This is the folder structure we set up for you:
   index.tsx       # EDIT THIS
 /test
   blah.test.tsx   # EDIT THIS
+/stories
+  Thing.stories.tsx
+/.storybook
+  main.js
 .gitignore
 package.json
 README.md         # EDIT THIS
