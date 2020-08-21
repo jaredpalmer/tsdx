@@ -241,7 +241,7 @@ prog
     const installSpinner = ora(Messages.installing(deps.sort())).start();
     try {
       const cmd = await getInstallCmd();
-      const args = getInstallArgs(cmd, deps).join(' ')
+      const args = getInstallArgs(cmd, deps).join(' ');
       await shell.exec(`${cmd} ${args}`, {
         silent: true,
       });
