@@ -2,7 +2,7 @@ import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Thing, Props } from '../src';
 
-export default {
+const meta: Meta = {
   title: 'Welcome',
   component: Thing,
   argTypes: {
@@ -15,7 +15,9 @@ export default {
   parameters: {
     controls: { expanded: true },
   },
-} as Meta;
+};
+
+export default meta;
 
 const Template: Story<Props> = args => <Thing {...args} />;
 
