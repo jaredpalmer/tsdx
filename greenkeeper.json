@@ -3,8 +3,7 @@
     "default": {
       "packages": [
         "package.json",
-        "templates/react/example/package.json",
-        "website/package.json"
+        "templates/react/example/package.json"
       ]
     }
   }
