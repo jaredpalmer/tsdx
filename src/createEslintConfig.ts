@@ -17,11 +17,7 @@ export async function createEslintConfig({
   const isReactLibrary = Boolean(getReactVersion(pkg));
 
   const config = {
-    extends: [
-      'react-app',
-      'prettier/@typescript-eslint',
-      'plugin:prettier/recommended',
-    ],
+    extends: ['tsdx'],
     settings: {
       react: {
         // Fix for https://github.com/jaredpalmer/tsdx/issues/279
