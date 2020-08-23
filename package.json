@@ -83,7 +83,7 @@
     "lodash.merge": "^4.6.2",
     "ora": "^3.4.0",
     "pascal-case": "^2.0.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.0",
     "progress-estimator": "^0.2.2",
     "rollup": "^1.32.1",
     "rollup-plugin-babel": "^4.3.2",
