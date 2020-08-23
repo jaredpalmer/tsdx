@@ -11,7 +11,7 @@ import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
 import { paths } from '../constants';
 import { safeVariableName } from '../utils';
-import pascalCase from 'pascal-case';
+import { pascalCase } from 'pascal-case';
 
 const babylonOptions = {
   sourceType: 'module',
