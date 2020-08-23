@@ -25,13 +25,14 @@ assignees: ''
 
 ### Your environment
 
-<!-- PLEASE FILL THIS OUT -->
+<!--
+  PLEASE RUN THIS COMMAND INSIDE YOUR PROJECT:
 
-| Software         | Version(s) |
-| ---------------- | ---------- |
-| TSDX           |
-| TypeScript       |
-| Browser          |
-| npm/Yarn         |
-| Node             | 
-| Operating System |
+  npx envinfo --system OS --browsers --binaries --npmPackages tsdx,typescript --npmGlobalPackages tsdx,typescript
+
+  AND PASTE ITS CONTENTS BELOW INSIDE THE CODE SNIPPET vvvvvvvvv
+-->
+
+```text
+
+```
