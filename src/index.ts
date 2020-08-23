@@ -13,7 +13,7 @@ import {
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import * as fs from 'fs-extra';
-import jest from 'jest';
+import * as jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
