@@ -18,8 +18,8 @@
   "bugs": {
     "url": "https://github.com/formium/tsdx/issues"
   },
-  "main": "./dist/types.js",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/externalTypes.js",
+  "typings": "./dist/externalTypes.d.ts",
   "bin": {
     "tsdx": "./dist/index.js"
   },
