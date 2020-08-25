@@ -620,6 +620,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/jssee"><img src="https://avatars1.githubusercontent.com/u/2642936?v=4" width="100px;" alt=""/><br /><sub><b>Jesse Hoyos</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=jssee" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/devrelm"><img src="https://avatars0.githubusercontent.com/u/2008333?v=4" width="100px;" alt=""/><br /><sub><b>Mike Deverell</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=devrelm" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://hipsterbrown.com"><img src="https://avatars3.githubusercontent.com/u/3051193?v=4" width="100px;" alt=""/><br /><sub><b>Nick Hehr</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=HipsterBrown" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=HipsterBrown" title="Documentation">📖</a> <a href="#example-HipsterBrown" title="Examples">💡</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->

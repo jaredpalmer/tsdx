@@ -797,6 +797,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "HipsterBrown",
+      "name": "Nick Hehr",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3051193?v=4",
+      "profile": "https://hipsterbrown.com",
+      "contributions": [
+        "code",
+        "doc",
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
