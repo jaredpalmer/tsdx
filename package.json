@@ -46,9 +46,7 @@
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-regenerator": "^7.4.5",
-    "@babel/plugin-transform-runtime": "^7.6.0",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@rollup/plugin-commonjs": "^11.0.0",
@@ -104,6 +102,7 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.0",
     "@types/eslint": "^6.1.2",
     "@types/fs-extra": "^8.0.0",
     "@types/node": "^13.1.0",
