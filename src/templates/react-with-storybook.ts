@@ -6,16 +6,13 @@ const storybookTemplate: Template = {
   dependencies: [
     ...reactTemplate.dependencies,
     '@babel/core',
-    '@storybook/addon-actions',
+    '@storybook/addon-essentials',
     '@storybook/addon-links',
     '@storybook/addon-info',
-    '@storybook/addon-docs',
     '@storybook/addons',
     '@storybook/react',
-    'react-docgen-typescript-loader',
     'react-is',
     'babel-loader',
-    'ts-loader',
   ],
   name: 'react-with-storybook',
   packageJson: {
