@@ -1,17 +1,20 @@
 import { Template } from '../template';
 
 interface ProjectArgs {
-  name: string;
+  safeName: string;
   author: string;
+  pkg: string;
 }
+
 export const composePackageJson = (template: Template) => ({
-  name,
+  safeName,
   author,
+  pkg,
 }: ProjectArgs) => {
   return {
     ...template.packageJson,
-    name,
+    name: pkg,
     author,
-    module: `dist/${name}.esm.js`,
+    module: `dist/${safeName}.esm.js`,
   };
 };
