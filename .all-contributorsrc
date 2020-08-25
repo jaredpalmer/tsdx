@@ -182,7 +182,9 @@
       "contributions": [
         "code",
         "example",
-        "test"
+        "test",
+        "review",
+        "question"
       ]
     },
     {
