@@ -64,7 +64,7 @@ TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rol
 Two actions are added by default:
 
 - `main` which installs deps w/ cache, lints, tests, and builds on all pushes
-- `size` which comments cost comparison of your library on every pull request using [size-limit](https://github.com/ai/size-limit)
+- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
 
 ## Optimizations
 
