@@ -5,10 +5,10 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  lint:
+  lint-and-dedupe:
     runs-on: ubuntu-latest
 
-    name: Lint on node 10.x and ubuntu-latest
+    name: Lint & Deduplicate deps on node 10.x and ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
@@ -22,6 +22,9 @@ jobs:
 
       - name: Lint codebase
         run: yarn lint:post-build
+
+      - name: Deduplicate dependencies
+        run: yarn deduplicate:check
 
   test:
     runs-on: ${{ matrix.os }}
