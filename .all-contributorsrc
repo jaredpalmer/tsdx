@@ -820,6 +820,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "andresz1",
+      "name": "Andres Alvarez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6877967?v=4",
+      "profile": "https://github.com/andresz1",
+      "contributions": [
+        "code",
+        "doc",
+        "example"
+      ]
     }
   ],
   "contributorsPerLine": 7,
