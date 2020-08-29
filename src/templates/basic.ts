@@ -2,7 +2,14 @@ import { Template } from './template';
 
 const basicTemplate: Template = {
   name: 'basic',
-  dependencies: ['husky', 'tsdx', 'tslib', 'typescript'],
+  dependencies: [
+    'husky',
+    'tsdx',
+    'tslib',
+    'typescript',
+    'size-limit',
+    '@size-limit/preset-small-lib',
+  ],
   packageJson: {
     // name: safeName,
     version: '0.1.0',
@@ -21,8 +28,22 @@ const basicTemplate: Template = {
       test: 'tsdx test',
       lint: 'tsdx lint',
       prepare: 'tsdx build',
+      size: 'size-limit',
+      analyze: 'size-limit --why',
     },
     peerDependencies: {},
+    /*
+    'size-limit': [
+      {
+        path: `dist/${safeName}.cjs.production.min.js`,
+        limit: '10 KB',
+      },
+      {
+        path: `dist/${safeName}.esm.js`,
+        limit: '10 KB',
+      },
+    ],
+    */
     husky: {
       hooks: {
         'pre-commit': 'tsdx lint',
