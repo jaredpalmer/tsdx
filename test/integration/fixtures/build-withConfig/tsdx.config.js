@@ -1,8 +1,14 @@
+/* eslint-disable-next-line no-unused-vars */
+const tsdx = require('..');
 const postcss = require('rollup-plugin-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
 module.exports = {
+  /**
+   * @param {tsdx.RollupOptions} config
+   * @param {tsdx.TsdxOptions} options
+   */
   rollup(config, options) {
     config.plugins.push(
       postcss({

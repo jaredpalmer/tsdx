@@ -25,3 +25,5 @@ export interface TsdxOptions extends SharedOpts {
   /** Only transpile, do not type check (makes compilation faster) */
   transpileOnly?: boolean;
 }
+
+export { RollupOptions } from 'rollup';
