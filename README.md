@@ -56,7 +56,9 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Bundle size snapshots
 - Opt-in to extract `invariant` error codes
 - Jest test runner setup with sensible defaults via `tsdx test`
+- ESLint with Prettier setup with sensible defaults via `tsdx lint`
 - Zero-config, single dependency
+- Escape hatches for customization via `.babelrc.js`, `jest.config.js`, `.eslintrc.js`, and `tsdx.config.js`
 
 ## Quick Start
 
@@ -387,13 +389,18 @@ You can add your own `.eslintrc.js` to the root of your project and TSDX will **
 
 ## Inspiration
 
-TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
+TSDX was originally ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling.
+TSDX has several similarities to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals had converged around similar plugins.
 
 ### Comparison with Microbundle
 
+Some key differences include:
+
 - TSDX includes out-of-the-box test running via Jest
-- TSDX includes a bootstrap command and default package template
-- TSDX is 100% TypeScript focused
+- TSDX includes out-of-the-box linting and formatting via ESLint and Prettier
+- TSDX includes a bootstrap command with a few package templates
+- TSDX allows for some lightweight customization
+- TSDX is TypeScript focused, but also supports plain JavaScript
 - TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
 
 ## API Reference
