@@ -831,6 +831,15 @@
         "doc",
         "example"
       ]
+    },
+    {
+      "login": "kyarik",
+      "name": "Yaroslav K.",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/33955898?v=4",
+      "profile": "https://github.com/kyarik",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
