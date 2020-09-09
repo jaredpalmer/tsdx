@@ -30,6 +30,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [Babel](#babel)
   - [Jest](#jest)
   - [ESLint](#eslint)
+  - [`patch-package`](#patch-package)
 - [Inspiration](#inspiration)
   - [Comparison with Microbundle](#comparison-with-microbundle)
 - [API Reference](#api-reference)
@@ -386,6 +387,11 @@ You can add your own `jest.config.js` to the root of your project and TSDX will 
 ### ESLint
 
 You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
+
+### `patch-package`
+
+If you still need more customizations, we recommend using [`patch-package`](https://github.com/ds300/patch-package) so you don't need to fork.
+Keep in mind that these types of changes may be quite fragile against version updates.
 
 ## Inspiration
 
