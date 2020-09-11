@@ -23,7 +23,6 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "stripInternal": true,
-    "target": "es5"
+    "stripInternal": true
   }
 }
