@@ -27,7 +27,7 @@ In one terminal, run tsdx watch in parallel:
 yarn start
 ```
 
-This builds each package to `<packages>/<package>/dist` and runs the project in watch mode so any edits you save inside `<packages>/<package>/src` causes a rebuild to `<packages>/<package>/dist`. The results wil stream to to the terminal.
+This builds each package to `<packages>/<package>/dist` and runs the project in watch mode so any edits you save inside `<packages>/<package>/src` cause a rebuild to `<packages>/<package>/dist`. The results will stream to to the terminal.
 
 ### Using the example/playground
 
