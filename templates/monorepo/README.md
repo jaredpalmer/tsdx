@@ -45,7 +45,7 @@ Important Safety Tip: When adding/altering packages in the playground, use `alia
 
 #### Yalc
 
-[Yalc](https://github.com/whitecolor/yalc) is alternative to `yarn/npm link` (and Parcel aliasing) that many developer find useful because it more closely mimics how NPM works. It works kind of like local package registry via filesystem and symlinking magic.
+[Yalc](https://github.com/whitecolor/yalc) is an alternative to `yarn/npm link` (and Parcel aliasing) that many developers find useful because it more closely mimics how NPM works. It works kind of like a local package registry via filesystem and symlinking magic.
 
 To do this, install yalc globally.
 
