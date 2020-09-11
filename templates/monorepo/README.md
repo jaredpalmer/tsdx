@@ -31,7 +31,7 @@ This builds each package to `<packages>/<package>/dist` and runs the project in 
 
 ### Using the example/playground
 
-YOu can play with local packages in the Parcel-powered example/playground.
+You can play with local packages in the Parcel-powered example/playground.
 
 ```sh
 cd example
