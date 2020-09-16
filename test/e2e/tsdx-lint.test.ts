@@ -30,6 +30,48 @@ describe('tsdx lint', () => {
     expect(output.stdout.includes('prettier/prettier')).toBe(true);
   });
 
+  it('should succeed linting a ts file with warnings when --max-warnings is not used', () => {
+    const testFile = `${lintDir}/file-with-lint-warnings.ts`;
+    const output = shell.exec(`node dist/index.js lint ${testFile}`);
+    expect(output.code).toBe(0);
+    expect(output.stdout.includes('@typescript-eslint/no-unused-vars')).toBe(
+      true
+    );
+  });
+
+  it('should succeed linting a ts file with fewer warnings than --max-warnings', () => {
+    const testFile = `${lintDir}/file-with-lint-warnings.ts`;
+    const output = shell.exec(
+      `node dist/index.js lint --max-warnings=4 ${testFile}`
+    );
+    expect(output.code).toBe(0);
+    expect(output.stdout.includes('@typescript-eslint/no-unused-vars')).toBe(
+      true
+    );
+  });
+
+  it('should succeed linting a ts file with same number of warnings as --max-warnings', () => {
+    const testFile = `${lintDir}/file-with-lint-warnings.ts`;
+    const output = shell.exec(
+      `node dist/index.js lint --max-warnings=3 ${testFile}`
+    );
+    expect(output.code).toBe(0);
+    expect(output.stdout.includes('@typescript-eslint/no-unused-vars')).toBe(
+      true
+    );
+  });
+
+  it('should fail to lint a ts file with more warnings than --max-warnings', () => {
+    const testFile = `${lintDir}/file-with-lint-warnings.ts`;
+    const output = shell.exec(
+      `node dist/index.js lint --max-warnings=2 ${testFile}`
+    );
+    expect(output.code).toBe(1);
+    expect(output.stdout.includes('@typescript-eslint/no-unused-vars')).toBe(
+      true
+    );
+  });
+
   it('should fail to lint a tsx file with errors', () => {
     const testFile = `${lintDir}/react-file-with-lint-errors.tsx`;
     const output = shell.exec(`node dist/index.js lint ${testFile}`);

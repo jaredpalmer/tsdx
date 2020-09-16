@@ -555,6 +555,7 @@ prog
       'ignore-pattern': string;
       'write-file': boolean;
       'report-file': string;
+      'max-warnings': number | undefined;
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
@@ -595,6 +596,12 @@ prog
         );
       }
       if (report.errorCount) {
+        process.exit(1);
+      }
+      if (
+        opts['max-warnings'] !== undefined &&
+        report.warningCount > opts['max-warnings']
+      ) {
         process.exit(1);
       }
     }
