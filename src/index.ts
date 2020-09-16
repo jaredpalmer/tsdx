@@ -545,6 +545,11 @@ prog
   .example('lint src test --fix')
   .option('--ignore-pattern', 'Ignore a pattern')
   .example('lint src test --ignore-pattern test/foobar.ts')
+  .option(
+    '--max-warnings',
+    'Exits with non-zero error code if warnings exceed this number'
+  )
+  .example('lint src test --max-warnings 10')
   .option('--write-file', 'Write the config file locally')
   .example('lint --write-file')
   .option('--report-file', 'Write JSON report to file locally')
