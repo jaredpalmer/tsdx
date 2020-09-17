@@ -4,7 +4,6 @@ module.exports = {
     './test-babel-preset'
   ],
   plugins: [
-    'styled-components',
    ['@babel/plugin-transform-runtime', { helpers: false }],
   ]
 }

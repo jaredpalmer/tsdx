@@ -19,19 +19,22 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
-    // from styled.h1` to styled.h1(
-    const matched = grep(/styled.h1\(/, ['dist/build-withbabel.*.js']);
+    // from styled.h1` to styled.h1.withConfig(
+    const matched = grep(/styled.h1.withConfig\(/, [
+      'dist/build-withbabel.*.js',
+    ]);
     expect(matched).toBeTruthy();
   });
 
-  // TODO: make this test work by allowing customization of plugin order
-  it.skip('should remove comments in the CSS', () => {
+  // TODO: make styled-components work with its Babel plugin and not just its
+  // macro by allowing customization of plugin order
+  it('should remove comments in the CSS', () => {
     const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
-    // the "should be removed" comment shouldn't be there (gets error code)
+    // the comment "should be removed" should no longer be there
     const matched = grep(/should be removed/, ['dist/build-withbabel.*.js']);
-    expect(matched).toBeTruthy();
+    expect(matched).toBeFalsy();
   });
 
   it('should add an import of regeneratorRuntime', () => {
