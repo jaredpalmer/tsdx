@@ -644,6 +644,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.linkedin.com/in/george-varghese-m/"><img src="https://avatars1.githubusercontent.com/u/20477438?v=4" width="100px;" alt=""/><br /><sub><b>George Varghese M.</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Documentation">📖</a> <a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://nelabs.dev/"><img src="https://avatars2.githubusercontent.com/u/137872?v=4" width="100px;" alt=""/><br /><sub><b>Reinis Ivanovs</b></sub></a><br /><a href="#ideas-slikts" title="Ideas, Planning, & Feedback">🤔</a> <a href="#question-slikts" title="Answering Questions">💬</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://orta.io"><img src="https://avatars2.githubusercontent.com/u/49038?v=4" width="100px;" alt=""/><br /><sub><b>Orta Therox</b></sub></a><br /><a href="#question-orta" title="Answering Questions">💬</a> <a href="https://github.com/formium/tsdx/commits?author=orta" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
