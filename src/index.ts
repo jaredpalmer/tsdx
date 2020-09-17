@@ -547,7 +547,8 @@ prog
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option(
     '--max-warnings',
-    'Exits with non-zero error code if warnings exceed this number'
+    'Exits with non-zero error code if warnings exceed this number',
+    Infinity
   )
   .example('lint src test --max-warnings 10')
   .option('--write-file', 'Write the config file locally')
@@ -560,7 +561,7 @@ prog
       'ignore-pattern': string;
       'write-file': boolean;
       'report-file': string;
-      'max-warnings': number | undefined;
+      'max-warnings': number;
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
@@ -603,10 +604,7 @@ prog
       if (report.errorCount) {
         process.exit(1);
       }
-      if (
-        opts['max-warnings'] !== undefined &&
-        report.warningCount > opts['max-warnings']
-      ) {
+      if (report.warningCount > opts['max-warnings']) {
         process.exit(1);
       }
     }
