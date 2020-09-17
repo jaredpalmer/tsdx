@@ -30,6 +30,19 @@ describe('tsdx lint', () => {
     expect(output.stdout.includes('prettier/prettier')).toBe(true);
   });
 
+  it('should fail to lint a tsx file with errors', () => {
+    const testFile = `${lintDir}/react-file-with-lint-errors.tsx`;
+    const output = shell.exec(`node dist/index.js lint ${testFile}`);
+    expect(output.code).toBe(1);
+    expect(output.stdout.includes('Parsing error:')).toBe(true);
+  });
+
+  it('should succeed linting a tsx file without errors', () => {
+    const testFile = `${lintDir}/react-file-without-lint-error.tsx`;
+    const output = shell.exec(`node dist/index.js lint ${testFile}`);
+    expect(output.code).toBe(0);
+  });
+
   it('should succeed linting a ts file with warnings when --max-warnings is not used', () => {
     const testFile = `${lintDir}/file-with-lint-warnings.ts`;
     const output = shell.exec(`node dist/index.js lint ${testFile}`);
@@ -70,19 +83,6 @@ describe('tsdx lint', () => {
     expect(output.stdout.includes('@typescript-eslint/no-unused-vars')).toBe(
       true
     );
-  });
-
-  it('should fail to lint a tsx file with errors', () => {
-    const testFile = `${lintDir}/react-file-with-lint-errors.tsx`;
-    const output = shell.exec(`node dist/index.js lint ${testFile}`);
-    expect(output.code).toBe(1);
-    expect(output.stdout.includes('Parsing error:')).toBe(true);
-  });
-
-  it('should succeed linting a tsx file without errors', () => {
-    const testFile = `${lintDir}/react-file-without-lint-error.tsx`;
-    const output = shell.exec(`node dist/index.js lint ${testFile}`);
-    expect(output.code).toBe(0);
   });
 
   it('should not lint', () => {
