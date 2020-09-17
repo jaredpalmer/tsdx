@@ -870,6 +870,16 @@
         "ideas",
         "question"
       ]
+    },
+    {
+      "login": "orta",
+      "name": "Orta Therox",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/49038?v=4",
+      "profile": "https://orta.io",
+      "contributions": [
+        "question",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
