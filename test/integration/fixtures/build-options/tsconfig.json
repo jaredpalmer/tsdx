@@ -12,7 +12,9 @@
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "types"],
 }
