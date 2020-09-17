@@ -547,7 +547,7 @@ prog
   .example('lint src test --ignore-pattern test/foobar.ts')
   .option(
     '--max-warnings',
-    'Exits with non-zero error code if warnings exceed this number',
+    'Exits with non-zero error code if number of warnings exceed this number',
     Infinity
   )
   .example('lint src test --max-warnings 10')
