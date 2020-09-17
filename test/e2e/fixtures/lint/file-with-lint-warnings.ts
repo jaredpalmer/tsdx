@@ -1,4 +1,5 @@
-const foo = () => {
-  const bar = 'baz';
-  const foobar = '';
+// this file should have 3 "unused var" lint warnings
+const unusedVar1 = () => {
+  const unusedVar2 = 'baz';
+  const unusedVar3 = '';
 };
