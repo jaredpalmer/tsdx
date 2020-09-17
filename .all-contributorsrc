@@ -860,6 +860,16 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "slikts",
+      "name": "Reinis Ivanovs",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/137872?v=4",
+      "profile": "https://nelabs.dev/",
+      "contributions": [
+        "ideas",
+        "question"
+      ]
     }
   ],
   "contributorsPerLine": 7,
