@@ -638,6 +638,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Bnaya"><img src="https://avatars0.githubusercontent.com/u/1304862?v=4" width="100px;" alt=""/><br /><sub><b>Bnaya Peretz</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3ABnaya" title="Bug reports">🐛</a> <a href="https://github.com/formium/tsdx/commits?author=Bnaya" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/andresz1"><img src="https://avatars2.githubusercontent.com/u/6877967?v=4" width="100px;" alt=""/><br /><sub><b>Andres Alvarez</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=andresz1" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=andresz1" title="Documentation">📖</a> <a href="#example-andresz1" title="Examples">💡</a></td>
     <td align="center"><a href="https://github.com/kyarik"><img src="https://avatars2.githubusercontent.com/u/33955898?v=4" width="100px;" alt=""/><br /><sub><b>Yaroslav K.</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=kyarik" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://strdr4605.github.io"><img src="https://avatars3.githubusercontent.com/u/16056918?v=4" width="100px;" alt=""/><br /><sub><b>Dragoș Străinu</b></sub></a><br /><a href="#ideas-strdr4605" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
