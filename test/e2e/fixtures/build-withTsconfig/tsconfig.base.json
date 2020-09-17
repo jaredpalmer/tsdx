@@ -16,7 +16,8 @@
     "jsx": "react",
     "esModuleInterop": false,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true
   },
   "include": ["src", "types"], // test parsing of trailing comma & comment
 }
