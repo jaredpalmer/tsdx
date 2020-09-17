@@ -502,6 +502,7 @@ Usage
 Options
   --fix               Fixes fixable errors and warnings
   --ignore-pattern    Ignore a pattern
+  --max-warnings      Exits with non-zero error code if number of warnings exceed this number  (default Infinity)
   --write-file        Write the config file locally
   --report-file       Write JSON report to file locally
   -h, --help          Displays this message
@@ -510,6 +511,7 @@ Examples
   $ tsdx lint src
   $ tsdx lint src --fix
   $ tsdx lint src test --ignore-pattern test/foo.ts
+  $ tsdx lint src test --max-warnings 10
   $ tsdx lint src --write-file
   $ tsdx lint src --report-file report.json
 ```
