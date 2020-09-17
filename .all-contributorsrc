@@ -849,6 +849,17 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "georgevarghese185",
+      "name": "George Varghese M.",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/20477438?v=4",
+      "profile": "https://www.linkedin.com/in/george-varghese-m/",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
