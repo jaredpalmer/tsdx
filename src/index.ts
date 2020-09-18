@@ -363,7 +363,7 @@ prog
 prog
   .command('build')
   .describe('Build your project once and exit')
-  .option('--entry, -i', 'Entry module(s)')
+  .option('--entry, -i', 'Entry module')
   .example('build --entry src/foo.tsx')
   .option('--target', 'Specify your target environment', 'browser')
   .example('build --target node')
