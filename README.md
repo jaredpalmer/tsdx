@@ -421,7 +421,7 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry           Entry module(s)
+  -i, --entry           Entry module
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
@@ -457,7 +457,7 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry           Entry module(s)
+  -i, --entry           Entry module
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
