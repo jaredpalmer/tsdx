@@ -75,6 +75,12 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           replacements,
         },
         {
+          name: 'babel-plugin-polyfill-regenerator',
+          // don't pollute global env as this is being used in a library
+          method: 'usage-pure',
+          targets: customOptions.targets,
+        },
+        {
           name: '@babel/plugin-proposal-class-properties',
           loose: true,
         },
@@ -101,8 +107,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             {
               loose: true,
               targets: customOptions.targets,
-              useBuiltIns: 'usage',
-              corejs: 2,
             },
             presetEnv.options,
             {
@@ -120,8 +124,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
         {
           name: '@babel/preset-env',
           targets: customOptions.targets,
-          useBuiltIns: 'usage',
-          corejs: 2,
           modules: false,
           loose: true,
         },
