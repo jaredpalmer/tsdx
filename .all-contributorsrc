@@ -880,6 +880,15 @@
         "question",
         "doc"
       ]
+    },
+    {
+      "login": "thany",
+      "name": "Martijn Saly",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/152227?v=4",
+      "profile": "https://github.com/thany",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

@@ -646,6 +646,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://orta.io"><img src="https://avatars2.githubusercontent.com/u/49038?v=4" width="100px;" alt=""/><br /><sub><b>Orta Therox</b></sub></a><br /><a href="#question-orta" title="Answering Questions">💬</a> <a href="https://github.com/formium/tsdx/commits?author=orta" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/thany"><img src="https://avatars1.githubusercontent.com/u/152227?v=4" width="100px;" alt=""/><br /><sub><b>Martijn Saly</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Athany" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
