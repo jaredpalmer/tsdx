@@ -99,7 +99,6 @@
     "typescript": "^3.7.3"
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.6.0",
     "@types/eslint": "^6.1.2",
     "@types/fs-extra": "^8.0.0",
     "@types/node": "^13.1.0",

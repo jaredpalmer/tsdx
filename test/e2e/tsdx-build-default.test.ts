@@ -1,7 +1,7 @@
 import * as shell from 'shelljs';
 
 import * as util from '../utils/fixture';
-import { execWithCache } from '../utils/shell';
+import { execWithCache, grep } from '../utils/shell';
 
 shell.config.silent = false;
 
@@ -49,6 +49,14 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(lib.__esModule).toBe(true);
 
     expect(output.code).toBe(0);
+  });
+
+  it('should bundle regeneratorRuntime', () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/regeneratorRuntime = r/, ['dist/build-default.*.js']);
+    expect(matched).toBeTruthy();
   });
 
   it('should clean the dist directory before rebuilding', () => {

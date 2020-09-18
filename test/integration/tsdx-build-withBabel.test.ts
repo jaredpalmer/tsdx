@@ -37,16 +37,6 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(matched).toBeFalsy();
   });
 
-  it('should bundle regeneratorRuntime', () => {
-    const output = execWithCache('node ../dist/index.js build');
-    expect(output.code).toBe(0);
-
-    const matched = grep(/regeneratorRuntime = r/, [
-      'dist/build-withbabel.*.js',
-    ]);
-    expect(matched).toBeTruthy();
-  });
-
   it('should merge and apply presets', () => {
     const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
