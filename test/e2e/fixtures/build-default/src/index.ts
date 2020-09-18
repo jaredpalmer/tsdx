@@ -3,6 +3,7 @@ import './syntax/optional-chaining';
 
 import './syntax/jsx-import/JSX-import-JSX';
 
+import './syntax/async';
 export { testGenerator } from './syntax/generator';
 
 export { foo } from './foo';
