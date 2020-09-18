@@ -60,8 +60,8 @@ export async function createRollupConfig(
     input: opts.input,
     // Tell Rollup which packages to ignore
     external: (id: string) => {
-      // bundle in any polyfills as TSDX can't control whether polyfills are installed as deps
-      if (id.startsWith('regenerator-runtime') || id.startsWith('core-js')) {
+      // bundle in polyfills as TSDX can't (yet) ensure installed as deps
+      if (id.startsWith('regenerator-runtime')) {
         return false;
       }
 
@@ -120,11 +120,13 @@ export async function createRollupConfig(
         // defaults + .jsx
         extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
       }),
+      // all bundled external modules need to be converted from CJS to ESM
       commonjs({
-        // Use a regex to make sure to include eventual hoisted packages (umd).
-        // Always transform core-js, so its internal dependencies are found
-        // by rollup's external() resolution.
-        include: opts.format === 'umd' ? /\/node_modules\// : /core-js\//,
+        // use a regex to make sure to include eventual hoisted packages
+        include:
+          opts.format === 'umd'
+            ? /\/node_modules\//
+            : /\/regenerator-runtime\//,
       }),
       json(),
       {
