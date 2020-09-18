@@ -3,6 +3,8 @@ import './syntax/optional-chaining';
 
 import './syntax/jsx-import/JSX-import-JSX';
 
+export { testGenerator } from './syntax/generator';
+
 export { foo } from './foo';
 
 export const sum = (a: number, b: number) => {
