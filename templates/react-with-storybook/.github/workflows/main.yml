@@ -23,20 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        env:
-          CI: true
 
       - name: Lint
         run: yarn lint
-        env:
-          CI: true
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
-        env:
-          CI: true
 
       - name: Build
         run: yarn build
-        env:
-          CI: true
