@@ -925,6 +925,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "in19farkt",
+      "name": "Dmitriy Serdtsev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12945918?v=4",
+      "profile": "https://github.com/in19farkt",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
