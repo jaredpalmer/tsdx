@@ -907,6 +907,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "seungdols",
+      "name": "seungdols",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16032614?v=4",
+      "profile": "http://seungdols.tistory.com/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
