@@ -78,7 +78,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           name: 'babel-plugin-polyfill-regenerator',
           // don't pollute global env as this is being used in a library
           method: 'usage-pure',
-          targets: customOptions.targets,
         },
         {
           name: '@babel/plugin-proposal-class-properties',
