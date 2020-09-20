@@ -650,6 +650,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://kattcorp.com"><img src="https://avatars1.githubusercontent.com/u/459267?v=4" width="100px;" alt=""/><br /><sub><b>Alex Johansson</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=KATT" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/hb-seb"><img src="https://avatars1.githubusercontent.com/u/69623566?v=4" width="100px;" alt=""/><br /><sub><b>hb-seb</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=hb-seb" title="Code">💻</a></td>
     <td align="center"><a href="http://seungdols.tistory.com/"><img src="https://avatars3.githubusercontent.com/u/16032614?v=4" width="100px;" alt=""/><br /><sub><b>seungdols</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Aseungdols" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/CyriacBr"><img src="https://avatars3.githubusercontent.com/u/38442110?v=4" width="100px;" alt=""/><br /><sub><b>Béré Cyriac</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3ACyriacBr" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
