@@ -934,6 +934,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "vladdy-moses",
+      "name": "Vladislav Moiseev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3105477?v=4",
+      "profile": "http://formoses.ru/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
