@@ -12,8 +12,7 @@ declare module '@babel/core' {
 
 // Rollup plugins
 declare module 'rollup-plugin-terser';
-declare module 'babel-traverse';
-declare module 'babylon';
+declare module '@babel/traverse';
 declare module '@babel/helper-module-imports';
 
 declare module 'lodash.merge';
