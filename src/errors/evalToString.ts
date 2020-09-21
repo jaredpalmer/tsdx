@@ -9,6 +9,7 @@
 export function evalToString(ast: any): string {
   switch (ast.type) {
     case 'StringLiteral':
+    case 'Literal': // ESLint
       return ast.value;
     case 'BinaryExpression': // `+`
       if (ast.operator !== '+') {
