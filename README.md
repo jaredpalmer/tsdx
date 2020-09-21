@@ -652,6 +652,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://formoses.ru/"><img src="https://avatars3.githubusercontent.com/u/3105477?v=4" width="100px;" alt=""/><br /><sub><b>Vladislav Moiseev</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=vladdy-moses" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/felixmosh"><img src="https://avatars3.githubusercontent.com/u/9304194?v=4" width="100px;" alt=""/><br /><sub><b>Felix Mosheev</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Afelixmosh" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
