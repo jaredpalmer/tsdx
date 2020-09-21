@@ -1,3 +1,4 @@
+// largely borrowed from https://github.com/facebook/react/blob/8b2d3783e58d1acea53428a10d2035a8399060fe/scripts/error-codes/extract-errors.js
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
