@@ -13,16 +13,8 @@ jobs:
         with:
           node-version: 12.x
 
-      - name: Use cached node_modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            nodeModules-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Lint
         run: yarn lint
