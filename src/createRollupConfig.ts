@@ -2,11 +2,13 @@ import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
-import { DEFAULT_EXTENSIONS } from '@babel/core';
+import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
-import resolve from '@rollup/plugin-node-resolve';
+import resolve, {
+  DEFAULTS as RESOLVE_DEFAULTS,
+} from '@rollup/plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
@@ -116,8 +118,7 @@ export async function createRollupConfig(
           'main',
           opts.target !== 'node' ? 'browser' : undefined,
         ].filter(Boolean) as string[],
-        // defaults + .jsx
-        extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
+        extensions: [...RESOLVE_DEFAULTS.extensions, '.jsx'],
       }),
       // all bundled external modules need to be converted from CJS to ESM
       commonjs({
@@ -185,7 +186,7 @@ export async function createRollupConfig(
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
-        extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
+        extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,
         custom: {
           targets: opts.target === 'node' ? { node: '10' } : undefined,
