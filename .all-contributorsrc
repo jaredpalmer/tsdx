@@ -943,6 +943,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "felixmosh",
+      "name": "Felix Mosheev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9304194?v=4",
+      "profile": "https://github.com/felixmosh",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
