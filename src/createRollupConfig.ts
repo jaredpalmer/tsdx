@@ -3,7 +3,6 @@ import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-// import babel from 'rollup-plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
@@ -193,6 +192,7 @@ export async function createRollupConfig(
           extractErrors: opts.extractErrors,
           format: opts.format,
         },
+        babelHelpers: 'bundled',
       }),
       opts.env !== undefined &&
         replace({
