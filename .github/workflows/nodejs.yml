@@ -11,8 +11,9 @@ jobs:
     name: Lint & Deduplicate deps on node 10.x and ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 10.x
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node 10.x
         uses: actions/setup-node@v1
         with:
           node-version: 10.x
@@ -27,18 +28,18 @@ jobs:
         run: yarn deduplicate:check
 
   test:
-    runs-on: ${{ matrix.os }}
+    name: Test on Node ${{ matrix.node }} and ${{ matrix.os }}
 
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: ['10.x', '12.x', '13.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
-    name: Test on node ${{ matrix.node }} and ${{ matrix.os }}
-
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node }}
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
