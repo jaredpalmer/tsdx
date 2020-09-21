@@ -67,6 +67,14 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(matched).toBeFalsy();
   });
 
+  it("shouldn't replace lodash/fp", () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/lodash\/fp/, ['dist/build-default.*.js']);
+    expect(matched).toBeTruthy();
+  });
+
   it('should clean the dist directory before rebuilding', () => {
     let output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);

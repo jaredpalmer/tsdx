@@ -10,7 +10,8 @@ export const isTruthy = (obj?: any) => {
   return obj.constructor !== Object || Object.keys(obj).length > 0;
 };
 
-const replacements = [{ original: 'lodash', replacement: 'lodash-es' }];
+// replace lodash with lodash-es, but not lodash/fp
+const replacements = [{ original: 'lodash(?!/fp)', replacement: 'lodash-es' }];
 
 export const mergeConfigItems = (type: any, ...configItemsToMerge: any[]) => {
   const mergedItems: any[] = [];
