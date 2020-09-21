@@ -112,7 +112,7 @@ function ErrorDev(message) {
   return error;
 }
 
-export default ErrorDev;      
+export default ErrorDev;
       `,
       'utf-8'
     );

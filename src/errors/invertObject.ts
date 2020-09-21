@@ -16,9 +16,7 @@
 
 type Dict = { [key: string]: any };
 
-export function invertObject(
-  targetObj: Dict /* : ErrorMap */
-) /* : ErrorMap */ {
+export function invertObject(targetObj: Dict) {
   const result: Dict = {};
   const mapKeys = Object.keys(targetObj);
 
