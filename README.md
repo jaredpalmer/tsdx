@@ -653,6 +653,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/CyriacBr"><img src="https://avatars3.githubusercontent.com/u/38442110?v=4" width="100px;" alt=""/><br /><sub><b>Béré Cyriac</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3ACyriacBr" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/in19farkt"><img src="https://avatars3.githubusercontent.com/u/12945918?v=4" width="100px;" alt=""/><br /><sub><b>Dmitriy Serdtsev</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Ain19farkt" title="Bug reports">🐛</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="http://formoses.ru/"><img src="https://avatars3.githubusercontent.com/u/3105477?v=4" width="100px;" alt=""/><br /><sub><b>Vladislav Moiseev</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=vladdy-moses" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
