@@ -1,5 +1,5 @@
 import { createConfigItem } from '@babel/core';
-import babelPlugin from 'rollup-plugin-babel';
+import { createBabelInputPluginFactory } from '@rollup/plugin-babel';
 import merge from 'lodash.merge';
 
 export const isTruthy = (obj?: any) => {
@@ -47,7 +47,7 @@ export const createConfigItems = (type: any, items: any[]) => {
   });
 };
 
-export const babelPluginTsdx = babelPlugin.custom(() => ({
+export const babelPluginTsdx = createBabelInputPluginFactory(() => ({
   // Passed the plugin options.
   options({ custom: customOptions, ...pluginOptions }: any) {
     return {
@@ -67,6 +67,7 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
         //   pragma: customOptions.jsx || 'h',
         //   pragmaFrag: customOptions.jsxFragment || 'Fragment',
         // },
+        { name: 'babel-plugin-macros' },
         { name: 'babel-plugin-annotate-pure-calls' },
         { name: 'babel-plugin-dev-expression' },
         customOptions.format !== 'cjs' && {
@@ -74,24 +75,13 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           replacements,
         },
         {
-          name: 'babel-plugin-transform-async-to-promises',
-          inlineHelpers: true,
-          externalHelpers: true,
+          name: 'babel-plugin-polyfill-regenerator',
+          // don't pollute global env as this is being used in a library
+          method: 'usage-pure',
         },
         {
           name: '@babel/plugin-proposal-class-properties',
           loose: true,
-        },
-        // Adds syntax support for optional chaining (.?)
-        { name: '@babel/plugin-proposal-optional-chaining' },
-        // Adds syntax support for default value using ?? operator
-        { name: '@babel/plugin-proposal-nullish-coalescing-operator' },
-        {
-          name: '@babel/plugin-transform-regenerator',
-          async: false,
-        },
-        {
-          name: 'babel-plugin-macros',
         },
         isTruthy(customOptions.extractErrors) && {
           name: './errors/transformErrorMessages',
@@ -120,10 +110,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
             presetEnv.options,
             {
               modules: false,
-              exclude: merge(
-                ['transform-async-to-generator', 'transform-regenerator'],
-                (presetEnv.options && presetEnv.options.exclude) || []
-              ),
             }
           ),
         ],
@@ -139,7 +125,6 @@ export const babelPluginTsdx = babelPlugin.custom(() => ({
           targets: customOptions.targets,
           modules: false,
           loose: true,
-          exclude: ['transform-async-to-generator', 'transform-regenerator'],
         },
       ]);
 

@@ -17,7 +17,7 @@ Thanks for your interest in TSDX! You are very welcome to contribute. If you are
    cd tsdx
    ```
 
-1. Install the dependencies and build the Typescript files to Javascript:
+1. Install the dependencies and build the TypeScript files to JavaScript:
 
    ```
    yarn && yarn build

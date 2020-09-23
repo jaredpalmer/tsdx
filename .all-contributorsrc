@@ -182,7 +182,9 @@
       "contributions": [
         "code",
         "example",
-        "test"
+        "test",
+        "review",
+        "question"
       ]
     },
     {
@@ -796,6 +798,159 @@
       "profile": "https://twitter.com/devrelm",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "HipsterBrown",
+      "name": "Nick Hehr",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3051193?v=4",
+      "profile": "https://hipsterbrown.com",
+      "contributions": [
+        "code",
+        "doc",
+        "example"
+      ]
+    },
+    {
+      "login": "Bnaya",
+      "name": "Bnaya Peretz",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1304862?v=4",
+      "profile": "https://github.com/Bnaya",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "andresz1",
+      "name": "Andres Alvarez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/6877967?v=4",
+      "profile": "https://github.com/andresz1",
+      "contributions": [
+        "code",
+        "doc",
+        "example"
+      ]
+    },
+    {
+      "login": "kyarik",
+      "name": "Yaroslav K.",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/33955898?v=4",
+      "profile": "https://github.com/kyarik",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "strdr4605",
+      "name": "Dragoș Străinu",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16056918?v=4",
+      "profile": "https://strdr4605.github.io",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "georgevarghese185",
+      "name": "George Varghese M.",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/20477438?v=4",
+      "profile": "https://www.linkedin.com/in/george-varghese-m/",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
+    {
+      "login": "slikts",
+      "name": "Reinis Ivanovs",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/137872?v=4",
+      "profile": "https://nelabs.dev/",
+      "contributions": [
+        "ideas",
+        "question"
+      ]
+    },
+    {
+      "login": "orta",
+      "name": "Orta Therox",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/49038?v=4",
+      "profile": "https://orta.io",
+      "contributions": [
+        "question",
+        "doc"
+      ]
+    },
+    {
+      "login": "thany",
+      "name": "Martijn Saly",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/152227?v=4",
+      "profile": "https://github.com/thany",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "KATT",
+      "name": "Alex Johansson",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/459267?v=4",
+      "profile": "http://kattcorp.com",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "hb-seb",
+      "name": "hb-seb",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/69623566?v=4",
+      "profile": "https://github.com/hb-seb",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "seungdols",
+      "name": "seungdols",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16032614?v=4",
+      "profile": "http://seungdols.tistory.com/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "CyriacBr",
+      "name": "Béré Cyriac",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/38442110?v=4",
+      "profile": "https://github.com/CyriacBr",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "in19farkt",
+      "name": "Dmitriy Serdtsev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/12945918?v=4",
+      "profile": "https://github.com/in19farkt",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "vladdy-moses",
+      "name": "Vladislav Moiseev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3105477?v=4",
+      "profile": "http://formoses.ru/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "felixmosh",
+      "name": "Felix Mosheev",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9304194?v=4",
+      "profile": "https://github.com/felixmosh",
+      "contributions": [
+        "bug"
       ]
     }
   ],

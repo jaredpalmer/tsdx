@@ -30,6 +30,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
   - [Babel](#babel)
   - [Jest](#jest)
   - [ESLint](#eslint)
+  - [`patch-package`](#patch-package)
 - [Inspiration](#inspiration)
   - [Comparison with Microbundle](#comparison-with-microbundle)
 - [API Reference](#api-reference)
@@ -56,7 +57,9 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Bundle size snapshots
 - Opt-in to extract `invariant` error codes
 - Jest test runner setup with sensible defaults via `tsdx test`
+- ESLint with Prettier setup with sensible defaults via `tsdx lint`
 - Zero-config, single dependency
+- Escape hatches for customization via `.babelrc.js`, `jest.config.js`, `.eslintrc.js`, and `tsdx.config.js`
 
 ## Quick Start
 
@@ -66,10 +69,7 @@ cd mylib
 yarn start
 ```
 
-_Requires Node `>= 10`._
-
-
-That's it. You don't need to worry about setting up Typescript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
+That's it. You don't need to worry about setting up TypeScript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
 
 Below is a list of commands you will probably find useful:
 
@@ -198,7 +198,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 ```
 
-**IMPORTANT:** To use `__DEV__` in TypeScript, you need add `declare var __DEV__: boolean` somewhere in your project's type path (e.g. `./types/index.d.ts`).
+**IMPORTANT:** To use `__DEV__` in TypeScript, you need to add `declare var __DEV__: boolean` somewhere in your project's type path (e.g. `./types/index.d.ts`).
 
 ```ts
 // ./types/index.d.ts
@@ -385,15 +385,25 @@ You can add your own `jest.config.js` to the root of your project and TSDX will 
 
 You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
 
+### `patch-package`
+
+If you still need more customizations, we recommend using [`patch-package`](https://github.com/ds300/patch-package) so you don't need to fork.
+Keep in mind that these types of changes may be quite fragile against version updates.
+
 ## Inspiration
 
-TSDX is ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling. TSDX is very similar to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals have converged around similar plugins over the last year or so.
+TSDX was originally ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling.
+TSDX has several similarities to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals had converged around similar plugins.
 
 ### Comparison with Microbundle
 
+Some key differences include:
+
 - TSDX includes out-of-the-box test running via Jest
-- TSDX includes a bootstrap command and default package template
-- TSDX is 100% TypeScript focused
+- TSDX includes out-of-the-box linting and formatting via ESLint and Prettier
+- TSDX includes a bootstrap command with a few package templates
+- TSDX allows for some lightweight customization
+- TSDX is TypeScript focused, but also supports plain JavaScript
 - TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
 
 ## API Reference
@@ -408,7 +418,7 @@ Usage
   $ tsdx watch [options]
 
 Options
-  -i, --entry           Entry module(s)
+  -i, --entry           Entry module
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
@@ -444,7 +454,7 @@ Usage
   $ tsdx build [options]
 
 Options
-  -i, --entry           Entry module(s)
+  -i, --entry           Entry module
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
@@ -465,7 +475,7 @@ Examples
 
 ### `tsdx test`
 
-This runs Jest v24.x, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
+This runs Jest, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
 
 ```json
 {
@@ -489,6 +499,7 @@ Usage
 Options
   --fix               Fixes fixable errors and warnings
   --ignore-pattern    Ignore a pattern
+  --max-warnings      Exits with non-zero error code if number of warnings exceed this number  (default Infinity)
   --write-file        Write the config file locally
   --report-file       Write JSON report to file locally
   -h, --help          Displays this message
@@ -497,6 +508,7 @@ Examples
   $ tsdx lint src
   $ tsdx lint src --fix
   $ tsdx lint src test --ignore-pattern test/foo.ts
+  $ tsdx lint src test --max-warnings 10
   $ tsdx lint src --write-file
   $ tsdx lint src --report-file report.json
 ```
@@ -540,7 +552,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://twitter.com/agilgur5"><img src="https://avatars3.githubusercontent.com/u/4970083?v=4" width="100px;" alt=""/><br /><sub><b>Anton Gilgur</b></sub></a><br /><a href="#maintenance-agilgur5" title="Maintenance">🚧</a> <a href="https://github.com/formium/tsdx/commits?author=agilgur5" title="Documentation">📖</a> <a href="https://github.com/formium/tsdx/commits?author=agilgur5" title="Code">💻</a> <a href="https://github.com/formium/tsdx/issues?q=author%3Aagilgur5" title="Bug reports">🐛</a> <a href="#example-agilgur5" title="Examples">💡</a> <a href="#ideas-agilgur5" title="Ideas, Planning, & Feedback">🤔</a> <a href="#question-agilgur5" title="Answering Questions">💬</a> <a href="https://github.com/formium/tsdx/pulls?q=is%3Apr+reviewed-by%3Aagilgur5" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/formium/tsdx/commits?author=agilgur5" title="Tests">⚠️</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://kylemh.com"><img src="https://avatars1.githubusercontent.com/u/9523719?v=4" width="100px;" alt=""/><br /><sub><b>Kyle Holmberg</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=kylemh" title="Code">💻</a> <a href="#example-kylemh" title="Examples">💡</a> <a href="https://github.com/formium/tsdx/commits?author=kylemh" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://kylemh.com"><img src="https://avatars1.githubusercontent.com/u/9523719?v=4" width="100px;" alt=""/><br /><sub><b>Kyle Holmberg</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=kylemh" title="Code">💻</a> <a href="#example-kylemh" title="Examples">💡</a> <a href="https://github.com/formium/tsdx/commits?author=kylemh" title="Tests">⚠️</a> <a href="https://github.com/formium/tsdx/pulls?q=is%3Apr+reviewed-by%3Akylemh" title="Reviewed Pull Requests">👀</a> <a href="#question-kylemh" title="Answering Questions">💬</a></td>
     <td align="center"><a href="https://github.com/sisp"><img src="https://avatars1.githubusercontent.com/u/2206639?v=4" width="100px;" alt=""/><br /><sub><b>Sigurd Spieckermann</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Asisp" title="Bug reports">🐛</a> <a href="https://github.com/formium/tsdx/commits?author=sisp" title="Code">💻</a></td>
     <td align="center"><a href="https://www.selbekk.io"><img src="https://avatars1.githubusercontent.com/u/1307267?v=4" width="100px;" alt=""/><br /><sub><b>Kristofer Giltvedt Selbekk</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=selbekk" title="Code">💻</a></td>
     <td align="center"><a href="https://tomasehrlich.cz"><img src="https://avatars2.githubusercontent.com/u/827862?v=4" width="100px;" alt=""/><br /><sub><b>Tomáš Ehrlich</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Atricoder42" title="Bug reports">🐛</a> <a href="https://github.com/formium/tsdx/commits?author=tricoder42" title="Code">💻</a></td>
@@ -619,6 +631,28 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/yuriy636"><img src="https://avatars3.githubusercontent.com/u/6631050?v=4" width="100px;" alt=""/><br /><sub><b>Yuriy Burychka</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=yuriy636" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/jssee"><img src="https://avatars1.githubusercontent.com/u/2642936?v=4" width="100px;" alt=""/><br /><sub><b>Jesse Hoyos</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=jssee" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/devrelm"><img src="https://avatars0.githubusercontent.com/u/2008333?v=4" width="100px;" alt=""/><br /><sub><b>Mike Deverell</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=devrelm" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://hipsterbrown.com"><img src="https://avatars3.githubusercontent.com/u/3051193?v=4" width="100px;" alt=""/><br /><sub><b>Nick Hehr</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=HipsterBrown" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=HipsterBrown" title="Documentation">📖</a> <a href="#example-HipsterBrown" title="Examples">💡</a></td>
+    <td align="center"><a href="https://github.com/Bnaya"><img src="https://avatars0.githubusercontent.com/u/1304862?v=4" width="100px;" alt=""/><br /><sub><b>Bnaya Peretz</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3ABnaya" title="Bug reports">🐛</a> <a href="https://github.com/formium/tsdx/commits?author=Bnaya" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/andresz1"><img src="https://avatars2.githubusercontent.com/u/6877967?v=4" width="100px;" alt=""/><br /><sub><b>Andres Alvarez</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=andresz1" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=andresz1" title="Documentation">📖</a> <a href="#example-andresz1" title="Examples">💡</a></td>
+    <td align="center"><a href="https://github.com/kyarik"><img src="https://avatars2.githubusercontent.com/u/33955898?v=4" width="100px;" alt=""/><br /><sub><b>Yaroslav K.</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=kyarik" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://strdr4605.github.io"><img src="https://avatars3.githubusercontent.com/u/16056918?v=4" width="100px;" alt=""/><br /><sub><b>Dragoș Străinu</b></sub></a><br /><a href="#ideas-strdr4605" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/george-varghese-m/"><img src="https://avatars1.githubusercontent.com/u/20477438?v=4" width="100px;" alt=""/><br /><sub><b>George Varghese M.</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Code">💻</a> <a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Documentation">📖</a> <a href="https://github.com/formium/tsdx/commits?author=georgevarghese185" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://nelabs.dev/"><img src="https://avatars2.githubusercontent.com/u/137872?v=4" width="100px;" alt=""/><br /><sub><b>Reinis Ivanovs</b></sub></a><br /><a href="#ideas-slikts" title="Ideas, Planning, & Feedback">🤔</a> <a href="#question-slikts" title="Answering Questions">💬</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://orta.io"><img src="https://avatars2.githubusercontent.com/u/49038?v=4" width="100px;" alt=""/><br /><sub><b>Orta Therox</b></sub></a><br /><a href="#question-orta" title="Answering Questions">💬</a> <a href="https://github.com/formium/tsdx/commits?author=orta" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/thany"><img src="https://avatars1.githubusercontent.com/u/152227?v=4" width="100px;" alt=""/><br /><sub><b>Martijn Saly</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Athany" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://kattcorp.com"><img src="https://avatars1.githubusercontent.com/u/459267?v=4" width="100px;" alt=""/><br /><sub><b>Alex Johansson</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=KATT" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/hb-seb"><img src="https://avatars1.githubusercontent.com/u/69623566?v=4" width="100px;" alt=""/><br /><sub><b>hb-seb</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=hb-seb" title="Code">💻</a></td>
+    <td align="center"><a href="http://seungdols.tistory.com/"><img src="https://avatars3.githubusercontent.com/u/16032614?v=4" width="100px;" alt=""/><br /><sub><b>seungdols</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Aseungdols" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/CyriacBr"><img src="https://avatars3.githubusercontent.com/u/38442110?v=4" width="100px;" alt=""/><br /><sub><b>Béré Cyriac</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3ACyriacBr" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/in19farkt"><img src="https://avatars3.githubusercontent.com/u/12945918?v=4" width="100px;" alt=""/><br /><sub><b>Dmitriy Serdtsev</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Ain19farkt" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://formoses.ru/"><img src="https://avatars3.githubusercontent.com/u/3105477?v=4" width="100px;" alt=""/><br /><sub><b>Vladislav Moiseev</b></sub></a><br /><a href="https://github.com/formium/tsdx/commits?author=vladdy-moses" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/felixmosh"><img src="https://avatars3.githubusercontent.com/u/9304194?v=4" width="100px;" alt=""/><br /><sub><b>Felix Mosheev</b></sub></a><br /><a href="https://github.com/formium/tsdx/issues?q=author%3Afelixmosh" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

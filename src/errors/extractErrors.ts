@@ -1,3 +1,4 @@
+// largely borrowed from https://github.com/facebook/react/blob/8b2d3783e58d1acea53428a10d2035a8399060fe/scripts/error-codes/extract-errors.js
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
@@ -5,17 +6,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 import fs from 'fs-extra';
-import * as babylon from 'babylon';
-import traverse from 'babel-traverse';
+import { parse, ParserOptions } from '@babel/parser';
+import traverse from '@babel/traverse';
 import { invertObject } from './invertObject';
 import { evalToString } from './evalToString';
 import { paths } from '../constants';
 import { safeVariableName } from '../utils';
-import pascalCase from 'pascal-case';
+import { pascalCase } from 'pascal-case';
 
-const babylonOptions = {
+const babelParserOptions: ParserOptions = {
   sourceType: 'module',
-  // As a parser, babylon has its own options and we can't directly
+  // As a parser, @babel/parser has its own options and we can't directly
   // import/require a babel preset. It should be kept **the same** as
   // the `babel-plugin-syntax-*` ones specified in
   // https://github.com/facebook/fbjs/blob/master/packages/babel-preset-fbjs/configure.js
@@ -26,7 +27,7 @@ const babylonOptions = {
     'trailingFunctionCommas',
     'objectRestSpread',
   ],
-};
+} as ParserOptions; // workaround for trailingFunctionCommas syntax
 
 export async function extractErrors(opts: any) {
   if (!opts || !('errorMapFilePath' in opts)) {
@@ -64,7 +65,7 @@ export async function extractErrors(opts: any) {
   existingErrorMap = invertObject(existingErrorMap);
 
   function transform(source: string) {
-    const ast = babylon.parse(source, babylonOptions);
+    const ast = parse(source, babelParserOptions);
 
     traverse(ast, {
       CallExpression: {
@@ -111,7 +112,7 @@ function ErrorDev(message) {
   return error;
 }
 
-export default ErrorDev;      
+export default ErrorDev;
       `,
       'utf-8'
     );

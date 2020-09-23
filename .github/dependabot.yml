@@ -1,0 +1,39 @@
+version: 2
+
+updates:
+  # configuration for /
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly # don't spam daily
+    commit-message:
+      prefix: 'deps:' # prefix commit with deps: for consistency
+    # only increase version when required, don't bump every patch or minor
+    versioning-strategy: increase-if-necessary
+    allow:
+      # only upgrade prod deps (not devDeps)
+      - dependency-name: '*'
+        dependency-type: production
+    # temporarily disable dep upgrade PRs for / as they're being updated
+    open-pull-requests-limit: 0
+
+  # configuration for /website
+  - package-ecosystem: npm
+    directory: /website
+    schedule:
+      interval: weekly # don't spam daily
+    commit-message:
+      prefix: 'deps:' # prefix commit with deps: for consistency
+    # only increase version when required, don't bump every patch or minor
+    versioning-strategy: increase-if-necessary
+    allow:
+      # only upgrade prod deps (not devDeps)
+      - dependency-name: '*'
+        dependency-type: production
+    # /website is not a published package and doesn't really have an attack
+    # surface area, should only be updated as needed, not as soon as deps change
+    ignore:
+      # no security PRs for /website
+      - dependency-name: '*'
+    # disable dep upgrade PRs for /website
+    open-pull-requests-limit: 0

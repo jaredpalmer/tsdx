@@ -2,12 +2,13 @@ import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
-import { DEFAULT_EXTENSIONS } from '@babel/core';
-// import babel from 'rollup-plugin-babel';
+import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
-import resolve from '@rollup/plugin-node-resolve';
+import resolve, {
+  DEFAULTS as RESOLVE_DEFAULTS,
+} from '@rollup/plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
@@ -60,9 +61,11 @@ export async function createRollupConfig(
     input: opts.input,
     // Tell Rollup which packages to ignore
     external: (id: string) => {
-      if (id === 'babel-plugin-transform-async-to-promises/helpers') {
+      // bundle in polyfills as TSDX can't (yet) ensure they're installed as deps
+      if (id.startsWith('regenerator-runtime')) {
         return false;
       }
+
       return external(id);
     },
     // Rollup has treeshaking by default, but we can optimize it further...
@@ -115,14 +118,16 @@ export async function createRollupConfig(
           'main',
           opts.target !== 'node' ? 'browser' : undefined,
         ].filter(Boolean) as string[],
-        // defaults + .jsx
-        extensions: ['.mjs', '.js', '.jsx', '.json', '.node'],
+        extensions: [...RESOLVE_DEFAULTS.extensions, '.jsx'],
       }),
-      opts.format === 'umd' &&
-        commonjs({
-          // use a regex to make sure to include eventual hoisted packages
-          include: /\/node_modules\//,
-        }),
+      // all bundled external modules need to be converted from CJS to ESM
+      commonjs({
+        // use a regex to make sure to include eventual hoisted packages
+        include:
+          opts.format === 'umd'
+            ? /\/node_modules\//
+            : /\/regenerator-runtime\//,
+      }),
       json(),
       {
         // Custom plugin that removes shebang from code because newer
@@ -181,22 +186,20 @@ export async function createRollupConfig(
       }),
       babelPluginTsdx({
         exclude: 'node_modules/**',
-        extensions: [...DEFAULT_EXTENSIONS, 'ts', 'tsx'],
+        extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,
         custom: {
-          targets: opts.target === 'node' ? { node: '8' } : undefined,
+          targets: opts.target === 'node' ? { node: '10' } : undefined,
           extractErrors: opts.extractErrors,
           format: opts.format,
         },
+        babelHelpers: 'bundled',
       }),
       opts.env !== undefined &&
         replace({
           'process.env.NODE_ENV': JSON.stringify(opts.env),
         }),
       sourceMaps(),
-      // sizeSnapshot({
-      //   printInfo: false,
-      // }),
       shouldMinify &&
         terser({
           sourcemap: true,

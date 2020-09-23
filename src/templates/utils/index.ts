@@ -13,5 +13,15 @@ export const composePackageJson = (template: Template) => ({
     name,
     author,
     module: `dist/${name}.esm.js`,
+    'size-limit': [
+      {
+        path: `dist/${name}.cjs.production.min.js`,
+        limit: '10 KB',
+      },
+      {
+        path: `dist/${name}.esm.js`,
+        limit: '10 KB',
+      },
+    ],
   };
 };

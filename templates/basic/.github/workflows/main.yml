@@ -2,41 +2,31 @@ name: CI
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Build, lint, and test on Node ${{ matrix.node }} and ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['10.x', '12.x', '14.x']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-      - name: Begin CI...
+      - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Use Node 12
+      - name: Use Node ${{ matrix.node }}
         uses: actions/setup-node@v1
         with:
-          node-version: 12.x
+          node-version: ${{ matrix.node }}
 
-      - name: Use cached node_modules
-        uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: nodeModules-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            nodeModules-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-        env:
-          CI: true
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Lint
         run: yarn lint
-        env:
-          CI: true
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
-        env:
-          CI: true
 
       - name: Build
         run: yarn build
-        env:
-          CI: true

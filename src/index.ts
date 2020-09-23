@@ -13,7 +13,7 @@ import {
 import asyncro from 'asyncro';
 import chalk from 'chalk';
 import * as fs from 'fs-extra';
-import jest from 'jest';
+import * as jest from 'jest';
 import { CLIEngine } from 'eslint';
 import logError from './logError';
 import path from 'path';
@@ -254,7 +254,7 @@ prog
 prog
   .command('watch')
   .describe('Rebuilds on any change')
-  .option('--entry, -i', 'Entry module(s)')
+  .option('--entry, -i', 'Entry module')
   .example('watch --entry src/foo.tsx')
   .option('--target', 'Specify your target environment', 'browser')
   .example('watch --target node')
@@ -363,7 +363,7 @@ prog
 prog
   .command('build')
   .describe('Build your project once and exit')
-  .option('--entry, -i', 'Entry module(s)')
+  .option('--entry, -i', 'Entry module')
   .example('build --entry src/foo.tsx')
   .option('--target', 'Specify your target environment', 'browser')
   .example('build --target node')
@@ -481,9 +481,7 @@ function setAuthorName(author: string) {
 
 prog
   .command('test')
-  .describe(
-    'Run jest test runner. Passes through all flags directly to Jest'
-  )
+  .describe('Run jest test runner. Passes through all flags directly to Jest')
   .action(async (opts: { config?: string }) => {
     // Do this as the first thing so that any code reading it knows the right env.
     process.env.BABEL_ENV = 'test';
@@ -547,6 +545,12 @@ prog
   .example('lint src test --fix')
   .option('--ignore-pattern', 'Ignore a pattern')
   .example('lint src test --ignore-pattern test/foobar.ts')
+  .option(
+    '--max-warnings',
+    'Exits with non-zero error code if number of warnings exceed this number',
+    Infinity
+  )
+  .example('lint src test --max-warnings 10')
   .option('--write-file', 'Write the config file locally')
   .example('lint --write-file')
   .option('--report-file', 'Write JSON report to file locally')
@@ -557,6 +561,7 @@ prog
       'ignore-pattern': string;
       'write-file': boolean;
       'report-file': string;
+      'max-warnings': number;
       _: string[];
     }) => {
       if (opts['_'].length === 0 && !opts['write-file']) {
@@ -597,6 +602,9 @@ prog
         );
       }
       if (report.errorCount) {
+        process.exit(1);
+      }
+      if (report.warningCount > opts['max-warnings']) {
         process.exit(1);
       }
     }

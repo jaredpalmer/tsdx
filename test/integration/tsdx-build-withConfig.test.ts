@@ -35,7 +35,7 @@ describe('integration :: tsdx build :: tsdx.config.js', () => {
 
     // autoprefixed and minifed output
     expect(
-      cssText.includes('.test::-webkit-input-placeholder{color:"blue"}')
+      cssText.includes('.test::-moz-placeholder{color:"blue"}')
     ).toBeTruthy();
 
     expect(output.code).toBe(0);
