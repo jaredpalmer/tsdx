@@ -67,6 +67,22 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(matched).toBeFalsy();
   });
 
+  it('should use lodash for the CJS build', () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/lodash/, ['dist/build-default.cjs.*.js']);
+    expect(matched).toBeTruthy();
+  });
+
+  it('should use lodash-es for the ESM build', () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/lodash-es/, ['dist/build-default.esm.js']);
+    expect(matched).toBeTruthy();
+  });
+
   it("shouldn't replace lodash/fp", () => {
     const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
