@@ -38,7 +38,7 @@ export async function createEslintConfig({
       { flag: 'wx' }
     );
   } catch (e) {
-    if (e.code === 'EEXIST') {
+    if ((e as NodeJS.ErrnoException).code === 'EEXIST') {
       console.error(
         'Error trying to save the Eslint configuration file:',
         `${file} already exists.`

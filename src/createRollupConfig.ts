@@ -203,7 +203,6 @@ export async function createRollupConfig(
       sourceMaps(),
       shouldMinify &&
         terser({
-          sourcemap: true,
           output: { comments: false },
           compress: {
             keep_infinity: true,
