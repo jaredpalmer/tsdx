@@ -324,15 +324,14 @@ The `options` object type definition in [src/externalTypes.ts](src/externalTypes
 #### Example: Adding Postcss
 
 ```js
-const tsdx = require('tsdx');
 const postcss = require('rollup-plugin-postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 
 module.exports = {
   /**
-   * @param {tsdx.RollupOptions} config
-   * @param {tsdx.TsdxOptions} options
+   * @param {import('tsdx').RollupOptions} config
+   * @param {import('tsdx').TsdxOptions} options
    */
   rollup(config, options) {
     config.plugins.push(
