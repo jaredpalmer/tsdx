@@ -961,6 +961,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "altrim",
+      "name": "Altrim Beqiri",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/602300?v=4",
+      "profile": "http://www.altrimbeqiri.com",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
