@@ -1,3 +1,5 @@
+// regression test for optional chaining syntax
 // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining
 
-export const foo = (foo?: { bar: string }) => foo?.bar || 'bar';
+const someObj: { someOptionalString?: string } = {};
+const shouldBeBar = someObj?.someOptionalString || 'bar';

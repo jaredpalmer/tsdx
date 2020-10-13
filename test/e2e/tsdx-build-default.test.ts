@@ -45,8 +45,8 @@ describe('tsdx build :: zero-config defaults', () => {
     const output = execWithCache('node ../dist/index.js build');
 
     const lib = require(`../../${stageName}/dist`);
-    expect(lib.foo()).toBe('bar');
-    expect(lib.__esModule).toBe(true);
+    expect(lib.returnsTrue()).toBe(true);
+    expect(lib.__esModule).toBe(true); // test that ESM -> CJS interop was output
 
     expect(output.code).toBe(0);
   });

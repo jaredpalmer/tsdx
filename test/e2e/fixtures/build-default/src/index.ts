@@ -9,11 +9,11 @@ export { testGenerator } from './syntax/generator';
 export { kebabCase } from 'lodash';
 export { merge, mergeAll } from 'lodash/fp';
 
-export { foo } from './foo';
+export { returnsTrue } from './returnsTrue';
 
 export const sum = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {
-    console.log('fuck');
+    console.log('dev only output');
   }
   return a + b;
 };
