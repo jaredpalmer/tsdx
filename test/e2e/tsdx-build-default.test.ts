@@ -59,14 +59,6 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(matched).toBeTruthy();
   });
 
-  it('should not bundle regeneratorRuntime when targeting Node', () => {
-    const output = execWithCache('node ../dist/index.js build --target node');
-    expect(output.code).toBe(0);
-
-    const matched = grep(/regeneratorRuntime = r/, ['dist/build-default.*.js']);
-    expect(matched).toBeFalsy();
-  });
-
   it('should use lodash for the CJS build', () => {
     const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
