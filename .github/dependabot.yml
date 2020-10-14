@@ -14,6 +14,20 @@ updates:
       # only upgrade prod deps (not devDeps)
       - dependency-name: '*'
         dependency-type: production
+    ignore:
+      # ignore eslint-config-react-app's peerDeps
+      - dependency-name: '@typescript-eslint/eslint-plugin'
+      - dependency-name: '@typescript-eslint/parser'
+      - dependency-name: 'babel-eslint'
+      - dependency-name: 'eslint-plugin-flowtype'
+      - dependency-name: 'eslint-plugin-import'
+      - dependency-name: 'eslint-plugin-jsx-a11y'
+      - dependency-name: 'eslint-plugin-react'
+      - dependency-name: 'eslint-plugin-react-hooks'
+      # ignore Jest's "peers" that should be upgraded simultaneously with Jest
+      - dependency-name: '@types/jest'
+      - dependency-name: 'jest-watch-typeahead'
+      - dependency-name: 'ts-jest'
     # temporarily disable dep upgrade PRs for / as they're being updated
     open-pull-requests-limit: 0
 
