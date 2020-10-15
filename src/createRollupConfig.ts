@@ -1,6 +1,6 @@
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
-import { RollupOptions } from 'rollup';
+import { RollupOptions, Plugin } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
 import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
@@ -213,6 +213,6 @@ export async function createRollupConfig(
           toplevel: opts.format === 'cjs',
           warnings: true,
         }),
-    ],
+    ].filter(Boolean) as Plugin[],
   };
 }
