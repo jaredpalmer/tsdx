@@ -1,3 +1,5 @@
+import { RollupOptions, OutputOptions } from 'rollup';
+
 interface SharedOpts {
   // JS target
   target: 'node' | 'browser';
@@ -62,3 +64,5 @@ export interface PackageJson {
     node?: string;
   };
 }
+
+export type RollupOptionsWithOutput = RollupOptions & { output: OutputOptions };

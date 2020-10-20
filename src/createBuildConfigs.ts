@@ -1,9 +1,14 @@
-import { RollupOptions, OutputOptions } from 'rollup';
+import { RollupOptions } from 'rollup';
 import * as fs from 'fs-extra';
 import { concatAllArray } from 'jpjs';
 
 import { paths } from './constants';
-import { TSDXOptions, AtLeastOneTSDXOptions, NormalizedOpts } from './types';
+import {
+  TSDXOptions,
+  AtLeastOneTSDXOptions,
+  NormalizedOpts,
+  RollupOptionsWithOutput,
+} from './types';
 
 import { createRollupConfig } from './createRollupConfig';
 
@@ -20,7 +25,7 @@ if (fs.existsSync(paths.appConfig)) {
 
 export async function createBuildConfigs(
   opts: NormalizedOpts
-): Promise<Array<RollupOptions & { output: OutputOptions }>> {
+): Promise<RollupOptionsWithOutput[]> {
   const allInputs = concatAllArray(
     opts.input.map((input: string) =>
       createAllFormats(opts, input).map(
