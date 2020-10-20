@@ -64,7 +64,7 @@ type IBabelPluginTSDX = (
 // temp workaround so prettier doesn't reformat 100 lines for indentation
 const shortBabelPlugin = createBabelInputPluginFactory;
 
-export const babelPluginTsdx: IBabelPluginTSDX = shortBabelPlugin(() => ({
+export const babelPluginTSDX: IBabelPluginTSDX = shortBabelPlugin(() => ({
   // Passed the plugin options.
   options({ custom: customOptions, ...pluginOptions }: any) {
     return {
