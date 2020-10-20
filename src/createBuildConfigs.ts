@@ -1,9 +1,9 @@
-import { RollupOptions } from 'rollup';
 import * as fs from 'fs-extra';
 import { concatAllArray } from 'jpjs';
 
 import { paths } from './constants';
 import {
+  TSDXConfig,
   TSDXOptions,
   AtLeastOneTSDXOptions,
   NormalizedOpts,
@@ -13,8 +13,8 @@ import {
 import { createRollupConfig } from './createRollupConfig';
 
 // check for custom tsdx.config.js
-let tsdxConfig = {
-  rollup(config: RollupOptions, _options: TSDXOptions): RollupOptions {
+let tsdxConfig: TSDXConfig = {
+  rollup(config, _options) {
     return config;
   },
 };

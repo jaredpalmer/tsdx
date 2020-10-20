@@ -66,3 +66,7 @@ export interface PackageJson {
 }
 
 export type RollupOptionsWithOutput = RollupOptions & { output: OutputOptions };
+
+export interface TSDXConfig {
+  rollup: (config: RollupOptions, options: TSDXOptions) => RollupOptions;
+}
