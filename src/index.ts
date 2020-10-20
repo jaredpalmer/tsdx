@@ -40,7 +40,7 @@ import {
   PackageJson,
   WatchOpts,
   BuildOpts,
-  ModuleFormat,
+  AtLeastOneModuleFormat,
   NormalizedOpts,
 } from './types';
 import { createProgressEstimator } from './createProgressEstimator';
@@ -424,7 +424,7 @@ async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
         return 'esm';
       }
       return format;
-    }) as [ModuleFormat, ...ModuleFormat[]],
+    }) as AtLeastOneModuleFormat,
   };
 }
 

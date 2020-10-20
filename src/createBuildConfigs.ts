@@ -3,7 +3,7 @@ import * as fs from 'fs-extra';
 import { concatAllArray } from 'jpjs';
 
 import { paths } from './constants';
-import { TSDXOptions, NormalizedOpts } from './types';
+import { TSDXOptions, AtLeastOneTSDXOptions, NormalizedOpts } from './types';
 
 import { createRollupConfig } from './createRollupConfig';
 
@@ -46,7 +46,7 @@ export async function createBuildConfigs(
 function createAllFormats(
   opts: NormalizedOpts,
   input: string
-): [TSDXOptions, ...TSDXOptions[]] {
+): AtLeastOneTSDXOptions {
   return [
     opts.format.includes('cjs') && {
       ...opts,
@@ -85,5 +85,5 @@ function createAllFormats(
       env: 'production',
       input,
     },
-  ].filter(Boolean) as [TSDXOptions, ...TSDXOptions[]];
+  ].filter(Boolean) as AtLeastOneTSDXOptions;
 }

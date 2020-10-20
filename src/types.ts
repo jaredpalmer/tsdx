@@ -8,6 +8,7 @@ interface SharedOpts {
 }
 
 export type ModuleFormat = 'cjs' | 'umd' | 'esm' | 'system';
+export type AtLeastOneModuleFormat = [ModuleFormat, ...ModuleFormat[]];
 
 export interface BuildOpts extends SharedOpts {
   name?: string;
@@ -29,7 +30,7 @@ export interface NormalizedOpts
   extends Omit<WatchOpts, 'name' | 'input' | 'format'> {
   name: string;
   input: string[];
-  format: [ModuleFormat, ...ModuleFormat[]];
+  format: AtLeastOneModuleFormat;
 }
 
 export interface TSDXOptions extends SharedOpts {
@@ -48,6 +49,7 @@ export interface TSDXOptions extends SharedOpts {
   // Only transpile, do not type check (makes compilation faster)
   transpileOnly?: boolean;
 }
+export type AtLeastOneTSDXOptions = [TSDXOptions, ...TSDXOptions[]];
 
 export interface PackageJson {
   name: string;
