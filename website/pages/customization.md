@@ -73,12 +73,12 @@ module.exports = {
 
 ## Babel
 
-You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with [its own Babel transforms](./src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
+You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with [its own Babel transforms](https://github.com/formium/tsdx/blob/master/src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
 
 ## Jest
 
-You can add your own `jest.config.js` to the root of your project and TSDX will **shallow merge** it with [its own Jest config](./src/createJestConfig.ts).
+You can add your own `jest.config.js` to the root of your project and TSDX will **shallow merge** it with [its own Jest config](https://github.com/formium/tsdx/blob/master/src/createJestConfig.ts).
 
 ## ESLint
 
-You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
+You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](https://github.com/formium/tsdx/blob/master/src/createEslintConfig.ts).
