@@ -41,12 +41,19 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(output.code).toBe(0);
   });
 
-  it('should create the library correctly', () => {
+  it('should create the library correctly', async () => {
     const output = execWithCache('node ../dist/index.js build');
 
     const lib = require(`../../${stageName}/dist`);
-    expect(lib.foo()).toBe('bar');
-    expect(lib.__esModule).toBe(true);
+    expect(lib.returnsTrue()).toBe(true);
+    expect(lib.__esModule).toBe(true); // test that ESM -> CJS interop was output
+
+    // syntax tests
+    expect(lib.testNullishCoalescing()).toBe(true);
+    expect(lib.testOptionalChaining()).toBe(true);
+    // can't use an async generator in Jest yet, so use next().value instead of yield
+    expect(lib.testGenerator().next().value).toBe(true);
+    expect(await lib.testAsync()).toBe(true);
 
     expect(output.code).toBe(0);
   });
@@ -59,12 +66,28 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(matched).toBeTruthy();
   });
 
-  it('should not bundle regeneratorRuntime when targeting Node', () => {
-    const output = execWithCache('node ../dist/index.js build --target node');
+  it('should use lodash for the CJS build', () => {
+    const output = execWithCache('node ../dist/index.js build');
     expect(output.code).toBe(0);
 
-    const matched = grep(/regeneratorRuntime = r/, ['dist/build-default.*.js']);
-    expect(matched).toBeFalsy();
+    const matched = grep(/lodash/, ['dist/build-default.cjs.*.js']);
+    expect(matched).toBeTruthy();
+  });
+
+  it('should use lodash-es for the ESM build', () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/lodash-es/, ['dist/build-default.esm.js']);
+    expect(matched).toBeTruthy();
+  });
+
+  it("shouldn't replace lodash/fp", () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+
+    const matched = grep(/lodash\/fp/, ['dist/build-default.*.js']);
+    expect(matched).toBeTruthy();
   });
 
   it('should clean the dist directory before rebuilding', () => {

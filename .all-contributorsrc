@@ -950,7 +950,38 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/9304194?v=4",
       "profile": "https://github.com/felixmosh",
       "contributions": [
-        "bug"
+        "bug",
+        "doc"
+      ]
+    },
+    {
+      "login": "ludofischer",
+      "name": "Ludovico Fischer",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/43557?v=4",
+      "profile": "http://www.ludofischer.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "altrim",
+      "name": "Altrim Beqiri",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/602300?v=4",
+      "profile": "http://www.altrimbeqiri.com",
+      "contributions": [
+        "bug",
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "tanem",
+      "name": "Tane Morgan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/464864?v=4",
+      "profile": "https://github.com/tanem",
+      "contributions": [
+        "bug",
+        "code"
       ]
     }
   ],

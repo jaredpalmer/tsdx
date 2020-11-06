@@ -1,6 +1,6 @@
 {
   "name": "tsdx",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
@@ -68,7 +68,7 @@
     "enquirer": "^2.3.4",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-config-react-app": "^5.0.2",
+    "eslint-config-react-app": "^5.2.1",
     "eslint-plugin-flowtype": "^3.13.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
@@ -89,7 +89,7 @@
     "rollup": "^1.32.1",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-terser": "^5.1.2",
-    "rollup-plugin-typescript2": "^0.26.0",
+    "rollup-plugin-typescript2": "^0.27.3",
     "sade": "^1.4.2",
     "semver": "^7.1.1",
     "shelljs": "^0.8.3",
@@ -101,6 +101,7 @@
   "devDependencies": {
     "@types/eslint": "^6.1.2",
     "@types/fs-extra": "^9.0.1",
+    "@types/lodash": "^4.14.161",
     "@types/node": "^14.11.1",
     "@types/react": "^16.9.11",
     "@types/rollup-plugin-json": "^3.0.2",

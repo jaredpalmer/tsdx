@@ -1,5 +1,9 @@
+// regression test for nullish coalescing syntax
 // https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#nullish-coalescing
 
-const bar = () => {};
-const foo = false;
-export const x = foo ?? bar();
+export function testNullishCoalescing() {
+  const someFunc = () => 'some string';
+  const someFalse = false;
+  const shouldBeTrue = !(someFalse ?? someFunc());
+  return shouldBeTrue;
+}

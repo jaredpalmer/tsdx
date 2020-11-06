@@ -40,9 +40,9 @@ This is the folder structure we set up for you:
 
 ```txt
 /src
-  index.tsx       # EDIT THIS
+  index.ts        # EDIT THIS
 /test
-  blah.test.tsx   # EDIT THIS
+  index.test.ts   # EDIT THIS
 .gitignore
 package.json
 README.md         # EDIT THIS
