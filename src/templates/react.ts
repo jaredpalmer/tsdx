@@ -9,8 +9,12 @@ const reactTemplate: Template = {
     ...basicTemplate.dependencies,
     '@types/react',
     '@types/react-dom',
+    '@types/testing-library__react',
+    '@types/testing-library__jest-dom',
     'react',
     'react-dom',
+    '@testing-library/react',
+    '@testing-library/jest-dom',
   ],
   packageJson: {
     ...basicTemplate.packageJson,

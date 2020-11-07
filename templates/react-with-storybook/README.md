@@ -87,7 +87,7 @@ tsconfig.json
 
 #### React Testing Library
 
-We do not set up `react-testing-library` for you yet, we welcome contributions and documentation on this.
+We set up `react-testing-library` for you. Learn [how to use](https://testing-library.com/docs/) `react-testing-library`.
 
 ### Rollup
 
