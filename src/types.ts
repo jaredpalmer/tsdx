@@ -5,6 +5,8 @@ interface SharedOpts {
   tsconfig?: string;
   // Is error extraction running?
   extractErrors?: boolean;
+  // Should omit progress animations?
+  noProgress?: boolean;
 }
 
 export type ModuleFormat = 'cjs' | 'umd' | 'esm' | 'system';

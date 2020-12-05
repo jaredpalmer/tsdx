@@ -382,11 +382,19 @@ prog
   .example(
     'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
   )
+  .option('--noProgress', "Don't show progress animations")
+  .example('build --noProgress')
   .action(async (dirtyOpts: BuildOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
     await cleanDistFolder();
-    const logger = await createProgressEstimator();
+    const progress =
+      process.stdout.isTTY && !process.env.CI && !opts.noProgress;
+    const logger = progress
+      ? await createProgressEstimator()
+      : (_promise: unknown, message: string) => {
+          console.log(message);
+        };
     if (opts.format.includes('cjs')) {
       const promise = writeCjsEntryFile(opts.name).catch(logError);
       logger(promise, 'Creating entry file');
