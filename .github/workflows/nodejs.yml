@@ -69,3 +69,53 @@ jobs:
       - name: Test package
         run: |
           yarn --version && yarn node -p 'process.versions.pnp' && yarn test:post-build
+
+  e2e-templates:
+    runs-on: ubuntu-latest
+
+    name: E2E `tsdx create ${{ matrix.template }}`
+
+    strategy:
+      matrix:
+        template: ['basic', 'react', 'react-with-storybook']
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
+
+      - name: Test
+        run: |
+          # generate tarball of tsdx
+          yarn pack
+
+          # Move into new, empty git repo
+          mkdir -p /tmp/tsdx-e2e/${{ matrix.template }}
+          cp tsdx-*.tgz /tmp/tsdx-e2e/
+          cd /tmp/tsdx-e2e/${{ matrix.template }}
+          git init
+
+          # Use npx to run `tsdx create...` from the tarball
+          git config --global user.name 'Author'
+          git config --global user.email 'author@example.com'
+          npx -p ../tsdx*.tgz tsdx create --template ${{ matrix.template }} mylib
+
+          # init yarn 2
+          cd mylib
+          yarn set version 2
+
+          # Switch to tarball version of tsdx
+          yarn add tsdx@file:$( echo ../../tsdx-v*.tgz )
+
+          # test it
+          yarn tsdx build
+          yarn tsdx test
+
+      - name: Deduplicate dependencies
+        run: yarn deduplicate:check
