@@ -270,7 +270,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.10.4", "@babel/parser@^7.11.5", "@babel/parser@^7.12.7", "@babel/parser@^7.7.5", "@babel/parser@^7.9.0":
+"@babel/parser@^7.0.0", "@babel/parser@^7.1.0", "@babel/parser@^7.11.5", "@babel/parser@^7.12.7", "@babel/parser@^7.7.5", "@babel/parser@^7.9.0":
   version "7.12.7"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.12.7.tgz#fee7b39fe809d0e73e5b25eecaf5780ef3d73056"
   integrity sha512-oWR02Ubp4xTLCAqPRiNIuMVgNO5Aif/xpXtabhzW2HWUD47XJsAB4Zd/Rg30+XeQA3juXigV7hlquOTmwqLiwg==
@@ -907,7 +907,7 @@
   resolved "https://registry.yarnpkg.com/@istanbuljs/schema/-/schema-0.1.2.tgz#26520bf09abe4a5644cd5414e37125a8954241dd"
   integrity sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
 
-"@jest/console@^25.3.0", "@jest/console@^25.5.0":
+"@jest/console@^25.5.0":
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-25.5.0.tgz#770800799d510f37329c508a9edd0b7b447d9abb"
   integrity sha512-T48kZa6MK1Y6k4b89sexwmSF4YLeZS/Udqg3Jj3jG/cHH+N/sLFCEoXEDMOKugJQ9FxPN1osxIknvKkxt6MKyw==
@@ -1013,7 +1013,7 @@
   optionalDependencies:
     node-notifier "^6.0.0"
 
-"@jest/source-map@^25.2.6", "@jest/source-map@^25.5.0":
+"@jest/source-map@^25.5.0":
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/@jest/source-map/-/source-map-25.5.0.tgz#df5c20d6050aa292c2c6d3f0d2c7606af315bd1b"
   integrity sha512-eIGx0xN12yVpMcPaVpjXPnn3N30QGJCJQSkEDUt9x1fI1Gdvb07Ml6K5iN2hG7NmMP6FDmtPEssE3z6doOYUwQ==
@@ -1022,7 +1022,7 @@
     graceful-fs "^4.2.4"
     source-map "^0.6.0"
 
-"@jest/test-result@^25.3.0", "@jest/test-result@^25.5.0":
+"@jest/test-result@^25.5.0":
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/@jest/test-result/-/test-result-25.5.0.tgz#139a043230cdeffe9ba2d8341b27f2efc77ce87c"
   integrity sha512-oV+hPJgXN7IQf/fHWkcS99y0smKLU2czLBJ9WA0jHITLst58HpQMtzSYxzaBvYc6U5U6jfoMthqsUlUlbRXs0A==
@@ -1065,7 +1065,7 @@
     source-map "^0.6.1"
     write-file-atomic "^3.0.0"
 
-"@jest/types@^25.3.0", "@jest/types@^25.4.0", "@jest/types@^25.5.0":
+"@jest/types@^25.4.0", "@jest/types@^25.5.0":
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/@jest/types/-/types-25.5.0.tgz#4d6a4793f7b9599fc3680877b856a97dbccf2a9d"
   integrity sha512-OXD0RgQ86Tu3MazKo8bnrkDRaDXXMGUqd+kTtLtK1Zb7CRzQcaSRPPPV37SvYTdevXEBVxe0HXylEjs8ibkmCw==
@@ -1845,7 +1845,7 @@ babel-eslint@^10.0.3:
     eslint-visitor-keys "^1.0.0"
     resolve "^1.12.0"
 
-babel-jest@^25.5.1:
+babel-jest@^25.4.0, babel-jest@^25.5.1:
   version "25.5.1"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-25.5.1.tgz#bc2e6101f849d6f6aec09720ffc7bc5332e62853"
   integrity sha512-9dA9+GmMjIzgPnYtkhBg73gOo/RHqPmLruP3BaGL4KEX3Dwz6pI8auSN8G8+iuEG90+GSswyKvslN+JYSaacaQ==
@@ -3851,7 +3851,7 @@ got@^9.6.0:
     to-readable-stream "^1.0.0"
     url-parse-lax "^3.0.0"
 
-graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.3, graceful-fs@^4.2.4:
+graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0, graceful-fs@^4.2.4:
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
@@ -4954,7 +4954,7 @@ jest-snapshot@^25.5.1:
     pretty-format "^25.5.0"
     semver "^6.3.0"
 
-jest-util@^25.3.0, jest-util@^25.5.0:
+jest-util@^25.5.0:
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/jest-util/-/jest-util-25.5.0.tgz#31c63b5d6e901274d264a4fec849230aa3fa35b0"
   integrity sha512-KVlX+WWg1zUTB9ktvhsg2PXZVdkI1NBevOJSkTKYAyXyH4QSvh+Lay/e/v+bmaFfrkfx43xD8QTfgobzlEXdIA==
@@ -6719,7 +6719,7 @@ prettier@^1.19.1:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
   integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
 
-pretty-format@^25.2.1, pretty-format@^25.3.0, pretty-format@^25.5.0:
+pretty-format@^25.2.1, pretty-format@^25.5.0:
   version "25.5.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-25.5.0.tgz#7873c1d774f682c34b8d48b6743a2bf2ac55791a"
   integrity sha512-kbo/kq2LQ/A/is0PQwsEHM7Ca6//bGPPvU6UnsdDRSKTWxT/ru/xb88v4BJf6a69H+uTytOEsTusT9ksd/1iWQ==
