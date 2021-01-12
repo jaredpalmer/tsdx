@@ -281,6 +281,8 @@ prog
   .example('watch --transpileOnly')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('watch --extractErrors')
+  .option('--noProgress', "Don't show progress animations")
+  .example('watch --noProgress')
   .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
@@ -315,7 +317,8 @@ prog
       ]);
     }
 
-    const spinner = ora().start();
+    // Leave isEnabled as undefined to preserve default behavior if noProgress is not set
+    const spinner = ora({ isEnabled: opts.noProgress && false }).start();
     watch(
       (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
         watch: {
@@ -388,13 +391,7 @@ prog
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
     await cleanDistFolder();
-    const progress =
-      process.stdout.isTTY && !process.env.CI && !opts.noProgress;
-    const logger = progress
-      ? await createProgressEstimator()
-      : (_promise: unknown, message: string) => {
-          console.log(message);
-        };
+    const logger = await createProgressEstimator(!opts.noProgress);
     if (opts.format.includes('cjs')) {
       const promise = writeCjsEntryFile(opts.name).catch(logError);
       logger(promise, 'Creating entry file');

@@ -5,7 +5,7 @@ interface SharedOpts {
   tsconfig?: string;
   // Is error extraction running?
   extractErrors?: boolean;
-  // Should omit progress animations?
+  // Are output progress animations disabled?
   noProgress?: boolean;
 }
 
