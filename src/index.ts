@@ -279,6 +279,8 @@ prog
   .example('watch --onFailure "The build failed!"')
   .option('--transpileOnly', 'Skip type checking')
   .example('watch --transpileOnly')
+  .option('--bin', 'Specify if shebang is added to build')
+  .example('build --bin')
   .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
   .example('watch --extractErrors')
   .action(async (dirtyOpts: WatchOpts) => {
@@ -375,6 +377,8 @@ prog
   .example('build --tsconfig ./tsconfig.foo.json')
   .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
+  .option('--bin', 'Specify if shebang is added to build')
+  .example('build --bin')
   .option(
     '--extractErrors',
     'Extract errors to ./errors/codes.json and provide a url for decoding.'
@@ -417,6 +421,7 @@ prog
 async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
   return {
     ...opts,
+    bin: Boolean(opts.bin || appPackageJson.bin),
     name: opts.name || appPackageJson.name,
     input: await getInputs(opts.entry, appPackageJson.source),
     format: opts.format.split(',').map((format: string) => {

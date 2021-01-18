@@ -45,6 +45,7 @@ export async function createRollupConfig(
   ]
     .filter(Boolean)
     .join('.');
+  const banner = opts.bin ? `#!/usr/bin/env node` : undefined;
 
   const tsconfigPath = opts.tsconfig || paths.tsconfigJson;
   // borrowed from https://github.com/facebook/create-react-app/pull/7248
@@ -100,6 +101,7 @@ export async function createRollupConfig(
       freeze: false,
       // Respect tsconfig esModuleInterop when setting __esModule.
       esModule: Boolean(tsCompilerOptions?.esModuleInterop),
+      banner,
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
       globals: { react: 'React', 'react-native': 'ReactNative' },

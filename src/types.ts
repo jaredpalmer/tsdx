@@ -5,6 +5,8 @@ interface SharedOpts {
   tsconfig?: string;
   // Is error extraction running?
   extractErrors?: boolean;
+  // Is executive?
+  bin?: boolean;
 }
 
 export type ModuleFormat = 'cjs' | 'umd' | 'esm' | 'system';
@@ -52,6 +54,7 @@ export interface TsdxOptions extends SharedOpts {
 export interface PackageJson {
   name: string;
   source?: string;
+  bin?: string | { [binary: string]: string };
   jest?: any;
   eslint?: any;
   dependencies?: { [packageName: string]: string };

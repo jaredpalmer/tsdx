@@ -41,6 +41,13 @@ describe('tsdx build :: zero-config defaults', () => {
     expect(output.code).toBe(0);
   });
 
+  it('should add shebang', async () => {
+    const output = execWithCache('node ../dist/index.js build');
+    expect(output.code).toBe(0);
+    const matched = grep(/#!\/usr\/bin\/env/, ['dist/build-default.*.js']);
+    expect(matched).toBeTruthy();
+  });
+
   it('should create the library correctly', async () => {
     const output = execWithCache('node ../dist/index.js build');
 

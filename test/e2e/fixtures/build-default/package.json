@@ -1,4 +1,5 @@
 {
+  "bin": "dist/index.js",
   "scripts": {
     "build": "tsdx build"
   },
