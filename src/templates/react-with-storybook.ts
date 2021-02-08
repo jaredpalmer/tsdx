@@ -21,6 +21,7 @@ const storybookTemplate: Template = {
       ...reactTemplate.packageJson.scripts,
       storybook: 'start-storybook -p 6006',
       'build-storybook': 'build-storybook',
+      lint: 'tsdx lint src test .storybook',
     } as PackageJson['scripts'],
   },
 };
