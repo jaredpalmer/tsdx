@@ -11,7 +11,6 @@ import resolve, {
 } from '@rollup/plugin-node-resolve';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import ts from 'typescript';
 
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
@@ -23,6 +22,22 @@ const errorCodeOpts = {
 
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
+let ts: typeof import('typescript');
+try {
+  ts = require('typescript');
+} catch (error) {
+  throw new Error(
+    `The module "typescript" was not found. tsdx requires that you include it in "dependencies" of your "package.json". To add it, run "npm install typescript"`
+  );
+}
+
+try {
+  require.resolve('tslib');
+} catch (error) {
+  console.warn(
+    `The module "tslib" was not found. We use it to reduce your bundle size.`
+  );
+}
 
 export async function createRollupConfig(
   opts: TsdxOptions,

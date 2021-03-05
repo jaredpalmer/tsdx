@@ -94,9 +94,7 @@
     "semver": "^7.1.1",
     "shelljs": "^0.8.3",
     "tiny-glob": "^0.2.6",
-    "ts-jest": "^25.3.1",
-    "tslib": "^1.9.3",
-    "typescript": "^3.7.3"
+    "ts-jest": "^25.3.1"
   },
   "devDependencies": {
     "@types/eslint": "^6.1.2",
@@ -123,7 +121,13 @@
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
+    "tslib": "^1.9.3",
+    "typescript": "^3.7.3",
     "yarn-deduplicate": "^2.1.1"
+  },
+  "peerDependencies": {
+    "tslib": "^1.9.3 || ^2.0.0",
+    "typescript": "^3.7.3 || ^4.0.0"
   },
   "husky": {
     "hooks": {
