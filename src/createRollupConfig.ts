@@ -15,8 +15,7 @@ import ts from 'typescript';
 
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
-import { TsdxOptions, PackageJson } from './types';
-import * as fs from 'fs-extra';
+import { TsdxOptions } from './types';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -57,15 +56,7 @@ export async function createRollupConfig(
     './'
   ).options;
 
-  let appPackageJson: PackageJson;
-
-  try {
-    appPackageJson = fs.readJSONSync(paths.appPackageJson);
-    external.dependencies = [
-      ...Object.keys(appPackageJson.dependencies || {}),
-      ...Object.keys(appPackageJson.devDependencies || {}),
-    ];
-  } catch (e) {}
+  external.dependencies = [];
 
   return {
     // Tell Rollup the entry point to the package
