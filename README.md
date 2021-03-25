@@ -379,7 +379,8 @@ module.exports = {
 ```js
 module.exports = {
   rollup(config, options) {
-    // default value = package.json dependencies + devDependencies
+    // // default
+    // config.external.dependencies = [];
 
     // things in package.json dependencies, 
     // but you don't wanna bundle with.
