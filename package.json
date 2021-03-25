@@ -123,8 +123,7 @@
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
-    "yarn-deduplicate": "^2.1.1",
-    "type-fest": "^1.0.1"
+    "yarn-deduplicate": "^2.1.1"
   },
   "husky": {
     "hooks": {
