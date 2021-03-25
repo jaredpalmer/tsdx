@@ -28,6 +28,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 - [Customization](#customization)
   - [Rollup](#rollup)
     - [Example: Adding Postcss](#example-adding-postcss)
+    - [Example: Adding and Removing Bundle Dependency](#example-adding-and-removing-bundle-dependency)
   - [Babel](#babel)
   - [Jest](#jest)
   - [ESLint](#eslint)
@@ -373,6 +374,27 @@ module.exports = {
   },
 };
 ```
+
+#### Example: Adding and Removing Bundle Dependency
+```js
+module.exports = {
+  rollup(config, options) {
+    // default value = package.json dependencies + devDependencies
+
+    // things in package.json dependencies, 
+    // but you don't wanna bundle with.
+    config.external.dependencies = config.external.dependencies
+      .filter(x=>!/lodash/.test(x));
+
+    // things not in package.json dependencies, 
+    // but you wanna bundle with.
+    // eg: browserify stuff
+    config.external.dependencies.push('buffer')
+    return config;
+  },
+};
+```
+
 
 ### Babel
 

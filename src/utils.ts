@@ -20,8 +20,29 @@ export const safePackageName = (name: string) =>
     .toLowerCase()
     .replace(/(^@.*\/)|((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
 
-export const external = (id: string) =>
-  !id.startsWith('.') && !path.isAbsolute(id);
+// FIXME: bundle in polyfills as TSDX can't (yet) ensure they're installed as deps
+const notSupportYet = (id: string) => id.startsWith('regenerator-runtime');
+const pathful = (id: string) => id.startsWith('.') || path.isAbsolute(id);
+const wannaEmbed = (deps: string[], id: string) =>
+  deps.some(dep => id.startsWith(dep));
+
+function external(id: string) {
+  if (notSupportYet(id)) {
+    return false;
+  }
+
+  if (pathful(id)) {
+    return false;
+  }
+
+  if (wannaEmbed(external.dependencies || [], id)) {
+    return false;
+  }
+
+  return true;
+}
+external.dependencies = [] as string[];
+export { external };
 
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637

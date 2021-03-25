@@ -15,7 +15,8 @@ import ts from 'typescript';
 
 import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
-import { TsdxOptions } from './types';
+import { TsdxOptions, PackageJson } from './types';
+import * as fs from 'fs-extra';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -56,18 +57,21 @@ export async function createRollupConfig(
     './'
   ).options;
 
+  let appPackageJson: PackageJson;
+
+  try {
+    appPackageJson = fs.readJSONSync(paths.appPackageJson);
+    external.dependencies = [
+      ...Object.keys(appPackageJson.dependencies || {}),
+      ...Object.keys(appPackageJson.devDependencies || {}),
+    ];
+  } catch (e) {}
+
   return {
     // Tell Rollup the entry point to the package
     input: opts.input,
     // Tell Rollup which packages to ignore
-    external: (id: string) => {
-      // bundle in polyfills as TSDX can't (yet) ensure they're installed as deps
-      if (id.startsWith('regenerator-runtime')) {
-        return false;
-      }
-
-      return external(id);
-    },
+    external,
     // Rollup has treeshaking by default, but we can optimize it further...
     treeshake: {
       // We assume reading a property of an object never has side-effects.
