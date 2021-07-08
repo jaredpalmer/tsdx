@@ -9,14 +9,15 @@ const Output = tslib_1.__importStar(require("./output"));
 const program = {
     name: 'tsdx',
 };
-exports.help = function () {
+const help = function () {
     return `
     Only ${chalk_1.default.green('<project-directory>')} is required.
     If you have any problems, do not hesitate to file an issue:
     ${chalk_1.default.cyan('https://github.com/formium/tsdx/issues/new')}
   `;
 };
-exports.missingProjectName = function () {
+exports.help = help;
+const missingProjectName = function () {
     return `
 Please specify the project directory:
   ${chalk_1.default.cyan(program.name)} ${chalk_1.default.green('<project-directory>')}
@@ -25,11 +26,13 @@ For example:
 Run ${chalk_1.default.cyan(`${program.name} --help`)} to see all options.
 `;
 };
-exports.alreadyExists = function (projectName) {
+exports.missingProjectName = missingProjectName;
+const alreadyExists = function (projectName) {
     return `
 Uh oh! Looks like there's already a directory called ${chalk_1.default.red(projectName)}. Please try a different name or delete that folder.`;
 };
-exports.installing = function (packages) {
+exports.alreadyExists = alreadyExists;
+const installing = function (packages) {
     const pkgText = packages
         .map(function (pkg) {
         return `    ${chalk_1.default.cyan(chalk_1.default.bold(pkg))}`;
@@ -39,7 +42,8 @@ exports.installing = function (packages) {
 ${pkgText}
 `;
 };
-exports.installError = function (packages) {
+exports.installing = installing;
+const installError = function (packages) {
     const pkgText = packages
         .map(function (pkg) {
         return `${chalk_1.default.cyan(chalk_1.default.bold(pkg))}`;
@@ -47,12 +51,14 @@ exports.installError = function (packages) {
         .join(', ');
     Output.error(`Failed to install ${pkgText}, try again.`);
 };
-exports.copying = function (projectName) {
+exports.installError = installError;
+const copying = function (projectName) {
     return `
 Creating ${chalk_1.default.bold(chalk_1.default.green(projectName))}...
 `;
 };
-exports.start = async function (projectName) {
+exports.copying = copying;
+const start = async function (projectName) {
     const cmd = await getInstallCmd_1.default();
     const commands = {
         install: cmd === 'npm' ? 'npm install' : 'yarn install',
@@ -79,6 +85,8 @@ exports.start = async function (projectName) {
   ${chalk_1.default.green('https://github.com/formium/tsdx/issues')}
 `;
 };
-exports.incorrectNodeVersion = function (requiredVersion) {
+exports.start = start;
+const incorrectNodeVersion = function (requiredVersion) {
     return `Unsupported Node version! Your current Node version (${chalk_1.default.red(process.version)}) does not satisfy the requirement of Node ${chalk_1.default.cyan(requiredVersion)}.`;
 };
+exports.incorrectNodeVersion = incorrectNodeVersion;

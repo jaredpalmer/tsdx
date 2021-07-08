@@ -38,14 +38,16 @@ try {
     appPackageJson = fs.readJSONSync(constants_1.paths.appPackageJson);
 }
 catch (e) { }
-exports.isDir = (name) => fs
+const isDir = (name) => fs
     .stat(name)
     .then(stats => stats.isDirectory())
     .catch(() => false);
-exports.isFile = (name) => fs
+exports.isDir = isDir;
+const isFile = (name) => fs
     .stat(name)
     .then(stats => stats.isFile())
     .catch(() => false);
+exports.isFile = isFile;
 async function jsOrTs(filename) {
     const extension = (await exports.isFile(utils_1.resolveApp(filename + '.ts')))
         ? '.ts'

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.composePackageJson = void 0;
-exports.composePackageJson = (template) => ({ name, author, }) => {
+const composePackageJson = (template) => ({ name, author, }) => {
     return Object.assign(Object.assign({}, template.packageJson), { name,
         author, 'size-limit': [
             {
@@ -14,3 +14,4 @@ exports.composePackageJson = (template) => ({ name, author, }) => {
             },
         ] });
 };
+exports.composePackageJson = composePackageJson;

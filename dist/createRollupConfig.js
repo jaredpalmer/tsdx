@@ -84,22 +84,19 @@ async function createRollupConfig(opts, outputNum) {
             esModule: Boolean(tsCompilerOptions === null || tsCompilerOptions === void 0 ? void 0 : tsCompilerOptions.esModuleInterop),
             name: opts.name || utils_1.safeVariableName(opts.name),
             sourcemap: true,
-            globals: {
-                react: 'React',
-                'react-native': 'ReactNative',
-                'lodash-es': 'lodashEs',
-                'lodash/fp': 'lodashFp',
-            },
+            globals: { react: 'React', 'react-native': 'ReactNative', 'lodash-es': 'lodashEs', 'lodash/fp': 'lodashFp' },
             exports: 'named',
         },
         plugins: [
             !!opts.extractErrors && {
-                async transform(code, map) {
-                    await findAndRecordErrorCodes(code);
-                    return {
-                        code,
-                        map,
-                    };
+                async transform(code) {
+                    try {
+                        await findAndRecordErrorCodes(code);
+                    }
+                    catch (e) {
+                        return null;
+                    }
+                    return { code, map: null };
                 },
             },
             plugin_node_resolve_1.default({
@@ -186,6 +183,7 @@ async function createRollupConfig(opts, outputNum) {
             rollup_plugin_sourcemaps_1.default(),
             shouldMinify &&
                 rollup_plugin_terser_1.terser({
+                    sourcemap: true,
                     output: { comments: false },
                     compress: {
                         keep_infinity: true,

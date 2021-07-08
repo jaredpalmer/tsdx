@@ -38,7 +38,7 @@
     "templates"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14"
   },
   "dependencies": {
     "@babel/core": "^7.4.4",

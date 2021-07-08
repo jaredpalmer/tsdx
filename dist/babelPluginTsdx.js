@@ -5,15 +5,16 @@ const tslib_1 = require("tslib");
 const core_1 = require("@babel/core");
 const plugin_babel_1 = require("@rollup/plugin-babel");
 const lodash_merge_1 = tslib_1.__importDefault(require("lodash.merge"));
-exports.isTruthy = (obj) => {
+const isTruthy = (obj) => {
     if (!obj) {
         return false;
     }
     return obj.constructor !== Object || Object.keys(obj).length > 0;
 };
+exports.isTruthy = isTruthy;
 // replace lodash with lodash-es, but not lodash/fp
 const replacements = [{ original: 'lodash(?!/fp)', replacement: 'lodash-es' }];
-exports.mergeConfigItems = (type, ...configItemsToMerge) => {
+const mergeConfigItems = (type, ...configItemsToMerge) => {
     const mergedItems = [];
     configItemsToMerge.forEach(configItemToMerge => {
         configItemToMerge.forEach((item) => {
@@ -32,12 +33,14 @@ exports.mergeConfigItems = (type, ...configItemsToMerge) => {
     });
     return mergedItems;
 };
-exports.createConfigItems = (type, items) => {
+exports.mergeConfigItems = mergeConfigItems;
+const createConfigItems = (type, items) => {
     return items.map((_a) => {
         var { name } = _a, options = tslib_1.__rest(_a, ["name"]);
         return core_1.createConfigItem([require.resolve(name), options], { type });
     });
 };
+exports.createConfigItems = createConfigItems;
 exports.babelPluginTsdx = plugin_babel_1.createBabelInputPluginFactory(() => ({
     // Passed the plugin options.
     options(_a) {

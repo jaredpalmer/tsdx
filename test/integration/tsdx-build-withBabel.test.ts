@@ -20,8 +20,8 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(output.code).toBe(0);
 
     // from styled.h1` to styled.h1.withConfig(
-    const matched = grep(/styled.h1.withConfig\(/, [
-      'dist/build-withbabel.*.cjs',
+    const matched = grep(/default.h1.withConfig\(/, [
+      'dist/build-withbabel.production.min.cjs',
     ]);
     expect(matched).toBeTruthy();
   });
@@ -33,7 +33,9 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(output.code).toBe(0);
 
     // the comment "should be removed" should no longer be there
-    const matched = grep(/should be removed/, ['dist/build-withbabel.*.cjs']);
+    const matched = grep(/should be removed/, [
+      'dist/build-withbabel.production.min.cjs',
+    ]);
     expect(matched).toBeFalsy();
   });
 
@@ -42,7 +44,9 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(output.code).toBe(0);
 
     // ensures replace-identifiers was used
-    const matched = grep(/replacedSum/, ['dist/build-withbabel.*.cjs']);
+    const matched = grep(/replacedSum/, [
+      'dist/build-withbabel.production.min.cjs',
+    ]);
     expect(matched).toBeTruthy();
   });
 

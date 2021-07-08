@@ -6,21 +6,26 @@ const fs_extra_1 = tslib_1.__importDefault(require("fs-extra"));
 const path_1 = tslib_1.__importDefault(require("path"));
 const camelcase_1 = tslib_1.__importDefault(require("camelcase"));
 // Remove the package name scope if it exists
-exports.removeScope = (name) => name.replace(/^@.*\//, '');
+const removeScope = (name) => name.replace(/^@.*\//, '');
+exports.removeScope = removeScope;
 // UMD-safe package name
-exports.safeVariableName = (name) => camelcase_1.default(exports.removeScope(name)
+const safeVariableName = (name) => camelcase_1.default(exports.removeScope(name)
     .toLowerCase()
     .replace(/((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, ''));
-exports.safePackageName = (name) => name
+exports.safeVariableName = safeVariableName;
+const safePackageName = (name) => name
     .toLowerCase()
     .replace(/(^@.*\/)|((^[^a-zA-Z]+)|[^\w.-])|([^a-zA-Z0-9]+$)/g, '');
-exports.external = (id) => !id.startsWith('.') && !path_1.default.isAbsolute(id);
+exports.safePackageName = safePackageName;
+const external = (id) => !id.startsWith('.') && !path_1.default.isAbsolute(id);
+exports.external = external;
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebookincubator/create-react-app/issues/637
 exports.appDirectory = fs_extra_1.default.realpathSync(process.cwd());
-exports.resolveApp = function (relativePath) {
+const resolveApp = function (relativePath) {
     return path_1.default.resolve(exports.appDirectory, relativePath);
 };
+exports.resolveApp = resolveApp;
 // Taken from Create React App, react-dev-utils/clearConsole
 // @see https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/clearConsole.js
 function clearConsole() {
