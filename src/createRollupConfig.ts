@@ -193,7 +193,7 @@ export async function createRollupConfig(
         check: !opts.transpileOnly && outputNum === 0,
         useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
-      !opts.modern && babelPluginTsdx({
+      opts.legacy && babelPluginTsdx({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,
@@ -219,7 +219,7 @@ export async function createRollupConfig(
           pure_getters: true,
           passes: 10,
         },
-        ecma: opts.modern ? 2017 : 5,
+        ecma: opts.legacy ? 5 : 2017,
         module: isEsm,
         toplevel: opts.format === 'cjs' || isEsm,
         warnings: true,

@@ -16,7 +16,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should compile files into a dist directory', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(shell.test('-f', 'dist/build-default.development.cjs')).toBeTruthy();
@@ -31,7 +31,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it("shouldn't compile files in test/ or types/", () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     expect(shell.test('-d', 'dist/test/')).toBeFalsy();
     expect(shell.test('-d', 'dist/types/')).toBeFalsy();
@@ -40,7 +40,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should create the library correctly', async () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     /**
      * Cannot test ESM import here since it is emitted as CJS. Getting tsdx to
@@ -74,7 +74,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should bundle regeneratorRuntime', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     const matched = grep(/regeneratorRuntime = r/, [
@@ -84,7 +84,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should use lodash for the CJS build', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     const matched = grep(/lodash/, ['dist/build-default.*.cjs']);
@@ -92,7 +92,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should use lodash-es for the ESM build', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     const matched = grep(/lodash-es/, ['dist/build-default.mjs']);
@@ -100,7 +100,7 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it("shouldn't replace lodash/fp", () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     const matched = grep(/lodash\/fp/, ['dist/build-default.*.cjs']);
@@ -108,14 +108,14 @@ describe('tsdx build :: zero-config defaults', () => {
   });
 
   it('should clean the dist directory before rebuilding', () => {
-    let output = execWithCache('node ../dist/index.js build');
+    let output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     shell.mv('package.json', 'package-og.json');
     shell.mv('package2.json', 'package.json');
 
     // cache bust because we want to re-run this command with new package.json
-    output = execWithCache('node ../dist/index.js build', { noCache: true });
+    output = execWithCache('node ../dist/index.js build --legacy', { noCache: true });
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
 
     // build-default files have been cleaned out

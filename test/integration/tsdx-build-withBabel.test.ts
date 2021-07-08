@@ -16,7 +16,7 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
   });
 
   it('should convert styled-components template tags', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     // from styled.h1` to styled.h1.withConfig(
@@ -29,7 +29,7 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
   // TODO: make styled-components work with its Babel plugin and not just its
   // macro by allowing customization of plugin order
   it('should remove comments in the CSS', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     // the comment "should be removed" should no longer be there
@@ -40,7 +40,7 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
   });
 
   it('should merge and apply presets', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
     expect(output.code).toBe(0);
 
     // ensures replace-identifiers was used
@@ -51,7 +51,7 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
   });
 
   it('should compile files into a dist directory', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(

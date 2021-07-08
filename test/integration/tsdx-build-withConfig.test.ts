@@ -17,7 +17,7 @@ describe('integration :: tsdx build :: tsdx.config.js', () => {
   });
 
   it('should create a CSS file in the dist/ directory', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     // TODO: this is kind of subpar naming, rollup-plugin-postcss just names it
     // the same as the output file, but with the .css extension
@@ -27,7 +27,7 @@ describe('integration :: tsdx build :: tsdx.config.js', () => {
   });
 
   it('should autoprefix and minify the CSS file', async () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     const cssText = await fs.readFile(
       './dist/build-withconfig.development.css'
@@ -42,7 +42,7 @@ describe('integration :: tsdx build :: tsdx.config.js', () => {
   });
 
   it('should compile files into a dist directory', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(

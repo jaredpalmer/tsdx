@@ -16,7 +16,7 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
   });
 
   it('should use the declarationDir when set', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(
@@ -35,7 +35,7 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
   });
 
   it('should set __esModule according to esModuleInterop', () => {
-    const output = execWithCache('node ../dist/index.js build');
+    const output = execWithCache('node ../dist/index.js build --legacy');
 
     const lib = require(`../../${stageName}/dist/build-withtsconfig.production.min.cjs`);
     // if esModuleInterop: false, no __esModule is added, therefore undefined
@@ -46,7 +46,7 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
 
   it('should read custom --tsconfig path', () => {
     const output = execWithCache(
-      'node ../dist/index.js build --format cjs --tsconfig ./src/tsconfig.json'
+      'node ../dist/index.js build --legacy --format cjs --tsconfig ./src/tsconfig.json'
     );
 
     expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
