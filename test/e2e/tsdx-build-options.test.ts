@@ -26,7 +26,7 @@ describe('tsdx build :: options', () => {
     expect(
       shell.test('-f', 'dist/build-default.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-default.mjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-default.min.mjs')).toBeTruthy();
     expect(
       shell.test('-f', 'dist/build-default.umd.development.cjs')
     ).toBeTruthy();

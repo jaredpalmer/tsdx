@@ -22,8 +22,8 @@ const errorCodeOpts = {
 let shebang = {};
 async function createRollupConfig(opts, outputNum) {
     const findAndRecordErrorCodes = await extractErrors_1.extractErrors(Object.assign(Object.assign({}, errorCodeOpts), opts));
-    const isEsm = ['esm', 'es'].includes(opts.format);
-    const shouldMinify = opts.minify !== undefined ? opts.minify : opts.env === 'production';
+    const isEsm = opts.format.includes('es') || opts.format.includes('esm');
+    const shouldMinify = opts.minify !== undefined ? opts.minify : opts.env === 'production' || isEsm;
     let formatString = ['esm', 'cjs'].includes(opts.format) ? '' : opts.format;
     let fileExtension = opts.format === 'esm' ? 'mjs' : 'cjs';
     const outputName = [

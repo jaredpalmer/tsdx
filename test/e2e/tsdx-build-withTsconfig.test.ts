@@ -25,7 +25,7 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
     expect(
       shell.test('-f', 'dist/build-withtsconfig.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-withtsconfig.mjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-withtsconfig.min.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
     expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();

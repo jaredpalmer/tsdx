@@ -44,7 +44,7 @@ describe('integration :: tsdx build :: options', () => {
     expect(
       shell.test('-f', 'dist/build-options.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-options.mjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-options.min.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 

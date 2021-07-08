@@ -356,8 +356,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 function writeMjsEntryFile(name) {
     const contents = `
-export { default } from './${name}.mjs';
-export * from './${name}.mjs';
+export { default } from './${name}.min.mjs';
+export * from './${name}.min.mjs';
   `;
     return fs.outputFile(path_1.default.join(constants_1.paths.appDist, 'index.mjs'), contents);
 }

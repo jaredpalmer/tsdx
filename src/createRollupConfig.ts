@@ -33,10 +33,10 @@ export async function createRollupConfig(
     ...opts,
   });
 
-  const isEsm = ['esm', 'es'].includes(opts.format);
+  const isEsm = opts.format.includes('es') || opts.format.includes('esm');
 
   const shouldMinify =
-    opts.minify !== undefined ? opts.minify : opts.env === 'production';
+    opts.minify !== undefined ? opts.minify : opts.env === 'production' || isEsm;
 
   let formatString = ['esm', 'cjs'].includes(opts.format) ? '' : opts.format;
   let fileExtension = opts.format === 'esm' ? 'mjs' : 'cjs';

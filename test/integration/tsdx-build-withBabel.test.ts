@@ -60,7 +60,7 @@ describe('integration :: tsdx build :: .babelrc.js', () => {
     expect(
       shell.test('-f', 'dist/build-withbabel.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-withbabel.mjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-withbabel.min.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 

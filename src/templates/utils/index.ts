@@ -18,7 +18,7 @@ export const composePackageJson = (template: Template) => ({
         limit: '10 KB',
       },
       {
-        path: `dist/${name}.mjs`,
+        path: `dist/${name}.min.mjs`,
         limit: '10 KB',
       },
     ],
