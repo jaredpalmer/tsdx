@@ -22,6 +22,7 @@ const errorCodeOpts = {
 let shebang = {};
 async function createRollupConfig(opts, outputNum) {
     const findAndRecordErrorCodes = await extractErrors_1.extractErrors(Object.assign(Object.assign({}, errorCodeOpts), opts));
+    const isEsm = ['esm', 'es'].includes(opts.format);
     const shouldMinify = opts.minify !== undefined ? opts.minify : opts.env === 'production';
     let formatString = ['esm', 'cjs'].includes(opts.format) ? '' : opts.format;
     let fileExtension = opts.format === 'esm' ? 'mjs' : 'cjs';
@@ -105,7 +106,7 @@ async function createRollupConfig(opts, outputNum) {
                     'main',
                     opts.target !== 'node' ? 'browser' : undefined,
                 ].filter(Boolean),
-                extensions: [...plugin_node_resolve_1.DEFAULTS.extensions, '.jsx'],
+                extensions: [...plugin_node_resolve_1.DEFAULTS.extensions, '.cjs', '.mjs', '.jsx'],
             }),
             // all bundled external modules need to be converted from CJS to ESM
             plugin_commonjs_1.default({
@@ -164,12 +165,12 @@ async function createRollupConfig(opts, outputNum) {
                 check: !opts.transpileOnly && outputNum === 0,
                 useTsconfigDeclarationDir: Boolean(tsCompilerOptions === null || tsCompilerOptions === void 0 ? void 0 : tsCompilerOptions.declarationDir),
             }),
-            babelPluginTsdx_1.babelPluginTsdx({
+            !opts.modern && babelPluginTsdx_1.babelPluginTsdx({
                 exclude: 'node_modules/**',
                 extensions: [...core_1.DEFAULT_EXTENSIONS, 'ts', 'tsx'],
                 passPerPreset: true,
                 custom: {
-                    targets: opts.target === 'node' ? { node: '10' } : undefined,
+                    targets: opts.target === 'node' ? { node: '14' } : undefined,
                     extractErrors: opts.extractErrors,
                     format: opts.format,
                 },
@@ -190,10 +191,27 @@ async function createRollupConfig(opts, outputNum) {
                         pure_getters: true,
                         passes: 10,
                     },
-                    ecma: 5,
-                    toplevel: opts.format === 'cjs',
+                    ecma: opts.modern ? 2017 : 5,
+                    module: isEsm,
+                    toplevel: opts.format === 'cjs' || isEsm,
                     warnings: true,
                 }),
+            /**
+             * Ensure there's an empty default export to prevent runtime errors.
+             *
+             * @see https://www.npmjs.com/package/rollup-plugin-export-default
+             */
+            {
+                renderChunk: async (code, chunk) => {
+                    if (chunk.exports.includes('default') || !isEsm) {
+                        return null;
+                    }
+                    return {
+                        code: `${code}\nexport default {};`,
+                        map: null,
+                    };
+                },
+            },
         ],
     };
 }

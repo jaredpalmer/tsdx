@@ -41,6 +41,8 @@ export interface TsdxOptions extends SharedOpts {
   env: 'development' | 'production';
   // Module format
   format: ModuleFormat;
+  /** If `true`, transpilation is disabled. */
+  modern: boolean;
   // Is minifying?
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?

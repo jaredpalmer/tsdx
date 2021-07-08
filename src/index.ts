@@ -374,6 +374,8 @@ prog
   .example('build --name Foo')
   .option('--format', 'Specify module format(s)', 'cjs,esm')
   .example('build --format cjs,esm')
+  .option('--modern', 'Emit a modern module with no transpilation.')
+  .example('build --modern')
   .option('--tsconfig', 'Specify custom tsconfig path')
   .example('build --tsconfig ./tsconfig.foo.json')
   .option('--transpileOnly', 'Skip type checking')

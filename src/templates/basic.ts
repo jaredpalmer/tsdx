@@ -28,7 +28,7 @@ const basicTemplate: Template = {
     typings: `dist/index.d.ts`,
     files: ['dist', 'src'],
     engines: {
-      node: '>=10',
+      node: '>=14',
     },
     scripts: {
       start: 'tsdx watch',

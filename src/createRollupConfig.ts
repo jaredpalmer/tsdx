@@ -33,6 +33,8 @@ export async function createRollupConfig(
     ...opts,
   });
 
+  const isEsm = ['esm', 'es'].includes(opts.format);
+
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
@@ -125,7 +127,7 @@ export async function createRollupConfig(
           'main',
           opts.target !== 'node' ? 'browser' : undefined,
         ].filter(Boolean) as string[],
-        extensions: [...RESOLVE_DEFAULTS.extensions, '.jsx'],
+        extensions: [...RESOLVE_DEFAULTS.extensions, '.cjs', '.mjs', '.jsx'],
       }),
       // all bundled external modules need to be converted from CJS to ESM
       commonjs({
@@ -191,12 +193,12 @@ export async function createRollupConfig(
         check: !opts.transpileOnly && outputNum === 0,
         useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
-      babelPluginTsdx({
+      !opts.modern && babelPluginTsdx({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,
         custom: {
-          targets: opts.target === 'node' ? { node: '10' } : undefined,
+          targets: opts.target === 'node' ? { node: '14' } : undefined,
           extractErrors: opts.extractErrors,
           format: opts.format,
         },
@@ -217,10 +219,28 @@ export async function createRollupConfig(
           pure_getters: true,
           passes: 10,
         },
-        ecma: 5,
-        toplevel: opts.format === 'cjs',
+        ecma: opts.modern ? 2017 : 5,
+        module: isEsm,
+        toplevel: opts.format === 'cjs' || isEsm,
         warnings: true,
       }),
+      /**
+       * Ensure there's an empty default export to prevent runtime errors.
+       *
+       * @see https://www.npmjs.com/package/rollup-plugin-export-default
+       */
+       {
+        renderChunk: async (code: string, chunk: any) => {
+          if (chunk.exports.includes('default') || !isEsm) {
+            return null;
+          }
+
+          return {
+            code: `${code}\nexport default {};`,
+            map: null,
+          };
+        },
+      },
     ],
   };
 }
