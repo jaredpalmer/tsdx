@@ -404,7 +404,7 @@ prog
         throw err;
     });
     const argv = process.argv.slice(2);
-    let jestConfig = Object.assign(Object.assign({}, createJestConfig_1.createJestConfig(relativePath => path_1.default.resolve(__dirname, '..', relativePath), opts.config ? path_1.default.dirname(opts.config) : constants_1.paths.appRoot)), appPackageJson.jest);
+    let jestConfig = Object.assign(Object.assign(Object.assign({}, createJestConfig_1.createJestConfig(relativePath => path_1.default.resolve(__dirname, '..', relativePath), opts.config ? path_1.default.dirname(opts.config) : constants_1.paths.appRoot)), appPackageJson.jest), { passWithNoTests: true });
     // Allow overriding with jest.config
     const defaultPathExists = await fs.pathExists(constants_1.paths.jestConfig);
     if (opts.config || defaultPathExists) {

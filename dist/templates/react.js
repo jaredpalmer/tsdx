@@ -13,6 +13,6 @@ const reactTemplate = {
     ],
     packageJson: Object.assign(Object.assign({}, basic_1.default.packageJson), { peerDependencies: {
             react: '>=16',
-        }, scripts: Object.assign(Object.assign({}, basic_1.default.packageJson.scripts), { test: 'tsdx test --passWithNoTests' }) }),
+        }, scripts: Object.assign(Object.assign({}, basic_1.default.packageJson.scripts), { test: 'tsdx test' }) }),
 };
 exports.default = reactTemplate;

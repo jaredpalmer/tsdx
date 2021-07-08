@@ -34,6 +34,7 @@ const basicTemplate: Template = {
       start: 'tsdx watch',
       build: 'tsdx build',
       test: 'tsdx test',
+      posttest: 'node test/import.mjs && node test/require.cjs',
       lint: 'tsdx lint',
       prepare: 'tsdx build',
       size: 'size-limit',

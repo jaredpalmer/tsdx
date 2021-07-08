@@ -517,6 +517,7 @@ prog
         opts.config ? path.dirname(opts.config) : paths.appRoot
       ),
       ...appPackageJson.jest,
+      passWithNoTests: true,
     };
 
     // Allow overriding with jest.config
