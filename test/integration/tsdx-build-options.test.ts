@@ -39,14 +39,12 @@ describe('integration :: tsdx build :: options', () => {
   it('should compile files into a dist directory', () => {
     const output = execWithCache('node ../dist/index.js build --extractErrors');
 
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-options.development.cjs')).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-options.cjs.development.js')
+      shell.test('-f', 'dist/build-options.production.min.cjs')
     ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-options.cjs.production.min.js')
-    ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-options.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-options.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 

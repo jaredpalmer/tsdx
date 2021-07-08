@@ -217,6 +217,9 @@ prog
     if (opts.format.includes('cjs')) {
         await writeCjsEntryFile(opts.name);
     }
+    if (opts.format.includes('esm')) {
+        await writeMjsEntryFile(opts.name);
+    }
     let firstTime = true;
     let successKiller = null;
     let failureKiller = null;
@@ -297,7 +300,11 @@ prog
     const logger = await createProgressEstimator_1.createProgressEstimator();
     if (opts.format.includes('cjs')) {
         const promise = writeCjsEntryFile(opts.name).catch(logError_1.default);
-        logger(promise, 'Creating entry file');
+        logger(promise, 'Creating CJS entry file');
+    }
+    if (opts.format.includes('esm')) {
+        const promise = writeMjsEntryFile(opts.name).catch(logError_1.default);
+        logger(promise, 'Creating MJS entry file');
     }
     try {
         const promise = asyncro_1.default
@@ -336,12 +343,19 @@ function writeCjsEntryFile(name) {
 'use strict'
 
 if (process.env.NODE_ENV === 'production') {
-  ${baseLine}.cjs.production.min.js')
+  ${baseLine}.production.min.cjs')
 } else {
-  ${baseLine}.cjs.development.js')
+  ${baseLine}.development.cjs')
 }
 `;
-    return fs.outputFile(path_1.default.join(constants_1.paths.appDist, 'index.js'), contents);
+    return fs.outputFile(path_1.default.join(constants_1.paths.appDist, 'index.cjs'), contents);
+}
+function writeMjsEntryFile(name) {
+    const contents = `
+export { default } from './${name}.mjs';
+export * from './${name}.mjs';
+  `;
+    return fs.outputFile(path_1.default.join(constants_1.paths.appDist, 'index.mjs'), contents);
 }
 function getAuthorName() {
     let author = '';

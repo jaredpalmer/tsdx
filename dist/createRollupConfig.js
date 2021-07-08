@@ -23,12 +23,14 @@ let shebang = {};
 async function createRollupConfig(opts, outputNum) {
     const findAndRecordErrorCodes = await extractErrors_1.extractErrors(Object.assign(Object.assign({}, errorCodeOpts), opts));
     const shouldMinify = opts.minify !== undefined ? opts.minify : opts.env === 'production';
+    let formatString = ['esm', 'cjs'].includes(opts.format) ? '' : opts.format;
+    let fileExtension = opts.format === 'esm' ? 'mjs' : 'cjs';
     const outputName = [
         `${constants_1.paths.appDist}/${utils_1.safePackageName(opts.name)}`,
-        opts.format,
+        formatString,
         opts.env,
         shouldMinify ? 'min' : '',
-        'js',
+        fileExtension,
     ]
         .filter(Boolean)
         .join('.');
@@ -82,14 +84,22 @@ async function createRollupConfig(opts, outputNum) {
             esModule: Boolean(tsCompilerOptions === null || tsCompilerOptions === void 0 ? void 0 : tsCompilerOptions.esModuleInterop),
             name: opts.name || utils_1.safeVariableName(opts.name),
             sourcemap: true,
-            globals: { react: 'React', 'react-native': 'ReactNative' },
+            globals: {
+                react: 'React',
+                'react-native': 'ReactNative',
+                'lodash-es': 'lodashEs',
+                'lodash/fp': 'lodashFp',
+            },
             exports: 'named',
         },
         plugins: [
             !!opts.extractErrors && {
-                async transform(source) {
-                    await findAndRecordErrorCodes(source);
-                    return source;
+                async transform(code, map) {
+                    await findAndRecordErrorCodes(code);
+                    return {
+                        code,
+                        map,
+                    };
                 },
             },
             plugin_node_resolve_1.default({
@@ -170,12 +180,12 @@ async function createRollupConfig(opts, outputNum) {
             }),
             opts.env !== undefined &&
                 plugin_replace_1.default({
+                    preventAssignment: true,
                     'process.env.NODE_ENV': JSON.stringify(opts.env),
                 }),
             rollup_plugin_sourcemaps_1.default(),
             shouldMinify &&
                 rollup_plugin_terser_1.terser({
-                    sourcemap: true,
                     output: { comments: false },
                     compress: {
                         keep_infinity: true,

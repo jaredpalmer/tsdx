@@ -32,19 +32,22 @@ const babelParserOptions = {
     ],
 }; // workaround for trailingFunctionCommas syntax
 async function extractErrors(opts) {
-    if (!opts || !('errorMapFilePath' in opts)) {
+    if (!opts || !opts.errorMapFilePath) {
         throw new Error('Missing options. Ensure you pass an object with `errorMapFilePath`.');
     }
-    if (!opts.name || !('name' in opts)) {
+    if (!opts.name || !opts.name) {
         throw new Error('Missing options. Ensure you pass --name flag to tsdx');
     }
     const errorMapFilePath = opts.errorMapFilePath;
     let existingErrorMap;
     try {
-        // Using `fs.readFile` instead of `require` here, because `require()`
-        // calls are cached, and the cache map is not properly invalidated after
-        // file changes.
-        existingErrorMap = JSON.parse(await fs_extra_1.default.readFile(errorMapFilePath, 'utf8'));
+        /**
+         * Using `fs.readFile` instead of `require` here, because `require()` calls
+         * are cached, and the cache map is not properly invalidated after file
+         * changes.
+         */
+        const fileContents = await fs_extra_1.default.readFile(errorMapFilePath, 'utf-8');
+        existingErrorMap = JSON.parse(fileContents);
     }
     catch (e) {
         existingErrorMap = {};

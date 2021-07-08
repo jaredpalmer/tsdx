@@ -23,14 +23,14 @@ describe('tsdx build :: invalid build', () => {
   it('should only transpile and not type check', () => {
     const output = execWithCache('node ../dist/index.js build --transpileOnly');
 
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-invalid.cjs.development.js')
+      shell.test('-f', 'dist/build-invalid.development.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-invalid.cjs.production.min.js')
+      shell.test('-f', 'dist/build-invalid.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-invalid.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-invalid.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
 

@@ -21,25 +21,23 @@ describe('tsdx build :: options', () => {
       'node ../dist/index.js build --format cjs,esm,umd,system'
     );
 
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-default.development.cjs')).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-default.cjs.development.js')
+      shell.test('-f', 'dist/build-default.production.min.cjs')
+    ).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-default.mjs')).toBeTruthy();
+    expect(
+      shell.test('-f', 'dist/build-default.umd.development.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-default.cjs.production.min.js')
-    ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-default.esm.js')).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.umd.development.js')
+      shell.test('-f', 'dist/build-default.umd.production.min.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-default.umd.production.min.js')
+      shell.test('-f', 'dist/build-default.system.development.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-default.system.development.js')
-    ).toBeTruthy();
-    expect(
-      shell.test('-f', 'dist/build-default.system.production.min.js')
+      shell.test('-f', 'dist/build-default.system.production.min.cjs')
     ).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeTruthy();
@@ -51,7 +49,9 @@ describe('tsdx build :: options', () => {
     const output = execWithCache('node ../dist/index.js build --target node');
     expect(output.code).toBe(0);
 
-    const matched = grep(/regeneratorRuntime = r/, ['dist/build-default.*.js']);
+    const matched = grep(/regeneratorRuntime = r/, [
+      'dist/build-default.*.cjs',
+    ]);
     expect(matched).toBeFalsy();
   });
 

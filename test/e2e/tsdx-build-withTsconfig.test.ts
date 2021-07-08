@@ -18,14 +18,14 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
   it('should use the declarationDir when set', () => {
     const output = execWithCache('node ../dist/index.js build');
 
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-withtsconfig.cjs.development.js')
+      shell.test('-f', 'dist/build-withtsconfig.development.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-withtsconfig.cjs.production.min.js')
+      shell.test('-f', 'dist/build-withtsconfig.production.min.cjs')
     ).toBeTruthy();
-    expect(shell.test('-f', 'dist/build-withtsconfig.esm.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/build-withtsconfig.mjs')).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();
     expect(shell.test('-f', 'typings/index.d.ts')).toBeTruthy();
@@ -37,7 +37,7 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
   it('should set __esModule according to esModuleInterop', () => {
     const output = execWithCache('node ../dist/index.js build');
 
-    const lib = require(`../../${stageName}/dist/build-withtsconfig.cjs.production.min.js`);
+    const lib = require(`../../${stageName}/dist/build-withtsconfig.production.min.cjs`);
     // if esModuleInterop: false, no __esModule is added, therefore undefined
     expect(lib.__esModule).toBe(undefined);
 
@@ -49,12 +49,12 @@ describe('tsdx build :: build with custom tsconfig.json options', () => {
       'node ../dist/index.js build --format cjs --tsconfig ./src/tsconfig.json'
     );
 
-    expect(shell.test('-f', 'dist/index.js')).toBeTruthy();
+    expect(shell.test('-f', 'dist/index.cjs')).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-withtsconfig.cjs.development.js')
+      shell.test('-f', 'dist/build-withtsconfig.development.cjs')
     ).toBeTruthy();
     expect(
-      shell.test('-f', 'dist/build-withtsconfig.cjs.production.min.js')
+      shell.test('-f', 'dist/build-withtsconfig.production.min.cjs')
     ).toBeTruthy();
 
     expect(shell.test('-f', 'dist/index.d.ts')).toBeFalsy();

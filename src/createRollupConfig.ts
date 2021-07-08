@@ -36,12 +36,15 @@ export async function createRollupConfig(
   const shouldMinify =
     opts.minify !== undefined ? opts.minify : opts.env === 'production';
 
+  let formatString = ['esm', 'cjs'].includes(opts.format) ? '' : opts.format;
+  let fileExtension = opts.format === 'esm' ? 'mjs' : 'cjs';
+
   const outputName = [
     `${paths.appDist}/${safePackageName(opts.name)}`,
-    opts.format,
+    formatString,
     opts.env,
     shouldMinify ? 'min' : '',
-    'js',
+    fileExtension,
   ]
     .filter(Boolean)
     .join('.');
@@ -102,14 +105,22 @@ export async function createRollupConfig(
       esModule: Boolean(tsCompilerOptions?.esModuleInterop),
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
-      globals: { react: 'React', 'react-native': 'ReactNative' },
+      globals: {
+        react: 'React',
+        'react-native': 'ReactNative',
+        'lodash-es': 'lodashEs',
+        'lodash/fp': 'lodashFp',
+      },
       exports: 'named',
     },
     plugins: [
       !!opts.extractErrors && {
-        async transform(source: any) {
-          await findAndRecordErrorCodes(source);
-          return source;
+        async transform(code: string, map) {
+          await findAndRecordErrorCodes(code);
+          return {
+            code,
+            map,
+          };
         },
       },
       resolve({
@@ -197,12 +208,12 @@ export async function createRollupConfig(
       }),
       opts.env !== undefined &&
         replace({
+          preventAssignment: true,
           'process.env.NODE_ENV': JSON.stringify(opts.env),
         }),
       sourceMaps(),
       shouldMinify &&
         terser({
-          sourcemap: true,
           output: { comments: false },
           compress: {
             keep_infinity: true,

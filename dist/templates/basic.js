@@ -15,8 +15,16 @@ const basicTemplate = {
         version: '0.1.0',
         license: 'MIT',
         // author: author,
-        main: 'dist/index.js',
-        // module: `dist/${safeName}.esm.js`,
+        main: './dist/index.cjs',
+        module: './dist/index.mjs',
+        exports: {
+            './package.json': './package.json',
+            '.': {
+                import: './dist/index.mjs',
+                require: './dist/index.cjs',
+            },
+        },
+        // module: `dist/${safeName}.mjs`,
         typings: `dist/index.d.ts`,
         files: ['dist', 'src'],
         engines: {
@@ -32,18 +40,6 @@ const basicTemplate = {
             analyze: 'size-limit --why',
         },
         peerDependencies: {},
-        /*
-        'size-limit': [
-          {
-            path: `dist/${safeName}.cjs.production.min.js`,
-            limit: '10 KB',
-          },
-          {
-            path: `dist/${safeName}.esm.js`,
-            limit: '10 KB',
-          },
-        ],
-        */
         husky: {
             hooks: {
                 'pre-commit': 'tsdx lint',
