@@ -88,7 +88,7 @@
     "regenerator-runtime": "^0.13.7",
     "rollup": "^2.52.8",
     "rollup-plugin-sourcemaps": "^0.6.2",
-    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.30.0",
     "sade": "^1.4.2",
     "semver": "^7.1.1",

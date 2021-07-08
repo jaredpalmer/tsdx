@@ -212,14 +212,13 @@ export async function createRollupConfig(
       sourceMaps(),
       shouldMinify &&
       terser({
-        sourcemap: true,
         output: { comments: false },
         compress: {
           keep_infinity: true,
           pure_getters: true,
           passes: 10,
         },
-        ecma: opts.legacy ? 5 : 2017,
+        ecma: opts.legacy ? 5 : 2020,
         module: isEsm,
         toplevel: opts.format === 'cjs' || isEsm,
         warnings: true,

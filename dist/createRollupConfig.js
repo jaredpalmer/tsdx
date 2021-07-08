@@ -184,14 +184,13 @@ async function createRollupConfig(opts, outputNum) {
             rollup_plugin_sourcemaps_1.default(),
             shouldMinify &&
                 rollup_plugin_terser_1.terser({
-                    sourcemap: true,
                     output: { comments: false },
                     compress: {
                         keep_infinity: true,
                         pure_getters: true,
                         passes: 10,
                     },
-                    ecma: opts.legacy ? 5 : 2017,
+                    ecma: opts.legacy ? 5 : 2020,
                     module: isEsm,
                     toplevel: opts.format === 'cjs' || isEsm,
                     warnings: true,
