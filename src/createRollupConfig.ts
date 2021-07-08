@@ -193,7 +193,7 @@ export async function createRollupConfig(
         check: !opts.transpileOnly && outputNum === 0,
         useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
-      opts.legacy && babelPluginTsdx({
+      babelPluginTsdx({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,
