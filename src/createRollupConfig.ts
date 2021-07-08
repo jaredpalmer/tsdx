@@ -102,14 +102,18 @@ export async function createRollupConfig(
       esModule: Boolean(tsCompilerOptions?.esModuleInterop),
       name: opts.name || safeVariableName(opts.name),
       sourcemap: true,
-      globals: { react: 'React', 'react-native': 'ReactNative' },
+      globals: { react: 'React', 'react-native': 'ReactNative', 'lodash-es': 'lodashEs', 'lodash/fp': 'lodashFp' },
       exports: 'named',
     },
     plugins: [
       !!opts.extractErrors && {
-        async transform(source: any) {
-          await findAndRecordErrorCodes(source);
-          return source;
+        async transform(code: string) {
+          try {
+            await findAndRecordErrorCodes(code);
+          } catch (e) {
+            return null;
+          }
+          return { code, map: null };
         },
       },
       resolve({
@@ -196,23 +200,24 @@ export async function createRollupConfig(
         babelHelpers: 'bundled',
       }),
       opts.env !== undefined &&
-        replace({
-          'process.env.NODE_ENV': JSON.stringify(opts.env),
-        }),
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify(opts.env),
+      }),
       sourceMaps(),
       shouldMinify &&
-        terser({
-          sourcemap: true,
-          output: { comments: false },
-          compress: {
-            keep_infinity: true,
-            pure_getters: true,
-            passes: 10,
-          },
-          ecma: 5,
-          toplevel: opts.format === 'cjs',
-          warnings: true,
-        }),
+      terser({
+        sourcemap: true,
+        output: { comments: false },
+        compress: {
+          keep_infinity: true,
+          pure_getters: true,
+          passes: 10,
+        },
+        ecma: 5,
+        toplevel: opts.format === 'cjs',
+        warnings: true,
+      }),
     ],
   };
 }
