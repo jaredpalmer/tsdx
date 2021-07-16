@@ -1,6 +1,6 @@
 {
   "name": "@weiran.zsd/tsdx",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "author": "Jared Palmer <jared@palmer.net>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
