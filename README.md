@@ -1,6 +1,6 @@
-[![NPM version](https://img.shields.io/npm/v/@weiran.zsd/tsdx.svg?style=flat)](https://npmjs.org/package/@weiran.zsd/tsdx)
 ![tsdx](https://user-images.githubusercontent.com/4060187/56918426-fc747600-6a8b-11e9-806d-2da0b49e89e4.png)
 
+[![NPM version](https://img.shields.io/npm/v/@weiran.zsd/tsdx.svg?style=flat)](https://npmjs.org/package/@weiran.zsd/tsdx)
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Discord](https://img.shields.io/discord/769256827007139912.svg?style=flat-square)](https://discord.gg/pJSg287)
 
 > a fork of the official tsdx, the main changes are:
