@@ -16,7 +16,7 @@
     "rollup"
   ],
   "bugs": {
-    "url": "https://github.com/formium/tsdx/issues"
+    "url": "https://github.com/weiran-zsd/tsdx/issues"
   },
   "bin": {
     "tsdx": "./dist/index.js"
@@ -135,5 +135,9 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
