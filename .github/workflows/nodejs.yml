@@ -3,6 +3,8 @@ name: Node CI
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  push:
+    branches: [master]
 
 jobs:
   lint-and-dedupe:
