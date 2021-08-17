@@ -6836,10 +6836,10 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.npm.taobao.org/process-nextick-args/download/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha1-eCDZsWEgzFXKmud5JoCufbptf+I=
 
-progress-estimator@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.npm.taobao.org/progress-estimator/download/progress-estimator-0.2.2.tgz#1c3947a5782ea56e40c8fccc290ac7ceeb1b91cb"
-  integrity sha1-HDlHpXgupW5AyPzMKQrHzusbkcs=
+progress-estimator@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/progress-estimator/-/progress-estimator-0.3.0.tgz#b80066764e9e614daf7a01808d00673ab9899634"
+  integrity sha512-vGKF+OgSjguKo+sbpgxE0c+HCNBf9QJsTgYXIUIGrriTBbZvPSVxjEed5JrurqMFDL+JthvX+amPP6a0TvpIkA==
   dependencies:
     chalk "^2.4.1"
     cli-spinners "^1.3.1"
@@ -7364,11 +7364,6 @@ safe-buffer@^5.1.0, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.2.tgz?cache=0&sync_timestamp=1589129978562&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsafe-buffer%2Fdownload%2Fsafe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha1-mR7GnSluAxN0fVm9/St0XDX4go0=
-
-safe-buffer@~5.2.0:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
-  integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
 
 safe-identifier@^0.4.1:
   version "0.4.2"
