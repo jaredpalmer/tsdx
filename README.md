@@ -3,7 +3,16 @@
 [![NPM version](https://img.shields.io/npm/v/@weiran.zsd/tsdx.svg?style=flat)](https://npmjs.org/package/@weiran.zsd/tsdx)
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Discord](https://img.shields.io/discord/769256827007139912.svg?style=flat-square)](https://discord.gg/pJSg287)
 
-> a fork of the official tsdx, the main changes are:
+> a fork of the official tsdx.
+
+```bash
+$ npm install @weiran.zsd/tsdx -D   # for npm users
+$ yarn add @weiran.zsd/tsdx -D      # for yarn users
+$ pnpm install @weiran.zsd/tsdx -D  # for pnpm users
+```
+
+The main changes are:
+
 * drop node.js <12
 * upgrade eslint v7
 * upgrade typescript v4
