@@ -21,7 +21,7 @@ jobs:
           node-version: 12.x
 
       - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+        run: yarn install && yarn build
 
       - name: Lint codebase
         run: yarn lint:post-build
@@ -47,7 +47,8 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+        run: yarn install && yarn build
+
 
       - name: Test package
         run: yarn test:post-build

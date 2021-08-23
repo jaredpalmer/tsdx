@@ -18,9 +18,7 @@
   "bugs": {
     "url": "https://github.com/weiran-zsd/tsdx/issues"
   },
-  "bin": {
-    "tsdx": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "scripts": {
     "prepare": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
@@ -30,8 +28,8 @@
     "test:post-build": "node dist/index.js test",
     "start": "tsc -p tsconfig.json --watch",
     "release": "np",
-    "deduplicate": "yarn-deduplicate -s fewer yarn.lock",
-    "deduplicate:check": "yarn-deduplicate -s fewer yarn.lock --list --fail"
+    "deduplicate": "yarn dedupe",
+    "deduplicate:check": "yarn dedupe -c"
   },
   "files": [
     "dist",
@@ -122,8 +120,7 @@
     "rollup-plugin-postcss": "^2.5.0",
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
-    "tiny-warning": "^1.0.3",
-    "yarn-deduplicate": "^2.1.1"
+    "tiny-warning": "^1.0.3"
   },
   "husky": {
     "hooks": {
