@@ -1,0 +1,2 @@
+* text eol=lf
+/test/{e2e,integration}/fixtures/**/* -text
