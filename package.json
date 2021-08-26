@@ -27,7 +27,7 @@
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test",
     "start": "tsc -p tsconfig.json --watch",
-    "release": "np",
+    "release": "yarn test && release-it",
     "deduplicate": "yarn dedupe",
     "deduplicate:check": "yarn dedupe -c"
   },
@@ -112,7 +112,7 @@
     "cssnano": "^4.1.10",
     "doctoc": "^1.4.0",
     "husky": "^4.2.2",
-    "np": "^6.4.0",
+    "release-it": "^14.11.5",
     "pretty-quick": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.13.0",
