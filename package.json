@@ -137,5 +137,11 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "git": {
+    "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
+  },
+  "hooks": {
+    "after:bump": "npx auto-changelog -p"
   }
 }
