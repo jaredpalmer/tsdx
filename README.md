@@ -13,10 +13,12 @@ $ pnpm install @weiran.zsd/tsdx -D  # for pnpm users
 
 The main changes are:
 
-* drop node.js <12
+* drop node.js < 12
 * upgrade eslint v7
 * upgrade typescript v4
 * upgrade jest v27
+* upgrade rollup v2
+* upgrade prettier v2
 
 Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
