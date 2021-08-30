@@ -94,6 +94,7 @@
     "tiny-glob": "^0.2.6",
     "ts-jest": "^27.0.3",
     "tslib": "^2.3.0",
+    "type-fest": "^2.1.0",
     "typescript": "^4"
   },
   "devDependencies": {
@@ -112,11 +113,11 @@
     "cssnano": "^4.1.10",
     "doctoc": "^1.4.0",
     "husky": "^4.2.2",
-    "release-it": "^14.11.5",
     "pretty-quick": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
+    "release-it": "^14.11.5",
     "rollup-plugin-postcss": "^2.5.0",
     "styled-components": "^5.0.1",
     "tiny-invariant": "^1.1.0",
