@@ -7,7 +7,7 @@ const program = {
   name: 'tsdx',
 };
 
-export const help = function() {
+export const help = function () {
   return `
     Only ${chalk.green('<project-directory>')} is required.
     If you have any problems, do not hesitate to file an issue:
@@ -15,7 +15,7 @@ export const help = function() {
   `;
 };
 
-export const missingProjectName = function() {
+export const missingProjectName = function () {
   return `
 Please specify the project directory:
   ${chalk.cyan(program.name)} ${chalk.green('<project-directory>')}
@@ -25,16 +25,16 @@ Run ${chalk.cyan(`${program.name} --help`)} to see all options.
 `;
 };
 
-export const alreadyExists = function(projectName: string) {
+export const alreadyExists = function (projectName: string) {
   return `
 Uh oh! Looks like there's already a directory called ${chalk.red(
     projectName
   )}. Please try a different name or delete that folder.`;
 };
 
-export const installing = function(packages: string[]) {
+export const installing = function (packages: string[]) {
   const pkgText = packages
-    .map(function(pkg) {
+    .map(function (pkg) {
       return `    ${chalk.cyan(chalk.bold(pkg))}`;
     })
     .join('\n');
@@ -44,9 +44,9 @@ ${pkgText}
 `;
 };
 
-export const installError = function(packages: string[]) {
+export const installError = function (packages: string[]) {
   const pkgText = packages
-    .map(function(pkg) {
+    .map(function (pkg) {
       return `${chalk.cyan(chalk.bold(pkg))}`;
     })
     .join(', ');
@@ -54,13 +54,13 @@ export const installError = function(packages: string[]) {
   Output.error(`Failed to install ${pkgText}, try again.`);
 };
 
-export const copying = function(projectName: string) {
+export const copying = function (projectName: string) {
   return `
 Creating ${chalk.bold(chalk.green(projectName))}...
 `;
 };
 
-export const start = async function(projectName: string) {
+export const start = async function (projectName: string) {
   const cmd = await getInstallCmd();
 
   const commands = {
@@ -90,7 +90,7 @@ export const start = async function(projectName: string) {
 `;
 };
 
-export const incorrectNodeVersion = function(requiredVersion: string) {
+export const incorrectNodeVersion = function (requiredVersion: string) {
   return `Unsupported Node version! Your current Node version (${chalk.red(
     process.version
   )}) does not satisfy the requirement of Node ${chalk.cyan(requiredVersion)}.`;

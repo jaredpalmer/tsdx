@@ -60,13 +60,13 @@ try {
 export const isDir = (name: string) =>
   fs
     .stat(name)
-    .then(stats => stats.isDirectory())
+    .then((stats) => stats.isDirectory())
     .catch(() => false);
 
 export const isFile = (name: string) =>
   fs
     .stat(name)
-    .then(stats => stats.isFile())
+    .then((stats) => stats.isFile())
     .catch(() => false);
 
 async function jsOrTs(filename: string) {
@@ -93,7 +93,7 @@ async function getInputs(
           : (source && resolveApp(source)) ||
               ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
       )
-      .map(file => glob(file))
+      .map((file) => glob(file))
   );
 }
 
@@ -317,7 +317,7 @@ prog
 
     const spinner = ora().start();
     watch(
-      (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
+      (buildConfigs as RollupWatchOptions[]).map((inputOptions) => ({
         watch: {
           silent: true,
           include: ['src/**'],
@@ -325,7 +325,7 @@ prog
         } as WatcherOptions,
         ...inputOptions,
       }))
-    ).on('event', async event => {
+    ).on('event', async (event) => {
       // clear previous onSuccess/onFailure hook processes so they don't pile up
       await killHooks();
 
@@ -489,14 +489,14 @@ prog
     // Makes the script crash on unhandled rejections instead of silently
     // ignoring them. In the future, promise rejections that are not handled will
     // terminate the Node.js process with a non-zero exit code.
-    process.on('unhandledRejection', err => {
+    process.on('unhandledRejection', (err) => {
       throw err;
     });
 
     const argv = process.argv.slice(2);
     let jestConfig: JestConfigOptions = {
       ...createJestConfig(
-        relativePath => path.resolve(__dirname, '..', relativePath),
+        (relativePath) => path.resolve(__dirname, '..', relativePath),
         opts.config ? path.dirname(opts.config) : paths.appRoot
       ),
       ...appPackageJson.jest,
@@ -519,7 +519,7 @@ prog
       } else {
         // case of "--config=path", only one arg to delete
         const configRegex = /--config=.+/;
-        configIndex = argv.findIndex(arg => arg.match(configRegex));
+        configIndex = argv.findIndex((arg) => arg.match(configRegex));
         if (configIndex !== -1) {
           argv.splice(configIndex, 1);
         }
