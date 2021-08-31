@@ -27,7 +27,7 @@
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test",
     "start": "tsc -p tsconfig.json --watch",
-    "release": "yarn test && release-it",
+    "release": "yarn test && auto-changelog -p && release-it",
     "deduplicate": "yarn dedupe",
     "deduplicate:check": "yarn dedupe -c"
   },
@@ -108,6 +108,7 @@
     "@types/semver": "^7.1.0",
     "@types/shelljs": "^0.8.5",
     "@types/styled-components": "^5.0.1",
+    "auto-changelog": "^2.3.0",
     "autoprefixer": "^9.7.4",
     "babel-plugin-replace-identifiers": "^0.1.1",
     "cssnano": "^4.1.10",
@@ -139,9 +140,9 @@
     "registry": "https://registry.npmjs.org/"
   },
   "git": {
-    "changelog": "npx auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
+    "changelog": "auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
   },
   "hooks": {
-    "after:bump": "npx auto-changelog -p"
+    "after:bump": "auto-changelog -p"
   }
 }
