@@ -1,6 +1,6 @@
 {
   "name": "@weiran.zsd/tsdx",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "author": "唯然<weiran.zsd@outlook.com>",
   "description": "Zero-config TypeScript package development",
   "license": "MIT",
