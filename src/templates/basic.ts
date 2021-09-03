@@ -4,7 +4,7 @@ const basicTemplate: Template = {
   name: 'basic',
   dependencies: [
     'husky',
-    'tsdx',
+    '@weiran.zsd/tsdx',
     'tslib',
     'typescript',
     'size-limit',
