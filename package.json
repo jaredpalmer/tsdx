@@ -27,7 +27,7 @@
     "test": "yarn build && yarn test:post-build",
     "test:post-build": "node dist/index.js test",
     "start": "tsc -p tsconfig.json --watch",
-    "release": "yarn test && auto-changelog -p && release-it",
+    "release": "yarn test && release-it",
     "deduplicate": "yarn dedupe",
     "deduplicate:check": "yarn dedupe -c"
   },
@@ -139,10 +139,12 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   },
-  "git": {
-    "changelog": "auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
-  },
-  "hooks": {
-    "after:bump": "auto-changelog -p"
+  "release-it": {
+    "git": {
+      "changelog": "auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
+    },
+    "hooks": {
+      "after:bump": "auto-changelog -p"
+    }
   }
 }
