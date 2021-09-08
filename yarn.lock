@@ -2509,7 +2509,7 @@ __metadata:
     lodash.merge: ^4.6.2
     ora: ^5.4.1
     pascal-case: ^3.1.1
-    prettier: ^2.3.2
+    prettier: 2.3.2
     pretty-quick: ^2.0.0
     progress-estimator: ^0.3.0
     react: ^16.8.6
@@ -9106,7 +9106,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.3.2":
+"prettier@npm:2.3.2":
   version: 2.3.2
   resolution: "prettier@npm:2.3.2"
   bin:
