@@ -18,7 +18,7 @@ The main changes are:
 * upgrade rollup v2
 * upgrade prettier v2
 
-Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
+Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). DTS is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -63,7 +63,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 ## Features
 
-TSDX comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
+DTS comes with the "battery-pack included" and is part of a complete TypeScript breakfast:
 
 - Bundles your code with [Rollup](https://github.com/rollup/rollup) and outputs multiple module formats (CJS & ESM by default, and also UMD if you want) plus development and production builds
 - Comes with treeshaking, ready-to-rock lodash optimizations, and minification/compression
@@ -75,7 +75,7 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Jest test runner setup with sensible defaults via `dts test`
 - ESLint with Prettier setup with sensible defaults via `dts lint`
 - Zero-config, single dependency
-- Escape hatches for customization via `.babelrc.js`, `jest.config.js`, `.eslintrc.js`, and `tsdx.config.js`
+- Escape hatches for customization via `.babelrc.js`, `jest.config.js`, `.eslintrc.js`, and `dts.config.js`
 
 ## Quick Start
 
@@ -91,7 +91,7 @@ Below is a list of commands you will probably find useful:
 
 ### `npm start` or `yarn start`
 
-Runs the project in development/watch mode. Your project will be rebuilt upon changes. TSDX has a special logger for your convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
+Runs the project in development/watch mode. Your project will be rebuilt upon changes. DTS has a special logger for your convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
 
 <img src="https://user-images.githubusercontent.com/4060187/52168303-574d3a00-26f6-11e9-9f3b-71dbec9ebfcb.gif" width="600" />
 
@@ -120,9 +120,9 @@ Runs automatically when you run either `npm publish` or `yarn publish`. The `pre
 
 ## Optimizations
 
-Aside from just bundling your module into different formats, TSDX comes with some optimizations for your convenience. They yield objectively better code and smaller bundle sizes.
+Aside from just bundling your module into different formats, DTS comes with some optimizations for your convenience. They yield objectively better code and smaller bundle sizes.
 
-After TSDX compiles your code with TypeScript, it processes your code with 3 Babel plugins:
+After DTS compiles your code with TypeScript, it processes your code with 3 Babel plugins:
 
 - [`babel-plugin-annotate-pure-calls`](https://github.com/Andarist/babel-plugin-annotate-pure-calls): Injects for `#__PURE` annotations to enable treeshaking
 - [`babel-plugin-dev-expressions`](https://github.com/4Catalyzer/babel-plugin-dev-expression): A mirror of Facebook's dev-expression Babel plugin. It reduces or eliminates development checks from production code
@@ -184,17 +184,17 @@ exports.sum = (s, t) => s + t;
 //# sourceMappingURL=test-react-tsdx.cjs.production.js.map
 ```
 
-AS you can see, TSDX stripped out the development check from the production code. **This allows you to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
+AS you can see, DTS stripped out the development check from the production code. **This allows you to safely add development-only behavior (like more useful error messages) without any production bundle size impact.**
 
 For ESM build, it's up to end-user to build environment specific build with NODE_ENV replace (done by Webpack 4 automatically).
 
 #### Rollup Treeshaking
 
-TSDX's rollup config [removes getters and setters on objects](https://github.com/palmerhq/tsdx/blob/1f6a1b6819bb17678aa417f0df5349bec12f59ac/src/createRollupConfig.ts#L73) so that property access has no side effects. Don't do it.
+DTS's rollup config [removes getters and setters on objects](https://github.com/palmerhq/tsdx/blob/1f6a1b6819bb17678aa417f0df5349bec12f59ac/src/createRollupConfig.ts#L73) so that property access has no side effects. Don't do it.
 
 #### Advanced `babel-plugin-dev-expressions`
 
-TSDX will use `babel-plugin-dev-expressions` to make the following replacements _before_ treeshaking.
+DTS will use `babel-plugin-dev-expressions` to make the following replacements _before_ treeshaking.
 
 ##### `__DEV__`
 
@@ -243,7 +243,7 @@ if (!condition) {
 }
 ```
 
-Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
+Note: DTS doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
 To extract and minify `invariant` error codes in production into a static `codes.json` file, specify the `--extractErrors` flag in command line. For more details see [Error extraction docs](#error-extraction).
 
@@ -263,11 +263,11 @@ if ('production' !== process.env.NODE_ENV) {
 }
 ```
 
-Note: TSDX doesn't supply a `warning` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-warning.
+Note: DTS doesn't supply a `warning` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-warning.
 
 ### Using lodash
 
-If you want to use a lodash function in your package, TSDX will help you do it the _right_ way so that your library does not get fat shamed on Twitter. However, before you continue, seriously consider rolling whatever function you are about to use on your own. Anyways, here is how to do it right.
+If you want to use a lodash function in your package, DTS will help you do it the _right_ way so that your library does not get fat shamed on Twitter. However, before you continue, seriously consider rolling whatever function you are about to use on your own. Anyways, here is how to do it right.
 
 First, install `lodash` and `lodash-es` as _dependencies_
 
@@ -281,7 +281,7 @@ Now install `@types/lodash` to your development dependencies.
 yarn add @types/lodash --dev
 ```
 
-Import your lodash method however you want, TSDX will optimize it like so.
+Import your lodash method however you want, DTS will optimize it like so.
 
 ```tsx
 // ./src/index.ts
@@ -300,9 +300,9 @@ import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as Ke
 //# sourceMappingURL=test-react-tsdx.esm.production.js.map
 ```
 
-TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
+DTS will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
 
-> Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
+> Note: DTS will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
 
 ### Error extraction
 
@@ -321,7 +321,7 @@ _TODO: Simple guide to host error codes to be completed_
 ### Rollup
 
 > **❗⚠️❗ Warning**: <br>
-> These modifications will override the default behavior and configuration of TSDX. As such they can invalidate internal guarantees and assumptions. These types of changes can break internal behavior and can be very fragile against updates. Use with discretion!
+> These modifications will override the default behavior and configuration of DTS. As such they can invalidate internal guarantees and assumptions. These types of changes can break internal behavior and can be very fragile against updates. Use with discretion!
 
 DTS uses Rollup under the hood. The defaults are solid for most packages (Formik uses the defaults!). However, if you do wish to alter the rollup configuration, you can do so by creating a file called `dts.config.js` at the root of your project like so:
 
@@ -391,15 +391,15 @@ module.exports = {
 
 ### Babel
 
-You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with [its own Babel transforms](./src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
+You can add your own `.babelrc` to the root of your project and DTS will **merge** it with [its own Babel transforms](./src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
 
 ### Jest
 
-You can add your own `jest.config.js` to the root of your project and TSDX will **shallow merge** it with [its own Jest config](./src/createJestConfig.ts).
+You can add your own `jest.config.js` to the root of your project and DTS will **shallow merge** it with [its own Jest config](./src/createJestConfig.ts).
 
 ### ESLint
 
-You can add your own `.eslintrc.js` to the root of your project and TSDX will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
+You can add your own `.eslintrc.js` to the root of your project and DTS will **deep merge** it with [its own ESLint config](./src/createEslintConfig.ts).
 
 ### `patch-package`
 
@@ -408,19 +408,19 @@ Keep in mind that these types of changes may be quite fragile against version up
 
 ## Inspiration
 
-TSDX was originally ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling.
-TSDX has several similarities to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals had converged around similar plugins.
+DTS was originally ripped out of [Formik's](https://github.com/jaredpalmer/formik) build tooling.
+DTS has several similarities to [@developit/microbundle](https://github.com/developit/microbundle), but that is because Formik's Rollup configuration and Microbundle's internals had converged around similar plugins.
 
 ### Comparison with Microbundle
 
 Some key differences include:
 
-- TSDX includes out-of-the-box test running via Jest
-- TSDX includes out-of-the-box linting and formatting via ESLint and Prettier
-- TSDX includes a bootstrap command with a few package templates
-- TSDX allows for some lightweight customization
-- TSDX is TypeScript focused, but also supports plain JavaScript
-- TSDX outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
+- DTS includes out-of-the-box test running via Jest
+- DTS includes out-of-the-box linting and formatting via ESLint and Prettier
+- DTS includes a bootstrap command with a few package templates
+- DTS allows for some lightweight customization
+- DTS is TypeScript focused, but also supports plain JavaScript
+- DTS outputs distinct development and production builds (like React does) for CJS and UMD builds. This means you can include rich error messages and other dev-friendly goodies without sacrificing final bundle size.
 
 ## API Reference
 
