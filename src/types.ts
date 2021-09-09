@@ -32,7 +32,7 @@ export interface NormalizedOpts
   format: [ModuleFormat, ...ModuleFormat[]];
 }
 
-export interface TsdxOptions extends SharedOpts {
+export interface DtsOptions extends SharedOpts {
   // Name of package
   name: string;
   // path to file

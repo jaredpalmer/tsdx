@@ -9,7 +9,7 @@ const testDir = 'e2e';
 const fixtureName = 'build-withTsconfig';
 const stageName = `stage-${fixtureName}`;
 
-describe('tsdx build :: build with custom tsconfig.json options', () => {
+describe('dts build :: build with custom tsconfig.json options', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
     util.setupStageWithFixture(testDir, stageName, fixtureName);

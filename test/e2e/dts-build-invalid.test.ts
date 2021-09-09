@@ -9,7 +9,7 @@ const testDir = 'e2e';
 const fixtureName = 'build-invalid';
 const stageName = `stage-${fixtureName}`;
 
-describe('tsdx build :: invalid build', () => {
+describe('dts build :: invalid build', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
     util.setupStageWithFixture(testDir, stageName, fixtureName);

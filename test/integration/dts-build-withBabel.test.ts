@@ -9,7 +9,7 @@ const testDir = 'integration';
 const fixtureName = 'build-withBabel';
 const stageName = `stage-integration-${fixtureName}`;
 
-describe('integration :: tsdx build :: .babelrc.js', () => {
+describe('integration :: dts build :: .babelrc.js', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
     util.setupStageWithFixture(testDir, stageName, fixtureName);

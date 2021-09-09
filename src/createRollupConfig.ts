@@ -14,8 +14,8 @@ import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
 
 import { extractErrors } from './errors/extractErrors';
-import { babelPluginTsdx } from './babelPluginTsdx';
-import { TsdxOptions } from './types';
+import { babelPluginDts } from './babelPluginDts-build';
+import { DtsOptions } from './types';
 
 const errorCodeOpts = {
   errorMapFilePath: paths.appErrorsJson,
@@ -25,7 +25,7 @@ const errorCodeOpts = {
 let shebang: any = {};
 
 export async function createRollupConfig(
-  opts: TsdxOptions,
+  opts: DtsOptions,
   outputNum: number
 ): Promise<RollupOptions> {
   const findAndRecordErrorCodes = await extractErrors({
@@ -61,7 +61,7 @@ export async function createRollupConfig(
     input: opts.input,
     // Tell Rollup which packages to ignore
     external: (id: string) => {
-      // bundle in polyfills as TSDX can't (yet) ensure they're installed as deps
+      // bundle in polyfills as DTS can't (yet) ensure they're installed as deps
       if (id.startsWith('regenerator-runtime')) {
         return false;
       }
@@ -71,7 +71,7 @@ export async function createRollupConfig(
     // Rollup has treeshaking by default, but we can optimize it further...
     treeshake: {
       // We assume reading a property of an object never has side-effects.
-      // This means tsdx WILL remove getters and setters defined directly on objects.
+      // This means dts WILL remove getters and setters defined directly on objects.
       // Any getters or setters defined on classes will not be effected.
       //
       // @example
@@ -184,7 +184,7 @@ export async function createRollupConfig(
         check: !opts.transpileOnly && outputNum === 0,
         useTsconfigDeclarationDir: Boolean(tsCompilerOptions?.declarationDir),
       }),
-      babelPluginTsdx({
+      babelPluginDts({
         exclude: 'node_modules/**',
         extensions: [...DEFAULT_BABEL_EXTENSIONS, 'ts', 'tsx'],
         passPerPreset: true,

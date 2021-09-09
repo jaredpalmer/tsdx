@@ -12,6 +12,7 @@ import {
 } from 'rollup';
 import asyncro from 'asyncro';
 import chalk from 'chalk';
+import figlet from 'figlet';
 import * as fs from 'fs-extra';
 import * as jest from 'jest';
 import { CLIEngine } from 'eslint';
@@ -49,7 +50,7 @@ import { composePackageJson } from './templates/utils';
 import * as deprecated from './deprecated';
 const pkg = require('../package.json');
 
-const prog = sade('tsdx');
+const prog = sade('dts');
 
 let appPackageJson: PackageJson;
 
@@ -100,7 +101,7 @@ async function getInputs(
 prog
   .version(pkg.version)
   .command('create <pkg>')
-  .describe('Create a new package with TSDX')
+  .describe('Create a new package with DTS')
   .example('create mypackage')
   .option(
     '--template',
@@ -111,15 +112,7 @@ prog
   .example('create --template react mypackage')
   .action(async (pkg: string, opts: any) => {
     console.log(
-      chalk.blue(`
-::::::::::: ::::::::  :::::::::  :::    :::
-    :+:    :+:    :+: :+:    :+: :+:    :+:
-    +:+    +:+        +:+    +:+  +:+  +:+
-    +#+    +#++:++#++ +#+    +:+   +#++:+
-    +#+           +#+ +#+    +#+  +#+  +#+
-    #+#    #+#    #+# #+#    #+# #+#    #+#
-    ###     ########  #########  ###    ###
-`)
+      chalk.cyan(figlet.textSync('DTS', { horizontalLayout: 'full' }))
     );
     const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
     let template;
@@ -569,8 +562,8 @@ prog
         opts['_'] = defaultInputs;
         console.log(
           chalk.yellow(
-            `Defaulting to "tsdx lint ${defaultInputs.join(' ')}"`,
-            '\nYou can override this in the package.json scripts, like "lint": "tsdx lint src otherDir"'
+            `Defaulting to "dts lint ${defaultInputs.join(' ')}"`,
+            '\nYou can override this in the package.json scripts, like "lint": "dts lint src otherDir"'
           )
         );
       }

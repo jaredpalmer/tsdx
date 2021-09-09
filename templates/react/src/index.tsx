@@ -2,5 +2,5 @@ import * as React from 'react';
 
 // Delete me
 export const Thing = () => {
-  return <div>the snozzberries taste like snozzberries</div>;
+  return <div>Welcome to your first test package.</div>;
 };

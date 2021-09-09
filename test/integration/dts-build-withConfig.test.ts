@@ -10,7 +10,7 @@ const testDir = 'integration';
 const fixtureName = 'build-withConfig';
 const stageName = `stage-integration-${fixtureName}`;
 
-describe('integration :: tsdx build :: tsdx.config.js', () => {
+describe('integration :: dts build :: dts-config.js', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
     util.setupStageWithFixture(testDir, stageName, fixtureName);

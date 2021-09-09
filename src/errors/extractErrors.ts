@@ -37,7 +37,7 @@ export async function extractErrors(opts: any) {
   }
 
   if (!opts.name || !('name' in opts)) {
-    throw new Error('Missing options. Ensure you pass --name flag to tsdx');
+    throw new Error('Missing options. Ensure you pass --name flag to dts');
   }
 
   const errorMapFilePath = opts.errorMapFilePath;

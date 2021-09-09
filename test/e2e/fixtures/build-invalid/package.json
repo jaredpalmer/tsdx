@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "tsdx build"
+    "build": "dts build"
   },
   "name": "build-invalid",
   "license": "MIT"

@@ -4,7 +4,7 @@ const basicTemplate: Template = {
   name: 'basic',
   dependencies: [
     'husky',
-    '@weiran.zsd/tsdx',
+    'dts-cli',
     'tslib',
     'typescript',
     'size-limit',
@@ -23,11 +23,11 @@ const basicTemplate: Template = {
       node: '>=10',
     },
     scripts: {
-      start: 'tsdx watch',
-      build: 'tsdx build',
-      test: 'tsdx test',
-      lint: 'tsdx lint',
-      prepare: 'tsdx build',
+      start: 'dts watch',
+      build: 'dts build',
+      test: 'dts test',
+      lint: 'dts lint',
+      prepare: 'dts build',
       size: 'size-limit',
       analyze: 'size-limit --why',
     },
@@ -46,7 +46,7 @@ const basicTemplate: Template = {
     */
     husky: {
       hooks: {
-        'pre-commit': 'tsdx lint',
+        'pre-commit': 'dts lint',
       },
     },
     prettier: {

@@ -9,7 +9,7 @@ const stageName = 'stage-lint';
 
 const lintDir = `test/${testDir}/fixtures/lint`;
 
-describe('tsdx lint', () => {
+describe('dts lint', () => {
   it('should fail to lint a ts file with errors', () => {
     const testFile = `${lintDir}/file-with-lint-errors.ts`;
     const output = shell.exec(`node dist/index.js lint ${testFile}`);
@@ -88,9 +88,9 @@ describe('tsdx lint', () => {
   it('should not lint', () => {
     const output = shell.exec(`node dist/index.js lint`);
     expect(output.code).toBe(1);
-    expect(output.toString()).toContain('Defaulting to "tsdx lint src test"');
+    expect(output.toString()).toContain('Defaulting to "dts lint src test"');
     expect(output.toString()).toContain(
-      'You can override this in the package.json scripts, like "lint": "tsdx lint src otherDir"'
+      'You can override this in the package.json scripts, like "lint": "dts lint src otherDir"'
     );
   });
 

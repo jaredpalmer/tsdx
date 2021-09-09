@@ -9,7 +9,7 @@ const testDir = 'e2e';
 const fixtureName = 'build-default';
 const stageName = `stage-${fixtureName}`;
 
-describe('tsdx build :: zero-config defaults', () => {
+describe('dts build :: zero-config defaults', () => {
   beforeAll(() => {
     util.teardownStage(stageName);
     util.setupStageWithFixture(testDir, stageName, fixtureName);

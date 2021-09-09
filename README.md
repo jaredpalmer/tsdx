@@ -1,14 +1,12 @@
-![tsdx](https://user-images.githubusercontent.com/4060187/56918426-fc747600-6a8b-11e9-806d-2da0b49e89e4.png)
-
-[![NPM version](https://img.shields.io/npm/v/@weiran.zsd/tsdx.svg?style=flat)](https://npmjs.org/package/@weiran.zsd/tsdx)
-[![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Discord](https://img.shields.io/discord/769256827007139912.svg?style=flat-square)](https://discord.gg/pJSg287)
+[![NPM version](https://img.shields.io/npm/v/dts-cli.svg?style=flat)](https://npmjs.org/package/dts-cli)
+[![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli)
 
 > a fork of the official tsdx.
 
 ```bash
-$ npm install @weiran.zsd/tsdx -D   # for npm users
-$ yarn add @weiran.zsd/tsdx -D      # for yarn users
-$ pnpm install @weiran.zsd/tsdx -D  # for pnpm users
+$ npm install dts-cli -D   # for npm users
+$ yarn add dts-cli -D      # for yarn users
+$ pnpm install dts-cli -D  # for pnpm users
 ```
 
 The main changes are:
@@ -52,10 +50,10 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 - [Inspiration](#inspiration)
   - [Comparison with Microbundle](#comparison-with-microbundle)
 - [API Reference](#api-reference)
-  - [`tsdx watch`](#tsdx-watch)
-  - [`tsdx build`](#tsdx-build)
-  - [`tsdx test`](#tsdx-test)
-  - [`tsdx lint`](#tsdx-lint)
+  - [`dts watch`](#dts-watch)
+  - [`dts build`](#dts-build)
+  - [`dts test`](#dts-test)
+  - [`dts lint`](#dts-lint)
 - [Contributing](#contributing)
 - [Author](#author)
 - [License](#license)
@@ -74,15 +72,15 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 - Human readable error messages (and in VSCode-friendly format)
 - Bundle size snapshots
 - Opt-in to extract `invariant` error codes
-- Jest test runner setup with sensible defaults via `tsdx test`
-- ESLint with Prettier setup with sensible defaults via `tsdx lint`
+- Jest test runner setup with sensible defaults via `dts test`
+- ESLint with Prettier setup with sensible defaults via `dts lint`
 - Zero-config, single dependency
 - Escape hatches for customization via `.babelrc.js`, `jest.config.js`, `.eslintrc.js`, and `tsdx.config.js`
 
 ## Quick Start
 
 ```bash
-npx tsdx create mylib
+npx dts-cli create mylib
 cd mylib
 yarn start
 ```
@@ -146,7 +144,7 @@ export const sum = (a: number, b: number) => {
 };
 ```
 
-`tsdx build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
+`dts build` will output an ES module file and 3 CommonJS files (dev, prod, and an entry file). If you want to specify a UMD build, you can do that as well. For brevity, let's examine the CommonJS output (comments added for emphasis):
 
 ```js
 // Entry File
@@ -325,7 +323,7 @@ _TODO: Simple guide to host error codes to be completed_
 > **❗⚠️❗ Warning**: <br>
 > These modifications will override the default behavior and configuration of TSDX. As such they can invalidate internal guarantees and assumptions. These types of changes can break internal behavior and can be very fragile against updates. Use with discretion!
 
-TSDX uses Rollup under the hood. The defaults are solid for most packages (Formik uses the defaults!). However, if you do wish to alter the rollup configuration, you can do so by creating a file called `tsdx.config.js` at the root of your project like so:
+DTS uses Rollup under the hood. The defaults are solid for most packages (Formik uses the defaults!). However, if you do wish to alter the rollup configuration, you can do so by creating a file called `dts.config.js` at the root of your project like so:
 
 ```js
 // Not transpiled with TypeScript or Babel, so use plain Es6/Node.js!
@@ -426,14 +424,14 @@ Some key differences include:
 
 ## API Reference
 
-### `tsdx watch`
+### `dts watch`
 
 ```shell
 Description
   Rebuilds on any change
 
 Usage
-  $ tsdx watch [options]
+  $ dts watch [options]
 
 Options
   -i, --entry           Entry module
@@ -450,26 +448,26 @@ Options
   -h, --help            Displays this message
 
 Examples
-  $ tsdx watch --entry src/foo.tsx
-  $ tsdx watch --target node
-  $ tsdx watch --name Foo
-  $ tsdx watch --format cjs,esm,umd
-  $ tsdx watch --tsconfig ./tsconfig.foo.json
-  $ tsdx watch --noClean
-  $ tsdx watch --onFirstSuccess "echo The first successful build!"
-  $ tsdx watch --onSuccess "echo Successful build!"
-  $ tsdx watch --onFailure "echo The build failed!"
-  $ tsdx watch --transpileOnly
+  $ dts watch --entry src/foo.tsx
+  $ dts watch --target node
+  $ dts watch --name Foo
+  $ dts watch --format cjs,esm,umd
+  $ dts watch --tsconfig ./tsconfig.foo.json
+  $ dts watch --noClean
+  $ dts watch --onFirstSuccess "echo The first successful build!"
+  $ dts watch --onSuccess "echo Successful build!"
+  $ dts watch --onFailure "echo The build failed!"
+  $ dts watch --transpileOnly
 ```
 
-### `tsdx build`
+### `dts build`
 
 ```shell
 Description
   Build your project once and exit
 
 Usage
-  $ tsdx build [options]
+  $ dts build [options]
 
 Options
   -i, --entry           Entry module
@@ -482,37 +480,37 @@ Options
   -h, --help            Displays this message
 
 Examples
-  $ tsdx build --entry src/foo.tsx
-  $ tsdx build --target node
-  $ tsdx build --name Foo
-  $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors
-  $ tsdx build --tsconfig ./tsconfig.foo.json
-  $ tsdx build --transpileOnly
+  $ dts build --entry src/foo.tsx
+  $ dts build --target node
+  $ dts build --name Foo
+  $ dts build --format cjs,esm,umd
+  $ dts build --extractErrors
+  $ dts build --tsconfig ./tsconfig.foo.json
+  $ dts build --transpileOnly
 ```
 
-### `tsdx test`
+### `dts test`
 
-This runs Jest, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `tsdx test --watch`. So you could set up your `package.json` `scripts` like:
+This runs Jest, forwarding all CLI flags to it. See [https://jestjs.io](https://jestjs.io) for options. For example, if you would like to run in watch mode, you can run `dts test --watch`. So you could set up your `package.json` `scripts` like:
 
 ```json
 {
   "scripts": {
-    "test": "tsdx test",
-    "test:watch": "tsdx test --watch",
-    "test:coverage": "tsdx test --coverage"
+    "test": "dts test",
+    "test:watch": "dts test --watch",
+    "test:coverage": "dts test --coverage"
   }
 }
 ```
 
-### `tsdx lint`
+### `dts lint`
 
 ```shell
 Description
   Run eslint with Prettier
 
 Usage
-  $ tsdx lint [options]
+  $ dts lint [options]
 
 Options
   --fix               Fixes fixable errors and warnings
@@ -523,12 +521,12 @@ Options
   -h, --help          Displays this message
 
 Examples
-  $ tsdx lint src
-  $ tsdx lint src --fix
-  $ tsdx lint src test --ignore-pattern test/foo.ts
-  $ tsdx lint src test --max-warnings 10
-  $ tsdx lint src --write-file
-  $ tsdx lint src --report-file report.json
+  $ dts lint src
+  $ dts lint src --fix
+  $ dts lint src test --ignore-pattern test/foo.ts
+  $ dts lint src test --max-warnings 10
+  $ dts lint src --write-file
+  $ dts lint src --report-file report.json
 ```
 
 ## Contributing

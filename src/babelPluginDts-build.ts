@@ -48,7 +48,7 @@ export const createConfigItems = (type: any, items: any[]) => {
   });
 };
 
-export const babelPluginTsdx = createBabelInputPluginFactory(() => ({
+export const babelPluginDts = createBabelInputPluginFactory(() => ({
   // Passed the plugin options.
   options({ custom: customOptions, ...pluginOptions }: any) {
     return {

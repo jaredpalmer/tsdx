@@ -3,19 +3,19 @@ import * as fs from 'fs-extra';
 import { concatAllArray } from 'jpjs';
 
 import { paths } from './constants';
-import { TsdxOptions, NormalizedOpts } from './types';
+import { DtsOptions, NormalizedOpts } from './types';
 
 import { createRollupConfig } from './createRollupConfig';
 
-// check for custom tsdx.config.js
-let tsdxConfig = {
-  rollup(config: RollupOptions, _options: TsdxOptions): RollupOptions {
+// check for custom dts.config.js
+let dtsBuildConfig = {
+  rollup(config: RollupOptions, _options: DtsOptions): RollupOptions {
     return config;
   },
 };
 
 if (fs.existsSync(paths.appConfig)) {
-  tsdxConfig = require(paths.appConfig);
+  dtsBuildConfig = require(paths.appConfig);
 }
 
 export async function createBuildConfigs(
@@ -24,7 +24,7 @@ export async function createBuildConfigs(
   const allInputs = concatAllArray(
     opts.input.map((input: string) =>
       createAllFormats(opts, input).map(
-        (options: TsdxOptions, index: number) => ({
+        (options: DtsOptions, index: number) => ({
           ...options,
           // We want to know if this is the first run for each entryfile
           // for certain plugins (e.g. css)
@@ -35,10 +35,10 @@ export async function createBuildConfigs(
   );
 
   return await Promise.all(
-    allInputs.map(async (options: TsdxOptions, index: number) => {
-      // pass the full rollup config to tsdx.config.js override
+    allInputs.map(async (options: DtsOptions, index: number) => {
+      // pass the full rollup config to dts-cli.config.js override
       const config = await createRollupConfig(options, index);
-      return tsdxConfig.rollup(config, options);
+      return dtsBuildConfig.rollup(config, options);
     })
   );
 }
@@ -46,7 +46,7 @@ export async function createBuildConfigs(
 function createAllFormats(
   opts: NormalizedOpts,
   input: string
-): [TsdxOptions, ...TsdxOptions[]] {
+): [DtsOptions, ...DtsOptions[]] {
   return [
     opts.format.includes('cjs') && {
       ...opts,
@@ -85,5 +85,5 @@ function createAllFormats(
       env: 'production',
       input,
     },
-  ].filter(Boolean) as [TsdxOptions, ...TsdxOptions[]];
+  ].filter(Boolean) as [DtsOptions, ...DtsOptions[]];
 }

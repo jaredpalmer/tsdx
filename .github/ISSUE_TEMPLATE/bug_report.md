@@ -17,7 +17,7 @@ assignees: ''
 
 ### Suggested solution(s)
 
-<!-- How could we solve this bug? What changes would need to made to TSDX? -->
+<!-- How could we solve this bug? What changes would need to made to DTS? -->
 
 ### Additional context
 
@@ -28,7 +28,7 @@ assignees: ''
 <!--
   PLEASE RUN THIS COMMAND INSIDE YOUR PROJECT:
 
-  npx envinfo --system OS --browsers --binaries --npmPackages tsdx,typescript --npmGlobalPackages tsdx,typescript
+  npx envinfo --system OS --browsers --binaries --npmPackages dts-cli,typescript --npmGlobalPackages dts-cli,typescript
 
   AND PASTE ITS CONTENTS BELOW INSIDE THE CODE SNIPPET vvvvvvvvv
 -->
