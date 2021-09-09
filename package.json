@@ -149,6 +149,9 @@
     },
     "hooks": {
       "after:bump": "auto-changelog -p"
+    },
+    "github": {
+      "release": true
     }
   }
 }
