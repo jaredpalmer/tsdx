@@ -101,7 +101,7 @@
     "typescript": "^4"
   },
   "devDependencies": {
-    "@types/eslint": "^6.1.2",
+    "@types/eslint": "^7.0.0",
     "@types/figlet": "^1.5.4",
     "@types/fs-extra": "^9.0.1",
     "@types/lodash": "^4.14.161",

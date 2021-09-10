@@ -2015,13 +2015,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:^6.1.2":
-  version: 6.8.1
-  resolution: "@types/eslint@npm:6.8.1"
+"@types/eslint@npm:^7.0.0":
+  version: 7.28.0
+  resolution: "@types/eslint@npm:7.28.0"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: e5fe90c5ec119bb6690c4e5d532d1d55f791c71e6bda0f2822e794be2de98e32267db462a495d921f0495d17aead2409d942ea19bcbc31ea9a98d0632599836d
+  checksum: 75ac2577d2a2e35bae66f56d2d1c871d5e836b2721cf14bd3df450c9d584eba48fa3b1013fba710245bf4795f16e1df0ed315e543e3199c4815ee4782537d0ae
   languageName: node
   linkType: hard
 
@@ -4412,7 +4412,7 @@ __metadata:
     "@rollup/plugin-json": ^4.1.0
     "@rollup/plugin-node-resolve": ^9.0.0
     "@rollup/plugin-replace": ^2.3.3
-    "@types/eslint": ^6.1.2
+    "@types/eslint": ^7.0.0
     "@types/figlet": ^1.5.4
     "@types/fs-extra": ^9.0.1
     "@types/jest": ^27.0.0
