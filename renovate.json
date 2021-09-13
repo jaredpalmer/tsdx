@@ -1,3 +1,4 @@
 {
-  "dependencyDashboard": true
+  "dependencyDashboard": true,
+  "ignorePaths": ["website/*", "./stage-*", "./test/*", "example/*" ]
 }
