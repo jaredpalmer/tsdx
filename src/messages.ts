@@ -2,6 +2,9 @@ import chalk from 'chalk';
 import getInstallCmd from './getInstallCmd';
 import * as Output from './output';
 
+// using import will report: 'rootDir' is expected to contain all source files.
+const pkg = require('../package.json');
+
 // This was copied from Razzle. Lots of unused stuff.
 const program = {
   name: 'dts',
@@ -11,7 +14,7 @@ export const help = function () {
   return `
     Only ${chalk.green('<project-directory>')} is required.
     If you have any problems, do not hesitate to file an issue:
-    ${chalk.cyan('https://github.com/formium/tsdx/issues/new')}
+    ${chalk.cyan(`${pkg.bugs.url}/new`)}
   `;
 };
 
@@ -86,7 +89,7 @@ export const start = async function (projectName: string) {
     ${Output.cmd(commands.test)}
     
   Questions? Feedback? Please let me know!
-  ${chalk.green('https://github.com/formium/tsdx/issues')}
+  ${chalk.green(pkg.bugs.url)}
 `;
 };
 

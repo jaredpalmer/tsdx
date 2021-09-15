@@ -16,6 +16,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-    "target": "es2017"
-  }
+    "target": "es2017",
+    "resolveJsonModule": true,
+  },
 }
