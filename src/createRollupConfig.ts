@@ -14,7 +14,7 @@ import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
 
 import { extractErrors } from './errors/extractErrors';
-import { babelPluginDts } from './babelPluginDts-build';
+import { babelPluginDts } from './babelPluginDts';
 import { DtsOptions } from './types';
 
 const errorCodeOpts = {
