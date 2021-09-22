@@ -26,8 +26,8 @@ jobs:
       - name: Lint codebase
         run: yarn lint:post-build
 
-      - name: Deduplicate dependencies
-        run: yarn deduplicate:check
+#       - name: Deduplicate dependencies
+#         run: yarn deduplicate:check
 
   test:
     name: Test on Node ${{ matrix.node }} and ${{ matrix.os }}
