@@ -23,7 +23,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Features](#features)
 - [Quick Start](#quick-start)
   - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
