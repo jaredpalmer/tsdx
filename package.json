@@ -114,7 +114,7 @@
     "@types/shelljs": "^0.8.9",
     "@types/styled-components": "^5.1.14",
     "auto-changelog": "^2.3.0",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.3.6",
     "babel-plugin-replace-identifiers": "^0.1.1",
     "cssnano": "^5.0.8",
     "doctoc": "^2.0.1",
