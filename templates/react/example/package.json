@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "start": "vite",
+    "build": "vite build"
   },
   "dependencies": {
     "react-app-polyfill": "^1.0.6"
@@ -18,7 +18,9 @@
   "devDependencies": {
     "@types/react": "^16.14.15",
     "@types/react-dom": "^16.9.14",
-    "parcel": "^1.12.4",
+    "@tsconfig/create-react-app": "latest",
+    "vite": "latest",
+    "vite-preset-react": "latest",
     "typescript": "^4"
   }
 }
