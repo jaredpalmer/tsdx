@@ -8,7 +8,7 @@ Congrats! You just saved yourself hours of work by bootstrapping this project wi
 
 ## Commands
 
-DTS scaffolds your new library inside `/src`, and also sets up a [Parcel-based](https://parceljs.org) playground for it inside `/example`.
+DTS scaffolds your new library inside `/src`, and also sets up a [Vite-based](https://vitejs.dev) playground for it inside `/example`.
 
 The recommended workflow is to run DTS in one terminal:
 
@@ -26,7 +26,7 @@ npm i # or yarn to install dependencies
 npm start # or yarn start
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure DTS is running in watch mode like we recommend above. **No symlinking required**, we use [Parcel's aliasing](https://parceljs.org/module_resolution.html#aliases).
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure DTS is running in watch mode like we recommend above. 
 
 To do a one-off build, use `npm run build` or `yarn build`.
 
@@ -109,7 +109,7 @@ The appropriate paths are configured in `package.json` and `dist/index.js` accor
 
 ## Deploying the Example Playground
 
-The Playground is just a simple [Parcel](https://parceljs.org) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
+The Playground is just a simple [Vite](https://vitejs.dev) app, you can deploy it anywhere you would normally deploy that. Here are some guidelines for **manually** deploying with the Netlify CLI (`npm i -g netlify-cli`):
 
 ```bash
 cd example # if not already in the example folder

@@ -1,0 +1,25 @@
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2.5rem -0.5rem 2rem;
+}
+
+.feature {
+  flex: 0 0 33%;
+  align-items: center;
+  display: inline-flex;
+  padding: 0 0.5rem 1.5rem;
+  margin: 0 auto;
+}
+.feature h4 {
+  margin: 0 0 0 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+@media (max-width: 860px) {
+  
+  .feature h4 {
+    font-size: 0.75rem;
+  }
+}
