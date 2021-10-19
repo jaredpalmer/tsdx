@@ -1,5 +1,6 @@
 [![NPM version](https://img.shields.io/npm/v/dts-cli.svg?style=flat)](https://npmjs.org/package/dts-cli)
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/dts-cli)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 > a fork of the official tsdx.
 
@@ -22,6 +23,7 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 
 - [Features](#features)
 - [Quick Start](#quick-start)

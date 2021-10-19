@@ -31,7 +31,10 @@
     "start": "tsc -p tsconfig.json --watch",
     "release": "yarn test && release-it",
     "deduplicate": "yarn dedupe",
-    "deduplicate:check": "yarn dedupe -c"
+    "deduplicate:check": "yarn dedupe -c",
+    "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "files": [
     "dist",
@@ -103,6 +106,9 @@
     "typescript": "^4.4.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@release-it/conventional-changelog": "^3.3.0",
     "@types/eslint": "^7.28.0",
     "@types/figlet": "^1.5.4",
     "@types/fs-extra": "^9.0.13",
@@ -119,7 +125,8 @@
     "babel-plugin-replace-identifiers": "^0.1.1",
     "cssnano": "^5.0.8",
     "doctoc": "^2.0.1",
-    "husky": "^4.3.8",
+    "husky": "^7.0.0",
+    "pinst": "^2.0.0",
     "pretty-quick": "^3.1.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
@@ -147,13 +154,17 @@
   },
   "release-it": {
     "git": {
-      "changelog": "auto-changelog --stdout --commit-limit false -u --template https://cdn.jsdelivr.net/gh/release-it/release-it/templates/changelog-compact.hbs"
+      "commitMessage": "chore: release v${version}"
     },
-    "hooks": {
-      "after:bump": "auto-changelog -p"
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": "conventionalcommits",
+        "infile": "CHANGELOG.md"
+      }
     },
     "github": {
       "release": true
     }
-  }
+  },
+  "packageManager": "yarn@3.0.2"
 }
