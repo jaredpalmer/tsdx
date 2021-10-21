@@ -1,3 +1,11 @@
+### [0.19.3-0](https://github.com/weiran-zsd/dts-cli/compare/v0.19.2...v0.19.3-0) (2021-10-21)
+
+
+### Bug Fixes
+
+* add pkg.private=>true in examples ([707f267](https://github.com/weiran-zsd/dts-cli/commit/707f26717ec67cfbad817d67f0afe2f88264010b))
+* use @tsconfig/recommended & @tsconfig/create-react-app ([be42ffb](https://github.com/weiran-zsd/dts-cli/commit/be42ffbad25170a8bc803dc4331874ca24435e6d))
+
 ### Changelog
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
