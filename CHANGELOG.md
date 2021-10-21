@@ -1,3 +1,10 @@
+### [0.19.4](https://github.com/weiran-zsd/dts-cli/compare/v0.19.3...v0.19.4) (2021-10-21)
+
+
+### Bug Fixes
+
+* rollup module incompatibility with tsconfig.json (fixes [#79](https://github.com/weiran-zsd/dts-cli/issues/79)) ([b72472a](https://github.com/weiran-zsd/dts-cli/commit/b72472ab4e637927b67f73111f1f5b33d5197daf))
+
 ### [0.19.3](https://github.com/weiran-zsd/dts-cli/compare/v0.19.3-0...v0.19.3) (2021-10-21)
 
 ### [0.19.3-0](https://github.com/weiran-zsd/dts-cli/compare/v0.19.2...v0.19.3-0) (2021-10-21)
