@@ -1,3 +1,5 @@
+### [0.19.3](https://github.com/weiran-zsd/dts-cli/compare/v0.19.3-0...v0.19.3) (2021-10-21)
+
 ### [0.19.3-0](https://github.com/weiran-zsd/dts-cli/compare/v0.19.2...v0.19.3-0) (2021-10-21)
 
 
