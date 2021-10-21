@@ -9,6 +9,7 @@ const basicTemplate: Template = {
     'typescript',
     'size-limit',
     '@size-limit/preset-small-lib',
+    '@tsconfig/recommended',
   ],
   packageJson: {
     // name: safeName,

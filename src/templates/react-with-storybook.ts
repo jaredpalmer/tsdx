@@ -13,6 +13,7 @@ const storybookTemplate: Template = {
     '@storybook/react',
     'react-is',
     'babel-loader',
+    '@tsconfig/create-react-app',
   ],
   name: 'react-with-storybook',
   packageJson: {
