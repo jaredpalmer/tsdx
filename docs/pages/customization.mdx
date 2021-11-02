@@ -77,12 +77,12 @@ module.exports = {
 
 ## Babel
 
-You can add your own `.babelrc` to the root of your project and DTS-cli will **merge** it with [its own Babel transforms](https://github.com/formium/dts-cli/blob/master/src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
+You can add your own `.babelrc` to the root of your project and DTS-cli will **merge** it with [its own Babel transforms](https://github.com/weiran-zsd/dts-cli/blob/master/src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
 
 ## Jest
 
-You can add your own `jest.config.js` to the root of your project and DTS-cli will **shallow merge** it with [its own Jest config](https://github.com/formium/dts-cli/blob/master/src/createJestConfig.ts).
+You can add your own `jest.config.js` to the root of your project and DTS-cli will **shallow merge** it with [its own Jest config](https://github.com/weiran-zsd/dts-cli/blob/master/src/createJestConfig.ts).
 
 ## ESLint
 
-You can add your own `.eslintrc.js` to the root of your project and DTS-cli will **deep merge** it with [its own ESLint config](https://github.com/formium/dts-cli/blob/master/src/createEslintConfig.ts).
+You can add your own `.eslintrc.js` to the root of your project and DTS-cli will **deep merge** it with [its own ESLint config](https://github.com/weiran-zsd/dts-cli/blob/master/src/createEslintConfig.ts).
