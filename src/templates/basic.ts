@@ -56,6 +56,9 @@ const basicTemplate: Template = {
       singleQuote: true,
       trailingComma: 'es5',
     },
+    jest: {
+      testEnvironment: 'node',
+    },
   },
 };
 

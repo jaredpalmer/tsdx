@@ -6,5 +6,6 @@ interface Template {
   packageJson: PackageJson & {
     husky?: any;
     prettier?: any;
+    jest?: any;
   };
 }

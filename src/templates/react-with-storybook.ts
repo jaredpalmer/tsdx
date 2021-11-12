@@ -23,6 +23,9 @@ const storybookTemplate: Template = {
       storybook: 'start-storybook -p 6006',
       'build-storybook': 'build-storybook',
     } as PackageJson['scripts'],
+    jest: {
+      testEnvironment: 'jsdom',
+    },
   },
 };
 
