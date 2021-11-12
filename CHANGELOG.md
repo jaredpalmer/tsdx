@@ -1,3 +1,10 @@
+### [0.19.5](https://github.com/weiran-zsd/dts-cli/compare/v0.19.4...v0.19.5) (2021-11-12)
+
+
+### Bug Fixes
+
+* add jest config in the templates ([#91](https://github.com/weiran-zsd/dts-cli/issues/91)) ([711f414](https://github.com/weiran-zsd/dts-cli/commit/711f4146b7f9d5162b988199ade723e29801c64a))
+
 ### [0.19.4](https://github.com/weiran-zsd/dts-cli/compare/v0.19.3...v0.19.4) (2021-10-21)
 
 
