@@ -8,15 +8,14 @@ jobs:
   lint-and-dedupe:
     runs-on: ubuntu-latest
 
-    name: Lint & Deduplicate deps on node 10.x and ubuntu-latest
+    name: Lint & Deduplicate deps on node stable and ubuntu-latest
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Use Node 10.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.x
+
+      - name: Use Node Stable
+        uses: actions/setup-node@v2
 
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
@@ -33,7 +32,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['10.x', '12.x', '14.x']
+        node: ['12.x', '14.x', '16.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
