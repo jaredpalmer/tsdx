@@ -71,6 +71,22 @@ module.exports = {
 };
 ```
 
+### Example: Adding images
+[Warning: use sparingly as this will increase file size](https://www.npmjs.com/package/@rollup/plugin-image)
+```js
+const image = require("@rollup/plugin-image");
+
+module.exports = {
+  rollup(config, options) {
+    config.plugins = [
+      image({ incude: ["**/*.png", "**/*.jpg"] }),
+      ...config.plugins,
+    ];
+    return config;
+  },
+};
+```
+
 ## Babel
 
 You can add your own `.babelrc` to the root of your project and TSDX will **merge** it with [its own Babel transforms](https://github.com/formium/tsdx/blob/master/src/babelPluginTsdx.ts) (which are mostly for optimization), putting any new presets and plugins at the end of its list.
