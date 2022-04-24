@@ -46,7 +46,9 @@ describe('tsdx build :: options', () => {
   });
 
   it('should not bundle regeneratorRuntime when targeting Node', () => {
-    const output = execWithCache('node ../dist/index.js build --legacy --target node');
+    const output = execWithCache(
+      'node ../dist/index.js build --legacy --target node'
+    );
     expect(output.code).toBe(0);
 
     const matched = grep(/regeneratorRuntime = r/, [
