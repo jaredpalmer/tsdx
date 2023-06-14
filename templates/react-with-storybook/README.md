@@ -80,6 +80,7 @@ This is the folder structure we set up for you:
   main.js
   preview.js
 .gitignore
+.babelrc.json
 package.json
 README.md         # EDIT THIS
 tsconfig.json
