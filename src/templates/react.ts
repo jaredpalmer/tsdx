@@ -15,7 +15,7 @@ const reactTemplate: Template = {
   packageJson: {
     ...basicTemplate.packageJson,
     peerDependencies: {
-      react: '>=16',
+      react: '>=18',
     },
     scripts: {
       ...basicTemplate.packageJson.scripts,
