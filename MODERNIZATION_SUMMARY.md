@@ -142,7 +142,16 @@ Updated all `@types/*` packages to latest versions:
   - Patched version: 3.29.5
 - Multiple outdated dependency vulnerabilities resolved through updates
 
-### 9. Documentation
+### 9. Feature Removals
+
+#### Error Extraction Feature Removed
+- **Removed**: `--extractErrors` CLI flag and related functionality
+- **Removed**: Error extraction babel transform (`transformErrorMessages`)
+- **Reason**: Rarely used feature that added complexity and maintenance burden
+- **Impact**: Users who relied on this feature will need to implement their own error code extraction if needed
+- **Documentation**: All references to `--extractErrors` removed from README and website docs
+
+### 10. Documentation
 
 #### New Files
 - **MIGRATION.md**: Comprehensive guide for upgrading existing projects
@@ -161,9 +170,12 @@ Updated all `@types/*` packages to latest versions:
 - `.eslintrc.js` - Removed deprecated prettier config
 
 ### Source Code
-- `src/createRollupConfig.ts` - Updated terser import
+- `src/createRollupConfig.ts` - Updated terser import, removed error extraction
 - `src/createJestConfig.ts` - Replaced testURL with testEnvironment
 - `src/env.d.ts` - Removed rollup-plugin-terser declaration
+- `src/index.ts` - Removed `--extractErrors` CLI flag
+- `src/types.ts` - Removed `extractErrors` property from SharedOpts
+- `src/babelPluginTsdx.ts` - Removed error extraction babel transform
 - `src/templates/react.ts` - Updated React peer dependency to >=18
 - `src/templates/react-with-storybook.ts` - Updated Storybook dependencies and scripts
 

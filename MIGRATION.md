@@ -45,7 +45,19 @@ This document outlines the modernization changes made to TSDX and provides guida
 
 **Action Required**: If you have a custom `tsdx.config.js`, update any references from `rollup-plugin-terser` to `@rollup/plugin-terser`.
 
-### 5. Babel ESLint Parser
+### 6. Error Extraction Feature Removed
+
+- **Removed**: `--extractErrors` CLI flag
+- **Removed**: Error extraction and transformation functionality
+
+**Reason**: This feature was rarely used and added significant complexity to the build process. It was based on React's internal error code system which may not be appropriate for most libraries.
+
+**Action Required**: 
+- If you were using `--extractErrors` flag, remove it from your build scripts
+- If you need error code extraction, you'll need to implement your own solution
+- The error extraction babel transform and related functionality have been completely removed
+
+### 7. Babel ESLint Parser
 
 - **Removed**: `babel-eslint` (deprecated)
 - **Added**: `@babel/eslint-parser`

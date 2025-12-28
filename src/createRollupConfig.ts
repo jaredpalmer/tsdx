@@ -13,13 +13,8 @@ import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
 
-import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
-
-const errorCodeOpts = {
-  errorMapFilePath: paths.appErrorsJson,
-};
 
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
@@ -28,10 +23,6 @@ export async function createRollupConfig(
   opts: TsdxOptions,
   outputNum: number
 ): Promise<RollupOptions> {
-  const findAndRecordErrorCodes = await extractErrors({
-    ...errorCodeOpts,
-    ...opts,
-  });
 
   const isEsm = opts.format.includes('es') || opts.format.includes('esm');
 
@@ -111,16 +102,6 @@ export async function createRollupConfig(
       exports: 'named',
     },
     plugins: [
-      !!opts.extractErrors && {
-        async transform(code: string) {
-          try {
-            await findAndRecordErrorCodes(code);
-          } catch (e) {
-            return null;
-          }
-          return { code, map: null };
-        },
-      },
       resolve({
         mainFields: [
           'module',
@@ -199,7 +180,6 @@ export async function createRollupConfig(
         passPerPreset: true,
         custom: {
           targets: opts.target === 'node' ? { node: '14' } : undefined,
-          extractErrors: opts.extractErrors,
           format: opts.format,
         },
         babelHelpers: 'bundled',

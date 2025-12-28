@@ -3,8 +3,6 @@ interface SharedOpts {
   target: 'node' | 'browser';
   // Path to tsconfig file
   tsconfig?: string;
-  // Is error extraction running?
-  extractErrors?: boolean;
 }
 
 export type ModuleFormat = 'cjs' | 'umd' | 'esm' | 'system';

@@ -279,8 +279,6 @@ prog
   .example('watch --onFailure "The build failed!"')
   .option('--transpileOnly', 'Skip type checking')
   .example('watch --transpileOnly')
-  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('watch --extractErrors')
   .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
@@ -380,13 +378,6 @@ prog
   .example('build --tsconfig ./tsconfig.foo.json')
   .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
-  .option(
-    '--extractErrors',
-    'Extract errors to ./errors/codes.json and provide a url for decoding.'
-  )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
   .action(async (dirtyOpts: BuildOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);

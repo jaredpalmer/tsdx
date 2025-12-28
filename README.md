@@ -24,7 +24,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
       - [`invariant`](#invariant)
       - [`warning`](#warning)
   - [Using lodash](#using-lodash)
-  - [Error extraction](#error-extraction)
 - [Customization](#customization)
   - [Rollup](#rollup)
     - [Example: Adding Postcss](#example-adding-postcss)
@@ -230,8 +229,6 @@ if (!condition) {
 
 Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
-To extract and minify `invariant` error codes in production into a static `codes.json` file, specify the `--extractErrors` flag in command line. For more details see [Error extraction docs](#error-extraction).
-
 ##### `warning`
 
 Replaces
@@ -289,18 +286,6 @@ TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o f
 
 > Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
 
-### Error extraction
-
-After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted `invariant` error codes. This process scans your production code and swaps out your `invariant` error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`.
-
-Note: We don't provide this function for you, it is up to you how you want it to behave. For example, you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
-
-⚠️Don't forget: you will need to host the decoder somewhere. Once you have a URL, look at `./errors/ErrorProd.js` and replace the `reactjs.org` URL with yours.
-
-> Known issue: our `transformErrorMessages` babel plugin currently doesn't have sourcemap support, so you will see "Sourcemap is likely to be incorrect" warnings. [We would love your help on this.](https://github.com/palmerhq/tsdx/issues/184)
-
-_TODO: Simple guide to host error codes to be completed_
-
 ## Customization
 
 ### Rollup
@@ -336,8 +321,6 @@ export interface TsdxOptions {
   env: 'development' | 'production';
   // Path to tsconfig file
   tsconfig?: string;
-  // Is error extraction running?
-  extractErrors?: boolean;
   // Is minifying?
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
@@ -459,7 +442,6 @@ Options
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
-  --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --transpileOnly       Skip type checking
   -h, --help            Displays this message
@@ -469,7 +451,6 @@ Examples
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
   $ tsdx build --transpileOnly
 ```
