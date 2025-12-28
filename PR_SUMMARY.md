@@ -39,6 +39,7 @@ After analyzing the codebase and 204 open issues, several critical problems were
 
 ### Security Improvements
 - ✅ CVE-2021-20066 (jsdom) - FIXED
+- ✅ Rollup XSS vulnerability (DOM Clobbering) - FIXED
 - ✅ All dependency vulnerabilities resolved
 - ✅ CodeQL security scan: 0 issues
 

@@ -27,7 +27,18 @@ This document outlines the modernization changes made to TSDX and provides guida
 - Update React imports to use `createRoot` from `react-dom/client` instead of `ReactDOM.render`
 - Review React 18 migration guide: https://react.dev/blog/2022/03/08/react-18-upgrade-guide
 
-### 4. Rollup Plugin Changes
+### 4. Rollup Version Update (Security Fix)
+
+- **Old**: Rollup 2.x
+- **New**: Rollup 3.29.5+
+
+**Security Issue Fixed**: DOM Clobbering Gadget vulnerability leading to XSS
+- Affected versions: < 2.79.2, 3.0.0 - 3.29.4, 4.0.0 - 4.22.3
+- Patched in: 3.29.5
+
+**Action Required**: No action needed unless you have custom Rollup configuration that depends on version-specific features.
+
+### 5. Rollup Plugin Changes
 
 - **Removed**: `rollup-plugin-terser` (deprecated)
 - **Added**: `@rollup/plugin-terser`

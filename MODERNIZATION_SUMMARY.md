@@ -137,6 +137,9 @@ Updated all `@types/*` packages to latest versions:
 
 #### Resolved Vulnerabilities
 - **CVE-2021-20066**: jsdom vulnerability (fixed by updating Jest to v29)
+- **Rollup XSS vulnerability**: DOM Clobbering Gadget leading to XSS (fixed by updating to v3.29.5+)
+  - Affected versions: < 2.79.2, 3.0.0 - 3.29.4, 4.0.0 - 4.22.3
+  - Patched version: 3.29.5
 - Multiple outdated dependency vulnerabilities resolved through updates
 
 ### 9. Documentation
