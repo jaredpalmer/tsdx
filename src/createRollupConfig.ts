@@ -1,7 +1,7 @@
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
 import { RollupOptions } from 'rollup';
-import { terser } from 'rollup-plugin-terser';
+import { terser } from '@rollup/plugin-terser';
 import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';

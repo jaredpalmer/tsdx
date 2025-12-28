@@ -16,6 +16,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-    "target": "es2017"
+    "target": "es2020",
+    "lib": ["es2020"]
   }
 }
