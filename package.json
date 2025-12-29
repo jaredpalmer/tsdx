@@ -48,14 +48,12 @@
     "node": ">=20"
   },
   "dependencies": {
-    "chalk": "^5.4.1",
     "commander": "^13.0.0",
     "enquirer": "^2.4.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.2.0",
     "ora": "^8.1.1",
-    "picocolors": "^1.1.1",
-    "tiny-glob": "^0.2.9"
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",
