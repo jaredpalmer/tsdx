@@ -161,6 +161,7 @@ Updated all `@types/*` packages to latest versions:
 #### Updated Files
 - `.eslintrc.js`: Removed deprecated prettier config
 - `tsconfig.json`: Updated target to ES2020
+- `.github/workflows/nodejs.yml`: Updated to Node 18.x, 20.x, 22.x and latest GitHub Actions
 
 ## Files Modified
 
@@ -168,6 +169,7 @@ Updated all `@types/*` packages to latest versions:
 - `package.json` - Updated all dependencies
 - `tsconfig.json` - Updated target and added lib
 - `.eslintrc.js` - Removed deprecated prettier config
+- `.github/workflows/nodejs.yml` - Updated Node versions and GitHub Actions
 
 ### Source Code
 - `src/createRollupConfig.ts` - Updated terser import, removed error extraction

@@ -8,15 +8,16 @@ jobs:
   lint-and-dedupe:
     runs-on: ubuntu-latest
 
-    name: Lint & Deduplicate deps on node 10.x and ubuntu-latest
+    name: Lint & Deduplicate deps on node 20.x and ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Use Node 10.x
-        uses: actions/setup-node@v1
+        uses: actions/checkout@v4
+      - name: Use Node 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: 10.x
+          node-version: 20.x
+          cache: 'yarn'
 
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
@@ -33,16 +34,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        node: ['10.x', '12.x', '14.x']
+        node: ['18.x', '20.x', '22.x']
         os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Use Node ${{ matrix.node }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+          cache: 'yarn'
 
       - name: Install deps and build (with cache)
         uses: bahmutov/npm-install@v1
