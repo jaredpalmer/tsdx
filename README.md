@@ -8,7 +8,7 @@ Zero-config CLI for TypeScript package development.
 
 Modern TypeScript library development, simplified. TSDX provides a zero-config CLI that helps you develop, test, and publish TypeScript packages with ease.
 
-> **TSDX 1.0** is a complete rewrite using modern, high-performance Rust-based tooling. See the [Migration Guide](./MIGRATION.md) if upgrading from v0.x.
+> **TSDX 1.0** is a complete rewrite using modern, high-performance Rust-based tooling. See the [Migration Guide](./MIGRATION.md) if upgrading from v0.x
 
 ## Features
 
