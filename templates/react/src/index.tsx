@@ -1,6 +1,13 @@
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
-// Delete me
-export const Thing = () => {
-  return <div>the snozzberries taste like snozzberries</div>;
+export interface ThingProps {
+  children?: ReactNode;
+}
+
+export const Thing = ({ children }: ThingProps) => {
+  return (
+    <div>
+      {children ?? 'the snozzberries taste like snozzberries'}
+    </div>
+  );
 };

@@ -1,53 +1,14 @@
 version: 2
 
 updates:
-  # configuration for /
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: weekly # don't spam daily
+      interval: weekly
     commit-message:
-      prefix: 'deps:' # prefix commit with deps: for consistency
-    # only increase version when required, don't bump every patch or minor
+      prefix: 'deps:'
     versioning-strategy: increase-if-necessary
     allow:
-      # only upgrade prod deps (not devDeps)
       - dependency-name: '*'
         dependency-type: production
-    ignore:
-      # ignore eslint-config-react-app's peerDeps
-      - dependency-name: '@typescript-eslint/eslint-plugin'
-      - dependency-name: '@typescript-eslint/parser'
-      - dependency-name: 'babel-eslint'
-      - dependency-name: 'eslint-plugin-flowtype'
-      - dependency-name: 'eslint-plugin-import'
-      - dependency-name: 'eslint-plugin-jsx-a11y'
-      - dependency-name: 'eslint-plugin-react'
-      - dependency-name: 'eslint-plugin-react-hooks'
-      # ignore Jest's "peers" that should be upgraded simultaneously with Jest
-      - dependency-name: '@types/jest'
-      - dependency-name: 'jest-watch-typeahead'
-      - dependency-name: 'ts-jest'
-    # temporarily disable dep upgrade PRs for / as they're being updated
-    open-pull-requests-limit: 0
-
-  # configuration for /website
-  - package-ecosystem: npm
-    directory: /website
-    schedule:
-      interval: weekly # don't spam daily
-    commit-message:
-      prefix: 'deps:' # prefix commit with deps: for consistency
-    # only increase version when required, don't bump every patch or minor
-    versioning-strategy: increase-if-necessary
-    allow:
-      # only upgrade prod deps (not devDeps)
-      - dependency-name: '*'
-        dependency-type: production
-    # /website is not a published package and doesn't really have an attack
-    # surface area, should only be updated as needed, not as soon as deps change
-    ignore:
-      # no security PRs for /website
-      - dependency-name: '*'
-    # disable dep upgrade PRs for /website
-    open-pull-requests-limit: 0
+    open-pull-requests-limit: 5

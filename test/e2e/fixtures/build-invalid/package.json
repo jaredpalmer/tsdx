@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "build": "tsdx build"
-  },
-  "name": "build-invalid",
-  "license": "MIT"
-}

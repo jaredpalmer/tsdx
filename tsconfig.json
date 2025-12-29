@@ -1,21 +1,25 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["src/template/**/*"],
   "compilerOptions": {
-    "allowJs": true,
-    "jsx": "react",
-    "importHelpers": true,
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "declaration": false,
-    "module": "commonjs",
-    "rootDir": "src",
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
     "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "target": "es2017"
-  }
+    "noImplicitReturns": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "templates"]
 }

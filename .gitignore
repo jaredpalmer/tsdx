@@ -1,9 +1,39 @@
-*.log
-.DS_Store
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Build output
 dist
+*.tsbuildinfo
+
+# Bun
+bun.lockb
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+coverage
+
+# Misc
+.env
+.env.local
+.netlify
+
+# Test directories
 tester
 tester-react
-package-lock.json
-# Local Netlify folder
-.netlify

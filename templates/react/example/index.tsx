@@ -1,14 +1,22 @@
-import 'react-app-polyfill/ie11';
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Thing } from '../src';
 
 const App = () => {
   return (
-    <div>
+    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+      <h1>Component Demo</h1>
       <Thing />
+      <Thing>Custom content!</Thing>
     </div>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = document.getElementById('root');
+if (root) {
+  createRoot(root).render(
+    <StrictMode>
+      <App />
+    </StrictMode>
+  );
+}

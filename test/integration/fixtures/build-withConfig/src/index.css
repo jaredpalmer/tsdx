@@ -1,4 +1,0 @@
-/* ::placeholder should be autoprefixed, and everything minified */
-.test::placeholder {
-  color: 'blue';
-}
