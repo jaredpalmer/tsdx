@@ -6,7 +6,12 @@ import fs from 'fs-extra';
 import path from 'path';
 import { execa, execaCommand } from 'execa';
 import ora from 'ora';
-import { Select, Input } from 'enquirer';
+import Enquirer from 'enquirer';
+
+const { Select, Input } = Enquirer as unknown as {
+  Select: new (options: { message: string; choices: { name: string; message: string }[] }) => { run: () => Promise<string> };
+  Input: new (options: { message: string; initial?: string }) => { run: () => Promise<string> };
+};
 
 // Read package.json for version
 const pkgPath = path.resolve(__dirname, '../package.json');
