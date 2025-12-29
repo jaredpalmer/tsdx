@@ -2,7 +2,7 @@
 "tsdx": major
 ---
 
-Initial 1.0.0 release - complete rewrite with modern Rust-based tooling
+Initial 2.0.0 release - complete rewrite with modern Rust-based tooling
 
 - Bundling with bunchee
 - Testing with vitest

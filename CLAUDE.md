@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TSDX is a zero-config CLI for TypeScript package development. Version 1.0 is a complete rewrite using modern Rust-based tooling: bunchee (bundling), vitest (testing), oxlint (linting), and oxfmt (formatting).
+TSDX is a zero-config CLI for TypeScript package development. Version 2.0 is a complete rewrite using modern Rust-based tooling: bunchee (bundling), vitest (testing), oxlint (linting), and oxfmt (formatting).
 
 ## Development Commands
 
