@@ -1,12 +1,12 @@
-# Migration Guide: TSDX v0.x to v1.0
+# Migration Guide: TSDX v0.x to v2.0
 
-This guide helps you migrate from the original TSDX (v0.x) to the modern TSDX 1.0.
+This guide helps you migrate from the original TSDX (v0.x) to the modern TSDX 2.0.
 
 ## What's Changed
 
-TSDX 1.0 is a complete rewrite that replaces the original toolchain with modern, high-performance alternatives:
+TSDX 2.0 is a complete rewrite that replaces the original toolchain with modern, high-performance alternatives:
 
-| Old (v0.x) | New (v1.0) | Why |
+| Old (v0.x) | New (v2.0) | Why |
 |------------|------------|-----|
 | Rollup + Babel | [bunchee](https://github.com/huozhi/bunchee) | Zero-config, SWC-powered, faster |
 | Jest | [vitest](https://vitest.dev/) | Vite-native, faster, Jest-compatible |

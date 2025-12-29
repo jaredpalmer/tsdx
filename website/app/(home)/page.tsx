@@ -263,7 +263,7 @@ export default function HomePage() {
             Powered by Modern Tools
           </h2>
           <p className="text-lg text-fd-muted-foreground mb-12">
-            TSDX 1.0 is built on the fastest, most modern tools in the ecosystem.
+            TSDX 2.0 is built on the fastest, most modern tools in the ecosystem.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
