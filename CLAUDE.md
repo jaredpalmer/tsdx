@@ -49,6 +49,37 @@ The e2e tests create projects in temp directories and have longer timeouts (60s)
 2. Register in `src/index.ts` in the `templates` object
 3. Include: package.json, tsconfig.json, vitest.config.ts, src/, test/, gitignore (not .gitignore), LICENSE with `<year>` and `<author>` placeholders
 
+## Documentation Website
+
+The documentation site is in `./website/` and built with:
+- **Next.js 16** - React framework
+- **Fumadocs** - Documentation framework (fumadocs-core, fumadocs-mdx, fumadocs-ui)
+- **Tailwind CSS v4** - CSS-first configuration
+- **IBM Plex Sans/Mono** - Typography via next/font/google
+
+### Website Commands
+
+```bash
+cd website
+bun install              # Install dependencies
+bun run dev              # Start dev server
+bun run build            # Build for production
+```
+
+### Content Structure
+
+- `content/docs/` - MDX documentation files
+- `content/docs/meta.json` - Sidebar navigation structure
+- `app/` - Next.js App Router pages
+- `app/layout.config.tsx` - Navigation and logo configuration
+
+### Adding Documentation Pages
+
+1. Create `.mdx` file in `content/docs/`
+2. Add frontmatter with `title` and `description`
+3. Add page to `content/docs/meta.json` in desired position
+4. Use `---Section Name---` syntax in meta.json for sidebar sections
+
 ## Commit Convention
 
 Uses Conventional Commits: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`
