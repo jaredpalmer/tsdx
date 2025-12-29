@@ -4,8 +4,10 @@
 
 @source '../node_modules/fumadocs-ui/dist/**/*.js';
 
-/* Custom primary color overrides */
+/* Custom theme overrides */
 @theme {
   --color-primary: #007ACC;
   --color-fd-primary: #007ACC;
+  --font-sans: var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 }
