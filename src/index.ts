@@ -217,7 +217,7 @@ prog
       const safeName = safePackageName(pkg);
       const pkgJson = generatePackageJson({ name: safeName, author });
 
-      const nodeVersionReq = getNodeEngineRequirement(pkgJson);
+      const nodeVersionReq = getNodeEngineRequirement(pkgJson as PackageJson);
       if (
         nodeVersionReq &&
         !semver.satisfies(process.version, nodeVersionReq)
