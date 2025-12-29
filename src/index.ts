@@ -25,6 +25,59 @@ const paths = {
   appSrc: path.resolve(process.cwd(), 'src'),
 };
 
+// Check if a package is installed
+function isPackageInstalled(packageName: string): boolean {
+  try {
+    require.resolve(packageName, { paths: [process.cwd()] });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Lazy install packages if missing (like Next.js)
+async function ensurePackagesInstalled(packages: string[]): Promise<boolean> {
+  const missing = packages.filter((pkg) => !isPackageInstalled(pkg));
+
+  if (missing.length === 0) {
+    return true;
+  }
+
+  console.log(pc.yellow(`The following packages are required but not installed:`));
+  console.log(pc.dim(`  ${missing.join(', ')}`));
+  console.log();
+
+  const { Confirm } = Enquirer as unknown as {
+    Confirm: new (options: { message: string; initial?: boolean }) => { run: () => Promise<boolean> };
+  };
+
+  const prompt = new Confirm({
+    message: 'Would you like to install them now?',
+    initial: true,
+  });
+
+  const shouldInstall = await prompt.run();
+
+  if (!shouldInstall) {
+    console.log(pc.dim('You can install them manually with:'));
+    console.log(pc.cyan(`  bun add -D ${missing.join(' ')}`));
+    return false;
+  }
+
+  const spinner = ora(`Installing ${missing.join(', ')}...`).start();
+
+  try {
+    await execa('bun', ['add', '-D', ...missing], { cwd: process.cwd() });
+    spinner.succeed(`Installed ${missing.join(', ')}`);
+    return true;
+  } catch (error) {
+    spinner.fail('Failed to install packages');
+    console.log(pc.dim('You can install them manually with:'));
+    console.log(pc.cyan(`  bun add -D ${missing.join(' ')}`));
+    return false;
+  }
+}
+
 // Template definitions
 const templates = {
   basic: {
@@ -258,15 +311,25 @@ program
       lintPaths: string[],
       options: { fix?: boolean; typecheck?: boolean; typeAware?: boolean; config?: string }
     ) => {
-      const args = ['oxlint'];
-
-      // Filter to existing paths
+      // Filter to existing paths first
       const existingPaths = lintPaths.filter((p) => fs.existsSync(path.resolve(process.cwd(), p)));
 
       if (existingPaths.length === 0) {
         console.log(pc.yellow('No valid paths to lint'));
         return;
       }
+
+      // Determine required packages based on options
+      const requiredPackages =
+        options.typeAware !== false ? ['oxlint', 'oxlint-tsgolint'] : ['oxlint'];
+
+      // Lazy install required packages if missing
+      const installed = await ensurePackagesInstalled(requiredPackages);
+      if (!installed) {
+        process.exit(1);
+      }
+
+      const args = ['oxlint'];
 
       args.push(...existingPaths);
 
@@ -451,7 +514,8 @@ ${pc.green('Configuration added!')}
 Install the required dev dependencies:
 
   ${pc.cyan('bun add -D bunchee vitest typescript')}
-  ${pc.cyan('bun add -D oxlint oxlint-tsgolint')}
+
+Note: ${pc.dim('oxlint and oxlint-tsgolint will be installed automatically on first lint')}
 
 Then you can run:
 
