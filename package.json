@@ -38,7 +38,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepare": "bun run build"
+    "prepare": "bun run build",
+    "changeset": "changeset",
+    "release": "bun run build && changeset publish"
   },
   "files": [
     "dist",
@@ -56,6 +58,8 @@
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
     "bunchee": "^6.4.0",
