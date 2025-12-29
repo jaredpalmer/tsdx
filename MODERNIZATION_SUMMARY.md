@@ -142,7 +142,20 @@ Updated all `@types/*` packages to latest versions:
   - Patched version: 3.29.5
 - Multiple outdated dependency vulnerabilities resolved through updates
 
-### 9. Feature Removals
+### 9. Package Manager Migration
+
+#### Switched from Yarn to Bun
+- **Removed**: yarn.lock, yarn-deduplicate dependency
+- **Added**: bun.lockb
+- **Reason**: Bun provides significantly faster package installation and has built-in features
+- **Impact**: 
+  - Much faster dependency installation (up to 30x faster than npm/yarn)
+  - Built-in package deduplication (no need for yarn-deduplicate)
+  - Better performance for CI/CD pipelines
+  - Users need to have Bun installed: `curl -fsSL https://bun.sh/install | bash`
+- **Scripts updated**: All `yarn` commands in package.json replaced with `bun run`
+
+### 10. Feature Removals
 
 #### Error Extraction Feature Removed
 - **Removed**: `--extractErrors` CLI flag and related functionality

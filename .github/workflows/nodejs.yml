@@ -5,31 +5,28 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  lint-and-dedupe:
+  lint:
     runs-on: ubuntu-latest
 
-    name: Lint & Deduplicate deps on node 20.x and ubuntu-latest
+    name: Lint on Bun with Node 20.x
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup Node 20.x
-        uses: actions/setup-node@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20.x
-          cache: 'yarn'
-
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+          bun-version: latest
+      
+      - name: Install dependencies
+        run: bun install
 
       - name: Lint codebase
-        run: yarn lint:post-build
-
-      - name: Deduplicate dependencies
-        run: yarn deduplicate:check
+        run: bun run lint:post-build
 
   test:
-    name: Test on Node ${{ matrix.node }} and ${{ matrix.os }}
+    name: Test on Bun with Node ${{ matrix.node }} and ${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
     strategy:
@@ -40,14 +37,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Setup Node ${{ matrix.node }}
-        uses: actions/setup-node@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: ${{ matrix.node }}
-          cache: 'yarn'
+          bun-version: latest
 
-      - name: Install deps and build (with cache)
-        uses: bahmutov/npm-install@v1
+      - name: Install dependencies
+        run: bun install
 
       - name: Test package
-        run: yarn test:post-build
+        run: bun run test:post-build
