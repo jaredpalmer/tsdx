@@ -54,7 +54,7 @@
     "enquirer": "^2.4.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.2.0",
-    "ora": "^8.1.1",
+    "ora": "^9.0.0",
     "picocolors": "^1.1.1"
   },
   "devDependencies": {
