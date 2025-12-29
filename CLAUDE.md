@@ -83,3 +83,29 @@ bun run build            # Build for production
 ## Commit Convention
 
 Uses Conventional Commits: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`
+
+## Release Process
+
+Uses [changesets](https://github.com/changesets/changesets) for version management and npm publishing.
+
+### Creating a Changeset
+
+When making changes that should be released:
+```bash
+bun run changeset
+```
+Follow the prompts to select version bump type (patch/minor/major) and describe the change.
+
+### Release Workflow
+
+1. Create a changeset with your PR
+2. Merge PR to main
+3. GitHub Action creates a "Release" PR with version bumps
+4. Merge the Release PR to publish to npm
+
+### Manual Release
+
+```bash
+bun run changeset version  # Apply version bumps from changesets
+bun run release            # Build and publish to npm
+```
