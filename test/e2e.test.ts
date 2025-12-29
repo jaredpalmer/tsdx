@@ -114,9 +114,11 @@ describe('CLI Basics', () => {
 
   it('should show command-specific help for lint', () => {
     const output = runCLI('lint --help');
-    expect(output).toContain('Lint the codebase with oxlint');
+    expect(output).toContain('Lint and type-check the codebase with oxlint');
     expect(output).toContain('--fix');
     expect(output).toContain('--config');
+    expect(output).toContain('--no-typecheck');
+    expect(output).toContain('--no-type-aware');
   });
 
   it('should show command-specific help for format', () => {
@@ -758,9 +760,11 @@ describe('Lint Command', () => {
 
   it('should show help for lint command', () => {
     const output = runCLI('lint --help');
-    expect(output).toContain('Lint the codebase with oxlint');
+    expect(output).toContain('Lint and type-check the codebase with oxlint');
     expect(output).toContain('-f, --fix');
     expect(output).toContain('--config');
+    expect(output).toContain('--no-typecheck');
+    expect(output).toContain('--no-type-aware');
   });
 
   it('should handle missing paths gracefully', () => {

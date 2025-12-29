@@ -64,6 +64,7 @@
     "@types/node": "^22.10.2",
     "bunchee": "^6.4.0",
     "oxlint": "^0.16.0",
+    "oxlint-tsgolint": "^0.10.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

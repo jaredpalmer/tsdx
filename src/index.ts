@@ -247,39 +247,56 @@ program
 // LINT command
 program
   .command('lint')
-  .description('Lint the codebase with oxlint')
+  .description('Lint and type-check the codebase with oxlint (type-aware)')
   .option('-f, --fix', 'Auto-fix fixable issues')
+  .option('--no-typecheck', 'Disable type-checking (only lint)')
+  .option('--no-type-aware', 'Disable type-aware rules (faster, but fewer checks)')
   .option('--config <path>', 'Path to config file')
   .argument('[paths...]', 'Paths to lint', ['src', 'test'])
-  .action(async (lintPaths: string[], options: { fix?: boolean; config?: string }) => {
-    const args = ['oxlint'];
+  .action(
+    async (
+      lintPaths: string[],
+      options: { fix?: boolean; typecheck?: boolean; typeAware?: boolean; config?: string }
+    ) => {
+      const args = ['oxlint'];
 
-    // Filter to existing paths
-    const existingPaths = lintPaths.filter((p) => fs.existsSync(path.resolve(process.cwd(), p)));
+      // Filter to existing paths
+      const existingPaths = lintPaths.filter((p) => fs.existsSync(path.resolve(process.cwd(), p)));
 
-    if (existingPaths.length === 0) {
-      console.log(pc.yellow('No valid paths to lint'));
-      return;
+      if (existingPaths.length === 0) {
+        console.log(pc.yellow('No valid paths to lint'));
+        return;
+      }
+
+      args.push(...existingPaths);
+
+      // Enable type-aware linting by default (requires oxlint-tsgolint)
+      if (options.typeAware !== false) {
+        args.push('--type-aware');
+
+        // Enable type-checking alongside linting by default
+        if (options.typecheck !== false) {
+          args.push('--type-check');
+        }
+      }
+
+      if (options.fix) {
+        args.push('--fix');
+      }
+
+      if (options.config) {
+        args.push('--config', options.config);
+      }
+
+      try {
+        await execa('bunx', args, { stdio: 'inherit' });
+        console.log(pc.green('Linting complete'));
+      } catch (error: unknown) {
+        const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
+        process.exit(exitCode);
+      }
     }
-
-    args.push(...existingPaths);
-
-    if (options.fix) {
-      args.push('--fix');
-    }
-
-    if (options.config) {
-      args.push('--config', options.config);
-    }
-
-    try {
-      await execa('bunx', args, { stdio: 'inherit' });
-      console.log(pc.green('Linting complete'));
-    } catch (error: unknown) {
-      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
-      process.exit(exitCode);
-    }
-  });
+  );
 
 // FORMAT command
 program
@@ -434,14 +451,14 @@ ${pc.green('Configuration added!')}
 Install the required dev dependencies:
 
   ${pc.cyan('bun add -D bunchee vitest typescript')}
-  ${pc.cyan('bun add -D oxlint')}
+  ${pc.cyan('bun add -D oxlint oxlint-tsgolint')}
 
 Then you can run:
 
   ${pc.cyan('bun run dev')}      Start development mode
   ${pc.cyan('bun run build')}    Build for production
   ${pc.cyan('bun run test')}     Run tests
-  ${pc.cyan('bun run lint')}     Lint the codebase
+  ${pc.cyan('bun run lint')}     Lint and type-check the codebase
 `);
     } catch (error) {
       spinner.fail('Failed to initialize');
