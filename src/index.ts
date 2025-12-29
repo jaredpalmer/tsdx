@@ -4,14 +4,9 @@ import { program } from 'commander';
 import pc from 'picocolors';
 import fs from 'fs-extra';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { execa, execaCommand } from 'execa';
 import ora from 'ora';
 import { Select, Input } from 'enquirer';
-import glob from 'tiny-glob/sync';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Read package.json for version
 const pkgPath = path.resolve(__dirname, '../package.json');
