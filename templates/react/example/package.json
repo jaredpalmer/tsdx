@@ -1,24 +1,22 @@
 {
   "name": "example",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "react-app-polyfill": "^1.0.0"
-  },
-  "alias": {
-    "react": "../node_modules/react",
-    "react-dom": "../node_modules/react-dom/profiling",
-    "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.8.4",
-    "parcel": "^1.12.3",
-    "typescript": "^3.4.5"
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
   }
 }

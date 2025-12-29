@@ -1,0 +1,48 @@
+{
+  "name": "package-name",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "bunchee --watch",
+    "build": "bunchee",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "oxlint",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "bunchee": "^6.4.0",
+    "oxlint": "^0.16.0",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

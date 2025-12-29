@@ -1,7 +1,0 @@
-{
-  "scripts": {
-    "build": "tsdx build --extractErrors"
-  },
-  "name": "build-options",
-  "license": "MIT"
-}

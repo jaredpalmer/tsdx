@@ -1,631 +1,453 @@
 #!/usr/bin/env node
 
-import sade from 'sade';
-import glob from 'tiny-glob/sync';
-import {
-  rollup,
-  watch,
-  RollupOptions,
-  OutputOptions,
-  RollupWatchOptions,
-  WatcherOptions,
-} from 'rollup';
-import asyncro from 'asyncro';
-import chalk from 'chalk';
-import * as fs from 'fs-extra';
-import * as jest from 'jest';
-import { CLIEngine } from 'eslint';
-import logError from './logError';
+import { program } from 'commander';
+import pc from 'picocolors';
+import fs from 'fs-extra';
 import path from 'path';
-import execa from 'execa';
-import shell from 'shelljs';
+import { fileURLToPath } from 'url';
+import { execa, execaCommand } from 'execa';
 import ora from 'ora';
-import semver from 'semver';
-import { paths } from './constants';
-import * as Messages from './messages';
-import { createBuildConfigs } from './createBuildConfigs';
-import { createJestConfig, JestConfigOptions } from './createJestConfig';
-import { createEslintConfig } from './createEslintConfig';
-import {
-  resolveApp,
-  safePackageName,
-  clearConsole,
-  getNodeEngineRequirement,
-} from './utils';
-import { concatAllArray } from 'jpjs';
-import getInstallCmd from './getInstallCmd';
-import getInstallArgs from './getInstallArgs';
-import { Input, Select } from 'enquirer';
-import {
-  PackageJson,
-  WatchOpts,
-  BuildOpts,
-  ModuleFormat,
-  NormalizedOpts,
-} from './types';
-import { createProgressEstimator } from './createProgressEstimator';
-import { templates } from './templates';
-import { composePackageJson } from './templates/utils';
-import * as deprecated from './deprecated';
-const pkg = require('../package.json');
+import { Select, Input } from 'enquirer';
+import glob from 'tiny-glob/sync';
 
-const prog = sade('tsdx');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-let appPackageJson: PackageJson;
+// Read package.json for version
+const pkgPath = path.resolve(__dirname, '../package.json');
+const pkg = fs.readJSONSync(pkgPath);
 
-try {
-  appPackageJson = fs.readJSONSync(paths.appPackageJson);
-} catch (e) { }
+// Path constants
+const paths = {
+  appRoot: process.cwd(),
+  appPackageJson: path.resolve(process.cwd(), 'package.json'),
+  appDist: path.resolve(process.cwd(), 'dist'),
+  appSrc: path.resolve(process.cwd(), 'src'),
+};
 
-export const isDir = (name: string) =>
-  fs
-    .stat(name)
-    .then(stats => stats.isDirectory())
-    .catch(() => false);
+// Template definitions
+const templates = {
+  basic: {
+    name: 'basic',
+    description: 'A basic TypeScript library',
+  },
+  react: {
+    name: 'react',
+    description: 'A React component library',
+  },
+} as const;
 
-export const isFile = (name: string) =>
-  fs
-    .stat(name)
-    .then(stats => stats.isFile())
-    .catch(() => false);
+type TemplateName = keyof typeof templates;
 
-async function jsOrTs(filename: string) {
-  const extension = (await isFile(resolveApp(filename + '.ts')))
-    ? '.ts'
-    : (await isFile(resolveApp(filename + '.tsx')))
-      ? '.tsx'
-      : (await isFile(resolveApp(filename + '.jsx')))
-        ? '.jsx'
-        : '.js';
+// ASCII banner
+const banner = `
+${pc.cyan('████████╗███████╗██████╗ ██╗  ██╗')}
+${pc.cyan('╚══██╔══╝██╔════╝██╔══██╗╚██╗██╔╝')}
+${pc.cyan('   ██║   ███████╗██║  ██║ ╚███╔╝ ')}
+${pc.cyan('   ██║   ╚════██║██║  ██║ ██╔██╗ ')}
+${pc.cyan('   ██║   ███████║██████╔╝██╔╝ ██╗')}
+${pc.cyan('   ╚═╝   ╚══════╝╚═════╝ ╚═╝  ╚═╝')}
+${pc.dim('Zero-config TypeScript package development')}
+${pc.dim('Powered by bunchee, oxlint, vitest')}
+`;
 
-  return resolveApp(`${filename}${extension}`);
-}
+program
+  .name('tsdx')
+  .description('Zero-config TypeScript package development')
+  .version(pkg.version);
 
-async function getInputs(
-  entries?: string | string[],
-  source?: string
-): Promise<string[]> {
-  return concatAllArray(
-    ([] as any[])
-      .concat(
-        entries && entries.length
-          ? entries
-          : (source && resolveApp(source)) ||
-          ((await isDir(resolveApp('src'))) && (await jsOrTs('src/index')))
-      )
-      .map(file => glob(file))
-  );
-}
+// CREATE command
+program
+  .command('create <name>')
+  .description('Create a new TypeScript package')
+  .option('-t, --template <template>', 'Template to use (basic, react)')
+  .action(async (name: string, options: { template?: string }) => {
+    console.log(banner);
 
-prog
-  .version(pkg.version)
-  .command('create <pkg>')
-  .describe('Create a new package with TSDX')
-  .example('create mypackage')
-  .option(
-    '--template',
-    `Specify a template. Allowed choices: [${Object.keys(templates).join(
-      ', '
-    )}]`
-  )
-  .example('create --template react mypackage')
-  .action(async (pkg: string, opts: any) => {
-    console.log(
-      chalk.blue(`
-::::::::::: ::::::::  :::::::::  :::    :::
-    :+:    :+:    :+: :+:    :+: :+:    :+:
-    +:+    +:+        +:+    +:+  +:+  +:+
-    +#+    +#++:++#++ +#+    +:+   +#++:+
-    +#+           +#+ +#+    +#+  +#+  +#+
-    #+#    #+#    #+# #+#    #+# #+#    #+#
-    ###     ########  #########  ###    ###
-`)
-    );
-    const bootSpinner = ora(`Creating ${chalk.bold.green(pkg)}...`);
-    let template;
-    // Helper fn to prompt the user for a different
-    // folder name if one already exists
-    async function getProjectPath(projectPath: string): Promise<string> {
-      const exists = await fs.pathExists(projectPath);
-      if (!exists) {
-        return projectPath;
-      }
-
-      bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
-      const prompt = new Input({
-        message: `A folder named ${chalk.bold.red(
-          pkg
-        )} already exists! ${chalk.bold('Choose a different name')}`,
-        initial: pkg + '-1',
-        result: (v: string) => v.trim(),
-      });
-
-      pkg = await prompt.run();
-      projectPath = (await fs.realpath(process.cwd())) + '/' + pkg;
-      bootSpinner.start(`Creating ${chalk.bold.green(pkg)}...`);
-      return await getProjectPath(projectPath); // recursion!
-    }
+    const spinner = ora();
 
     try {
-      // get the project path
-      const realPath = await fs.realpath(process.cwd());
-      let projectPath = await getProjectPath(realPath + '/' + pkg);
-
-      const prompt = new Select({
-        message: 'Choose a template',
-        choices: Object.keys(templates),
-      });
-
-      if (opts.template) {
-        template = opts.template.trim();
-        if (!prompt.choices.includes(template)) {
-          bootSpinner.fail(`Invalid template ${chalk.bold.red(template)}`);
-          template = await prompt.run();
-        }
-      } else {
-        template = await prompt.run();
+      // Check if folder exists
+      const projectPath = path.resolve(process.cwd(), name);
+      if (await fs.pathExists(projectPath)) {
+        console.log(pc.red(`Error: Directory "${name}" already exists`));
+        process.exit(1);
       }
 
-      bootSpinner.start();
-      // copy the template
-      await fs.copy(
-        path.resolve(__dirname, `../templates/${template}`),
-        projectPath,
-        {
-          overwrite: true,
-        }
-      );
-      // fix gitignore
-      await fs.move(
-        path.resolve(projectPath, './gitignore'),
-        path.resolve(projectPath, './.gitignore')
-      );
+      // Select template
+      let templateName: TemplateName;
+      if (options.template && options.template in templates) {
+        templateName = options.template as TemplateName;
+      } else {
+        const prompt = new Select({
+          message: 'Choose a template',
+          choices: Object.entries(templates).map(([key, val]) => ({
+            name: key,
+            message: `${key} - ${val.description}`,
+          })),
+        });
+        templateName = (await prompt.run()) as TemplateName;
+      }
 
-      // update license year and author
-      let license: string = await fs.readFile(
-        path.resolve(projectPath, 'LICENSE'),
-        { encoding: 'utf-8' }
-      );
+      spinner.start(`Creating ${pc.green(name)}...`);
 
-      license = license.replace(/<year>/, `${new Date().getFullYear()}`);
+      // Copy template
+      const templatePath = path.resolve(__dirname, `../templates/${templateName}`);
+      await fs.copy(templatePath, projectPath);
 
-      // attempt to automatically derive author name
-      let author = getAuthorName();
+      // Rename gitignore
+      const gitignorePath = path.resolve(projectPath, 'gitignore');
+      if (await fs.pathExists(gitignorePath)) {
+        await fs.move(gitignorePath, path.resolve(projectPath, '.gitignore'));
+      }
+
+      // Get author name
+      let author = '';
+      try {
+        const { stdout } = await execa('git', ['config', '--global', 'user.name']);
+        author = stdout.trim();
+      } catch {
+        // Ignore if git config fails
+      }
 
       if (!author) {
-        bootSpinner.stop();
-        const licenseInput = new Input({
-          name: 'author',
+        spinner.stop();
+        const authorPrompt = new Input({
           message: 'Who is the package author?',
+          initial: '',
         });
-        author = await licenseInput.run();
-        setAuthorName(author);
-        bootSpinner.start();
+        author = await authorPrompt.run();
+        spinner.start();
       }
 
-      license = license.replace(/<author>/, author.trim());
+      // Update package.json
+      const pkgJsonPath = path.resolve(projectPath, 'package.json');
+      const pkgJson = await fs.readJSON(pkgJsonPath);
+      pkgJson.name = name;
+      pkgJson.author = author;
+      await fs.writeJSON(pkgJsonPath, pkgJson, { spaces: 2 });
 
-      await fs.writeFile(path.resolve(projectPath, 'LICENSE'), license, {
-        encoding: 'utf-8',
-      });
+      // Update LICENSE
+      const licensePath = path.resolve(projectPath, 'LICENSE');
+      if (await fs.pathExists(licensePath)) {
+        let license = await fs.readFile(licensePath, 'utf-8');
+        license = license.replace(/<year>/g, new Date().getFullYear().toString());
+        license = license.replace(/<author>/g, author);
+        await fs.writeFile(licensePath, license);
+      }
 
-      const templateConfig = templates[template as keyof typeof templates];
-      const generatePackageJson = composePackageJson(templateConfig);
+      spinner.succeed(`Created ${pc.green(name)}`);
 
-      // Install deps
+      // Install dependencies
+      spinner.start('Installing dependencies with bun...');
       process.chdir(projectPath);
-      const safeName = safePackageName(pkg);
-      const pkgJson = generatePackageJson({ name: safeName, author });
+      await execa('bun', ['install']);
+      spinner.succeed('Installed dependencies');
 
-      const nodeVersionReq = getNodeEngineRequirement(pkgJson);
-      if (
-        nodeVersionReq &&
-        !semver.satisfies(process.version, nodeVersionReq)
-      ) {
-        bootSpinner.fail(Messages.incorrectNodeVersion(nodeVersionReq));
-        process.exit(1);
-      }
+      // Success message
+      console.log(`
+${pc.green('Success!')} Created ${pc.cyan(name)} at ${pc.dim(projectPath)}
 
-      await fs.outputJSON(path.resolve(projectPath, 'package.json'), pkgJson);
-      bootSpinner.succeed(`Created ${chalk.bold.green(pkg)}`);
-      await Messages.start(pkg);
-    } catch (error) {
-      bootSpinner.fail(`Failed to create ${chalk.bold.red(pkg)}`);
-      logError(error);
-      process.exit(1);
-    }
+Inside that directory, you can run:
 
-    const templateConfig = templates[template as keyof typeof templates];
-    const { dependencies: deps } = templateConfig;
+  ${pc.cyan('bun run dev')}      Start the dev server
+  ${pc.cyan('bun run build')}    Build for production
+  ${pc.cyan('bun run test')}     Run tests
+  ${pc.cyan('bun run lint')}     Lint the codebase
+  ${pc.cyan('bun run format')}   Format the codebase
 
-    const installSpinner = ora(Messages.installing(deps.sort())).start();
-    try {
-      const cmd = await getInstallCmd();
-      await execa(cmd, getInstallArgs(cmd, deps));
-      installSpinner.succeed('Installed dependencies');
-      console.log(await Messages.start(pkg));
-    } catch (error) {
-      installSpinner.fail('Failed to install dependencies');
-      logError(error);
-      process.exit(1);
-    }
-  });
+We suggest that you begin by typing:
 
-prog
-  .command('watch')
-  .describe('Rebuilds on any change')
-  .option('--entry, -i', 'Entry module')
-  .example('watch --entry src/foo.tsx')
-  .option('--target', 'Specify your target environment', 'browser')
-  .example('watch --target node')
-  .option('--name', 'Specify name exposed in UMD builds')
-  .example('watch --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,esm')
-  .example('watch --format cjs,esm')
-  .option(
-    '--verbose',
-    'Keep outdated console output in watch mode instead of clearing the screen'
-  )
-  .example('watch --verbose')
-  .option('--noClean', "Don't clean the dist folder")
-  .example('watch --noClean')
-  .option('--tsconfig', 'Specify custom tsconfig path')
-  .example('watch --tsconfig ./tsconfig.foo.json')
-  .option('--onFirstSuccess', 'Run a command on the first successful build')
-  .example('watch --onFirstSuccess "echo The first successful build!"')
-  .option('--onSuccess', 'Run a command on a successful build')
-  .example('watch --onSuccess "echo Successful build!"')
-  .option('--onFailure', 'Run a command on a failed build')
-  .example('watch --onFailure "The build failed!"')
-  .option('--transpileOnly', 'Skip type checking')
-  .example('watch --transpileOnly')
-  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('watch --extractErrors')
-  .action(async (dirtyOpts: WatchOpts) => {
-    const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = await createBuildConfigs(opts);
-    if (!opts.noClean) {
-      await cleanDistFolder();
-    }
-    if (opts.format.includes('cjs')) {
-      await writeCjsEntryFile(opts.name);
-    }
-    if (opts.format.includes('esm')) {
-      await writeMjsEntryFile(opts.name);
-    }
-
-    type Killer = execa.ExecaChildProcess | null;
-
-    let firstTime = true;
-    let successKiller: Killer = null;
-    let failureKiller: Killer = null;
-
-    function run(command?: string) {
-      if (!command) {
-        return null;
-      }
-
-      const [exec, ...args] = command.split(' ');
-      return execa(exec, args, {
-        stdio: 'inherit',
-      });
-    }
-
-    function killHooks() {
-      return Promise.all([
-        successKiller ? successKiller.kill('SIGTERM') : null,
-        failureKiller ? failureKiller.kill('SIGTERM') : null,
-      ]);
-    }
-
-    const spinner = ora().start();
-    watch(
-      (buildConfigs as RollupWatchOptions[]).map(inputOptions => ({
-        watch: {
-          silent: true,
-          include: ['src/**'],
-          exclude: ['node_modules/**'],
-        } as WatcherOptions,
-        ...inputOptions,
-      }))
-    ).on('event', async event => {
-      // clear previous onSuccess/onFailure hook processes so they don't pile up
-      await killHooks();
-
-      if (event.code === 'START') {
-        if (!opts.verbose) {
-          clearConsole();
-        }
-        spinner.start(chalk.bold.cyan('Compiling modules...'));
-      }
-      if (event.code === 'ERROR') {
-        spinner.fail(chalk.bold.red('Failed to compile'));
-        logError(event.error);
-        failureKiller = run(opts.onFailure);
-      }
-      if (event.code === 'END') {
-        spinner.succeed(chalk.bold.green('Compiled successfully'));
-        console.log(`
-  ${chalk.dim('Watching for changes')}
+  ${pc.cyan('cd')} ${name}
+  ${pc.cyan('bun run dev')}
 `);
-
-        try {
-          await deprecated.moveTypes();
-
-          if (firstTime && opts.onFirstSuccess) {
-            firstTime = false;
-            run(opts.onFirstSuccess);
-          } else {
-            successKiller = run(opts.onSuccess);
-          }
-        } catch (_error) { }
-      }
-    });
-  });
-
-prog
-  .command('build')
-  .describe('Build your project once and exit')
-  .option('--entry, -i', 'Entry module')
-  .example('build --entry src/foo.tsx')
-  .option('--target', 'Specify your target environment', 'browser')
-  .example('build --target node')
-  .option('--name', 'Specify name exposed in UMD builds')
-  .example('build --name Foo')
-  .option('--format', 'Specify module format(s)', 'cjs,esm')
-  .example('build --format cjs,esm')
-  .option('--legacy', 'Babel transpile and emit ES5.')
-  .example('build --legacy')
-  .option('--tsconfig', 'Specify custom tsconfig path')
-  .example('build --tsconfig ./tsconfig.foo.json')
-  .option('--transpileOnly', 'Skip type checking')
-  .example('build --transpileOnly')
-  .option(
-    '--extractErrors',
-    'Extract errors to ./errors/codes.json and provide a url for decoding.'
-  )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
-  .action(async (dirtyOpts: BuildOpts) => {
-    const opts = await normalizeOpts(dirtyOpts);
-    const buildConfigs = await createBuildConfigs(opts);
-    await cleanDistFolder();
-    const logger = await createProgressEstimator();
-    if (opts.format.includes('cjs')) {
-      const promise = writeCjsEntryFile(opts.name).catch(logError);
-      logger(promise, 'Creating CJS entry file');
-    }
-    if (opts.format.includes('esm')) {
-      const promise = writeMjsEntryFile(opts.name).catch(logError);
-      logger(promise, 'Creating MJS entry file');
-    }
-    try {
-      const promise = asyncro
-        .map(
-          buildConfigs,
-          async (inputOptions: RollupOptions & { output: OutputOptions }) => {
-            let bundle = await rollup(inputOptions);
-            await bundle.write(inputOptions.output);
-          }
-        )
-        .catch((e: any) => {
-          throw e;
-        })
-        .then(async () => {
-          await deprecated.moveTypes();
-        });
-      logger(promise, 'Building modules');
-      await promise;
     } catch (error) {
-      logError(error);
+      spinner.fail('Failed to create project');
+      console.error(error);
       process.exit(1);
     }
   });
 
-async function normalizeOpts(opts: WatchOpts): Promise<NormalizedOpts> {
-  return {
-    ...opts,
-    name: opts.name || appPackageJson.name,
-    input: await getInputs(opts.entry, appPackageJson.source),
-    format: opts.format.split(',').map((format: string) => {
-      if (format === 'es') {
-        return 'esm';
+// BUILD command
+program
+  .command('build')
+  .description('Build the package for production')
+  .option('--no-clean', 'Skip cleaning the dist folder')
+  .action(async (options: { clean: boolean }) => {
+    const spinner = ora();
+
+    try {
+      if (options.clean) {
+        spinner.start('Cleaning dist folder...');
+        await fs.remove(paths.appDist);
+        spinner.succeed('Cleaned dist folder');
       }
-      return format;
-    }) as [ModuleFormat, ...ModuleFormat[]],
-  };
-}
 
-async function cleanDistFolder() {
-  await fs.remove(paths.appDist);
-}
-
-function writeCjsEntryFile(name: string) {
-  const baseLine = `module.exports = require('./${safePackageName(name)}`;
-  const contents = `
-'use strict'
-
-if (process.env.NODE_ENV === 'production') {
-  ${baseLine}.production.min.cjs')
-} else {
-  ${baseLine}.development.cjs')
-}
-`;
-  return fs.outputFile(path.join(paths.appDist, 'index.cjs'), contents);
-}
-
-function writeMjsEntryFile(name: string) {
-  const contents = `
-export { default } from './${name}.min.mjs';
-export * from './${name}.min.mjs';
-  `;
-  return fs.outputFile(path.join(paths.appDist, 'index.mjs'), contents);
-}
-
-function getAuthorName() {
-  let author = '';
-
-  author = shell
-    .exec('npm config get init-author-name', { silent: true })
-    .stdout.trim();
-  if (author) return author;
-
-  author = shell
-    .exec('git config --global user.name', { silent: true })
-    .stdout.trim();
-  if (author) {
-    setAuthorName(author);
-    return author;
-  }
-
-  author = shell
-    .exec('npm config get init-author-email', { silent: true })
-    .stdout.trim();
-  if (author) return author;
-
-  author = shell
-    .exec('git config --global user.email', { silent: true })
-    .stdout.trim();
-  if (author) return author;
-
-  return author;
-}
-
-function setAuthorName(author: string) {
-  shell.exec(`npm config set init-author-name "${author}"`, { silent: true });
-}
-
-prog
-  .command('test')
-  .describe('Run jest test runner. Passes through all flags directly to Jest')
-  .action(async (opts: { config?: string }) => {
-    // Do this as the first thing so that any code reading it knows the right env.
-    process.env.BABEL_ENV = 'test';
-    process.env.NODE_ENV = 'test';
-    // Makes the script crash on unhandled rejections instead of silently
-    // ignoring them. In the future, promise rejections that are not handled will
-    // terminate the Node.js process with a non-zero exit code.
-    process.on('unhandledRejection', err => {
-      throw err;
-    });
-
-    const argv = process.argv.slice(2);
-    let jestConfig: JestConfigOptions = {
-      ...createJestConfig(
-        relativePath => path.resolve(__dirname, '..', relativePath),
-        opts.config ? path.dirname(opts.config) : paths.appRoot
-      ),
-      ...appPackageJson.jest,
-      passWithNoTests: true,
-    };
-
-    // Allow overriding with jest.config
-    const defaultPathExists = await fs.pathExists(paths.jestConfig);
-    if (opts.config || defaultPathExists) {
-      const jestConfigPath = resolveApp(opts.config || paths.jestConfig);
-      const jestConfigContents: JestConfigOptions = require(jestConfigPath);
-      jestConfig = { ...jestConfig, ...jestConfigContents };
+      spinner.start('Building with bunchee...');
+      await execaCommand('bunchee', { stdio: 'inherit' });
+      spinner.succeed('Build complete');
+    } catch (error) {
+      spinner.fail('Build failed');
+      console.error(error);
+      process.exit(1);
     }
-
-    // if custom path, delete the arg as it's already been merged
-    if (opts.config) {
-      let configIndex = argv.indexOf('--config');
-      if (configIndex !== -1) {
-        // case of "--config path", delete both args
-        argv.splice(configIndex, 2);
-      } else {
-        // case of "--config=path", only one arg to delete
-        const configRegex = /--config=.+/;
-        configIndex = argv.findIndex(arg => arg.match(configRegex));
-        if (configIndex !== -1) {
-          argv.splice(configIndex, 1);
-        }
-      }
-    }
-
-    argv.push(
-      '--config',
-      JSON.stringify({
-        ...jestConfig,
-      })
-    );
-
-    const [, ...argsToPassToJestCli] = argv;
-    jest.run(argsToPassToJestCli);
   });
 
-prog
-  .command('lint')
-  .describe('Run eslint with Prettier')
-  .example('lint src test')
-  .option('--fix', 'Fixes fixable errors and warnings')
-  .example('lint src test --fix')
-  .option('--ignore-pattern', 'Ignore a pattern')
-  .example('lint src test --ignore-pattern test/foobar.ts')
-  .option(
-    '--max-warnings',
-    'Exits with non-zero error code if number of warnings exceed this number',
-    Infinity
-  )
-  .example('lint src test --max-warnings 10')
-  .option('--write-file', 'Write the config file locally')
-  .example('lint --write-file')
-  .option('--report-file', 'Write JSON report to file locally')
-  .example('lint --report-file eslint-report.json')
-  .action(
-    async (opts: {
-      fix: boolean;
-      'ignore-pattern': string;
-      'write-file': boolean;
-      'report-file': string;
-      'max-warnings': number;
-      _: string[];
-    }) => {
-      if (opts['_'].length === 0 && !opts['write-file']) {
-        const defaultInputs = ['src', 'test'].filter(fs.existsSync);
-        opts['_'] = defaultInputs;
-        console.log(
-          chalk.yellow(
-            `Defaulting to "tsdx lint ${defaultInputs.join(' ')}"`,
-            '\nYou can override this in the package.json scripts, like "lint": "tsdx lint src otherDir"'
-          )
-        );
-      }
-
-      const config = await createEslintConfig({
-        pkg: appPackageJson,
-        rootDir: paths.appRoot,
-        writeFile: opts['write-file'],
-      });
-
-      const cli = new CLIEngine({
-        baseConfig: {
-          ...config,
-          ...appPackageJson.eslint,
-        },
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
-        fix: opts.fix,
-        ignorePattern: opts['ignore-pattern'],
-      });
-      const report = cli.executeOnFiles(opts['_']);
-      if (opts.fix) {
-        CLIEngine.outputFixes(report);
-      }
-      console.log(cli.getFormatter()(report.results));
-      if (opts['report-file']) {
-        await fs.outputFile(
-          opts['report-file'],
-          cli.getFormatter('json')(report.results)
-        );
-      }
-      if (report.errorCount) {
-        process.exit(1);
-      }
-      if (report.warningCount > opts['max-warnings']) {
-        process.exit(1);
-      }
+// DEV/WATCH command
+program
+  .command('dev')
+  .alias('watch')
+  .description('Start development mode with watch')
+  .action(async () => {
+    console.log(pc.cyan('Starting development mode...'));
+    try {
+      await execaCommand('bunchee --watch', { stdio: 'inherit' });
+    } catch (error) {
+      console.error(pc.red('Development mode failed'));
+      process.exit(1);
     }
-  );
+  });
 
-prog.parse(process.argv);
+// TEST command
+program
+  .command('test')
+  .description('Run tests with vitest')
+  .option('-w, --watch', 'Run in watch mode')
+  .option('-c, --coverage', 'Run with coverage')
+  .option('-u, --update', 'Update snapshots')
+  .allowUnknownOption(true)
+  .action(async (options: { watch?: boolean; coverage?: boolean; update?: boolean }, command) => {
+    const args = ['vitest'];
+
+    if (!options.watch) {
+      args.push('run');
+    }
+
+    if (options.coverage) {
+      args.push('--coverage');
+    }
+
+    if (options.update) {
+      args.push('--update');
+    }
+
+    // Pass through any additional arguments
+    const extraArgs = command.args || [];
+    args.push(...extraArgs);
+
+    try {
+      await execa('bunx', args, { stdio: 'inherit' });
+    } catch (error: unknown) {
+      // Vitest exits with non-zero on test failure, which is expected
+      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
+      process.exit(exitCode);
+    }
+  });
+
+// LINT command
+program
+  .command('lint')
+  .description('Lint the codebase with oxlint')
+  .option('-f, --fix', 'Auto-fix fixable issues')
+  .option('--config <path>', 'Path to config file')
+  .argument('[paths...]', 'Paths to lint', ['src', 'test'])
+  .action(async (lintPaths: string[], options: { fix?: boolean; config?: string }) => {
+    const args = ['oxlint'];
+
+    // Filter to existing paths
+    const existingPaths = lintPaths.filter((p) => fs.existsSync(path.resolve(process.cwd(), p)));
+
+    if (existingPaths.length === 0) {
+      console.log(pc.yellow('No valid paths to lint'));
+      return;
+    }
+
+    args.push(...existingPaths);
+
+    if (options.fix) {
+      args.push('--fix');
+    }
+
+    if (options.config) {
+      args.push('--config', options.config);
+    }
+
+    try {
+      await execa('bunx', args, { stdio: 'inherit' });
+      console.log(pc.green('Linting complete'));
+    } catch (error: unknown) {
+      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
+      process.exit(exitCode);
+    }
+  });
+
+// FORMAT command
+program
+  .command('format')
+  .description('Format the codebase with oxfmt')
+  .option('-c, --check', 'Check if files are formatted')
+  .argument('[paths...]', 'Paths to format', ['.'])
+  .action(async (formatPaths: string[], options: { check?: boolean }) => {
+    const args = ['oxfmt'];
+
+    if (options.check) {
+      args.push('--check');
+    } else {
+      args.push('--write');
+    }
+
+    args.push(...formatPaths);
+
+    try {
+      await execa('bunx', args, { stdio: 'inherit' });
+      if (options.check) {
+        console.log(pc.green('All files are formatted'));
+      } else {
+        console.log(pc.green('Formatting complete'));
+      }
+    } catch (error: unknown) {
+      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
+      process.exit(exitCode);
+    }
+  });
+
+// TYPECHECK command
+program
+  .command('typecheck')
+  .description('Run TypeScript type checking')
+  .option('-w, --watch', 'Run in watch mode')
+  .action(async (options: { watch?: boolean }) => {
+    const args = ['tsc', '--noEmit'];
+
+    if (options.watch) {
+      args.push('--watch');
+    }
+
+    try {
+      await execa('bunx', args, { stdio: 'inherit' });
+      console.log(pc.green('Type checking complete'));
+    } catch (error: unknown) {
+      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
+      process.exit(exitCode);
+    }
+  });
+
+// INIT command - initialize tsdx in an existing project
+program
+  .command('init')
+  .description('Initialize tsdx configuration in an existing project')
+  .action(async () => {
+    const spinner = ora();
+
+    try {
+      // Check if package.json exists
+      if (!(await fs.pathExists(paths.appPackageJson))) {
+        console.log(pc.red('No package.json found. Run this command in a project directory.'));
+        process.exit(1);
+      }
+
+      spinner.start('Initializing tsdx configuration...');
+
+      // Read current package.json
+      const pkgJson = await fs.readJSON(paths.appPackageJson);
+
+      // Add/update exports field for bunchee
+      if (!pkgJson.exports) {
+        pkgJson.exports = {
+          '.': {
+            import: './dist/index.js',
+            require: './dist/index.cjs',
+            types: './dist/index.d.ts',
+          },
+          './package.json': './package.json',
+        };
+      }
+
+      // Add main/module/types
+      pkgJson.main = './dist/index.cjs';
+      pkgJson.module = './dist/index.js';
+      pkgJson.types = './dist/index.d.ts';
+      pkgJson.type = 'module';
+
+      // Add scripts
+      pkgJson.scripts = {
+        ...pkgJson.scripts,
+        dev: 'bunchee --watch',
+        build: 'bunchee',
+        test: 'vitest run',
+        'test:watch': 'vitest',
+        lint: 'oxlint',
+        format: 'oxfmt --write .',
+        'format:check': 'oxfmt --check .',
+        typecheck: 'tsc --noEmit',
+      };
+
+      await fs.writeJSON(paths.appPackageJson, pkgJson, { spaces: 2 });
+
+      // Create tsconfig.json if it doesn't exist
+      const tsconfigPath = path.resolve(process.cwd(), 'tsconfig.json');
+      if (!(await fs.pathExists(tsconfigPath))) {
+        const tsconfig = {
+          compilerOptions: {
+            target: 'ES2022',
+            module: 'ESNext',
+            moduleResolution: 'bundler',
+            lib: ['ES2022', 'DOM'],
+            strict: true,
+            esModuleInterop: true,
+            skipLibCheck: true,
+            forceConsistentCasingInFileNames: true,
+            declaration: true,
+            declarationMap: true,
+            outDir: './dist',
+            rootDir: './src',
+            resolveJsonModule: true,
+            isolatedModules: true,
+            noEmit: true,
+          },
+          include: ['src'],
+          exclude: ['node_modules', 'dist'],
+        };
+        await fs.writeJSON(tsconfigPath, tsconfig, { spaces: 2 });
+      }
+
+      // Create vitest.config.ts if it doesn't exist
+      const vitestConfigPath = path.resolve(process.cwd(), 'vitest.config.ts');
+      if (!(await fs.pathExists(vitestConfigPath))) {
+        const vitestConfig = `import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+  },
+});
+`;
+        await fs.writeFile(vitestConfigPath, vitestConfig);
+      }
+
+      spinner.succeed('Initialized tsdx configuration');
+
+      console.log(`
+${pc.green('Configuration added!')}
+
+Install the required dev dependencies:
+
+  ${pc.cyan('bun add -D bunchee vitest typescript')}
+  ${pc.cyan('bun add -D oxlint')}
+
+Then you can run:
+
+  ${pc.cyan('bun run dev')}      Start development mode
+  ${pc.cyan('bun run build')}    Build for production
+  ${pc.cyan('bun run test')}     Run tests
+  ${pc.cyan('bun run lint')}     Lint the codebase
+`);
+    } catch (error) {
+      spinner.fail('Failed to initialize');
+      console.error(error);
+      process.exit(1);
+    }
+  });
+
+program.parse();
