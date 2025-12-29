@@ -50,7 +50,6 @@ Options
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
-  --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --transpileOnly       Skip type checking
   -h, --help            Displays this message
@@ -60,7 +59,6 @@ Examples
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
   $ tsdx build --transpileOnly
 ```

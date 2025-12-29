@@ -14,7 +14,7 @@ import asyncro from 'asyncro';
 import chalk from 'chalk';
 import * as fs from 'fs-extra';
 import * as jest from 'jest';
-import { CLIEngine } from 'eslint';
+import { ESLint } from 'eslint';
 import logError from './logError';
 import path from 'path';
 import execa from 'execa';
@@ -217,7 +217,7 @@ prog
       const safeName = safePackageName(pkg);
       const pkgJson = generatePackageJson({ name: safeName, author });
 
-      const nodeVersionReq = getNodeEngineRequirement(pkgJson);
+      const nodeVersionReq = getNodeEngineRequirement(pkgJson as PackageJson);
       if (
         nodeVersionReq &&
         !semver.satisfies(process.version, nodeVersionReq)
@@ -279,8 +279,6 @@ prog
   .example('watch --onFailure "The build failed!"')
   .option('--transpileOnly', 'Skip type checking')
   .example('watch --transpileOnly')
-  .option('--extractErrors', 'Extract invariant errors to ./errors/codes.json.')
-  .example('watch --extractErrors')
   .action(async (dirtyOpts: WatchOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
@@ -380,13 +378,6 @@ prog
   .example('build --tsconfig ./tsconfig.foo.json')
   .option('--transpileOnly', 'Skip type checking')
   .example('build --transpileOnly')
-  .option(
-    '--extractErrors',
-    'Extract errors to ./errors/codes.json and provide a url for decoding.'
-  )
-  .example(
-    'build --extractErrors=https://reactjs.org/docs/error-decoder.html?invariant='
-  )
   .action(async (dirtyOpts: BuildOpts) => {
     const opts = await normalizeOpts(dirtyOpts);
     const buildConfigs = await createBuildConfigs(opts);
@@ -599,30 +590,38 @@ prog
         writeFile: opts['write-file'],
       });
 
-      const cli = new CLIEngine({
+      const eslint = new ESLint({
         baseConfig: {
           ...config,
           ...appPackageJson.eslint,
-        },
+        } as any,
         extensions: ['.ts', '.tsx', '.js', '.jsx'],
         fix: opts.fix,
-        ignorePattern: opts['ignore-pattern'],
+        overrideConfig: {
+          ignorePatterns: opts['ignore-pattern'] ? [opts['ignore-pattern']] : [],
+        },
       });
-      const report = cli.executeOnFiles(opts['_']);
+      const results = await eslint.lintFiles(opts['_']);
       if (opts.fix) {
-        CLIEngine.outputFixes(report);
+        await ESLint.outputFixes(results);
       }
-      console.log(cli.getFormatter()(report.results));
+      const formatter = await eslint.loadFormatter();
+      const resultText = await formatter.format(results);
+      console.log(resultText);
       if (opts['report-file']) {
+        const jsonFormatter = await eslint.loadFormatter('json');
+        const jsonText = await jsonFormatter.format(results);
         await fs.outputFile(
           opts['report-file'],
-          cli.getFormatter('json')(report.results)
+          jsonText
         );
       }
-      if (report.errorCount) {
+      const errorCount = results.reduce((acc, result) => acc + result.errorCount, 0);
+      const warningCount = results.reduce((acc, result) => acc + result.warningCount, 0);
+      if (errorCount > 0) {
         process.exit(1);
       }
-      if (report.warningCount > opts['max-warnings']) {
+      if (warningCount > opts['max-warnings']) {
         process.exit(1);
       }
     }

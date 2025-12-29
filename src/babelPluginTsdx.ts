@@ -84,9 +84,6 @@ export const babelPluginTsdx = createBabelInputPluginFactory(() => ({
           name: '@babel/plugin-proposal-class-properties',
           loose: true,
         },
-        isTruthy(customOptions.extractErrors) && {
-          name: './errors/transformErrorMessages',
-        },
       ].filter(Boolean)
     );
 

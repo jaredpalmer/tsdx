@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import { CLIEngine } from 'eslint';
+import { ESLint } from 'eslint';
 import { PackageJson } from './types';
 import { getReactVersion } from './utils';
 
@@ -13,7 +13,7 @@ export async function createEslintConfig({
   pkg,
   rootDir,
   writeFile,
-}: CreateEslintConfigArgs): Promise<CLIEngine.Options['baseConfig'] | void> {
+}: CreateEslintConfigArgs): Promise<ESLint.ConfigData | void> {
   const isReactLibrary = Boolean(getReactVersion(pkg));
 
   const config = {
@@ -41,7 +41,7 @@ export async function createEslintConfig({
       `module.exports = ${JSON.stringify(config, null, 2)}`,
       { flag: 'wx' }
     );
-  } catch (e) {
+  } catch (e: any) {
     if (e.code === 'EEXIST') {
       console.error(
         'Error trying to save the Eslint configuration file:',

@@ -1,7 +1,7 @@
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
-import { RollupOptions } from 'rollup';
-import { terser } from 'rollup-plugin-terser';
+import { RollupOptions, Plugin } from 'rollup';
+import terser from '@rollup/plugin-terser';
 import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -13,13 +13,8 @@ import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import ts from 'typescript';
 
-import { extractErrors } from './errors/extractErrors';
 import { babelPluginTsdx } from './babelPluginTsdx';
 import { TsdxOptions } from './types';
-
-const errorCodeOpts = {
-  errorMapFilePath: paths.appErrorsJson,
-};
 
 // shebang cache map thing because the transform only gets run once
 let shebang: any = {};
@@ -28,10 +23,6 @@ export async function createRollupConfig(
   opts: TsdxOptions,
   outputNum: number
 ): Promise<RollupOptions> {
-  const findAndRecordErrorCodes = await extractErrors({
-    ...errorCodeOpts,
-    ...opts,
-  });
 
   const isEsm = opts.format.includes('es') || opts.format.includes('esm');
 
@@ -111,16 +102,6 @@ export async function createRollupConfig(
       exports: 'named',
     },
     plugins: [
-      !!opts.extractErrors && {
-        async transform(code: string) {
-          try {
-            await findAndRecordErrorCodes(code);
-          } catch (e) {
-            return null;
-          }
-          return { code, map: null };
-        },
-      },
       resolve({
         mainFields: [
           'module',
@@ -139,6 +120,7 @@ export async function createRollupConfig(
       }),
       json(),
       {
+        name: 'shebang-plugin',
         // Custom plugin that removes shebang from code because newer
         // versions of bublé bundle their own private version of `acorn`
         // and I don't know a way to patch in the option `allowHashBang`
@@ -157,7 +139,7 @@ export async function createRollupConfig(
             map: null,
           };
         },
-      },
+      } as Plugin,
       typescript({
         typescript: ts,
         tsconfig: opts.tsconfig,
@@ -199,7 +181,6 @@ export async function createRollupConfig(
         passPerPreset: true,
         custom: {
           targets: opts.target === 'node' ? { node: '14' } : undefined,
-          extractErrors: opts.extractErrors,
           format: opts.format,
         },
         babelHelpers: 'bundled',
@@ -221,7 +202,6 @@ export async function createRollupConfig(
         ecma: opts.legacy ? 5 : 2020,
         module: isEsm,
         toplevel: opts.format === 'cjs' || isEsm,
-        warnings: true,
       }),
       /**
        * Ensure there's an empty default export to prevent runtime errors.
@@ -229,6 +209,7 @@ export async function createRollupConfig(
        * @see https://www.npmjs.com/package/rollup-plugin-export-default
        */
        {
+        name: 'default-export-plugin',
         renderChunk: async (code: string, chunk: any) => {
           if (chunk.exports.includes('default') || !isEsm) {
             return null;
@@ -239,7 +220,7 @@ export async function createRollupConfig(
             map: null,
           };
         },
-      },
+      } as Plugin,
     ],
   };
 }

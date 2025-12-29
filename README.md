@@ -3,7 +3,7 @@
 [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Blazing Fast](https://badgen.now.sh/badge/speed/blazing%20%F0%9F%94%A5/green)](https://npm.im/tsdx) [![Discord](https://img.shields.io/discord/769256827007139912.svg?style=flat-square)](https://discord.gg/pJSg287)
 
 
-Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [Yarn resolutions](https://yarnpkg.com/en/docs/selective-version-resolutions), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
+Despite all the recent hype, setting up a new TypeScript (x React) library can be tough. Between [Rollup](https://github.com/rollup/rollup), [Jest](https://github.com/facebook/jest), `tsconfig`, [package overrides](https://bun.sh/docs/install/overrides), ESLint, and getting VSCode to play nicely....there is just a whole lot of stuff to do (and things to screw up). TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages with ease--so you can focus on your awesome new library and not waste another afternoon on the configuration.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -11,10 +11,10 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
 
 - [Features](#features)
 - [Quick Start](#quick-start)
-  - [`npm start` or `yarn start`](#npm-start-or-yarn-start)
-  - [`npm run build` or `yarn build`](#npm-run-build-or-yarn-build)
-  - [`npm test` or `yarn test`](#npm-test-or-yarn-test)
-  - [`npm run lint` or `yarn lint`](#npm-run-lint-or-yarn-lint)
+  - [`npm start` or `bun run start`](#npm-start-or-yarn-start)
+  - [`npm run build` or `bun run build`](#npm-run-build-or-yarn-build)
+  - [`bun run test` or `bun run test`](#npm-test-or-yarn-test)
+  - [`bun run lint` or `bun run lint`](#npm-run-lint-or-yarn-lint)
   - [`prepare` script](#prepare-script)
 - [Optimizations](#optimizations)
   - [Development-only Expressions + Treeshaking](#development-only-expressions--treeshaking)
@@ -24,7 +24,6 @@ Despite all the recent hype, setting up a new TypeScript (x React) library can b
       - [`invariant`](#invariant)
       - [`warning`](#warning)
   - [Using lodash](#using-lodash)
-  - [Error extraction](#error-extraction)
 - [Customization](#customization)
   - [Rollup](#rollup)
     - [Example: Adding Postcss](#example-adding-postcss)
@@ -67,14 +66,14 @@ TSDX comes with the "battery-pack included" and is part of a complete TypeScript
 ```bash
 npx tsdx create mylib
 cd mylib
-yarn start
+bun run start
 ```
 
 That's it. You don't need to worry about setting up TypeScript or Rollup or Jest or other plumbing. Just start editing `src/index.ts` and go!
 
 Below is a list of commands you will probably find useful:
 
-### `npm start` or `yarn start`
+### `npm start` or `bun run start`
 
 Runs the project in development/watch mode. Your project will be rebuilt upon changes. TSDX has a special logger for your convenience. Error messages are pretty printed and formatted for compatibility VS Code's Problems tab.
 
@@ -82,26 +81,26 @@ Runs the project in development/watch mode. Your project will be rebuilt upon ch
 
 Your library will be rebuilt if you make edits.
 
-### `npm run build` or `yarn build`
+### `npm run build` or `bun run build`
 
 Bundles the package to the `dist` folder.
 The package is optimized and bundled with Rollup into multiple formats (CommonJS, UMD, and ES Module).
 
 <img src="https://user-images.githubusercontent.com/4060187/52168322-a98e5b00-26f6-11e9-8cf6-222d716b75ef.gif" width="600" />
 
-### `npm test` or `yarn test`
+### `bun run test` or `bun run test`
 
 Runs your tests using Jest.
 
-### `npm run lint` or `yarn lint`
+### `bun run lint` or `bun run lint`
 
 Runs Eslint with Prettier on .ts and .tsx files.
-If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `yarn lint --write-file` and edit the generated `.eslintrc.js` file.
+If you want to customize eslint you can add an `eslint` block to your package.json, or you can run `bun run lint --write-file` and edit the generated `.eslintrc.js` file.
 
 ### `prepare` script
 
 Bundles and packages to the `dist` folder.
-Runs automatically when you run either `npm publish` or `yarn publish`. The `prepare` script will run the equivalent of `npm run build` or `yarn build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
+Runs automatically when you run either `npm publish` or `bun publish`. The `prepare` script will run the equivalent of `npm run build` or `bun run build`. It will also be run if your module is installed as a git dependency (ie: `"mymodule": "github:myuser/mymodule#some-branch"`) so it can be depended on without checking the transpiled code into git.
 
 ## Optimizations
 
@@ -230,8 +229,6 @@ if (!condition) {
 
 Note: TSDX doesn't supply an `invariant` function for you, you need to import one yourself. We recommend https://github.com/alexreardon/tiny-invariant.
 
-To extract and minify `invariant` error codes in production into a static `codes.json` file, specify the `--extractErrors` flag in command line. For more details see [Error extraction docs](#error-extraction).
-
 ##### `warning`
 
 Replaces
@@ -257,13 +254,13 @@ If you want to use a lodash function in your package, TSDX will help you do it t
 First, install `lodash` and `lodash-es` as _dependencies_
 
 ```bash
-yarn add lodash lodash-es
+bun add lodash lodash-es
 ```
 
 Now install `@types/lodash` to your development dependencies.
 
 ```bash
-yarn add @types/lodash --dev
+bun add @types/lodash --dev
 ```
 
 Import your lodash method however you want, TSDX will optimize it like so.
@@ -288,18 +285,6 @@ import o from"lodash-es/kebabCase";const e=e=>{console.log(o(e))};export{e as Ke
 TSDX will rewrite your `import kebabCase from 'lodash/kebabCase'` to `import o from 'lodash-es/kebabCase'`. This allows your library to be treeshakable to end consumers while allowing to you to use `@types/lodash` for free.
 
 > Note: TSDX will also transform destructured imports. For example, `import { kebabCase } from 'lodash'` would have also been transformed to `import o from "lodash-es/kebabCase".
-
-### Error extraction
-
-After running `--extractErrors`, you will have a `./errors/codes.json` file with all your extracted `invariant` error codes. This process scans your production code and swaps out your `invariant` error message strings for a corresponding error code (just like React!). This extraction only works if your error checking/warning is done by a function called `invariant`.
-
-Note: We don't provide this function for you, it is up to you how you want it to behave. For example, you can use either `tiny-invariant` or `tiny-warning`, but you must then import the module as a variable called `invariant` and it should have the same type signature.
-
-⚠️Don't forget: you will need to host the decoder somewhere. Once you have a URL, look at `./errors/ErrorProd.js` and replace the `reactjs.org` URL with yours.
-
-> Known issue: our `transformErrorMessages` babel plugin currently doesn't have sourcemap support, so you will see "Sourcemap is likely to be incorrect" warnings. [We would love your help on this.](https://github.com/palmerhq/tsdx/issues/184)
-
-_TODO: Simple guide to host error codes to be completed_
 
 ## Customization
 
@@ -336,8 +321,6 @@ export interface TsdxOptions {
   env: 'development' | 'production';
   // Path to tsconfig file
   tsconfig?: string;
-  // Is error extraction running?
-  extractErrors?: boolean;
   // Is minifying?
   minify?: boolean;
   // Is this the very first rollup config (and thus should one-off metadata be extracted)?
@@ -459,7 +442,6 @@ Options
   --target              Specify your target environment  (default web)
   --name                Specify name exposed in UMD builds
   --format              Specify module format(s)  (default cjs,esm)
-  --extractErrors       Opt-in to extracting invariant error codes
   --tsconfig            Specify your custom tsconfig path (default <root-folder>/tsconfig.json)
   --transpileOnly       Skip type checking
   -h, --help            Displays this message
@@ -469,7 +451,6 @@ Examples
   $ tsdx build --target node
   $ tsdx build --name Foo
   $ tsdx build --format cjs,esm,umd
-  $ tsdx build --extractErrors
   $ tsdx build --tsconfig ./tsconfig.foo.json
   $ tsdx build --transpileOnly
 ```

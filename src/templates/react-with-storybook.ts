@@ -8,9 +8,9 @@ const storybookTemplate: Template = {
     '@babel/core',
     '@storybook/addon-essentials',
     '@storybook/addon-links',
-    '@storybook/addon-info',
-    '@storybook/addons',
     '@storybook/react',
+    '@storybook/react-webpack5',
+    '@storybook/cli',
     'react-is',
     'babel-loader',
   ],
@@ -19,8 +19,8 @@ const storybookTemplate: Template = {
     ...reactTemplate.packageJson,
     scripts: {
       ...reactTemplate.packageJson.scripts,
-      storybook: 'start-storybook -p 6006',
-      'build-storybook': 'build-storybook',
+      storybook: 'storybook dev -p 6006',
+      'build-storybook': 'storybook build',
     } as PackageJson['scripts'],
   },
 };
