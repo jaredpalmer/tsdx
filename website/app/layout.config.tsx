@@ -23,7 +23,7 @@ export const baseOptions: BaseLayoutProps = {
             fill="currentColor"
           />
         </svg>
-        <span className="font-semibold">TSDX</span>
+        <span className="sr-only">TSDX</span>
       </div>
     ),
   },
