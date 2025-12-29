@@ -1,0 +1,96 @@
+---
+title: Quick Start
+description: Create your first TypeScript package in seconds
+---
+
+# Quick Start
+
+With TSDX, you can quickly bootstrap a new TypeScript project in seconds, instead of hours.
+
+## Create a New Project
+
+Open your terminal and run:
+
+```bash
+bunx tsdx create mylib
+```
+
+You'll be prompted to choose from one of the available templates:
+
+| Template | Description |
+|----------|-------------|
+| `basic` | A basic TypeScript library with vitest |
+| `react` | A React component library with Testing Library |
+
+After you select one, TSDX will create a folder with the project template and install all dependencies.
+
+## Specifying a Template
+
+You can skip the prompt by specifying the template directly:
+
+```bash
+bunx tsdx create mylib --template basic
+# or
+bunx tsdx create mylib --template react
+```
+
+## Start Developing
+
+Once your project is created, navigate to the project folder:
+
+```bash
+cd mylib
+```
+
+Start the development server:
+
+```bash
+bun run dev
+```
+
+Now edit `src/index.ts` (or `src/index.tsx` for React) and see your changes rebuild automatically!
+
+## Available Commands
+
+Inside your new project, you can run:
+
+```bash
+bun run dev       # Start development mode with watch
+bun run build     # Build for production
+bun run test      # Run tests with vitest
+bun run lint      # Lint with oxlint
+bun run format    # Format with oxfmt
+bun run typecheck # Type check with TypeScript
+```
+
+## Building for Production
+
+When you're ready to publish your package:
+
+```bash
+bun run build
+```
+
+This outputs:
+- `dist/index.js` - ESM bundle
+- `dist/index.cjs` - CommonJS bundle
+- `dist/index.d.ts` - TypeScript declarations
+
+## Publishing
+
+```bash
+# Build the package
+bun run build
+
+# Publish to npm
+npm publish
+```
+
+We recommend using [np](https://github.com/sindresorhus/np) or [changesets](https://github.com/changesets/changesets) for a better publishing workflow.
+
+## Next Steps
+
+- Learn about all available [Commands](/docs/commands)
+- Explore [Project Templates](/docs/templates)
+- Understand the [Project Structure](/docs/project-structure)
+- Configure your project in [Configuration](/docs/configuration)

@@ -1,0 +1,164 @@
+---
+title: Templates
+description: Available project templates in TSDX
+---
+
+# Templates
+
+TSDX provides project templates to help you get started quickly with different types of TypeScript packages.
+
+## Available Templates
+
+| Template | Description |
+|----------|-------------|
+| `basic` | A basic TypeScript library with vitest |
+| `react` | A React component library with Testing Library |
+
+## Basic Template
+
+The basic template is perfect for any TypeScript library that doesn't require React.
+
+```bash
+bunx tsdx create mylib --template basic
+```
+
+### What's Included
+
+- TypeScript configuration
+- Vitest for testing
+- oxlint for linting
+- oxfmt for formatting
+- GitHub Actions CI workflow
+- MIT License
+- README with usage instructions
+
+### Project Structure
+
+```
+mylib/
+├── src/
+│   └── index.ts          # Library entry point
+├── test/
+│   └── index.test.ts     # Tests (vitest)
+├── dist/                  # Build output (generated)
+├── .github/
+│   └── workflows/        # CI/CD workflows
+├── package.json
+├── tsconfig.json
+├── vitest.config.ts
+├── LICENSE
+└── README.md
+```
+
+### Example Code
+
+```typescript
+// src/index.ts
+export const sum = (a: number, b: number): number => {
+  return a + b;
+};
+```
+
+```typescript
+// test/index.test.ts
+import { describe, expect, it } from 'vitest';
+import { sum } from '../src';
+
+describe('sum', () => {
+  it('should add two numbers', () => {
+    expect(sum(1, 2)).toBe(3);
+  });
+});
+```
+
+---
+
+## React Template
+
+The React template is designed for building React component libraries.
+
+```bash
+bunx tsdx create mylib --template react
+```
+
+### What's Included
+
+Everything from the basic template, plus:
+- React and React DOM
+- @testing-library/react for component testing
+- jsdom environment for vitest
+- Example Vite-powered playground
+
+### Project Structure
+
+```
+mylib/
+├── src/
+│   └── index.tsx         # React component entry
+├── test/
+│   └── index.test.tsx    # Tests with Testing Library
+├── example/              # Demo app (Vite-powered)
+│   ├── index.tsx
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.ts
+├── dist/                  # Build output (generated)
+├── package.json
+├── tsconfig.json
+├── vitest.config.ts
+├── LICENSE
+└── README.md
+```
+
+### Example Code
+
+```tsx
+// src/index.tsx
+import React from 'react';
+
+export interface MyComponentProps {
+  text: string;
+}
+
+export const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
+  return <div className="my-component">{text}</div>;
+};
+```
+
+```tsx
+// test/index.test.tsx
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { MyComponent } from '../src';
+
+describe('MyComponent', () => {
+  it('renders text', () => {
+    render(<MyComponent text="Hello" />);
+    expect(screen.getByText('Hello')).toBeDefined();
+  });
+});
+```
+
+### Running the Example
+
+The React template includes a Vite-powered example app for developing and testing your components:
+
+```bash
+cd example
+bun install
+bun run dev
+```
+
+This starts a development server where you can see your components in action.
+
+---
+
+## Creating Custom Templates
+
+While TSDX doesn't support custom templates out of the box, you can:
+
+1. Create a project with an existing template
+2. Customize it to your needs
+3. Use it as a boilerplate for future projects
+
+Alternatively, you can use `tsdx init` to add TSDX configuration to any existing project.

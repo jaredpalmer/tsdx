@@ -1,0 +1,54 @@
+---
+title: Introduction
+description: Zero-config CLI for TypeScript package development
+---
+
+# TSDX
+
+**TSDX is a zero-config CLI that helps you develop, test, and publish modern TypeScript packages** with ease—so you can focus on your awesome new library and not waste another afternoon on configuration.
+
+<Callout type="info" title="TSDX 1.0">
+  TSDX 1.0 is a complete rewrite using modern, high-performance Rust-based tooling. See the [Migration Guide](/docs/migration) if upgrading from v0.x.
+</Callout>
+
+## Features
+
+- **Zero config** - Sensible defaults, just start coding
+- **Modern tooling** - Built on [bunchee](https://github.com/huozhi/bunchee), [vitest](https://vitest.dev/), [oxlint](https://oxc.rs/docs/guide/usage/linter.html), and [oxfmt](https://oxc.rs/docs/guide/usage/formatter)
+- **Dual ESM/CJS** - Automatic dual module builds with proper exports
+- **TypeScript first** - Full TypeScript support with declaration generation
+- **Lightning fast** - Rust-powered linting (50-100x faster than ESLint) and formatting (35x faster than Prettier)
+- **Bun-native** - Uses bun for package management
+- **Modern Node.js** - Supports Node.js 20+ (LTS)
+
+## Tool Stack
+
+TSDX 1.0 uses modern, high-performance tools:
+
+| Tool | Purpose | Performance |
+|------|---------|-------------|
+| [bunchee](https://github.com/huozhi/bunchee) | Bundling | Zero-config, built on Rollup + SWC |
+| [vitest](https://vitest.dev/) | Testing | Vite-native, Jest-compatible API |
+| [oxlint](https://oxc.rs/docs/guide/usage/linter.html) | Linting | 50-100x faster than ESLint |
+| [oxfmt](https://oxc.rs/docs/guide/usage/formatter) | Formatting | 35x faster than Prettier |
+| [bun](https://bun.sh/) | Package Management | Native speed, npm-compatible |
+
+## Requirements
+
+- **Node.js**: 20+ (LTS)
+- **Bun**: Latest version
+
+## Quick Example
+
+```bash
+# Create a new package
+bunx tsdx create mylib
+
+# Navigate to the project
+cd mylib
+
+# Start development
+bun run dev
+```
+
+That's it! Start editing `src/index.ts` and build your library.

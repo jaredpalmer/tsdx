@@ -1,0 +1,86 @@
+---
+title: Installation
+description: How to install TSDX and its dependencies
+---
+
+# Installation
+
+## Prerequisites
+
+Before installing TSDX, you need to have **bun** installed.
+
+### Installing Bun
+
+<Tabs items={['macOS/Linux', 'Windows', 'npm']}>
+
+<Tab value="macOS/Linux">
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+</Tab>
+
+<Tab value="Windows">
+```powershell
+powershell -c "irm bun.sh/install.ps1 | iex"
+```
+</Tab>
+
+<Tab value="npm">
+```bash
+npm install -g bun
+```
+</Tab>
+
+</Tabs>
+
+## Installing TSDX
+
+### Global Installation (recommended for creating projects)
+
+```bash
+bun add -g tsdx
+```
+
+After installing globally, you can create new projects from anywhere:
+
+```bash
+tsdx create mylib
+```
+
+### Per-Project Installation
+
+```bash
+bun add -D tsdx
+```
+
+When installed per-project, use `bunx` to run commands:
+
+```bash
+bunx tsdx create mylib
+```
+
+### One-off Usage (no installation)
+
+You can use `bunx` to run TSDX without installing it:
+
+```bash
+bunx tsdx create mylib
+```
+
+## Verifying Installation
+
+Check that TSDX is installed correctly:
+
+```bash
+tsdx --version
+```
+
+Or with bunx:
+
+```bash
+bunx tsdx --version
+```
+
+## Next Steps
+
+Once installed, you're ready to [create your first project](/docs/quick-start).

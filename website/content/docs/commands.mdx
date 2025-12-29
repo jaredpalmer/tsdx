@@ -1,0 +1,252 @@
+---
+title: Commands
+description: Complete reference for all TSDX CLI commands
+---
+
+# Commands
+
+TSDX provides a set of commands to help you develop, test, and build your TypeScript packages.
+
+## tsdx create
+
+Create a new TypeScript package from a template.
+
+```bash
+tsdx create <name> [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-t, --template <template>` | Template to use (basic, react) |
+
+### Examples
+
+```bash
+# Interactive template selection
+bunx tsdx create mylib
+
+# Specify template directly
+bunx tsdx create mylib --template react
+```
+
+---
+
+## tsdx build
+
+Build the package for production using [bunchee](https://github.com/huozhi/bunchee).
+
+```bash
+tsdx build [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `--no-clean` | Skip cleaning the dist folder before building |
+
+### Examples
+
+```bash
+# Standard build
+tsdx build
+
+# Build without cleaning dist
+tsdx build --no-clean
+```
+
+### Output
+
+The build command outputs:
+- `dist/index.js` - ESM module
+- `dist/index.cjs` - CommonJS module
+- `dist/index.d.ts` - TypeScript declarations
+- `dist/index.d.cts` - CJS TypeScript declarations
+
+---
+
+## tsdx dev / tsdx watch
+
+Start development mode with file watching. Rebuilds automatically when files change.
+
+```bash
+tsdx dev
+# or
+tsdx watch
+```
+
+### Examples
+
+```bash
+# Start development mode
+tsdx dev
+```
+
+---
+
+## tsdx test
+
+Run tests using [vitest](https://vitest.dev/).
+
+```bash
+tsdx test [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-w, --watch` | Run in watch mode |
+| `-c, --coverage` | Run with coverage |
+| `-u, --update` | Update snapshots |
+
+All additional options are passed through to vitest.
+
+### Examples
+
+```bash
+# Run tests once
+tsdx test
+
+# Watch mode
+tsdx test --watch
+
+# With coverage
+tsdx test --coverage
+
+# Update snapshots
+tsdx test --update
+
+# Run specific test file
+tsdx test src/utils.test.ts
+```
+
+---
+
+## tsdx lint
+
+Lint the codebase using [oxlint](https://oxc.rs/docs/guide/usage/linter.html).
+
+```bash
+tsdx lint [paths...] [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-f, --fix` | Auto-fix fixable issues |
+| `--config <path>` | Path to config file |
+
+### Arguments
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `paths` | Paths to lint | `src test` |
+
+### Examples
+
+```bash
+# Lint src and test directories (default)
+tsdx lint
+
+# Lint specific paths
+tsdx lint src lib
+
+# Auto-fix issues
+tsdx lint --fix
+
+# Use custom config
+tsdx lint --config .oxlintrc.json
+```
+
+---
+
+## tsdx format
+
+Format the codebase using [oxfmt](https://oxc.rs/docs/guide/usage/formatter).
+
+```bash
+tsdx format [paths...] [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-c, --check` | Check if files are formatted without making changes |
+
+### Arguments
+
+| Argument | Description | Default |
+|----------|-------------|---------|
+| `paths` | Paths to format | `.` |
+
+### Examples
+
+```bash
+# Format all files
+tsdx format
+
+# Check formatting without changes
+tsdx format --check
+
+# Format specific paths
+tsdx format src test
+```
+
+---
+
+## tsdx typecheck
+
+Run TypeScript type checking.
+
+```bash
+tsdx typecheck [options]
+```
+
+### Options
+
+| Option | Description |
+|--------|-------------|
+| `-w, --watch` | Run in watch mode |
+
+### Examples
+
+```bash
+# Type check once
+tsdx typecheck
+
+# Watch mode
+tsdx typecheck --watch
+```
+
+---
+
+## tsdx init
+
+Initialize TSDX configuration in an existing project.
+
+```bash
+tsdx init
+```
+
+This command:
+- Updates `package.json` with tsdx scripts and exports configuration
+- Creates `tsconfig.json` if it doesn't exist
+- Creates `vitest.config.ts` if it doesn't exist
+
+### Examples
+
+```bash
+# Initialize in existing project
+bunx tsdx init
+```
+
+After running `tsdx init`, install the required dependencies:
+
+```bash
+bun add -D bunchee vitest typescript oxlint
+```
