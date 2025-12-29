@@ -1,5 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
-import { execSync, spawn, ChildProcess } from 'child_process';
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'bun:test';
+import { execSync } from 'child_process';
 import path from 'path';
 import fs from 'fs-extra';
 import os from 'os';
@@ -84,10 +84,6 @@ describe('CLI Basics', () => {
     expect(output).toContain('create');
     expect(output).toContain('build');
     expect(output).toContain('dev');
-    expect(output).toContain('test');
-    expect(output).toContain('lint');
-    expect(output).toContain('format');
-    expect(output).toContain('typecheck');
     expect(output).toContain('init');
   });
 
@@ -102,33 +98,6 @@ describe('CLI Basics', () => {
     const output = runCLI('build --help');
     expect(output).toContain('Build the package for production');
     expect(output).toContain('--no-clean');
-  });
-
-  it('should show command-specific help for test', () => {
-    const output = runCLI('test --help');
-    expect(output).toContain('Run tests with vitest');
-    expect(output).toContain('--watch');
-    expect(output).toContain('--coverage');
-    expect(output).toContain('--update');
-  });
-
-  it('should show command-specific help for lint', () => {
-    const output = runCLI('lint --help');
-    expect(output).toContain('Lint the codebase with oxlint');
-    expect(output).toContain('--fix');
-    expect(output).toContain('--config');
-  });
-
-  it('should show command-specific help for format', () => {
-    const output = runCLI('format --help');
-    expect(output).toContain('Format the codebase with oxfmt');
-    expect(output).toContain('--check');
-  });
-
-  it('should show command-specific help for typecheck', () => {
-    const output = runCLI('typecheck --help');
-    expect(output).toContain('Run TypeScript type checking');
-    expect(output).toContain('--watch');
   });
 
   it('should show command-specific help for init', () => {
@@ -222,10 +191,9 @@ describe('Create Command', () => {
       const pkgJson = fs.readJSONSync(path.join(projectPath, 'package.json'));
       expect(pkgJson.scripts.dev).toBe('tsdx dev');
       expect(pkgJson.scripts.build).toBe('tsdx build');
-      expect(pkgJson.scripts.test).toBe('tsdx test');
-      expect(pkgJson.scripts.lint).toBe('tsdx lint');
-      expect(pkgJson.scripts.format).toBe('tsdx format');
-      expect(pkgJson.scripts.typecheck).toBe('tsdx typecheck');
+      // test, lint use tools directly now
+      expect(pkgJson.scripts.test).toBe('bun test');
+      expect(pkgJson.scripts.lint).toBe('oxlint src test');
     });
 
     it('should have tsdx as devDependency', () => {
@@ -442,13 +410,9 @@ describe('Init Command', () => {
 
     const updatedPkgJson = fs.readJSONSync(path.join(tempDir, 'package.json'));
 
-    // Should have new scripts
+    // Should have tsdx scripts for build/dev only
     expect(updatedPkgJson.scripts.dev).toBe('tsdx dev');
     expect(updatedPkgJson.scripts.build).toBe('tsdx build');
-    expect(updatedPkgJson.scripts.test).toBe('tsdx test');
-    expect(updatedPkgJson.scripts.lint).toBe('tsdx lint');
-    expect(updatedPkgJson.scripts.format).toBe('tsdx format');
-    expect(updatedPkgJson.scripts.typecheck).toBe('tsdx typecheck');
 
     // Should preserve existing scripts
     expect(updatedPkgJson.scripts.existing).toBe('echo existing');
@@ -507,29 +471,6 @@ describe('Init Command', () => {
     const tsconfig = fs.readJSONSync(path.join(tempDir, 'tsconfig.json'));
     expect(tsconfig.compilerOptions.target).toBe('ES2020');
     expect(tsconfig.compilerOptions.custom).toBe('option');
-  });
-
-  it('should create vitest.config.ts if it does not exist', () => {
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-
-    runCLI('init', { cwd: tempDir });
-
-    expect(fs.existsSync(path.join(tempDir, 'vitest.config.ts'))).toBe(true);
-
-    const vitestConfig = fs.readFileSync(path.join(tempDir, 'vitest.config.ts'), 'utf-8');
-    expect(vitestConfig).toContain('defineConfig');
-    expect(vitestConfig).toContain('globals: true');
-  });
-
-  it('should not overwrite existing vitest.config.ts', () => {
-    const existingConfig = 'export default { custom: true };';
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-    fs.writeFileSync(path.join(tempDir, 'vitest.config.ts'), existingConfig);
-
-    runCLI('init', { cwd: tempDir });
-
-    const vitestConfig = fs.readFileSync(path.join(tempDir, 'vitest.config.ts'), 'utf-8');
-    expect(vitestConfig).toBe(existingConfig);
   });
 
   it('should not overwrite existing exports field', () => {
@@ -731,98 +672,6 @@ describe('Build Command', () => {
     expect(fs.existsSync(path.join(tempDir, 'dist', 'old-file.js'))).toBe(false);
     // New file should exist
     expect(fs.existsSync(path.join(tempDir, 'dist', 'index.js'))).toBe(true);
-  });
-});
-
-// ============================================================================
-// TEST COMMAND TESTS
-// ============================================================================
-
-describe('Test Command', () => {
-  it('should show help for test command', () => {
-    const output = runCLI('test --help');
-    expect(output).toContain('Run tests with vitest');
-    expect(output).toContain('-w, --watch');
-    expect(output).toContain('-c, --coverage');
-    expect(output).toContain('-u, --update');
-  });
-});
-
-// ============================================================================
-// LINT COMMAND TESTS
-// ============================================================================
-
-describe('Lint Command', () => {
-  let tempDir: string;
-
-  beforeEach(() => {
-    tempDir = createTempDir('lint');
-  });
-
-  afterEach(async () => {
-    await fs.remove(tempDir);
-  });
-
-  it('should show help for lint command', () => {
-    const output = runCLI('lint --help');
-    expect(output).toContain('Lint the codebase with oxlint');
-    expect(output).toContain('-f, --fix');
-    expect(output).toContain('--config');
-  });
-
-  it('should handle missing paths gracefully', () => {
-    // Create a project without src or test directories
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-
-    // Should not error, just report no valid paths
-    const output = runCLI('lint', { cwd: tempDir });
-    expect(output).toContain('No valid paths to lint');
-  });
-
-  it('should lint existing directories', () => {
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-    fs.mkdirSync(path.join(tempDir, 'src'));
-    fs.writeFileSync(path.join(tempDir, 'src', 'index.ts'), 'export const x = 1;');
-
-    // Should succeed with valid TypeScript code
-    const result = runCLIWithExitCode('lint', { cwd: tempDir });
-    // oxlint should run successfully (may return 0 for clean code or non-zero for issues)
-    // The key is that it doesn't crash - it runs the linter
-    expect(result.exitCode).toBeDefined();
-  });
-
-  it('should accept custom paths', () => {
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-    fs.mkdirSync(path.join(tempDir, 'lib'));
-    fs.writeFileSync(path.join(tempDir, 'lib', 'index.ts'), 'export const x = 1;');
-
-    // Should run lint on the custom path
-    const result = runCLIWithExitCode('lint lib', { cwd: tempDir });
-    expect(result.exitCode).toBeDefined();
-  });
-});
-
-// ============================================================================
-// FORMAT COMMAND TESTS
-// ============================================================================
-
-describe('Format Command', () => {
-  it('should show help for format command', () => {
-    const output = runCLI('format --help');
-    expect(output).toContain('Format the codebase with oxfmt');
-    expect(output).toContain('-c, --check');
-  });
-});
-
-// ============================================================================
-// TYPECHECK COMMAND TESTS
-// ============================================================================
-
-describe('Typecheck Command', () => {
-  it('should show help for typecheck command', () => {
-    const output = runCLI('typecheck --help');
-    expect(output).toContain('Run TypeScript type checking');
-    expect(output).toContain('-w, --watch');
   });
 });
 

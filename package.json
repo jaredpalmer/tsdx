@@ -12,9 +12,7 @@
   "keywords": [
     "typescript",
     "bundle",
-    "rolldown",
-    "vitest",
-    "oxlint"
+    "rolldown"
   ],
   "bugs": {
     "url": "https://github.com/jaredpalmer/tsdx/issues"
@@ -35,8 +33,8 @@
     "lint": "oxlint",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit",
     "prepare": "bun run build",
     "changeset": "changeset",
@@ -64,7 +62,6 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
     "oxlint": "^0.16.0",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "typescript": "^5.7.2"
   }
 }

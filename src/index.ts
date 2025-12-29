@@ -51,7 +51,6 @@ ${pc.cyan('   ██║   ╚════██║██║  ██║ ██╔
 ${pc.cyan('   ██║   ███████║██████╔╝██╔╝ ██╗')}
 ${pc.cyan('   ╚═╝   ╚══════╝╚═════╝ ╚═╝  ╚═╝')}
 ${pc.dim('Zero-config TypeScript package development')}
-${pc.dim('Powered by rolldown, oxlint, vitest')}
 `;
 
 program
@@ -153,11 +152,10 @@ ${pc.green('Success!')} Created ${pc.cyan(name)} at ${pc.dim(projectPath)}
 
 Inside that directory, you can run:
 
-  ${pc.cyan('bun run dev')}      Start the dev server
+  ${pc.cyan('bun run dev')}      Start development mode
   ${pc.cyan('bun run build')}    Build for production
   ${pc.cyan('bun run test')}     Run tests
   ${pc.cyan('bun run lint')}     Lint the codebase
-  ${pc.cyan('bun run format')}   Format the codebase
 
 We suggest that you begin by typing:
 
@@ -250,130 +248,6 @@ program
     }
   });
 
-// TEST command
-program
-  .command('test')
-  .description('Run tests with vitest')
-  .option('-w, --watch', 'Run in watch mode')
-  .option('-c, --coverage', 'Run with coverage')
-  .option('-u, --update', 'Update snapshots')
-  .allowUnknownOption(true)
-  .action(async (options: { watch?: boolean; coverage?: boolean; update?: boolean }, command) => {
-    const args = ['vitest'];
-
-    if (!options.watch) {
-      args.push('run');
-    }
-
-    if (options.coverage) {
-      args.push('--coverage');
-    }
-
-    if (options.update) {
-      args.push('--update');
-    }
-
-    // Pass through any additional arguments
-    const extraArgs = command.args || [];
-    args.push(...extraArgs);
-
-    try {
-      await execa('bunx', args, { stdio: 'inherit' });
-    } catch (error: unknown) {
-      // Vitest exits with non-zero on test failure, which is expected
-      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
-      process.exit(exitCode);
-    }
-  });
-
-// LINT command
-program
-  .command('lint')
-  .description('Lint the codebase with oxlint')
-  .option('-f, --fix', 'Auto-fix fixable issues')
-  .option('--config <path>', 'Path to config file')
-  .argument('[paths...]', 'Paths to lint', ['src', 'test'])
-  .action(async (lintPaths: string[], options: { fix?: boolean; config?: string }) => {
-    const args = ['oxlint'];
-
-    // Filter to existing paths
-    const existingPaths = lintPaths.filter((p) => fs.existsSync(path.resolve(process.cwd(), p)));
-
-    if (existingPaths.length === 0) {
-      console.log(pc.yellow('No valid paths to lint'));
-      return;
-    }
-
-    args.push(...existingPaths);
-
-    if (options.fix) {
-      args.push('--fix');
-    }
-
-    if (options.config) {
-      args.push('--config', options.config);
-    }
-
-    try {
-      await execa('bunx', args, { stdio: 'inherit' });
-      console.log(pc.green('Linting complete'));
-    } catch (error: unknown) {
-      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
-      process.exit(exitCode);
-    }
-  });
-
-// FORMAT command
-program
-  .command('format')
-  .description('Format the codebase with oxfmt')
-  .option('-c, --check', 'Check if files are formatted')
-  .argument('[paths...]', 'Paths to format', ['.'])
-  .action(async (formatPaths: string[], options: { check?: boolean }) => {
-    const args = ['oxfmt'];
-
-    if (options.check) {
-      args.push('--check');
-    } else {
-      args.push('--write');
-    }
-
-    args.push(...formatPaths);
-
-    try {
-      await execa('bunx', args, { stdio: 'inherit' });
-      if (options.check) {
-        console.log(pc.green('All files are formatted'));
-      } else {
-        console.log(pc.green('Formatting complete'));
-      }
-    } catch (error: unknown) {
-      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
-      process.exit(exitCode);
-    }
-  });
-
-// TYPECHECK command
-program
-  .command('typecheck')
-  .description('Run TypeScript type checking')
-  .option('-w, --watch', 'Run in watch mode')
-  .action(async (options: { watch?: boolean }) => {
-    const args = ['tsc', '--noEmit'];
-
-    if (options.watch) {
-      args.push('--watch');
-    }
-
-    try {
-      await execa('bunx', args, { stdio: 'inherit' });
-      console.log(pc.green('Type checking complete'));
-    } catch (error: unknown) {
-      const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
-      process.exit(exitCode);
-    }
-  });
-
 // INIT command - initialize tsdx in an existing project
 program
   .command('init')
@@ -411,17 +285,11 @@ program
       pkgJson.types = './dist/index.d.ts';
       pkgJson.type = 'module';
 
-      // Add scripts
+      // Add scripts (only build/dev use tsdx, others use tools directly)
       pkgJson.scripts = {
         ...pkgJson.scripts,
         dev: 'tsdx dev',
         build: 'tsdx build',
-        test: 'tsdx test',
-        'test:watch': 'tsdx test --watch',
-        lint: 'tsdx lint',
-        format: 'tsdx format',
-        'format:check': 'tsdx format --check',
-        typecheck: 'tsdx typecheck',
       };
 
       await fs.writeJSON(paths.appPackageJson, pkgJson, { spaces: 2 });
@@ -453,21 +321,6 @@ program
         await fs.writeJSON(tsconfigPath, tsconfig, { spaces: 2 });
       }
 
-      // Create vitest.config.ts if it doesn't exist
-      const vitestConfigPath = path.resolve(process.cwd(), 'vitest.config.ts');
-      if (!(await fs.pathExists(vitestConfigPath))) {
-        const vitestConfig = `import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-  },
-});
-`;
-        await fs.writeFile(vitestConfigPath, vitestConfig);
-      }
-
       spinner.succeed('Initialized tsdx configuration');
 
       console.log(`
@@ -481,8 +334,6 @@ Then you can run:
 
   ${pc.cyan('bun run dev')}      Start development mode
   ${pc.cyan('bun run build')}    Build for production
-  ${pc.cyan('bun run test')}     Run tests
-  ${pc.cyan('bun run lint')}     Lint the codebase
 `);
     } catch (error) {
       spinner.fail('Failed to initialize');

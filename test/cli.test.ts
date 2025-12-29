@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 import { execSync } from 'child_process';
 import path from 'path';
 
@@ -20,8 +20,6 @@ describe('tsdx CLI', () => {
     expect(output).toContain('create');
     expect(output).toContain('build');
     expect(output).toContain('dev');
-    expect(output).toContain('test');
-    expect(output).toContain('lint');
-    expect(output).toContain('format');
+    expect(output).toContain('init');
   });
 });

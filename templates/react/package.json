@@ -30,12 +30,10 @@
   "scripts": {
     "dev": "tsdx dev",
     "build": "tsdx build",
-    "test": "tsdx test",
-    "test:watch": "tsdx test --watch",
-    "lint": "tsdx lint",
-    "format": "tsdx format",
-    "format:check": "tsdx format --check",
-    "typecheck": "tsdx typecheck",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "lint": "oxlint src test",
+    "typecheck": "tsc --noEmit",
     "prepublishOnly": "bun run build"
   },
   "peerDependencies": {
@@ -43,11 +41,13 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^16.6.0",
     "@testing-library/react": "^16.1.0",
+    "@types/bun": "latest",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
-    "jsdom": "^25.0.1",
+    "oxlint": "^0.16.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tsdx": "^2.0.0",
