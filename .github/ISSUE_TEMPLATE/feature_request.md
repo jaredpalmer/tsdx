@@ -2,33 +2,27 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
 
-### Current Behavior
+### Problem Statement
 
-<!-- A clear and concise description of what is the current behavior / use.  -->
+What problem are you trying to solve? What's the current behavior?
 
-### Desired Behavior
+### Proposed Solution
 
-<!-- A clear and concise description of what you want to happen.  -->
+Describe the solution you'd like. Be specific about the API or behavior.
 
-### Suggested Solution
+### Alternatives Considered
 
-<!-- Suggest a solution that the community/maintainers/you may take to enable the desired behavior  -->
+What alternative solutions or features have you considered?
 
-<!-- NOTE: Feature Requests without suggested solutions may not be addressed or treated with the same level of urgency as those that have suggested solutions. -->
+### Who Benefits?
 
-### Who does this impact? Who is this for?
+Who is this for? All users? Specific use cases?
 
-<!-- Who is this for? All users? TypeScript users? Beginners? Advanced? Yourself? People using X, Y, X, etc.? -->
+### Additional Context
 
-### Describe alternatives you've considered
-
-<!-- A clear and concise description of any alternative solutions or features you've considered.  -->
-
-### Additional context
-
-<!-- Add any other context or links about the feature request here. -->
+Add any other context, screenshots, or examples about the feature request here.
