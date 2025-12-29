@@ -1,44 +1,209 @@
 # Contributing to TSDX
 
-Thanks for your interest in TSDX! You are very welcome to contribute. If you are proposing a new feature, make sure to [open an issue](https://github.com/palmerhq/tsdx/issues/new/choose) to make sure it is inline with the project goals.
+Thanks for your interest in TSDX! Contributions are welcome.
+
+If you're proposing a new feature, please [open an issue](https://github.com/jaredpalmer/tsdx/issues/new/choose) first to discuss it.
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) 20+ (LTS)
+- [Bun](https://bun.sh/) (latest version)
+
+### Installing Bun
+
+```bash
+# macOS/Linux
+curl -fsSL https://bun.sh/install | bash
+
+# Windows
+powershell -c "irm bun.sh/install.ps1 | iex"
+```
 
 ## Setup
 
-0. First, remove any existing `tsdx` global installations that may conflict.
+1. Fork this repository to your own GitHub account and clone it:
 
-   ```
-   yarn global remove tsdx # or npm uninstall -g tsdx
-   ```
-
-1. Fork this repository to your own GitHub account and clone it to your local device:
-
-   ```
-   git clone https://github.com/your-name/tsdx.git
+   ```bash
+   git clone https://github.com/your-username/tsdx.git
    cd tsdx
    ```
 
-1. Install the dependencies and build the TypeScript files to JavaScript:
+2. Install dependencies:
 
-   ```
-   yarn && yarn build
-   ```
-
-   > **Note:** you'll need to run `yarn build` any time you want to see your changes, or run `yarn watch` to leave it in watch mode.
-
-1. Make it so running `tsdx` anywhere will run your local dev version:
-
-   ```
-   yarn link
+   ```bash
+   bun install
    ```
 
-4) To use your local version when running `yarn build`/`yarn start`/`yarn test` in a TSDX project, run this in the project:
+3. Build the CLI:
 
-   ```
-   yarn link tsdx
+   ```bash
+   bun run build
    ```
 
-   You should see a success message: `success Using linked package for "tsdx".` The project will now use the locally linked version instead of a copy from `node_modules`.
+4. Link for local development:
+
+   ```bash
+   bun link
+   ```
+
+   Now you can use `tsdx` commands globally and they'll run your local version.
+
+## Development Workflow
+
+### Building
+
+```bash
+# Build once
+bun run build
+
+# Watch mode (rebuilds on changes)
+bun run dev
+```
+
+### Testing
+
+```bash
+# Run all tests
+bun run test
+
+# Watch mode
+bun run test:watch
+
+# Run specific test file
+bun run test test/cli.test.ts
+```
+
+### Linting
+
+```bash
+# Lint the codebase
+bun run lint
+
+# Auto-fix issues
+bun run lint --fix
+```
+
+### Type Checking
+
+```bash
+bun run typecheck
+```
+
+### Formatting
+
+```bash
+# Format all files
+bun run format
+
+# Check formatting
+bun run format:check
+```
+
+## Testing Your Changes
+
+### Testing the CLI
+
+After building, test your changes by creating a new project:
+
+```bash
+# Create a test project
+cd /tmp
+tsdx create test-project --template basic
+cd test-project
+
+# Verify it works
+bun run build
+bun run test
+```
+
+### Testing Templates
+
+Templates are in the `templates/` directory. After modifying a template:
+
+1. Build tsdx: `bun run build`
+2. Create a new project: `tsdx create test-project --template <template-name>`
+3. Verify the generated project works correctly
+
+## Project Structure
+
+```
+tsdx/
+├── src/
+│   └── index.ts          # CLI entry point
+├── templates/
+│   ├── basic/            # Basic TypeScript template
+│   └── react/            # React component template
+├── test/
+│   ├── cli.test.ts       # CLI unit tests
+│   └── e2e.test.ts       # End-to-end tests
+├── package.json
+├── tsconfig.json
+└── vitest.config.ts
+```
 
 ## Submitting a PR
 
-Be sure to run `yarn test` before you make your PR to make sure you haven't broken anything.
+1. Create a feature branch:
+   ```bash
+   git checkout -b feature/my-feature
+   ```
+
+2. Make your changes
+
+3. Run all checks:
+   ```bash
+   bun run lint
+   bun run typecheck
+   bun run test
+   bun run build
+   ```
+
+4. Commit your changes with a descriptive message:
+   ```bash
+   git commit -m "feat: add new feature"
+   ```
+
+5. Push and create a pull request:
+   ```bash
+   git push origin feature/my-feature
+   ```
+
+### Commit Message Guidelines
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+- `feat:` - New features
+- `fix:` - Bug fixes
+- `docs:` - Documentation changes
+- `test:` - Test changes
+- `refactor:` - Code refactoring
+- `chore:` - Maintenance tasks
+
+## Adding a New Template
+
+1. Create a new directory in `templates/`:
+   ```bash
+   mkdir templates/my-template
+   ```
+
+2. Add the template files (use `basic` as reference)
+
+3. Register the template in `src/index.ts`:
+   ```typescript
+   const templates = {
+     basic: { ... },
+     react: { ... },
+     'my-template': {
+       name: 'my-template',
+       description: 'Description of my template',
+     },
+   };
+   ```
+
+4. Add tests for the new template
+
+5. Update the README to document the new template
+
+## Questions?
+
+Feel free to [open an issue](https://github.com/jaredpalmer/tsdx/issues) if you have questions or need help.

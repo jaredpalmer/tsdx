@@ -2,37 +2,55 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
 
-### Current Behavior
+### Describe the Bug
 
-<!-- If applicable, add screenshots/code to help explain your problem. -->
+A clear and concise description of what the bug is.
 
-### Expected behavior
+### Steps to Reproduce
 
-<!-- A clear and concise description of what you expected to happen. -->
+1. Run `tsdx create mylib`
+2. ...
+3. See error
 
-### Suggested solution(s)
+### Expected Behavior
 
-<!-- How could we solve this bug? What changes would need to made to TSDX? -->
+What you expected to happen.
 
-### Additional context
+### Actual Behavior
 
-<!-- Add any other context about the problem here.  -->
+What actually happened.
 
-### Your environment
+### Screenshots/Logs
 
-<!--
-  PLEASE RUN THIS COMMAND INSIDE YOUR PROJECT:
-
-  npx envinfo --system OS --browsers --binaries --npmPackages tsdx,typescript --npmGlobalPackages tsdx,typescript
-
-  AND PASTE ITS CONTENTS BELOW INSIDE THE CODE SNIPPET vvvvvvvvv
--->
-
-```text
+If applicable, add screenshots or error logs.
 
 ```
+Paste error output here
+```
+
+### Environment
+
+```
+TSDX version:
+Node version:
+Bun version:
+OS:
+Template used:
+```
+
+Run this to get versions:
+```bash
+echo "TSDX: $(bunx tsdx --version 2>/dev/null || echo 'not installed')"
+echo "Node: $(node --version)"
+echo "Bun: $(bun --version)"
+echo "OS: $(uname -a)"
+```
+
+### Additional Context
+
+Add any other context about the problem here.
