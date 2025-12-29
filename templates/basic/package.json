@@ -28,21 +28,19 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "bunchee --watch",
-    "build": "bunchee",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "lint": "oxlint",
-    "format": "oxfmt --write .",
-    "format:check": "oxfmt --check .",
-    "typecheck": "tsc --noEmit",
+    "dev": "tsdx dev",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "test:watch": "tsdx test --watch",
+    "lint": "tsdx lint",
+    "format": "tsdx format",
+    "format:check": "tsdx format --check",
+    "typecheck": "tsdx typecheck",
     "prepublishOnly": "bun run build"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "bunchee": "^6.4.0",
-    "oxlint": "^0.16.0",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "tsdx": "^1.0.0",
+    "typescript": "^5.7.2"
   }
 }

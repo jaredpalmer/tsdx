@@ -43,17 +43,17 @@ vitest.config.ts
 | Script | Description |
 |--------|-------------|
 | `bun run dev` | Start development mode with watch |
-| `bun run build` | Build for production using bunchee |
-| `bun run test` | Run tests with Vitest |
+| `bun run build` | Build for production |
+| `bun run test` | Run tests |
 | `bun run test:watch` | Run tests in watch mode |
-| `bun run lint` | Lint code with oxlint |
-| `bun run format` | Format code with oxfmt |
+| `bun run lint` | Lint code |
+| `bun run format` | Format code |
 | `bun run format:check` | Check if code is formatted |
 | `bun run typecheck` | Run TypeScript type checking |
 
 ## Tools
 
-This project uses modern, high-performance tools:
+TSDX wraps these modern, high-performance tools:
 
 - **[Bunchee](https://github.com/huozhi/bunchee)** - Zero-config bundler for npm packages
 - **[Vitest](https://vitest.dev/)** - Next-generation testing framework
