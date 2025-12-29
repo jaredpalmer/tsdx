@@ -50,7 +50,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "commander": "^13.0.0",
+    "commander": "^14.0.2",
     "enquirer": "^2.4.1",
     "execa": "^9.5.2",
     "fs-extra": "^11.2.0",
