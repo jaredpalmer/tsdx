@@ -1,4 +1,4 @@
-import { eraseLine } from 'ansi-escapes';
+import ansiEscapes from 'ansi-escapes';
 import chalk from 'chalk';
 import ora from 'ora';
 
@@ -26,7 +26,7 @@ export const wait = (msg: string) => {
 
   return () => {
     spinner.stop();
-    process.stdout.write(eraseLine);
+    process.stdout.write(ansiEscapes.eraseLine);
   };
 };
 

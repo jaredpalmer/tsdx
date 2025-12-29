@@ -1,7 +1,7 @@
 import { safeVariableName, safePackageName, external } from './utils';
 import { paths } from './constants';
-import { RollupOptions } from 'rollup';
-import { terser } from '@rollup/plugin-terser';
+import { RollupOptions, Plugin } from 'rollup';
+import terser from '@rollup/plugin-terser';
 import { DEFAULT_EXTENSIONS as DEFAULT_BABEL_EXTENSIONS } from '@babel/core';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -120,6 +120,7 @@ export async function createRollupConfig(
       }),
       json(),
       {
+        name: 'shebang-plugin',
         // Custom plugin that removes shebang from code because newer
         // versions of bublé bundle their own private version of `acorn`
         // and I don't know a way to patch in the option `allowHashBang`
@@ -138,7 +139,7 @@ export async function createRollupConfig(
             map: null,
           };
         },
-      },
+      } as Plugin,
       typescript({
         typescript: ts,
         tsconfig: opts.tsconfig,
@@ -201,7 +202,6 @@ export async function createRollupConfig(
         ecma: opts.legacy ? 5 : 2020,
         module: isEsm,
         toplevel: opts.format === 'cjs' || isEsm,
-        warnings: true,
       }),
       /**
        * Ensure there's an empty default export to prevent runtime errors.
@@ -209,6 +209,7 @@ export async function createRollupConfig(
        * @see https://www.npmjs.com/package/rollup-plugin-export-default
        */
        {
+        name: 'default-export-plugin',
         renderChunk: async (code: string, chunk: any) => {
           if (chunk.exports.includes('default') || !isEsm) {
             return null;
@@ -219,7 +220,7 @@ export async function createRollupConfig(
             map: null,
           };
         },
-      },
+      } as Plugin,
     ],
   };
 }
