@@ -1,0 +1,17 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "---Quick Start---",
+    "installation",
+    "quick-start",
+    "---Usage---",
+    "commands",
+    "templates",
+    "---Configuration---",
+    "configuration",
+    "project-structure",
+    "---Migration---",
+    "migration"
+  ]
+}

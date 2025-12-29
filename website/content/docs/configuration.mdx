@@ -1,0 +1,222 @@
+---
+title: Configuration
+description: Configuring TSDX and its underlying tools
+---
+
+# Configuration
+
+TSDX is designed to be zero-config, but you can customize the underlying tools when needed.
+
+## TypeScript
+
+TSDX creates a modern TypeScript configuration in `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
+```
+
+You can modify this file to adjust TypeScript behavior for your project.
+
+---
+
+## Vitest
+
+Test configuration is in `vitest.config.ts`:
+
+```typescript
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node', // or 'jsdom' for React/DOM testing
+  },
+});
+```
+
+### Common Configurations
+
+<Tabs items={['Node Environment', 'JSDOM (React)', 'With Coverage']}>
+
+<Tab value="Node Environment">
+```typescript
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+  },
+});
+```
+</Tab>
+
+<Tab value="JSDOM (React)">
+```typescript
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./test/setup.ts'],
+  },
+});
+```
+</Tab>
+
+<Tab value="With Coverage">
+```typescript
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+    },
+  },
+});
+```
+</Tab>
+
+</Tabs>
+
+See the [Vitest documentation](https://vitest.dev/config/) for all options.
+
+---
+
+## Linting (oxlint)
+
+Create `.oxlintrc.json` in your project root for custom lint rules:
+
+```json
+{
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}
+```
+
+See the [oxlint documentation](https://oxc.rs/docs/guide/usage/linter/rules.html) for available rules.
+
+---
+
+## Formatting (oxfmt)
+
+Create `.oxfmtrc.json` in your project root for custom formatting:
+
+```json
+{
+  "indentWidth": 2,
+  "lineWidth": 100
+}
+```
+
+See the [oxfmt documentation](https://oxc.rs/docs/guide/usage/formatter) for available options.
+
+---
+
+## Bundling (bunchee)
+
+Bunchee reads your `package.json` exports field to determine build output. The default configuration is:
+
+```json
+{
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  }
+}
+```
+
+For advanced customization, create `bunchee.config.ts`:
+
+```typescript
+import { BuncheeConfig } from 'bunchee';
+
+export default {
+  // See bunchee documentation
+} satisfies BuncheeConfig;
+```
+
+See the [bunchee documentation](https://github.com/huozhi/bunchee) for all options.
+
+---
+
+## GitHub Actions
+
+TSDX templates include a GitHub Actions workflow in `.github/workflows/main.yml`:
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node: ['20', '22']
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - run: bun install
+      - run: bun run lint
+      - run: bun run typecheck
+      - run: bun run build
+      - run: bun run test
+```
+
+You can customize this workflow to fit your needs.

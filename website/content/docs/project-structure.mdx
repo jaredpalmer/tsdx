@@ -1,0 +1,198 @@
+---
+title: Project Structure
+description: Understanding the structure of TSDX projects
+---
+
+# Project Structure
+
+Projects created with TSDX follow a consistent, well-organized structure.
+
+## Basic Template Structure
+
+```
+mylib/
+├── src/
+│   └── index.ts          # Library entry point
+├── test/
+│   └── index.test.ts     # Tests (vitest)
+├── dist/                  # Build output (generated)
+│   ├── index.js          # ESM
+│   ├── index.cjs         # CommonJS
+│   ├── index.d.ts        # TypeScript declarations
+│   └── index.d.cts       # CJS TypeScript declarations
+├── .github/
+│   └── workflows/
+│       └── main.yml      # CI/CD workflow
+├── package.json
+├── tsconfig.json
+├── vitest.config.ts
+├── LICENSE
+└── README.md
+```
+
+## React Template Structure
+
+The React template includes everything from the basic template plus:
+
+```
+mylib/
+├── src/
+│   └── index.tsx         # React component entry
+├── test/
+│   └── index.test.tsx    # Tests with Testing Library
+├── example/              # Demo app (Vite-powered)
+│   ├── index.tsx         # Example app entry
+│   ├── index.html        # HTML template
+│   ├── package.json      # Example app dependencies
+│   └── vite.config.ts    # Vite configuration
+├── dist/
+├── .github/
+├── package.json
+├── tsconfig.json
+├── vitest.config.ts
+├── LICENSE
+└── README.md
+```
+
+---
+
+## Key Files
+
+### `src/index.ts` (or `src/index.tsx`)
+
+The main entry point of your library. This is what gets exported when users import your package.
+
+```typescript
+// Basic library
+export const sum = (a: number, b: number): number => {
+  return a + b;
+};
+
+// React component library
+export { MyComponent } from './MyComponent';
+export type { MyComponentProps } from './MyComponent';
+```
+
+### `package.json`
+
+Contains your package configuration, dependencies, and scripts:
+
+```json
+{
+  "name": "mylib",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "src"],
+  "scripts": {
+    "dev": "tsdx dev",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "format": "tsdx format",
+    "typecheck": "tsdx typecheck",
+    "prepublishOnly": "bun run build"
+  }
+}
+```
+
+### `tsconfig.json`
+
+TypeScript configuration:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true
+  }
+}
+```
+
+### `vitest.config.ts`
+
+Test configuration:
+
+```typescript
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+  },
+});
+```
+
+---
+
+## Module Formats
+
+TSDX outputs both ESM and CommonJS formats:
+
+| File | Format | Usage |
+|------|--------|-------|
+| `dist/index.js` | ESM | Modern bundlers, Node.js with `type: "module"` |
+| `dist/index.cjs` | CommonJS | Legacy Node.js, older bundlers |
+| `dist/index.d.ts` | TypeScript | ESM type definitions |
+| `dist/index.d.cts` | TypeScript | CJS type definitions |
+
+---
+
+## Adding More Entry Points
+
+You can add multiple entry points by updating your `package.json` exports:
+
+```json
+{
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./utils": {
+      "import": "./dist/utils.js",
+      "require": "./dist/utils.cjs"
+    }
+  }
+}
+```
+
+Then create corresponding source files:
+
+```
+src/
+├── index.ts
+└── utils.ts
+```
+
+Bunchee will automatically build all entry points defined in your exports.
+
+---
+
+## Best Practices
+
+1. **Keep `src/` focused** - Only include source code that should be bundled
+2. **Separate tests** - Keep tests in the `test/` directory
+3. **Use TypeScript** - Take advantage of type safety and declaration generation
+4. **Export types** - Always export TypeScript types alongside your code
+5. **Document with JSDoc** - Add JSDoc comments for better IDE support
