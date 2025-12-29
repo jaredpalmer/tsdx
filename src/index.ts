@@ -202,7 +202,7 @@ program
     console.log(pc.cyan('Starting development mode...'));
     try {
       await execaCommand('bunchee --watch', { stdio: 'inherit' });
-    } catch (error) {
+    } catch {
       console.error(pc.red('Development mode failed'));
       process.exit(1);
     }
