@@ -443,12 +443,12 @@ describe('Init Command', () => {
     const updatedPkgJson = fs.readJSONSync(path.join(tempDir, 'package.json'));
 
     // Should have new scripts
-    expect(updatedPkgJson.scripts.dev).toBe('bunchee --watch');
-    expect(updatedPkgJson.scripts.build).toBe('bunchee');
-    expect(updatedPkgJson.scripts.test).toBe('vitest run');
-    expect(updatedPkgJson.scripts.lint).toBe('oxlint');
-    expect(updatedPkgJson.scripts.format).toBe('oxfmt --write .');
-    expect(updatedPkgJson.scripts.typecheck).toBe('tsc --noEmit');
+    expect(updatedPkgJson.scripts.dev).toBe('tsdx dev');
+    expect(updatedPkgJson.scripts.build).toBe('tsdx build');
+    expect(updatedPkgJson.scripts.test).toBe('tsdx test');
+    expect(updatedPkgJson.scripts.lint).toBe('tsdx lint');
+    expect(updatedPkgJson.scripts.format).toBe('tsdx format');
+    expect(updatedPkgJson.scripts.typecheck).toBe('tsdx typecheck');
 
     // Should preserve existing scripts
     expect(updatedPkgJson.scripts.existing).toBe('echo existing');
@@ -688,7 +688,7 @@ describe('Build Command', () => {
     expect(output).toContain('--no-clean');
   });
 
-  it('should fail gracefully without bunchee installed', () => {
+  it('should build successfully with integrated rolldown', () => {
     // Create minimal project structure
     fs.writeJSONSync(
       path.join(tempDir, 'package.json'),
@@ -703,15 +703,20 @@ describe('Build Command', () => {
     fs.writeFileSync(path.join(tempDir, 'src', 'index.ts'), 'export const x = 1;');
 
     const result = runCLIWithExitCode('build', { cwd: tempDir });
-    // Should fail because bunchee is not installed
-    expect(result.exitCode).not.toBe(0);
+    // Should succeed because rolldown is integrated
+    expect(result.exitCode).toBe(0);
+    expect(fs.existsSync(path.join(tempDir, 'dist', 'index.js'))).toBe(true);
   });
 
   it('should clean dist folder by default (when it exists)', () => {
     // Create a project with an existing dist folder
     fs.writeJSONSync(
       path.join(tempDir, 'package.json'),
-      { name: 'test', type: 'module' },
+      {
+        name: 'test',
+        type: 'module',
+        exports: { '.': './dist/index.js' },
+      },
       { spaces: 2 }
     );
     fs.mkdirSync(path.join(tempDir, 'dist'));
@@ -719,11 +724,13 @@ describe('Build Command', () => {
     fs.mkdirSync(path.join(tempDir, 'src'));
     fs.writeFileSync(path.join(tempDir, 'src', 'index.ts'), 'export const x = 1;');
 
-    // Build will fail because bunchee isn't installed, but dist should be cleaned first
+    // Build will clean dist folder first
     runCLIWithExitCode('build', { cwd: tempDir });
 
-    // Dist folder should be cleaned
+    // Old file should be removed
     expect(fs.existsSync(path.join(tempDir, 'dist', 'old-file.js'))).toBe(false);
+    // New file should exist
+    expect(fs.existsSync(path.join(tempDir, 'dist', 'index.js'))).toBe(true);
   });
 });
 

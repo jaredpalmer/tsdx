@@ -12,7 +12,7 @@
   "keywords": [
     "typescript",
     "bundle",
-    "bunchee",
+    "rolldown",
     "vitest",
     "oxlint"
   ],
@@ -30,8 +30,8 @@
     }
   },
   "scripts": {
-    "build": "bunchee",
-    "dev": "bunchee --watch",
+    "build": "rolldown -c && tsc --emitDeclarationOnly",
+    "dev": "rolldown -c --watch",
     "lint": "oxlint",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
@@ -55,14 +55,14 @@
     "execa": "^9.5.2",
     "fs-extra": "^11.2.0",
     "ora": "^8.1.1",
-    "picocolors": "^1.1.1"
+    "picocolors": "^1.1.1",
+    "rolldown": "^1.0.0-beta.8"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
-    "bunchee": "^6.4.0",
     "oxlint": "^0.16.0",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"

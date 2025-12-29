@@ -1,12 +1,15 @@
-#!/usr/bin/env node
-
 import { program } from 'commander';
 import pc from 'picocolors';
 import fs from 'fs-extra';
 import path from 'path';
-import { execa, execaCommand } from 'execa';
+import { fileURLToPath } from 'url';
+import { execa } from 'execa';
 import ora from 'ora';
 import Enquirer from 'enquirer';
+import { build, watch, getBuildInfo } from './build/index.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const { Select, Input } = Enquirer as unknown as {
   Select: new (options: { message: string; choices: { name: string; message: string }[] }) => { run: () => Promise<string> };
@@ -48,7 +51,7 @@ ${pc.cyan('   ██║   ╚════██║██║  ██║ ██╔
 ${pc.cyan('   ██║   ███████║██████╔╝██╔╝ ██╗')}
 ${pc.cyan('   ╚═╝   ╚══════╝╚═════╝ ╚═╝  ╚═╝')}
 ${pc.dim('Zero-config TypeScript package development')}
-${pc.dim('Powered by bunchee, oxlint, vitest')}
+${pc.dim('Powered by rolldown, oxlint, vitest')}
 `;
 
 program
@@ -173,19 +176,40 @@ program
   .command('build')
   .description('Build the package for production')
   .option('--no-clean', 'Skip cleaning the dist folder')
-  .action(async (options: { clean: boolean }) => {
+  .option('--no-sourcemap', 'Disable source maps')
+  .option('--no-declaration', 'Skip TypeScript declaration generation')
+  .option('-e, --entry <path>', 'Custom entry point')
+  .option('-o, --out-dir <path>', 'Output directory', 'dist')
+  .option('--minify', 'Enable minification')
+  .action(async (options: {
+    clean: boolean;
+    sourcemap: boolean;
+    declaration: boolean;
+    entry?: string;
+    outDir: string;
+    minify?: boolean;
+  }) => {
     const spinner = ora();
 
     try {
-      if (options.clean) {
-        spinner.start('Cleaning dist folder...');
-        await fs.remove(paths.appDist);
-        spinner.succeed('Cleaned dist folder');
-      }
+      // Get build info for display
+      const info = await getBuildInfo({
+        entry: options.entry,
+        outDir: options.outDir,
+      });
 
-      spinner.start('Building with bunchee...');
-      await execaCommand('bunchee', { stdio: 'inherit' });
-      spinner.succeed('Build complete');
+      console.log(pc.cyan(`\n  Building ${pc.bold(info.pkg.name)}...\n`));
+
+      await build({
+        clean: options.clean,
+        sourcemap: options.sourcemap,
+        declaration: options.declaration,
+        entry: options.entry,
+        outDir: options.outDir,
+        minify: options.minify,
+      });
+
+      console.log(pc.green('\n  Build complete!\n'));
     } catch (error) {
       spinner.fail('Build failed');
       console.error(error);
@@ -198,12 +222,30 @@ program
   .command('dev')
   .alias('watch')
   .description('Start development mode with watch')
-  .action(async () => {
-    console.log(pc.cyan('Starting development mode...'));
+  .option('--no-declaration', 'Skip TypeScript declaration generation')
+  .option('-e, --entry <path>', 'Custom entry point')
+  .option('-o, --out-dir <path>', 'Output directory', 'dist')
+  .action(async (options: {
+    declaration: boolean;
+    entry?: string;
+    outDir: string;
+  }) => {
     try {
-      await execaCommand('bunchee --watch', { stdio: 'inherit' });
-    } catch {
+      const info = await getBuildInfo({
+        entry: options.entry,
+        outDir: options.outDir,
+      });
+
+      console.log(pc.cyan(`\n  Watching ${pc.bold(info.pkg.name)}...\n`));
+
+      await watch({
+        declaration: options.declaration,
+        entry: options.entry,
+        outDir: options.outDir,
+      });
+    } catch (error) {
       console.error(pc.red('Development mode failed'));
+      console.error(error);
       process.exit(1);
     }
   });
@@ -351,7 +393,7 @@ program
       // Read current package.json
       const pkgJson = await fs.readJSON(paths.appPackageJson);
 
-      // Add/update exports field for bunchee
+      // Add/update exports field
       if (!pkgJson.exports) {
         pkgJson.exports = {
           '.': {
@@ -372,14 +414,14 @@ program
       // Add scripts
       pkgJson.scripts = {
         ...pkgJson.scripts,
-        dev: 'bunchee --watch',
-        build: 'bunchee',
-        test: 'vitest run',
-        'test:watch': 'vitest',
-        lint: 'oxlint',
-        format: 'oxfmt --write .',
-        'format:check': 'oxfmt --check .',
-        typecheck: 'tsc --noEmit',
+        dev: 'tsdx dev',
+        build: 'tsdx build',
+        test: 'tsdx test',
+        'test:watch': 'tsdx test --watch',
+        lint: 'tsdx lint',
+        format: 'tsdx format',
+        'format:check': 'tsdx format --check',
+        typecheck: 'tsdx typecheck',
       };
 
       await fs.writeJSON(paths.appPackageJson, pkgJson, { spaces: 2 });
@@ -431,10 +473,9 @@ export default defineConfig({
       console.log(`
 ${pc.green('Configuration added!')}
 
-Install the required dev dependencies:
+Install tsdx as a dev dependency:
 
-  ${pc.cyan('bun add -D bunchee vitest typescript')}
-  ${pc.cyan('bun add -D oxlint')}
+  ${pc.cyan('bun add -D tsdx')}
 
 Then you can run:
 
