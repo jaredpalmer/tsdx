@@ -48,7 +48,7 @@ ${pc.cyan('   ██║   ╚════██║██║  ██║ ██╔
 ${pc.cyan('   ██║   ███████║██████╔╝██╔╝ ██╗')}
 ${pc.cyan('   ╚═╝   ╚══════╝╚═════╝ ╚═╝  ╚═╝')}
 ${pc.dim('Zero-config TypeScript package development')}
-${pc.dim('Powered by bunchee, oxlint, vitest')}
+${pc.dim('Powered by bunchee, oxlint, bun test')}
 `;
 
 program
@@ -211,16 +211,16 @@ program
 // TEST command
 program
   .command('test')
-  .description('Run tests with vitest')
+  .description('Run tests with bun test')
   .option('-w, --watch', 'Run in watch mode')
   .option('-c, --coverage', 'Run with coverage')
   .option('-u, --update', 'Update snapshots')
   .allowUnknownOption(true)
   .action(async (options: { watch?: boolean; coverage?: boolean; update?: boolean }, command) => {
-    const args = ['vitest'];
+    const args = ['test'];
 
-    if (!options.watch) {
-      args.push('run');
+    if (options.watch) {
+      args.push('--watch');
     }
 
     if (options.coverage) {
@@ -228,7 +228,7 @@ program
     }
 
     if (options.update) {
-      args.push('--update');
+      args.push('--update-snapshots');
     }
 
     // Pass through any additional arguments
@@ -236,9 +236,9 @@ program
     args.push(...extraArgs);
 
     try {
-      await execa('bunx', args, { stdio: 'inherit' });
+      await execa('bun', args, { stdio: 'inherit' });
     } catch (error: unknown) {
-      // Vitest exits with non-zero on test failure, which is expected
+      // bun test exits with non-zero on test failure, which is expected
       const exitCode = (error as { exitCode?: number }).exitCode ?? 1;
       process.exit(exitCode);
     }
@@ -374,8 +374,8 @@ program
         ...pkgJson.scripts,
         dev: 'bunchee --watch',
         build: 'bunchee',
-        test: 'vitest run',
-        'test:watch': 'vitest',
+        test: 'bun test',
+        'test:watch': 'bun test --watch',
         lint: 'oxlint',
         format: 'oxfmt --write .',
         'format:check': 'oxfmt --check .',
@@ -411,20 +411,6 @@ program
         await fs.writeJSON(tsconfigPath, tsconfig, { spaces: 2 });
       }
 
-      // Create vitest.config.ts if it doesn't exist
-      const vitestConfigPath = path.resolve(process.cwd(), 'vitest.config.ts');
-      if (!(await fs.pathExists(vitestConfigPath))) {
-        const vitestConfig = `import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-  },
-});
-`;
-        await fs.writeFile(vitestConfigPath, vitestConfig);
-      }
 
       spinner.succeed('Initialized tsdx configuration');
 
@@ -433,8 +419,7 @@ ${pc.green('Configuration added!')}
 
 Install the required dev dependencies:
 
-  ${pc.cyan('bun add -D bunchee vitest typescript')}
-  ${pc.cyan('bun add -D oxlint')}
+  ${pc.cyan('bun add -D bunchee typescript oxlint')}
 
 Then you can run:
 

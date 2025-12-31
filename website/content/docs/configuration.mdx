@@ -39,72 +39,45 @@ You can modify this file to adjust TypeScript behavior for your project.
 
 ---
 
-## Vitest
+## Bun Test
 
-Test configuration is in `vitest.config.ts`:
+Bun's built-in test runner requires no configuration file. Tests are automatically discovered in `test/` directories with `.test.ts` or `.spec.ts` extensions.
 
-```typescript
-import { defineConfig } from 'vitest/config';
+### Running Tests
 
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node', // or 'jsdom' for React/DOM testing
-  },
-});
+```bash
+# Run all tests
+bun test
+
+# Watch mode
+bun test --watch
+
+# With coverage
+bun test --coverage
 ```
 
-### Common Configurations
+### React/DOM Testing
 
-<Tabs items={['Node Environment', 'JSDOM (React)', 'With Coverage']}>
+For React testing with DOM, create a `bunfig.toml` and setup file:
 
-<Tab value="Node Environment">
-```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-  },
-});
+**`bunfig.toml`**:
+```toml
+[test]
+preload = ["./happydom.ts"]
 ```
-</Tab>
 
-<Tab value="JSDOM (React)">
+**`happydom.ts`**:
 ```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./test/setup.ts'],
-  },
-});
+import { GlobalRegistrator } from '@happy-dom/global-registrator';
+GlobalRegistrator.register();
 ```
-</Tab>
 
-<Tab value="With Coverage">
-```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-    },
-  },
-});
+Then install happy-dom:
+```bash
+bun add -D happy-dom @happy-dom/global-registrator
 ```
-</Tab>
 
-</Tabs>
-
-See the [Vitest documentation](https://vitest.dev/config/) for all options.
+See the [Bun Test documentation](https://bun.sh/docs/cli/test) for all options.
 
 ---
 

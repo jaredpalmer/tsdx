@@ -23,7 +23,7 @@ const features = [
   },
   {
     title: 'Modern Tooling',
-    description: 'Built on bunchee, vitest, oxlint, and oxfmt for blazing fast development.',
+    description: 'Built on bunchee, bun test, oxlint, and oxfmt for blazing fast development.',
     icon: (
       <svg
         width="24"
@@ -269,7 +269,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { name: 'bunchee', description: 'Bundling', url: 'https://github.com/huozhi/bunchee' },
-              { name: 'vitest', description: 'Testing', url: 'https://vitest.dev/' },
+              { name: 'bun test', description: 'Testing', url: 'https://bun.sh/docs/cli/test' },
               { name: 'oxlint', description: 'Linting', url: 'https://oxc.rs/' },
               { name: 'bun', description: 'Package Mgmt', url: 'https://bun.sh/' },
             ].map((tool) => (

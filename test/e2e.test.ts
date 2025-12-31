@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, beforeEach, afterEach } from 'bun:test';
 import { execSync, spawn, ChildProcess } from 'child_process';
 import path from 'path';
 import fs from 'fs-extra';
@@ -106,7 +106,7 @@ describe('CLI Basics', () => {
 
   it('should show command-specific help for test', () => {
     const output = runCLI('test --help');
-    expect(output).toContain('Run tests with vitest');
+    expect(output).toContain('Run tests with bun test');
     expect(output).toContain('--watch');
     expect(output).toContain('--coverage');
     expect(output).toContain('--update');
@@ -176,7 +176,7 @@ describe('Create Command', () => {
       expect(fs.existsSync(path.join(projectPath, 'tsconfig.json'))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, 'src', 'index.ts'))).toBe(true);
       expect(fs.existsSync(path.join(projectPath, 'test', 'index.test.ts'))).toBe(true);
-      expect(fs.existsSync(path.join(projectPath, 'vitest.config.ts'))).toBe(true);
+      expect(fs.existsSync(path.join(projectPath, 'package.json'))).toBe(true);
     });
 
     it('should set project name in package.json when git author is available', () => {
@@ -445,7 +445,7 @@ describe('Init Command', () => {
     // Should have new scripts
     expect(updatedPkgJson.scripts.dev).toBe('bunchee --watch');
     expect(updatedPkgJson.scripts.build).toBe('bunchee');
-    expect(updatedPkgJson.scripts.test).toBe('vitest run');
+    expect(updatedPkgJson.scripts.test).toBe('bun test');
     expect(updatedPkgJson.scripts.lint).toBe('oxlint');
     expect(updatedPkgJson.scripts.format).toBe('oxfmt --write .');
     expect(updatedPkgJson.scripts.typecheck).toBe('tsc --noEmit');
@@ -509,27 +509,14 @@ describe('Init Command', () => {
     expect(tsconfig.compilerOptions.custom).toBe('option');
   });
 
-  it('should create vitest.config.ts if it does not exist', () => {
+  it('should set test script to bun test', () => {
     fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
 
     runCLI('init', { cwd: tempDir });
 
-    expect(fs.existsSync(path.join(tempDir, 'vitest.config.ts'))).toBe(true);
-
-    const vitestConfig = fs.readFileSync(path.join(tempDir, 'vitest.config.ts'), 'utf-8');
-    expect(vitestConfig).toContain('defineConfig');
-    expect(vitestConfig).toContain('globals: true');
-  });
-
-  it('should not overwrite existing vitest.config.ts', () => {
-    const existingConfig = 'export default { custom: true };';
-    fs.writeJSONSync(path.join(tempDir, 'package.json'), { name: 'test' }, { spaces: 2 });
-    fs.writeFileSync(path.join(tempDir, 'vitest.config.ts'), existingConfig);
-
-    runCLI('init', { cwd: tempDir });
-
-    const vitestConfig = fs.readFileSync(path.join(tempDir, 'vitest.config.ts'), 'utf-8');
-    expect(vitestConfig).toBe(existingConfig);
+    const pkgJson = fs.readJSONSync(path.join(tempDir, 'package.json'));
+    expect(pkgJson.scripts.test).toBe('bun test');
+    expect(pkgJson.scripts['test:watch']).toBe('bun test --watch');
   });
 
   it('should not overwrite existing exports field', () => {
@@ -569,8 +556,9 @@ describe('Template Validation', () => {
       expect(tsconfig.compilerOptions.strict).toBe(true);
     });
 
-    it('should have valid vitest.config.ts', () => {
-      expect(fs.existsSync(path.join(templatePath, 'vitest.config.ts'))).toBe(true);
+    it('should have valid test file using bun:test', () => {
+      const testFile = fs.readFileSync(path.join(templatePath, 'test', 'index.test.ts'), 'utf-8');
+      expect(testFile).toContain("from 'bun:test'");
     });
 
     it('should have source entry point', () => {
@@ -627,9 +615,10 @@ describe('Template Validation', () => {
       expect(tsconfig.compilerOptions.jsx).toBeDefined();
     });
 
-    it('should have vitest.config.ts with jsdom', () => {
-      const config = fs.readFileSync(path.join(templatePath, 'vitest.config.ts'), 'utf-8');
-      expect(config).toContain('jsdom');
+    it('should have bunfig.toml with happy-dom preload', () => {
+      const config = fs.readFileSync(path.join(templatePath, 'bunfig.toml'), 'utf-8');
+      expect(config).toContain('preload');
+      expect(config).toContain('happydom');
     });
 
     it('should have TSX source entry point', () => {
@@ -734,7 +723,7 @@ describe('Build Command', () => {
 describe('Test Command', () => {
   it('should show help for test command', () => {
     const output = runCLI('test --help');
-    expect(output).toContain('Run tests with vitest');
+    expect(output).toContain('Run tests with bun test');
     expect(output).toContain('-w, --watch');
     expect(output).toContain('-c, --coverage');
     expect(output).toContain('-u, --update');
@@ -864,7 +853,6 @@ describe('Integration: Full Workflow', () => {
     const expectedFiles = [
       'package.json',
       'tsconfig.json',
-      'vitest.config.ts',
       'README.md',
       'LICENSE',
       '.gitignore',
@@ -972,20 +960,27 @@ describe('Edge Cases', () => {
 });
 
 // ============================================================================
-// VITEST CONFIG VALIDATION
+// BUN TEST CONFIG VALIDATION
 // ============================================================================
 
-describe('Vitest Configuration', () => {
-  it('basic template vitest config should be valid', () => {
-    const config = fs.readFileSync(path.join(TEMPLATES_PATH, 'basic', 'vitest.config.ts'), 'utf-8');
-    expect(config).toContain('defineConfig');
-    expect(config).toContain('test');
+describe('Bun Test Configuration', () => {
+  it('basic template test should use bun:test', () => {
+    const testFile = fs.readFileSync(path.join(TEMPLATES_PATH, 'basic', 'test', 'index.test.ts'), 'utf-8');
+    expect(testFile).toContain("from 'bun:test'");
+    expect(testFile).toContain('describe');
+    expect(testFile).toContain('expect');
   });
 
-  it('react template vitest config should include jsdom', () => {
-    const config = fs.readFileSync(path.join(TEMPLATES_PATH, 'react', 'vitest.config.ts'), 'utf-8');
-    expect(config).toContain('defineConfig');
-    expect(config).toContain('jsdom');
+  it('react template should have happy-dom configuration', () => {
+    const bunfig = fs.readFileSync(path.join(TEMPLATES_PATH, 'react', 'bunfig.toml'), 'utf-8');
+    expect(bunfig).toContain('preload');
+    expect(bunfig).toContain('happydom');
+  });
+
+  it('react template test should use bun:test', () => {
+    const testFile = fs.readFileSync(path.join(TEMPLATES_PATH, 'react', 'test', 'index.test.tsx'), 'utf-8');
+    expect(testFile).toContain("from 'bun:test'");
+    expect(testFile).toContain('@testing-library/react');
   });
 });
 

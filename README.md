@@ -13,7 +13,7 @@ Modern TypeScript library development, simplified. TSDX provides a zero-config C
 ## Features
 
 - **Zero config** - Sensible defaults, just start coding
-- **Modern tooling** - Built on [bunchee](https://github.com/huozhi/bunchee), [vitest](https://vitest.dev/), [oxlint](https://oxc.rs/docs/guide/usage/linter.html), and [oxfmt](https://oxc.rs/docs/guide/usage/formatter)
+- **Modern tooling** - Built on [bunchee](https://github.com/huozhi/bunchee), [bun test](https://bun.sh/docs/cli/test), [oxlint](https://oxc.rs/docs/guide/usage/linter.html), and [oxfmt](https://oxc.rs/docs/guide/usage/formatter)
 - **Dual ESM/CJS** - Automatic dual module builds with proper exports
 - **TypeScript first** - Full TypeScript support with declaration generation
 - **Lightning fast** - Rust-powered linting (50-100x faster than ESLint) and formatting (35x faster than Prettier)
@@ -67,7 +67,7 @@ bunx tsdx create mylib --template react
 
 | Template | Description |
 |----------|-------------|
-| `basic` | A basic TypeScript library with vitest |
+| `basic` | A basic TypeScript library with bun test |
 | `react` | A React component library with Testing Library |
 
 ### `tsdx build`
@@ -95,7 +95,7 @@ Rebuilds automatically when files change.
 
 ### `tsdx test`
 
-Run tests using [vitest](https://vitest.dev/).
+Run tests using [bun test](https://bun.sh/docs/cli/test).
 
 ```bash
 # Run tests once
@@ -163,7 +163,7 @@ Initialize tsdx configuration in an existing project.
 bunx tsdx init
 ```
 
-This adds the necessary configuration to your `package.json`, creates `tsconfig.json` and `vitest.config.ts` if they don't exist.
+This adds the necessary configuration to your `package.json` and creates `tsconfig.json` if it doesn't exist.
 
 ## Project Structure
 
@@ -174,7 +174,7 @@ mylib/
 ├── src/
 │   └── index.ts          # Library entry point
 ├── test/
-│   └── index.test.ts     # Tests (vitest)
+│   └── index.test.ts     # Tests (bun test)
 ├── dist/                  # Build output (generated)
 │   ├── index.js          # ESM
 │   ├── index.cjs         # CommonJS
@@ -183,7 +183,6 @@ mylib/
 │   └── workflows/        # CI/CD workflows
 ├── package.json
 ├── tsconfig.json
-├── vitest.config.ts
 ├── LICENSE
 └── README.md
 ```
@@ -246,7 +245,7 @@ TSDX 2.0 uses modern, high-performance tools:
 | Tool | Purpose | Performance |
 |------|---------|-------------|
 | [bunchee](https://github.com/huozhi/bunchee) | Bundling | Zero-config, built on Rollup + SWC |
-| [vitest](https://vitest.dev/) | Testing | Vite-native, Jest-compatible API |
+| [bun test](https://bun.sh/docs/cli/test) | Testing | Fast, built-in test runner with Jest-compatible API |
 | [oxlint](https://oxc.rs/docs/guide/usage/linter.html) | Linting | 50-100x faster than ESLint |
 | [oxfmt](https://oxc.rs/docs/guide/usage/formatter) | Formatting | 35x faster than Prettier |
 | [bun](https://bun.sh/) | Package Management | Native speed, npm-compatible |
@@ -270,19 +269,20 @@ TSDX creates a modern TypeScript configuration:
 }
 ```
 
-### Vitest (`vitest.config.ts`)
+### Bun Test
 
-Default test configuration:
+Bun's built-in test runner requires no configuration. Tests are automatically discovered in `test/` directories.
 
+For React testing with DOM, add a `bunfig.toml`:
+```toml
+[test]
+preload = ["./happydom.ts"]
+```
+
+And create `happydom.ts`:
 ```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node', // or 'jsdom' for React
-  },
-});
+import { GlobalRegistrator } from '@happy-dom/global-registrator';
+GlobalRegistrator.register();
 ```
 
 ### Linting (`.oxlintrc.json`)
@@ -333,7 +333,7 @@ See the [Migration Guide](./MIGRATION.md) for detailed instructions on upgrading
 **Quick summary:**
 1. Install bun
 2. Update `package.json` scripts to use tsdx commands
-3. Replace Jest with vitest
+3. Replace Jest with bun test
 4. Replace ESLint with oxlint (optional)
 5. Replace Prettier with oxfmt (optional)
 6. Run `bun install`
@@ -377,9 +377,8 @@ Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for g
 TSDX 2.0 is built on the shoulders of giants:
 
 - [bunchee](https://github.com/huozhi/bunchee) by Jiachi Liu
-- [vitest](https://vitest.dev/) by the Vitest team
-- [oxc](https://oxc.rs/) by the OXC team
 - [bun](https://bun.sh/) by the Bun team
+- [oxc](https://oxc.rs/) by the OXC team
 
 ## Author
 

@@ -9,7 +9,7 @@ TSDX 2.0 is a complete rewrite that replaces the original toolchain with modern,
 | Old (v0.x) | New (v2.0) | Why |
 |------------|------------|-----|
 | Rollup + Babel | [bunchee](https://github.com/huozhi/bunchee) | Zero-config, SWC-powered, faster |
-| Jest | [vitest](https://vitest.dev/) | Vite-native, faster, Jest-compatible |
+| Jest | [bun test](https://bun.sh/docs/cli/test) | Fast, built-in, Jest-compatible |
 | ESLint | [oxlint](https://oxc.rs/) | 50-100x faster, Rust-powered |
 | Prettier | [oxfmt](https://oxc.rs/) | 35x faster, Rust-powered |
 | yarn/npm | [bun](https://bun.sh/) | Faster installs and execution |
@@ -59,37 +59,36 @@ bun remove tsdx rollup @rollup/plugin-* babel-* @babel/* jest ts-jest eslint @ty
 bun add -D tsdx typescript
 ```
 
-### 4. Replace Jest with Vitest
+### 4. Replace Jest with Bun Test
 
-Create `vitest.config.ts`:
+Bun has a built-in test runner that requires no configuration. Update your test files to import from `bun:test`:
 
 ```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node', // or 'jsdom' for React/DOM testing
-  },
-});
+import { describe, it, expect } from 'bun:test';
 ```
 
-Update test files:
-- Change `import { describe, it, expect } from 'jest'` to `import { describe, it, expect } from 'vitest'`
-- Or use `globals: true` in vitest.config.ts to avoid imports
+**Jest to Bun Test Cheatsheet:**
 
-**Jest to Vitest Cheatsheet:**
-
-| Jest | Vitest |
-|------|--------|
-| `jest.fn()` | `vi.fn()` |
-| `jest.mock()` | `vi.mock()` |
-| `jest.spyOn()` | `vi.spyOn()` |
-| `jest.useFakeTimers()` | `vi.useFakeTimers()` |
+| Jest | Bun Test |
+|------|----------|
+| `jest.fn()` | `mock()` from 'bun:test' |
+| `jest.spyOn()` | `spyOn()` from 'bun:test' |
 | `beforeAll/afterAll` | Same |
 | `beforeEach/afterEach` | Same |
 | `describe/it/test` | Same |
 | `expect()` | Same |
+
+For React/DOM testing, create `bunfig.toml`:
+```toml
+[test]
+preload = ["./happydom.ts"]
+```
+
+And `happydom.ts`:
+```typescript
+import { GlobalRegistrator } from '@happy-dom/global-registrator';
+GlobalRegistrator.register();
+```
 
 ### 5. Remove Old Config Files
 
@@ -217,20 +216,9 @@ describe('sum', () => {
 });
 ```
 
-**New Vitest test (same syntax!):**
+**New Bun test (similar syntax!):**
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { sum } from './index';
-
-describe('sum', () => {
-  it('adds numbers', () => {
-    expect(sum(1, 2)).toBe(3);
-  });
-});
-```
-
-Or with `globals: true` in vitest.config.ts:
-```typescript
+import { describe, it, expect } from 'bun:test';
 import { sum } from './index';
 
 describe('sum', () => {
@@ -253,9 +241,9 @@ test('renders', () => {
 });
 ```
 
-**New (same, just with Vitest!):**
+**New (same, just with Bun test!):**
 ```typescript
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from 'bun:test';
 import { render, screen } from '@testing-library/react';
 import { MyComponent } from './MyComponent';
 
@@ -267,7 +255,7 @@ describe('MyComponent', () => {
 });
 ```
 
-Note: Replace `toBeInTheDocument()` with `toBeDefined()` or add `@testing-library/jest-dom` and configure in vitest setup.
+Note: Replace `toBeInTheDocument()` with `toBeDefined()`. For DOM testing, configure happy-dom as shown above.
 
 ### Linting
 
@@ -368,7 +356,7 @@ jobs:
 
 1. **Build output** - Slightly different but compatible
 2. **Watch mode** - Now uses bunchee's watch, may have different behavior
-3. **Test runner** - Vitest instead of Jest (mostly compatible API)
+3. **Test runner** - Bun test instead of Jest (mostly compatible API)
 4. **Default branch** - Uses `main` instead of `master` in templates
 
 ## Compatibility
@@ -400,20 +388,11 @@ Install bun:
 curl -fsSL https://bun.sh/install | bash
 ```
 
-### Tests fail with "vi is not defined"
+### Tests fail with "mock is not defined"
 
-Add vitest imports:
+Add bun:test imports:
 ```typescript
-import { describe, it, expect, vi } from 'vitest';
-```
-
-Or enable globals in `vitest.config.ts`:
-```typescript
-export default defineConfig({
-  test: {
-    globals: true,
-  },
-});
+import { describe, it, expect, mock, spyOn } from 'bun:test';
 ```
 
 ### TypeScript errors with moduleResolution
@@ -438,19 +417,12 @@ Ensure your package.json has:
 
 ### "Cannot find module" in tests
 
-Check your vitest.config.ts has correct paths:
-```typescript
-export default defineConfig({
-  test: {
-    include: ['test/**/*.test.ts'],
-  },
-});
-```
+Bun test automatically discovers tests in `test/` and `__tests__/` directories with `.test.ts` or `.spec.ts` extensions.
 
 ## Getting Help
 
 - [TSDX GitHub Issues](https://github.com/jaredpalmer/tsdx/issues)
-- [Vitest Documentation](https://vitest.dev/)
+- [Bun Test Documentation](https://bun.sh/docs/cli/test)
 - [bunchee Documentation](https://github.com/huozhi/bunchee)
 - [oxlint Documentation](https://oxc.rs/docs/guide/usage/linter.html)
 - [Bun Documentation](https://bun.sh/docs)

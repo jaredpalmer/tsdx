@@ -30,12 +30,11 @@ bun run format
 /src
   index.ts        # Your library entry point
 /test
-  index.test.ts   # Tests using Vitest
+  index.test.ts   # Tests using bun test
 .gitignore
 package.json
 README.md
 tsconfig.json
-vitest.config.ts
 ```
 
 ## Scripts
@@ -56,7 +55,7 @@ vitest.config.ts
 TSDX wraps these modern, high-performance tools:
 
 - **[Bunchee](https://github.com/huozhi/bunchee)** - Zero-config bundler for npm packages
-- **[Vitest](https://vitest.dev/)** - Next-generation testing framework
+- **[Bun Test](https://bun.sh/docs/cli/test)** - Fast, built-in test runner
 - **[Oxlint](https://oxc.rs/docs/guide/usage/linter.html)** - Rust-powered linter (50-100x faster than ESLint)
 - **[Oxfmt](https://oxc.rs/docs/guide/usage/formatter)** - Rust-powered formatter (35x faster than Prettier)
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety

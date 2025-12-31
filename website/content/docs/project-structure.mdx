@@ -14,7 +14,7 @@ mylib/
 ├── src/
 │   └── index.ts          # Library entry point
 ├── test/
-│   └── index.test.ts     # Tests (vitest)
+│   └── index.test.ts     # Tests (bun test)
 ├── dist/                  # Build output (generated)
 │   ├── index.js          # ESM
 │   ├── index.cjs         # CommonJS
@@ -25,7 +25,6 @@ mylib/
 │       └── main.yml      # CI/CD workflow
 ├── package.json
 ├── tsconfig.json
-├── vitest.config.ts
 ├── LICENSE
 └── README.md
 ```
@@ -49,7 +48,8 @@ mylib/
 ├── .github/
 ├── package.json
 ├── tsconfig.json
-├── vitest.config.ts
+├── bunfig.toml           # Bun test configuration
+├── happydom.ts           # Happy-dom setup
 ├── LICENSE
 └── README.md
 ```
@@ -128,19 +128,22 @@ TypeScript configuration:
 }
 ```
 
-### `vitest.config.ts`
+### Test Files
 
-Test configuration:
+Bun test requires no configuration file. Tests are automatically discovered in `test/` directories.
 
+For React/DOM testing, the React template includes:
+
+**`bunfig.toml`**:
+```toml
+[test]
+preload = ["./happydom.ts"]
+```
+
+**`happydom.ts`**:
 ```typescript
-import { defineConfig } from 'vitest/config';
-
-export default defineConfig({
-  test: {
-    globals: true,
-    environment: 'node',
-  },
-});
+import { GlobalRegistrator } from '@happy-dom/global-registrator';
+GlobalRegistrator.register();
 ```
 
 ---

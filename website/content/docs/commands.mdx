@@ -88,7 +88,7 @@ tsdx dev
 
 ## tsdx test
 
-Run tests using [vitest](https://vitest.dev/).
+Run tests using [bun test](https://bun.sh/docs/cli/test).
 
 ```bash
 tsdx test [options]
@@ -102,7 +102,7 @@ tsdx test [options]
 | `-c, --coverage` | Run with coverage |
 | `-u, --update` | Update snapshots |
 
-All additional options are passed through to vitest.
+All additional options are passed through to bun test.
 
 ### Examples
 
@@ -236,7 +236,6 @@ tsdx init
 This command:
 - Updates `package.json` with tsdx scripts and exports configuration
 - Creates `tsconfig.json` if it doesn't exist
-- Creates `vitest.config.ts` if it doesn't exist
 
 ### Examples
 
@@ -248,5 +247,5 @@ bunx tsdx init
 After running `tsdx init`, install the required dependencies:
 
 ```bash
-bun add -D bunchee vitest typescript oxlint
+bun add -D bunchee typescript oxlint
 ```

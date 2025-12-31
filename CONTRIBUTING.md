@@ -137,8 +137,7 @@ tsdx/
 │   ├── cli.test.ts       # CLI unit tests
 │   └── e2e.test.ts       # End-to-end tests
 ├── package.json
-├── tsconfig.json
-└── vitest.config.ts
+└── tsconfig.json
 ```
 
 ## Submitting a PR

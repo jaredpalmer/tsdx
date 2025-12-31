@@ -13,7 +13,7 @@
     "typescript",
     "bundle",
     "bunchee",
-    "vitest",
+    "bun-test",
     "oxlint"
   ],
   "bugs": {
@@ -35,8 +35,8 @@
     "lint": "oxlint",
     "format": "oxfmt --write .",
     "format:check": "oxfmt --check .",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit",
     "prepare": "bun run build",
     "changeset": "changeset",
@@ -60,11 +60,11 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
+    "@types/bun": "^1.1.14",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^22.10.2",
     "bunchee": "^6.4.0",
     "oxlint": "^0.16.0",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "typescript": "^5.7.2"
   }
 }

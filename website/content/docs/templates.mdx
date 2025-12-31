@@ -11,7 +11,7 @@ TSDX provides project templates to help you get started quickly with different t
 
 | Template | Description |
 |----------|-------------|
-| `basic` | A basic TypeScript library with vitest |
+| `basic` | A basic TypeScript library with bun test |
 | `react` | A React component library with Testing Library |
 
 ## Basic Template
@@ -25,7 +25,7 @@ bunx tsdx create mylib --template basic
 ### What's Included
 
 - TypeScript configuration
-- Vitest for testing
+- Bun test for testing
 - oxlint for linting
 - oxfmt for formatting
 - GitHub Actions CI workflow
@@ -39,13 +39,12 @@ mylib/
 ├── src/
 │   └── index.ts          # Library entry point
 ├── test/
-│   └── index.test.ts     # Tests (vitest)
+│   └── index.test.ts     # Tests (bun test)
 ├── dist/                  # Build output (generated)
 ├── .github/
 │   └── workflows/        # CI/CD workflows
 ├── package.json
 ├── tsconfig.json
-├── vitest.config.ts
 ├── LICENSE
 └── README.md
 ```
@@ -61,7 +60,7 @@ export const sum = (a: number, b: number): number => {
 
 ```typescript
 // test/index.test.ts
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { sum } from '../src';
 
 describe('sum', () => {
@@ -86,7 +85,7 @@ bunx tsdx create mylib --template react
 Everything from the basic template, plus:
 - React and React DOM
 - @testing-library/react for component testing
-- jsdom environment for vitest
+- happy-dom environment for bun test
 - Example Vite-powered playground
 
 ### Project Structure
@@ -105,7 +104,8 @@ mylib/
 ├── dist/                  # Build output (generated)
 ├── package.json
 ├── tsconfig.json
-├── vitest.config.ts
+├── bunfig.toml            # Bun test configuration
+├── happydom.ts            # Happy-dom setup
 ├── LICENSE
 └── README.md
 ```
@@ -127,7 +127,7 @@ export const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
 
 ```tsx
 // test/index.test.tsx
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 import { render, screen } from '@testing-library/react';
 import { MyComponent } from '../src';
 

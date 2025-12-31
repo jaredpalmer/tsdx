@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TSDX is a zero-config CLI for TypeScript package development. Version 2.0 is a complete rewrite using modern Rust-based tooling: bunchee (bundling), vitest (testing), oxlint (linting), and oxfmt (formatting).
+TSDX is a zero-config CLI for TypeScript package development. Version 2.0 is a complete rewrite using modern Rust-based tooling: bunchee (bundling), bun test (testing), oxlint (linting), and oxfmt (formatting).
 
 ## Development Commands
 
@@ -12,7 +12,7 @@ TSDX is a zero-config CLI for TypeScript package development. Version 2.0 is a c
 bun install              # Install dependencies
 bun run build            # Build CLI with bunchee
 bun run dev              # Watch mode (rebuilds on changes)
-bun run test             # Run all tests with vitest
+bun run test             # Run all tests with bun test
 bun run test:watch       # Run tests in watch mode
 bun run test test/cli.test.ts   # Run a specific test file
 bun run lint             # Lint with oxlint
@@ -35,7 +35,7 @@ The e2e tests create projects in temp directories and have longer timeouts (60s)
 **Single CLI Entry Point**: `src/index.ts` contains all CLI commands using Commander.js:
 - `create` - scaffolds projects from templates, installs deps with bun
 - `build/dev` - wraps bunchee
-- `test` - wraps vitest
+- `test` - wraps bun test
 - `lint` - wraps oxlint
 - `format` - wraps oxfmt
 - `typecheck` - wraps tsc
@@ -47,7 +47,8 @@ The e2e tests create projects in temp directories and have longer timeouts (60s)
 
 1. Create directory in `templates/`
 2. Register in `src/index.ts` in the `templates` object
-3. Include: package.json, tsconfig.json, vitest.config.ts, src/, test/, gitignore (not .gitignore), LICENSE with `<year>` and `<author>` placeholders
+3. Include: package.json, tsconfig.json, src/, test/, gitignore (not .gitignore), LICENSE with `<year>` and `<author>` placeholders
+4. For React templates, also include bunfig.toml and happydom.ts for DOM testing
 
 ## Documentation Website
 
