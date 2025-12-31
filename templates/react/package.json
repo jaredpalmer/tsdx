@@ -50,7 +50,8 @@
     "jsdom": "^25.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tsdx": "^1.0.0",
-    "typescript": "^5.7.2"
+    "tsdx": "^2.0.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.0.16"
   }
 }
