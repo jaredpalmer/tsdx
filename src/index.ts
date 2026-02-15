@@ -125,6 +125,12 @@ program
       const pkgJson = await fs.readJSON(pkgJsonPath);
       pkgJson.name = name;
       pkgJson.author = author;
+
+      // Set tsdx version to match the current CLI major version
+      const majorVersion = pkg.version.split('.')[0];
+      if (pkgJson.devDependencies?.tsdx) {
+        pkgJson.devDependencies.tsdx = `^${majorVersion}.0.0`;
+      }
       await fs.writeJSON(pkgJsonPath, pkgJson, { spaces: 2 });
 
       // Update LICENSE
